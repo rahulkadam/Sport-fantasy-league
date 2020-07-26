@@ -22,6 +22,7 @@ public class TournamentController {
     @PostMapping(value = "/create")
     @ResponseBody
     public Tournament createTournament(@RequestBody Tournament tournament) {
-        return tournamentRepository.save(tournament);
+        Tournament tournament1 =  tournamentRepository.save(tournament);
+        return tournament;
     }
 }
