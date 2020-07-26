@@ -1,23 +1,16 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
 import com.garv.satta.fantasy.model.backoffice.Player;
-import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Data
-public class UserTeam {
-
-    /**
-     *  id
-     *  leagueId
-     *  userId
-     *
-     */
+public class UserTeam implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +18,14 @@ public class UserTeam {
     private String name;
     private Boolean status;
 
+    private Integer creditbalance;
+
     private Integer total_score;
+
+    private Integer total_Transfer;
+    private Integer used_Transfer;
+    private Integer remained_Transfer;
+    private Integer current_Used_Transfer;
 
     private Date created_at;
     private Date updated_at;
@@ -37,6 +37,11 @@ public class UserTeam {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "captain_player_id", nullable = false)
+    private Player captain_player;
 
     @ManyToMany
     @JoinTable(

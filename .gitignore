@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+**/src/webapp/node_modules**
+**/src/webapp/build**
+**/src/webapp/package-lock.json
+**/src/.DS_Store

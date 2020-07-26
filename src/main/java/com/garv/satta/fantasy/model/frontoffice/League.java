@@ -35,9 +35,9 @@ public class League implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "league_user",
+            name = "league_userteam",
             joinColumns = @JoinColumn(name = "league_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> leagueMembers;
+            inverseJoinColumns = @JoinColumn(name = "userteam_id"))
+    private List<UserTeam> leagueMembers;
 
 }
