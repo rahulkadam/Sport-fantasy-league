@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class PlayerConverter extends Converter<Player, PlayerDTO> {
@@ -28,8 +27,7 @@ public class PlayerConverter extends Converter<Player, PlayerDTO> {
     }
 
     public List<PlayerDTO> convertToDTOList(List<Player> playerList){
-        return playerList.stream()
-                .map(entity -> mapper.map(entity, PlayerDTO.class))
-                .collect(Collectors.toList());
+        return mapToDTOList(playerList, PlayerDTO.class);
     }
+
 }
