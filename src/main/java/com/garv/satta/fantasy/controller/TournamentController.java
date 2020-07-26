@@ -1,9 +1,13 @@
 package com.garv.satta.fantasy.controller;
 
 import com.garv.satta.fantasy.dao.repository.TournamentRepository;
+import com.garv.satta.fantasy.dto.TournamentDTO;
+import com.garv.satta.fantasy.dto.converter.TournamentConverter;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -13,16 +17,20 @@ public class TournamentController {
     @Autowired
     private TournamentRepository tournamentRepository;
 
+    @Autowired
+    private TournamentConverter tournamentConverter;
+
     @GetMapping(value = "/list")
     @ResponseBody
-    public Iterable<Tournament> getTournementList() {
-        return tournamentRepository.findAll();
+    public List<TournamentDTO> getTournementList() {
+        List<Tournament> tournamentList =  (List) tournamentRepository.findAll();
+        return tournamentConverter.convertToDTOList(tournamentList);
     }
 
     @PostMapping(value = "/create")
     @ResponseBody
-    public Tournament createTournament(@RequestBody Tournament tournament) {
+    public TournamentDTO createTournament(@RequestBody Tournament tournament) {
         Tournament tournament1 =  tournamentRepository.save(tournament);
-        return tournament;
+        return tournamentConverter.convertToDTO(tournament);
     }
 }
