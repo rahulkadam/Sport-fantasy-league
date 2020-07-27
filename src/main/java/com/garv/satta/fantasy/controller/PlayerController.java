@@ -1,9 +1,8 @@
 package com.garv.satta.fantasy.controller;
 
-import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dto.PlayerDTO;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
-import com.garv.satta.fantasy.model.backoffice.Player;
+import com.garv.satta.fantasy.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class PlayerController {
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
 
     @Autowired
     private PlayerConverter playerConverter;
@@ -23,15 +22,14 @@ public class PlayerController {
     @GetMapping(value = "/list")
     @ResponseBody
     public List<PlayerDTO> getPlayerList() {
-        List<Player> playerList =  (List)playerRepository.findAll();
-        return playerConverter.convertToDTOList(playerList);
+        List<PlayerDTO> playerList =  (List)playerService.getPlayerList();
+        return playerList;
     }
 
     @PostMapping(value = "/create")
     @ResponseBody
     public PlayerDTO createPlayer(@RequestBody PlayerDTO playerDTO) {
-        Player player = playerConverter.convertToEntity(playerDTO);
-        player = playerRepository.save(player);
-        return playerConverter.convertToDTO(player);
+        PlayerDTO player = playerService.createPlayer(playerDTO);
+        return player;
     }
 }

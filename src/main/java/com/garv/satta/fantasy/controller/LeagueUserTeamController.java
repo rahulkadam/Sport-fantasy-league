@@ -1,4 +1,4 @@
 package com.garv.satta.fantasy.controller;
 
-public class MatchController {
+public class LeagueUserTeamController {
 }

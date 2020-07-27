@@ -30,5 +30,8 @@ public class MatchSchedule extends BaseDaoObject {
     @JoinColumn(name = "team_away_id", nullable = false)
     private Team team_away;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "tournament_id", nullable = false)
+    private Tournament tournament;
 
 }

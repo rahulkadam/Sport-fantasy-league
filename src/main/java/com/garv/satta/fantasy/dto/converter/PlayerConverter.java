@@ -14,14 +14,11 @@ public class PlayerConverter extends Converter<Player, PlayerDTO> {
     private TeamConverter teamDTOConverter;
 
     public Player convertToEntity(PlayerDTO playerDTO) {
-        if(playerDTO == null) {
-            return null;
-        }
         Player player = mapper.map(playerDTO, Player.class);
         return player;
     }
 
-    public PlayerDTO convertToDTO(Player player){
+    public PlayerDTO convertToDTO(Player player) {
         PlayerDTO playerDTO = mapper.map(player, PlayerDTO.class);
         return playerDTO;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class UserTeam extends BaseDaoObject {
+public class LeagueUserTeam extends BaseDaoObject {
 
     @NotNull
     private String name;
@@ -33,15 +33,14 @@ public class UserTeam extends BaseDaoObject {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "captain_player_id", nullable = false)
     private Player captain_player;
 
     @ManyToMany
     @JoinTable(
-            name = "userteam_player",
-            joinColumns = @JoinColumn(name = "userteam_id"),
+            name = "leagueuserteam_player",
+            joinColumns = @JoinColumn(name = "league_user_team_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
     private List<Player> teamPlayers;
 }

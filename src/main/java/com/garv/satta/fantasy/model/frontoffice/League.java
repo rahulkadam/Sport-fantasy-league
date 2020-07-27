@@ -21,11 +21,11 @@ public class League extends BaseDaoObject {
     private String leagueCode;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "created_by", nullable = false)
+    @JoinColumn(name = "created_by_id", nullable = false)
     private User created_by;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "updated_by", nullable = false)
+    @JoinColumn(name = "updated_by_id", nullable = false)
     private User updated_by;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -37,6 +37,6 @@ public class League extends BaseDaoObject {
             name = "league_userteam",
             joinColumns = @JoinColumn(name = "league_id"),
             inverseJoinColumns = @JoinColumn(name = "userteam_id"))
-    private List<UserTeam> leagueMembers;
+    private List<LeagueUserTeam> leagueMembers;
 
 }
