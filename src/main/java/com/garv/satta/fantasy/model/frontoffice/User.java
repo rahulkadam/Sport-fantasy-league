@@ -1,19 +1,18 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
+import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class User extends BaseDaoObject {
+
+    @NotNull
     private String name;
+    @NotNull
     private String email;
     private String password;
     private String access_token;

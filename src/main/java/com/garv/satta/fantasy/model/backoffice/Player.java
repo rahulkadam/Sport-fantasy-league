@@ -1,22 +1,24 @@
 package com.garv.satta.fantasy.model.backoffice;
 
+import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.fantasyenum.PlayerEnum;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Data
-public class Player implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Player extends BaseDaoObject {
+    @NotNull
+    @Column(unique = true)
     private String name;
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private PlayerEnum type;
     private String Country;
-    private float value;
+    private Float value;
 
     @ManyToMany
     @JoinTable(

@@ -1,24 +1,23 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
+import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Data
-public class League implements Serializable {
+public class League extends BaseDaoObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull
     private String name;
+
     private Boolean status;
-    private Date created_at;
-    private Date updated_at;
+
+    @NotNull
     private String leagueCode;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

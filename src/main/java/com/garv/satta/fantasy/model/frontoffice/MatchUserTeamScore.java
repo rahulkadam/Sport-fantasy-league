@@ -1,18 +1,24 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
+import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.MatchDetails;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
+/**
+ * MatchUserTeamScore will store User team  match score, so we will have score of each match for userTeam
+ *
+ * i.e UserTeam has name : warrior11
+ * here, we will get score for each match for warrior11,
+ * warrior11 score in match1
+ *  * warrior11 score in match2
+ */
 @Entity
 @Data
-public class MatchUserTeamScore  implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class MatchUserTeamScore  extends BaseDaoObject {
+
     private Integer current_match_point;
     private Integer totalPoint;
 

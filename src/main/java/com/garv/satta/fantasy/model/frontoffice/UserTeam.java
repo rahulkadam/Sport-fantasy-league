@@ -1,20 +1,18 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
+import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Data
-public class UserTeam implements Serializable {
+public class UserTeam extends BaseDaoObject {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @NotNull
     private String name;
     private Boolean status;
 
@@ -26,9 +24,6 @@ public class UserTeam implements Serializable {
     private Integer used_Transfer;
     private Integer remained_Transfer;
     private Integer current_Used_Transfer;
-
-    private Date created_at;
-    private Date updated_at;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "league_id", nullable = false)

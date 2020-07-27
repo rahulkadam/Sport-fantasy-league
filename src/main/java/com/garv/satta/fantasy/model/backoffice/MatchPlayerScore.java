@@ -1,17 +1,14 @@
 package com.garv.satta.fantasy.model.backoffice;
 
+import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Data
-public class MatchPlayerScore implements Serializable {
+public class MatchPlayerScore extends BaseDaoObject{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private Integer pointscore;
     private Integer run_scored;
     private Integer wicket;

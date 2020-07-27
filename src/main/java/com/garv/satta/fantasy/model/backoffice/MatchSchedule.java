@@ -1,21 +1,22 @@
 package com.garv.satta.fantasy.model.backoffice;
 
+import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class MatchSchedule implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class MatchSchedule extends BaseDaoObject {
+
     private String description;
 
-    private Date matchTime;
-    private String owner;
+    @NotNull
+    private DateTime matchTime;
+
+    private Boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "venue_id", nullable = false)
