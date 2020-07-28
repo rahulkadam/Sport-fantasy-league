@@ -3,6 +3,8 @@ package com.garv.satta.fantasy.model.frontoffice;
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.MatchDetails;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -16,6 +18,8 @@ import javax.persistence.*;
  */
 @Entity
 @Data
+@NoArgsConstructor
+@ToString(exclude = {"matchDetails", "userTeam"})
 public class LeagueUserTeamScorePerMatch extends BaseDaoObject {
 
     private Integer current_match_point;

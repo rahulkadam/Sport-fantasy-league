@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@ToString(exclude = {"created_by", "updated_by", "tournament","leagueMembers"}, callSuper = true)
 public class League extends BaseDaoObject {
 
     @NotNull

@@ -2,6 +2,7 @@ package com.garv.satta.fantasy.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @MappedSuperclass
 @Data
 @NoArgsConstructor
+@ToString
 public class BaseDaoObject implements Serializable {
 
     @Id

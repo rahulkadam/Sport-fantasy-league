@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.fantasyenum.GameEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@ToString(exclude = {"teams"}, callSuper = true)
 public class Tournament extends BaseDaoObject {
     @NotNull
     @Column(unique = true)
@@ -23,10 +25,10 @@ public class Tournament extends BaseDaoObject {
     private GameEnum sportName;
     private Boolean status;
 
+    @ManyToMany(mappedBy = "tournament")
+    private List<Team> teams;
+
     public Tournament(Long id) {
         super(id);
     }
-
-    @ManyToMany(mappedBy = "tournament")
-    private List<Team> teams;
 }

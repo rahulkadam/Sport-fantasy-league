@@ -12,4 +12,6 @@ public interface MatchPlayerScoreRepository extends CrudRepository<MatchPlayerSc
 
     List<MatchPlayerScore> findMatchPlayerScoreByPlayerId(Long id);
 
+    List<MatchPlayerScore> findMatchPlayerScoreByMatchDetailsId(Long id);
+
 }

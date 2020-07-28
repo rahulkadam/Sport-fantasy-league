@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.model.backoffice;
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Table(name = "match_schedule")
 @NoArgsConstructor
+@ToString(exclude = {"venue", "team_host", "team_away","tournament"}, callSuper = true)
 public class Match extends BaseDaoObject {
 
     private String description;
