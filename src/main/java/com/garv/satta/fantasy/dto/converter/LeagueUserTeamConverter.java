@@ -7,6 +7,7 @@ import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,6 @@ public class LeagueUserTeamConverter extends Converter<LeagueUserTeam, LeagueUse
 
     public LeagueUserTeam convertToEntity(LeagueUserTeamDTO dto) {
         LeagueUserTeam leagueUserTeam = mapper.map(dto, LeagueUserTeam.class);
-
 
         Long playerId = dto.getTeam_captain_player_Id();
         if (playerId != null) {
@@ -37,8 +37,10 @@ public class LeagueUserTeamConverter extends Converter<LeagueUserTeam, LeagueUse
 
         Long leagueId = dto.getFantasyleagueId();
         if (leagueId != null) {
+            List<League> leagueList = new ArrayList<>();
             League league = new League(leagueId);
-            leagueUserTeam.setLeague(league);
+            leagueList.add(league);
+            leagueUserTeam.setLeagues(leagueList);
         }
 
         return leagueUserTeam;

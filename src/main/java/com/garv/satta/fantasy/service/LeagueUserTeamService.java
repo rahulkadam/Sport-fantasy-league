@@ -34,5 +34,4 @@ public class LeagueUserTeamService {
         return converter.convertToDTO(leagueUserTeam);
     }
 
-
 }

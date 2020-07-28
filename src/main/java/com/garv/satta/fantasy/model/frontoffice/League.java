@@ -34,11 +34,7 @@ public class League extends BaseDaoObject {
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
-    @ManyToMany
-    @JoinTable(
-            name = "league_userteam",
-            joinColumns = @JoinColumn(name = "league_id"),
-            inverseJoinColumns = @JoinColumn(name = "userteam_id"))
+    @ManyToMany(mappedBy = "leagues")
     private List<LeagueUserTeam> leagueMembers;
 
     public League(Long id) {

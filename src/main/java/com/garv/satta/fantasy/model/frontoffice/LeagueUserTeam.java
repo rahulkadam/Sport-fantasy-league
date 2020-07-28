@@ -25,9 +25,12 @@ public class LeagueUserTeam extends BaseDaoObject {
     private Integer remained_Transfer;
     private Integer current_Used_Transfer;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "league_id", nullable = false)
-    private League league;
+    @ManyToMany
+    @JoinTable(
+            name = "league_userteam",
+            joinColumns = @JoinColumn(name = "userteam_id"),
+            inverseJoinColumns = @JoinColumn(name = "league_id"))
+    private List<League> leagues;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
