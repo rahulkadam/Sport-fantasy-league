@@ -9,33 +9,26 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class LeagueUserTeamConverter extends Converter<LeagueUserTeam, LeagueUserTeamDTO> {
 
     public LeagueUserTeam convertToEntity(LeagueUserTeamDTO dto) {
         LeagueUserTeam leagueUserTeam = mapper.map(dto, LeagueUserTeam.class);
+        return leagueUserTeam;
+    }
 
-        Long playerId = dto.getTeam_captain_player_Id();
-        if (playerId != null) {
-            Player captionPlayer = new Player(playerId);
-            leagueUserTeam.setCaptain_player(captionPlayer);
-        }
+    public LeagueUserTeam convertToFullEntity(LeagueUserTeamDTO dto) {
+        LeagueUserTeam leagueUserTeam = convertToEntity(dto);
 
-        Long userId = dto.getFantasyUserId();
-        if(userId != null) {
-            User user = new User(userId);
-            leagueUserTeam.setUser(user);
-        }
 
-        List<Long> playerIdsList = dto.getUser_team_playerIds();
-        if (playerIdsList != null) {
-            List<Player> playerList = getPlayerListFromIds(playerIdsList);
-            leagueUserTeam.setTeamPlayers(playerList);
-        }
+        Player captionPlayer = new Player(dto.getTeam_captain_player_Id());
+        leagueUserTeam.setCaptain_player(captionPlayer);
 
-        Long leagueId = dto.getFantasyleagueId();
+        User user = new User(dto.getUserId());
+        leagueUserTeam.setUser(user);
+
+        Long leagueId = dto.getLeagueId();
         if (leagueId != null) {
             List<League> leagueList = new ArrayList<>();
             League league = new League(leagueId);
@@ -46,16 +39,24 @@ public class LeagueUserTeamConverter extends Converter<LeagueUserTeam, LeagueUse
         return leagueUserTeam;
     }
 
-    private List<Player> getPlayerListFromIds(List<Long> ids) {
-        return ids.stream().map(id -> new Player(id)).collect(Collectors.toList());
-    }
-
     public LeagueUserTeamDTO convertToDTO(LeagueUserTeam entity) {
         return mapper.map(entity, LeagueUserTeamDTO.class);
-
     }
 
-    public List<LeagueUserTeamDTO> convertToDTOList(List<LeagueUserTeam> entityList){
+    @Override
+    public LeagueUserTeamDTO convertToFullDTO(LeagueUserTeam entity) {
+        LeagueUserTeamDTO leagueUserTeamDTO = convertToDTO(entity);
+        leagueUserTeamDTO.setTeam_captain_player_Id(entity.getCaptain_player().getId());
+        leagueUserTeamDTO.setUserId(entity.getUser().getId());
+        return leagueUserTeamDTO;
+    }
+
+    @Override
+    public LeagueUserTeam convertToShortEntity(LeagueUserTeamDTO dto) {
+        return null;
+    }
+
+    public List<LeagueUserTeamDTO> convertToDTOList(List<LeagueUserTeam> entityList) {
         return mapToDTOList(entityList, LeagueUserTeamDTO.class);
     }
 }

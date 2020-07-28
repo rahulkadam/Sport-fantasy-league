@@ -1,13 +1,13 @@
 package com.garv.satta.fantasy.dto;
 
-import com.garv.satta.fantasy.model.backoffice.Player;
-import com.garv.satta.fantasy.model.frontoffice.League;
-import com.garv.satta.fantasy.model.frontoffice.User;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LeagueUserTeamDTO extends BaseDTO {
 
     private String name;
@@ -18,12 +18,12 @@ public class LeagueUserTeamDTO extends BaseDTO {
     private Integer used_Transfer;
     private Integer remained_Transfer;
     private Integer current_Used_Transfer;
-    private List<LeagueDTO> leagues;
-    private UserDTO user;
-    private PlayerDTO captain_player;
-    private List<PlayerDTO> teamPlayers;
-    private Long fantasyleagueId;
-    private Long fantasyUserId;
+    private List<LeagueDTO> leagueDTOList;
+    private UserDTO userDTO;
+    private PlayerDTO captain_playerDTO;
+    private List<PlayerDTO> teamPlayersPlayerDTOList;
+    private Long leagueId;
+    private Long userId;
     private Long team_captain_player_Id;
     private List<Long> user_team_playerIds;
 

@@ -1,6 +1,8 @@
 package com.garv.satta.fantasy.dto.converter;
 
+import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
 import com.garv.satta.fantasy.model.backoffice.Player;
+import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +18,10 @@ public abstract class Converter<E,D> {
     public abstract D convertToDTO(E entity);
 
     public abstract List<D> convertToDTOList(List<E> list);
+
+    public abstract E convertToFullEntity(D dto);
+    public abstract D convertToFullDTO(E entity);
+    public abstract E convertToShortEntity(D dto);
 
     public List<D> mapToDTOList(final Collection<E> entityList, Class<D> outCLass) {
         return entityList.stream()

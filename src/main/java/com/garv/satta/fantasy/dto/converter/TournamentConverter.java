@@ -19,6 +19,21 @@ public class TournamentConverter extends Converter<Tournament, TournamentDTO> {
         return mapper.map(entity, TournamentDTO.class);
     }
 
+    @Override
+    public Tournament convertToFullEntity(TournamentDTO dto) {
+        return null;
+    }
+
+    @Override
+    public TournamentDTO convertToFullDTO(Tournament entity) {
+        return null;
+    }
+
+    @Override
+    public Tournament convertToShortEntity(TournamentDTO dto) {
+        return null;
+    }
+
     public List<TournamentDTO> convertToDTOList(List<Tournament> tournamentList){
         return mapToDTOList(tournamentList, TournamentDTO.class);
     }

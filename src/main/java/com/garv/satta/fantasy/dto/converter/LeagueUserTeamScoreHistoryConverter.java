@@ -18,6 +18,21 @@ public class LeagueUserTeamScoreHistoryConverter extends Converter<LeagueUserTea
 
     }
 
+    @Override
+    public LeagueUserTeamScorePerMatch convertToFullEntity(LeagueUserTeamScoreHistoryDTO dto) {
+        return null;
+    }
+
+    @Override
+    public LeagueUserTeamScoreHistoryDTO convertToFullDTO(LeagueUserTeamScorePerMatch entity) {
+        return null;
+    }
+
+    @Override
+    public LeagueUserTeamScorePerMatch convertToShortEntity(LeagueUserTeamScoreHistoryDTO dto) {
+        return null;
+    }
+
     public List<LeagueUserTeamScoreHistoryDTO> convertToDTOList(List<LeagueUserTeamScorePerMatch> entityList){
         return mapToDTOList(entityList, LeagueUserTeamScoreHistoryDTO.class);
     }

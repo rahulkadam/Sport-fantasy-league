@@ -17,6 +17,21 @@ public class MatchScheduleConverter extends Converter<MatchSchedule, MatchSchedu
         return mapper.map(entity, MatchScheduleDTO.class);
     }
 
+    @Override
+    public MatchSchedule convertToFullEntity(MatchScheduleDTO dto) {
+        return null;
+    }
+
+    @Override
+    public MatchScheduleDTO convertToFullDTO(MatchSchedule entity) {
+        return null;
+    }
+
+    @Override
+    public MatchSchedule convertToShortEntity(MatchScheduleDTO dto) {
+        return null;
+    }
+
     public List<MatchScheduleDTO> convertToDTOList(List<MatchSchedule> entityList) {
         return mapToDTOList(entityList, MatchScheduleDTO.class);
     }

@@ -36,7 +36,7 @@ public class TeamService {
 
 
     public TeamDTO CreateTeamForTournament(TeamDTO teamDTO ) {
-        Team team = teamRepository.save(converter.convertToEntity(teamDTO));
+        Team team = teamRepository.save(converter.convertToFullEntity(teamDTO));
         return converter.convertToDTO(team);
     }
 }

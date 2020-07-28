@@ -23,6 +23,21 @@ public class PlayerConverter extends Converter<Player, PlayerDTO> {
         return playerDTO;
     }
 
+    @Override
+    public Player convertToFullEntity(PlayerDTO dto) {
+        return null;
+    }
+
+    @Override
+    public PlayerDTO convertToFullDTO(Player entity) {
+        return null;
+    }
+
+    @Override
+    public Player convertToShortEntity(PlayerDTO dto) {
+        return null;
+    }
+
     public List<PlayerDTO> convertToDTOList(List<Player> playerList){
         return mapToDTOList(playerList, PlayerDTO.class);
     }

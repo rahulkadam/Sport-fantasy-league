@@ -17,6 +17,21 @@ public class MatchDetailsConverter extends Converter<MatchDetails, MatchDetailsD
         return mapper.map(entity, MatchDetailsDTO.class);
     }
 
+    @Override
+    public MatchDetails convertToFullEntity(MatchDetailsDTO dto) {
+        return null;
+    }
+
+    @Override
+    public MatchDetailsDTO convertToFullDTO(MatchDetails entity) {
+        return null;
+    }
+
+    @Override
+    public MatchDetails convertToShortEntity(MatchDetailsDTO dto) {
+        return null;
+    }
+
     public List<MatchDetailsDTO> convertToDTOList(List<MatchDetails> entityList) {
         return mapToDTOList(entityList, MatchDetailsDTO.class);
     }

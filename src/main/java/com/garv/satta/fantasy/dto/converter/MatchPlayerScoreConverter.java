@@ -17,6 +17,21 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
         return mapper.map(entity, MatchPlayerScoreDTO.class);
     }
 
+    @Override
+    public MatchPlayerScore convertToFullEntity(MatchPlayerScoreDTO dto) {
+        return null;
+    }
+
+    @Override
+    public MatchPlayerScoreDTO convertToFullDTO(MatchPlayerScore entity) {
+        return null;
+    }
+
+    @Override
+    public MatchPlayerScore convertToShortEntity(MatchPlayerScoreDTO dto) {
+        return null;
+    }
+
     public List<MatchPlayerScoreDTO> convertToDTOList(List<MatchPlayerScore> entityList) {
         return mapToDTOList(entityList, MatchPlayerScoreDTO.class);
     }

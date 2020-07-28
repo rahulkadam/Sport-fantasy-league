@@ -20,8 +20,8 @@ public class BaseDaoObject implements Serializable {
     protected DateTime updated_at;
 
     /* TODO will need to support this also in future, to know who is updating creating data
-        protected User created_by;
-        protected User updated_by;
+        protected User created_by_UserDTO;
+        protected User updated_by_UserDTO;
     */
 
     public BaseDaoObject(Long id) {
