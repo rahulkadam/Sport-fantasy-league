@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MatchScheduleDTO extends BaseDTO {
+public class MatchDTO extends BaseDTO {
     private String description;
     private DateTime matchTime;
     private Boolean status;

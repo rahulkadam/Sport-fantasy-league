@@ -2,6 +2,7 @@ package com.garv.satta.fantasy.model.backoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -9,7 +10,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class MatchSchedule extends BaseDaoObject {
+@Table(name = "match_schedule")
+@NoArgsConstructor
+public class Match extends BaseDaoObject {
 
     private String description;
 
@@ -33,5 +36,9 @@ public class MatchSchedule extends BaseDaoObject {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
+
+    public Match(Long id) {
+        super(id);
+    }
 
 }

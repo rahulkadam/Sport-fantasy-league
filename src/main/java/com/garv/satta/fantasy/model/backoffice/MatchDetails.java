@@ -2,10 +2,13 @@ package com.garv.satta.fantasy.model.backoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class MatchDetails extends BaseDaoObject {
 
     private String description;
@@ -21,6 +24,10 @@ public class MatchDetails extends BaseDaoObject {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "match_schedule_id", nullable = false)
-    private MatchSchedule matchSchedule;
+    private Match match;
+
+    public MatchDetails(Long id) {
+        super(id);
+    }
 
 }
