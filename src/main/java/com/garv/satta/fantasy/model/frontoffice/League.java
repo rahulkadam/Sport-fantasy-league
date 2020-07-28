@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
+import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Entity
 @Data
@@ -36,10 +39,38 @@ public class League extends BaseDaoObject {
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
-    @ManyToMany(mappedBy = "leagues")
+    @ManyToMany
+    @JoinTable(
+            name = "league_userteam",
+            joinColumns = @JoinColumn(name = "league_id"),
+            inverseJoinColumns = @JoinColumn(name = "userteam_id"))
     private List<LeagueUserTeam> leagueMembers;
 
     public League(Long id) {
         super(id);
     }
+
+
+    public void addLeagueMembers(LeagueUserTeam leagueUserTeam) {
+        if (leagueMembers == null) {
+            leagueMembers = new ArrayList<>();
+            leagueMembers.add(leagueUserTeam);
+            return;
+        }
+
+        Predicate<LeagueUserTeam> isLeagueMemberMatch = leagueUserTeam1 -> leagueUserTeam1.getId() == leagueUserTeam.getId();
+        LeagueUserTeam findLeagueMember = leagueMembers.stream().filter(isLeagueMemberMatch).findAny().orElse(null);
+        if (findLeagueMember == null) {
+            leagueMembers.add(leagueUserTeam);
+        }
+    }
+
+    public void removeLeague(LeagueUserTeam leagueUserTeam) {
+        if (leagueMembers == null) {
+            return;
+        }
+        Predicate<LeagueUserTeam> isLeagueMemberMatch = leagueUserTeam1 -> leagueUserTeam1.getId() == leagueUserTeam.getId();
+        leagueMembers.removeIf(isLeagueMemberMatch);
+    }
+
 }

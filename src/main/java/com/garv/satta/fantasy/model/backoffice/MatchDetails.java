@@ -19,8 +19,8 @@ public class MatchDetails extends BaseDaoObject {
     @JoinColumn(name = "team_winner_id", nullable = false)
     private Team team_winner;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "player_of_match_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_of_match_id")
     private Player matchPlayer;
 
 

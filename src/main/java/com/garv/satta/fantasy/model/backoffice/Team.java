@@ -7,7 +7,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Entity
 @Data
@@ -31,10 +33,29 @@ public class Team extends BaseDaoObject {
     @ManyToMany(mappedBy = "teams")
     private List<Player> players;
 
-
-
-
     public Team(Long id) {
         super(id);
     }
+    public void addTournament(Tournament tournamentobj) {
+        if (tournament == null) {
+            tournament = new ArrayList<>();
+            tournament.add(tournamentobj);
+            return;
+        }
+
+        Predicate<Tournament> isTeamMatch = tournament1 -> tournament1.getId() == tournamentobj.getId();
+        Tournament findTournament = tournament.stream().filter(isTeamMatch).findAny().orElse(null);
+        if (findTournament == null) {
+            tournament.add(tournamentobj);
+        }
+    }
+
+    public void removeTournament(Tournament tournamentObj) {
+        if (tournament == null) {
+            return;
+        }
+        Predicate<Tournament> isTournamentMatch = tournament1 -> tournament1.getId() == tournamentObj.getId();
+        tournament.removeIf(isTournamentMatch);
+    }
+
 }

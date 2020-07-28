@@ -10,6 +10,8 @@ import com.garv.satta.fantasy.model.backoffice.TeamSquad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeamSquadService {
 
@@ -39,8 +41,10 @@ public class TeamSquadService {
         TeamSquad squad = teamSquadRepository.findTeamSquadById(squadId);
 
         if ( squad != null && player != null) {
+            List<Player> playerList = squad.getPlayerList();
+            Long squadLength = squad.getSquadLength();
             // Squad count should not exceed
-            if (squad.getPlayerList() != null && squad.getPlayerList().size() < squad.getSquadLength()-1) {
+            if (playerList != null && (squadLength == null || playerList.size() < squadLength-1 )) {
                 squad.addPlayer(player);
                 teamSquadRepository.save(squad);
             }

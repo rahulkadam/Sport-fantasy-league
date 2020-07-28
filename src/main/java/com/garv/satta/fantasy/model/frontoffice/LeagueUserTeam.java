@@ -8,7 +8,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Entity
 @Data
@@ -29,11 +31,7 @@ public class LeagueUserTeam extends BaseDaoObject {
     private Integer remained_Transfer;
     private Integer current_Used_Transfer;
 
-    @ManyToMany
-    @JoinTable(
-            name = "league_userteam",
-            joinColumns = @JoinColumn(name = "userteam_id"),
-            inverseJoinColumns = @JoinColumn(name = "league_id"))
+    @ManyToMany(mappedBy = "leagueMembers")
     private List<League> leagues;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -50,4 +48,28 @@ public class LeagueUserTeam extends BaseDaoObject {
             joinColumns = @JoinColumn(name = "league_user_team_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
     private List<Player> teamPlayers;
+
+
+    public void addPlayer(Player player) {
+        if (teamPlayers == null) {
+            teamPlayers = new ArrayList<>();
+            teamPlayers.add(player);
+            return;
+        }
+
+        Predicate<Player> isplayerMatch = player1 -> player1.getId() == player.getId();
+        Player findPlayer = teamPlayers.stream().filter(isplayerMatch).findAny().orElse(null);
+        if (findPlayer == null) {
+            teamPlayers.add(player);
+        }
+    }
+
+    public void removePlayer(Player player) {
+        if (teamPlayers == null) {
+            return;
+        }
+        Predicate<Player> isplayerMatch = player1 -> player1.getId() == player.getId();
+        teamPlayers.removeIf(isplayerMatch);
+    }
+
 }

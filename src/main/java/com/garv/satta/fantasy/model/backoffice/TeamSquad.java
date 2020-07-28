@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Entity
@@ -38,11 +39,12 @@ public class TeamSquad extends BaseDaoObject {
     public void addPlayer(Player player) {
         if (playerList == null) {
             playerList = new ArrayList<>();
+            playerList.add(player);
+            return;
         }
 
-        Player findPlayer = playerList.stream().filter(player1 -> player1.getId() == player.getId())
-                .findAny().orElse(null);
-
+        Predicate<Player> isplayerMatch = player1 -> player1.getId() == player.getId();
+        Player findPlayer = playerList.stream().filter(isplayerMatch).findAny().orElse(null);
         if (findPlayer == null) {
             playerList.add(player);
         }
@@ -52,6 +54,7 @@ public class TeamSquad extends BaseDaoObject {
         if (playerList == null) {
             return;
         }
-        playerList.removeIf(player1 -> player.getId() == player1.getId());
+        Predicate<Player> isplayerMatch = player1 -> player1.getId() == player.getId();
+        playerList.removeIf(isplayerMatch);
     }
 }
