@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.dto.converter;
 
+import com.garv.satta.fantasy.model.backoffice.Player;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,4 +22,5 @@ public abstract class Converter<E,D> {
                 .map(entity -> mapper.map(entity, outCLass))
                 .collect(Collectors.toList());
     }
+
 }

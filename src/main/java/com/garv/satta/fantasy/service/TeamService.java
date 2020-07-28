@@ -19,10 +19,21 @@ public class TeamService {
     @Autowired
     TeamConverter converter;
 
-    public List<TeamDTO> getTeams(Integer tournamentId) {
+    public List<TeamDTO> getTeams() {
         List<Team> teamList = (List) teamRepository.findAll();
         return converter.convertToDTOList(teamList);
     }
+
+    public List<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
+        List<Team> teamList = teamRepository.findTeamByTournamentId(tournamentId);
+        return converter.convertToDTOList(teamList);
+    }
+
+    public TeamDTO getTeamsById(Long id) {
+        Team team = teamRepository.findTeamById(id);
+        return converter.convertToDTO(team);
+    }
+
 
     public TeamDTO CreateTeamForTournament(TeamDTO teamDTO ) {
         Team team = teamRepository.save(converter.convertToEntity(teamDTO));

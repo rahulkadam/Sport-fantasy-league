@@ -22,4 +22,9 @@ public class LeagueUserTeamDTO extends BaseDTO {
     private UserDTO user;
     private PlayerDTO captain_player;
     private List<PlayerDTO> teamPlayers;
+    private Long fantasyleagueId;
+    private Long fantasyUserId;
+    private Long team_captain_player_Id;
+    private List<Long> user_team_playerIds;
+
 }

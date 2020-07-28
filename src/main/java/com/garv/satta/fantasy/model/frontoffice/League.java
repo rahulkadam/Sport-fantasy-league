@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.model.frontoffice;
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class League extends BaseDaoObject {
 
     @NotNull
@@ -39,4 +41,7 @@ public class League extends BaseDaoObject {
             inverseJoinColumns = @JoinColumn(name = "userteam_id"))
     private List<LeagueUserTeam> leagueMembers;
 
+    public League(Long id) {
+        super(id);
+    }
 }

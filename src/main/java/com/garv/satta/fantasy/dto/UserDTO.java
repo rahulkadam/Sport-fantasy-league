@@ -11,4 +11,5 @@ public class UserDTO extends BaseDTO {
     private String refresh_token;
     private String mobileNumber;
     private String role;
+
 }

@@ -12,8 +12,8 @@ public class LeagueDTO extends BaseDTO{
     private String name;
     private Boolean status;
     private String leagueCode;
-    private User created_by;
-    private User updated_by;
-    private Tournament tournament;
+    private UserDTO created_by;
+    private UserDTO updated_by;
+    private TournamentDTO tournament;
     private List<LeagueUserTeamDTO> leagueMembers;
 }

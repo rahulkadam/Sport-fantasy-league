@@ -18,7 +18,6 @@ public class PlayerController {
     @Autowired
     private PlayerConverter playerConverter;
 
-
     @GetMapping(value = "/list")
     @ResponseBody
     public List<PlayerDTO> getPlayerList() {

@@ -4,4 +4,8 @@ import com.garv.satta.fantasy.model.backoffice.MatchDetails;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MatchDetailsRepository extends CrudRepository<MatchDetails, Long> {
+
+    MatchDetails findMatchDetailsByMatchScheduleId(Long id);
+    MatchDetails findMatchDetailsById(Long id);
+
 }

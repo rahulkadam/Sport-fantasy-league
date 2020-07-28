@@ -17,6 +17,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleEntityNotFound(Exception ex) {
+        ex.printStackTrace();
         String error = ex.getMessage();
         String error_description = ex.getLocalizedMessage();
         ErrorInfo errorInfo = new ErrorInfo(error, error_description);

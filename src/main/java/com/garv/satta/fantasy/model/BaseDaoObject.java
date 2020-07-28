@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 
 @MappedSuperclass
 @Data
+@NoArgsConstructor
 public class BaseDaoObject implements Serializable {
 
     @Id
@@ -22,6 +24,9 @@ public class BaseDaoObject implements Serializable {
         protected User updated_by;
     */
 
+    public BaseDaoObject(Long id) {
+        this.id = id;
+    }
     @PrePersist
     public void prePersistData() {
         this.created_at = DateTime.now();

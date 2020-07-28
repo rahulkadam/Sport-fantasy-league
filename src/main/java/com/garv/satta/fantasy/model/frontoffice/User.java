@@ -2,12 +2,14 @@ package com.garv.satta.fantasy.model.frontoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class User extends BaseDaoObject {
 
     @NotNull
@@ -19,4 +21,8 @@ public class User extends BaseDaoObject {
     private String refresh_token;
     private String mobileNumber;
     private String role;
+
+    public User(Long id) {
+        super(id);
+    }
 }
