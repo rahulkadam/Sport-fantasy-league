@@ -31,6 +31,9 @@ public class Player extends BaseDaoObject {
             inverseJoinColumns = @JoinColumn(name = "player_id"))
     private List<Team> teams;
 
+    @ManyToMany(mappedBy = "playerList")
+    private List<TeamSquad> squads;
+
     public Player(Long id) {
         super(id);
     }

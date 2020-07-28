@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"tournament"}, callSuper = true)
+@ToString(exclude = {"tournament", "players"}, callSuper = true)
 public class Team extends BaseDaoObject {
     @NotNull
     @Column(unique = true)
@@ -27,6 +27,11 @@ public class Team extends BaseDaoObject {
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "tournament_id"))
     private List<Tournament> tournament;
+
+    @ManyToMany(mappedBy = "teams")
+    private List<Player> players;
+
+
 
 
     public Team(Long id) {
