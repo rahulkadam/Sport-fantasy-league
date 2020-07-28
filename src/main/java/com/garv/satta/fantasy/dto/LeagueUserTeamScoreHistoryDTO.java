@@ -1,13 +1,16 @@
 package com.garv.satta.fantasy.dto;
 
-import com.garv.satta.fantasy.model.backoffice.MatchDetails;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LeagueUserTeamScoreHistoryDTO extends BaseDTO {
 
     private Integer current_match_point;
     private Integer totalPoint;
-    private LeagueUserTeamDTO userTeam;
-    private MatchDetailsDTO matchDetails;
+    private Long userTeamId;
+    private Long matchDetailsId;
+    private LeagueUserTeamDTO userTeamDTO;
+    private MatchDetailsDTO matchDetailsDTO;
 }

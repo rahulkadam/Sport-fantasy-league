@@ -19,19 +19,19 @@ public class LeagueUserTeamService {
 
     public LeagueUserTeamDTO getUserTeamByUser(Long id) {
         LeagueUserTeam leagueUserTeam =  repository.findLeagueUserTeamByUserId(id);
-        return converter.convertToDTO(leagueUserTeam);
+        return converter.convertToFullDTO(leagueUserTeam);
     }
 
     public LeagueUserTeamDTO getUserTeamById(Long id) {
         LeagueUserTeam leagueUserTeam = repository.findLeagueUserTeamById(id);
-        return converter.convertToDTO(leagueUserTeam);
+        return converter.convertToFullDTO(leagueUserTeam);
     }
 
     public LeagueUserTeamDTO createLeagueUserTeam(LeagueUserTeamDTO userTeamDTO) {
 
-        LeagueUserTeam leagueUserTeam = converter.convertToEntity(userTeamDTO);
+        LeagueUserTeam leagueUserTeam = converter.convertToFullEntity(userTeamDTO);
         leagueUserTeam = repository.save(leagueUserTeam);
-        return converter.convertToDTO(leagueUserTeam);
+        return converter.convertToFullDTO(leagueUserTeam);
     }
 
 }

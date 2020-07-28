@@ -19,6 +19,21 @@ public class UserConverter extends Converter<User, UserDTO> {
         return playerDTO;
     }
 
+    @Override
+    public User convertToFullEntity(UserDTO dto) {
+        return null;
+    }
+
+    @Override
+    public UserDTO convertToFullDTO(User entity) {
+        return null;
+    }
+
+    @Override
+    public User convertToShortEntity(UserDTO dto) {
+        return null;
+    }
+
     public List<UserDTO> convertToDTOList(List<User> playerList){
         return mapToDTOList(playerList, UserDTO.class);
     }

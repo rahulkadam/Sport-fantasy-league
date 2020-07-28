@@ -2,11 +2,13 @@ package com.garv.satta.fantasy.model.backoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@ToString(exclude = {"matchDetails", "player"}, callSuper = true)
 public class MatchPlayerScore extends BaseDaoObject{
 
     private Integer pointscore;

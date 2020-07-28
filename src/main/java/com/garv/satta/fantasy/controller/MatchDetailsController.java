@@ -25,8 +25,8 @@ public class MatchDetailsController {
     }
 
     @GetMapping(value = "/get/match/{id}")
-    public MatchDetailsDTO getDetailsByMatchScheduleId(@PathVariable(name = "id") Long id) {
-        return service.getDetailsByMatchScheduleId(id);
+    public MatchDetailsDTO getDetailsByMatchId(@PathVariable(name = "id") Long id) {
+        return service.getDetailsByMatchId(id);
     }
 
 }

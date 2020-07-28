@@ -3,6 +3,8 @@ package com.garv.satta.fantasy.model.frontoffice;
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString(exclude = {"leagues", "user", "captain_player","teamPlayers"}, callSuper = true)
+@NoArgsConstructor
 public class LeagueUserTeam extends BaseDaoObject {
 
     @NotNull

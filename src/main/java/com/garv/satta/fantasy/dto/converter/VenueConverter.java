@@ -17,6 +17,21 @@ public class VenueConverter extends Converter<Venue, VenueDTO> {
         return mapper.map(entity, VenueDTO.class);
     }
 
+    @Override
+    public Venue convertToFullEntity(VenueDTO dto) {
+        return null;
+    }
+
+    @Override
+    public VenueDTO convertToFullDTO(Venue entity) {
+        return null;
+    }
+
+    @Override
+    public Venue convertToShortEntity(VenueDTO dto) {
+        return null;
+    }
+
     public List<VenueDTO> convertToDTOList(List<Venue> entityList) {
         return mapToDTOList(entityList, VenueDTO.class);
     }

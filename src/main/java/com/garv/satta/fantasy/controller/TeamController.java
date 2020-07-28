@@ -28,7 +28,7 @@ public class TeamController {
         return team;
     }
 
-    @GetMapping(value = "/list/tournament")
+    @GetMapping(value = "/list/tournamentDTO")
     @ResponseBody
     public List<TeamDTO> getTeams(@RequestParam(name = "id") Long tournamentId) {
         List<TeamDTO> teamList = teamService.getTeamsByTournamentId(tournamentId);

@@ -22,17 +22,17 @@ public class MatchDetailsService {
 
     public MatchDetailsDTO getDetailsById(Long id) {
         MatchDetails matchDetails =  repository.findMatchDetailsById(id);
-        return converter.convertToDTO(matchDetails);
+        return converter.convertToFullDTO(matchDetails);
     }
 
-    public MatchDetailsDTO getDetailsByMatchScheduleId(@PathVariable(name = "id") Long id) {
-        MatchDetails matchDetails =  repository.findMatchDetailsByMatchScheduleId(id);
-        return converter.convertToDTO(matchDetails);
+    public MatchDetailsDTO getDetailsByMatchId(@PathVariable(name = "id") Long id) {
+        MatchDetails matchDetails =  repository.findMatchDetailsByMatchId(id);
+        return converter.convertToFullDTO(matchDetails);
     }
 
     @Transactional
     public void uploadMatchResult(MatchDetailsDTO detailsDTO) {
-        MatchDetails matchDetails = converter.convertToEntity(detailsDTO);
+        MatchDetails matchDetails = converter.convertToFullEntity(detailsDTO);
         repository.save(matchDetails);
     }
 }

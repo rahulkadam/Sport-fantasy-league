@@ -20,7 +20,7 @@ public class MatchPlayerScoreService {
     private MatchPlayerScoreConverter converter;
 
     public void uploadPlayerScoreforMatch(@RequestBody MatchPlayerScoreDTO dto) {
-        MatchPlayerScore playerScore = converter.convertToEntity(dto);
+        MatchPlayerScore playerScore = converter.convertToFullEntity(dto);
         repository.save(playerScore);
     }
 

@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface MatchDetailsRepository extends CrudRepository<MatchDetails, Long> {
 
-    MatchDetails findMatchDetailsByMatchScheduleId(Long id);
+    MatchDetails findMatchDetailsByMatchId(Long id);
     MatchDetails findMatchDetailsById(Long id);
 
 }

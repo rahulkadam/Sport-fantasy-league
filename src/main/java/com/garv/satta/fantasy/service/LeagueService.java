@@ -25,13 +25,13 @@ public class LeagueService {
 
     public LeagueDTO getLeagueById(Long id) {
         League league = repository.findLeagueById(id);
-        return converter.convertToDTO(league);
+        return converter.convertToFullDTO(league);
     }
 
     public LeagueDTO createLeague(LeagueDTO leagueDTO) {
-        League league = converter.convertToEntity(leagueDTO);
+        League league = converter.convertToFullEntity(leagueDTO);
         league = repository.save(league);
-        return converter.convertToDTO(league);
+        return converter.convertToFullDTO(league);
     }
 
 }
