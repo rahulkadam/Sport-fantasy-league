@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.service;
 
+import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dao.repository.TeamRepository;
 import com.garv.satta.fantasy.dto.PlayerDTO;
@@ -8,8 +9,10 @@ import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Team;
+import com.garv.satta.fantasy.validation.PlayerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.net.www.content.text.Generic;
 
 import java.util.List;
 
@@ -25,6 +28,9 @@ public class PlayerService {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private PlayerValidator validator;
+
     public List<PlayerDTO> getPlayerList() {
         List<Player> playerList = playerRepository.findAll();
         return playerConverter.convertToDTOList(playerList);
@@ -32,6 +38,8 @@ public class PlayerService {
 
     public PlayerDTO createPlayer(PlayerDTO playerDTO) {
         Player player = playerConverter.convertToEntity(playerDTO);
+        player.setId(null);
+        validator.validatePlayerValue(player.getValue());
         player = playerRepository.save(player);
         return playerConverter.convertToDTO(player);
     }

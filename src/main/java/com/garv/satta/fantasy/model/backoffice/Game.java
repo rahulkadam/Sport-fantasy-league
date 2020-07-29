@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 @ToString(callSuper = true)
 public class Game extends BaseDaoObject {
 
+    @Column(unique = true)
     private String name;
     private String description;
     private Integer playerCount;

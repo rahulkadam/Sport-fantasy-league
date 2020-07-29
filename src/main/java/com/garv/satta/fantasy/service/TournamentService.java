@@ -23,8 +23,15 @@ public class TournamentService {
         return tournamentConverter.convertToDTOList(tournamentList);
     }
 
+    /**
+     * Creating Tournament for Fantasy
+     * @param tournamentDto
+     * @return
+     */
     public TournamentDTO createTournament(@RequestBody TournamentDTO tournamentDto) {
         Tournament tournament = tournamentConverter.convertToEntity(tournamentDto);
+        tournament.setStatus(true);
+        tournament.setId(null);
         tournament =  tournamentRepository.save(tournament);
         return tournamentConverter.convertToDTO(tournament);
     }

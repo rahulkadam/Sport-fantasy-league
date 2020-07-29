@@ -30,6 +30,7 @@ public class VenueService {
 
     public VenueDTO createVenue(VenueDTO venueDTO) {
         Venue venue = converter.convertToEntity(venueDTO);
+        venue.setId(null);
         venue =  venueRepository.save(venue);
         return converter.convertToDTO(venue);
     }

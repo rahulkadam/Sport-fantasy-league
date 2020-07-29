@@ -1,7 +1,6 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
-import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +24,7 @@ public class League extends BaseDaoObject {
     private Boolean status;
 
     @NotNull
+    @Column(unique = true)
     private String leagueCode;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

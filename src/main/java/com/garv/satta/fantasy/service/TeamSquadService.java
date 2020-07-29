@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.service;
 
+import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dao.repository.TeamSquadRepository;
 import com.garv.satta.fantasy.dto.TeamSquadDTO;
@@ -27,6 +28,10 @@ public class TeamSquadService {
 
     public TeamSquadDTO createTeamSquad(TeamSquadDTO dto) {
         TeamSquad teamSquad = converter.convertToFullEntity(dto);
+        teamSquad.setId(null);
+        if (teamSquad.getSquadLength() == null) {
+            teamSquad.setSquadLength(FantasyConstant.DEFAULT_SQUAD_LENGTH);
+        }
         teamSquad = teamSquadRepository.save(teamSquad);
         return converter.convertToFullDTO(teamSquad);
     }

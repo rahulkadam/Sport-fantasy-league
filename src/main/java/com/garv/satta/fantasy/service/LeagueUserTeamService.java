@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.service;
 
+import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
@@ -8,6 +9,8 @@ import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
+import com.garv.satta.fantasy.validation.PlayerValidator;
+import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,12 @@ public class LeagueUserTeamService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @Autowired
+    private UserValidator userValidator;
+
+    @Autowired
+    private PlayerValidator playerValidator;
+
     public LeagueUserTeamDTO getUserTeamByUser(Long id) {
         LeagueUserTeam leagueUserTeam = repository.findLeagueUserTeamByUserId(id);
         return converter.convertToFullDTO(leagueUserTeam);
@@ -34,8 +43,13 @@ public class LeagueUserTeamService {
     }
 
     public LeagueUserTeamDTO createLeagueUserTeam(LeagueUserTeamDTO userTeamDTO) {
-
         LeagueUserTeam leagueUserTeam = converter.convertToFullEntity(userTeamDTO);
+        userValidator.validateUserId(userTeamDTO.getUserId());
+        leagueUserTeam.setTotal_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
+        leagueUserTeam.setTotal_score(0);
+        leagueUserTeam.setRemained_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
+        leagueUserTeam.setCurrent_Used_Transfer(0);
+        leagueUserTeam.setUsed_Transfer(0);
         leagueUserTeam = repository.save(leagueUserTeam);
         return converter.convertToFullDTO(leagueUserTeam);
     }

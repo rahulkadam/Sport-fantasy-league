@@ -20,6 +20,7 @@ public class GameService {
 
     public GameDTO createGame(GameDTO gameDTO) {
         Game game = converter.convertToEntity(gameDTO);
+        game.setId(null);
         game = repository.save(game);
         return converter.convertToDTO(game);
     }

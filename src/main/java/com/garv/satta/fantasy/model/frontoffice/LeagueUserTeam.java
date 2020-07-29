@@ -19,6 +19,7 @@ import java.util.function.Predicate;
 public class LeagueUserTeam extends BaseDaoObject {
 
     @NotNull
+    @Column(unique = true)
     private String name;
     private Boolean status;
 
@@ -38,8 +39,8 @@ public class LeagueUserTeam extends BaseDaoObject {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "captain_player_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "captain_player_id")
     private Player captain_player;
 
     @ManyToMany
