@@ -36,6 +36,7 @@ public class Team extends BaseDaoObject {
     public Team(Long id) {
         super(id);
     }
+
     public void addTournament(Tournament tournamentobj) {
         if (tournament == null) {
             tournament = new ArrayList<>();

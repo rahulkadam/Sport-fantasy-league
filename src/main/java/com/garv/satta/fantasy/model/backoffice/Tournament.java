@@ -1,7 +1,7 @@
 package com.garv.satta.fantasy.model.backoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
-import com.garv.satta.fantasy.model.fantasyenum.GameEnum;
+import com.garv.satta.fantasy.fantasyenum.GameEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
