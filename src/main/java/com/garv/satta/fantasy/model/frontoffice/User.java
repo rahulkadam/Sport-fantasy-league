@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ public class User extends BaseDaoObject {
     @NotNull
     private String name;
     @NotNull
+    @Column(unique = true)
     private String email;
     private String password;
     private String access_token;

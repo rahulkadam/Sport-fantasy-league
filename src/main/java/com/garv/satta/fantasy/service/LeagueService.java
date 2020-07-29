@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.service;
 
+import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.LeagueRepository;
 import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
 import com.garv.satta.fantasy.dto.LeagueDTO;
@@ -8,6 +9,8 @@ import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
+import com.garv.satta.fantasy.validation.TournamentValidator;
+import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,13 @@ public class LeagueService {
     @Autowired
     private LeagueUserTeamRepository leagueUserTeamRepository;
 
+    @Autowired
+    private TournamentValidator tournamentValidator;
+
+
+    @Autowired
+    private UserValidator userValidator;
+
     public List<LeagueDTO> getLeaguesList() {
         List<League> leagues = repository.findAll();
         return converter.convertToDTOList(leagues);
@@ -37,6 +47,11 @@ public class LeagueService {
 
     public LeagueDTO createLeague(LeagueDTO leagueDTO) {
         League league = converter.convertToFullEntity(leagueDTO);
+        league.setId(null);
+        tournamentValidator.validateTournamentById(leagueDTO.getTournamentId());
+        userValidator.validateUserId(leagueDTO.getCreateByUserId());
+        String leagueCode = LeagueCodeGenerator.randomAlphaNumeric(FantasyConstant.DEFAULT_LEAGUE_CODE_LENGTH);
+        league.setLeagueCode(leagueCode);
         league = repository.save(league);
         return converter.convertToFullDTO(league);
     }
