@@ -1,4 +1,4 @@
-package com.garv.satta.fantasy.model.fantasyenum;
+package com.garv.satta.fantasy.fantasyenum;
 
 public enum PlayerEnum {
     BATSMAN("B"), BOWLER("BW"), WICKETKEEPER("WK"), ALLROUNDER("AR");

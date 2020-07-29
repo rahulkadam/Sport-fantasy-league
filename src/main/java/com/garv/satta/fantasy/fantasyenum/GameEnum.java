@@ -1,4 +1,4 @@
-package com.garv.satta.fantasy.model.fantasyenum;
+package com.garv.satta.fantasy.fantasyenum;
 
 public enum GameEnum {
     CRICKET("CR"), FOOTBALL("FB"), HOCKEY("HK"), KABADDI("KB");

@@ -1,7 +1,7 @@
 package com.garv.satta.fantasy.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.garv.satta.fantasy.model.fantasyenum.PlayerEnum;
+import com.garv.satta.fantasy.fantasyenum.PlayerEnum;
 import lombok.Data;
 
 import java.util.List;

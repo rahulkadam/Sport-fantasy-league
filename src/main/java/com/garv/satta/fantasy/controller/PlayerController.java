@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.controller;
 
 import com.garv.satta.fantasy.dto.PlayerDTO;
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
 import com.garv.satta.fantasy.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,21 @@ public class PlayerController {
     public PlayerDTO createPlayer(@RequestBody PlayerDTO playerDTO) {
         PlayerDTO player = playerService.createPlayer(playerDTO);
         return player;
+    }
+
+    @PostMapping(value = "/add/team")
+    public String addTeamToPlayer(@RequestBody RequestDTO dto) {
+        Long playerId = dto.getAddTo();
+        Long teamId = dto.getAdd();
+        playerService.addTeamToPlayer(playerId, teamId);
+        return "User Team added successfully";
+    }
+
+    @PostMapping(value = "/remove/team")
+    public String removeTeamFromPlayer(@RequestBody RequestDTO dto) {
+        Long playerId = dto.getRemoveFrom();
+        Long teamId = dto.getRemove();
+        playerService.removeTeamFromPlayer(playerId, teamId);
+        return "User Team Removed successfully";
     }
 }

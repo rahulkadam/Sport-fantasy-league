@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.controller;
 
 import com.garv.satta.fantasy.dto.LeagueDTO;
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +31,21 @@ public class LeagueController {
     @ResponseBody
     public LeagueDTO createLeague(@RequestBody LeagueDTO leagueDTO) {
         return leagueService.createLeague(leagueDTO);
+    }
+
+    @PostMapping(value = "/add/userteam")
+    public String addUserTeamToLeague(@RequestBody RequestDTO dto) {
+        Long leagueId = dto.getAddTo();
+        Long userTeamID = dto.getAdd();
+        leagueService.addUserTeamToLeague(leagueId, userTeamID);
+        return "User Team added successfully";
+    }
+
+    @PostMapping(value = "/remove/userteam")
+    public String removeUserTeamFromLeague(@RequestBody RequestDTO dto) {
+        Long leagueId = dto.getRemoveFrom();
+        Long userTeamID = dto.getRemove();
+        leagueService.removeUserTeamFromLeague(leagueId, userTeamID);
+        return "User Team Removed successfully";
     }
 }
