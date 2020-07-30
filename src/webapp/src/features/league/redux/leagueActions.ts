@@ -74,7 +74,7 @@ const joinLeagueAction = () => {
         .catch((error: any) => {
           dispatch({
             type: ACTION_ERROR,
-            data: error,
+            data: error.message,
           });
         });
     }
