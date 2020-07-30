@@ -1,4 +1,3 @@
-const astroLogo = require('./astrologo.svg');
-const pcidssLogo = require('./pcidss.svg');
+const fantasyLogo = require('./fantasylogo.png');
 
-export {astroLogo, pcidssLogo};
+export {fantasyLogo};

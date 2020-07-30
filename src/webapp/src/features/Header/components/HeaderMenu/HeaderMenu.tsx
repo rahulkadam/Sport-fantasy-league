@@ -5,7 +5,7 @@ import {Link, Route} from 'react-router-dom';
 import {Logo} from '../../../../common/components/Logo/Logo';
 import {GetLoginStoreData} from '../../../Authentication/redux';
 import {HeaderUser} from '../HeaderUser/HeaderUser';
-import {astroLogo} from '@logos/index';
+import {fantasyLogo} from '@logos/index';
 
 const HeaderMenu = () => {
   const loggedUser = GetLoginStoreData();
@@ -16,12 +16,12 @@ const HeaderMenu = () => {
         <Navbar collapseOnSelect={true} expand="md">
           <Navbar.Toggle />
           <Navbar.Brand as={Link} to="/">
-            <Logo logoSource={astroLogo} width="56" />
+            <Logo logoSource={fantasyLogo} width="56" />
           </Navbar.Brand>
           <Navbar.Collapse>
             <Nav>
-              <Nav.Link as={Link} to="/" href="#">
-                IPL
+              <Nav.Link as={Link} to="/league" href="#">
+                League
               </Nav.Link>
               <Nav.Link as={Link} to="/counter" href="#">
                 Team

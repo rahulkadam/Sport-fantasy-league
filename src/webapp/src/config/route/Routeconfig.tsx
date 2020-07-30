@@ -4,7 +4,6 @@ import {BillView} from '../../features/QuickPay/BillView/components';
 import Login from '../../features/Authentication/components';
 import {AutoDebitHome} from '../../features/AmdocsAutoDebit/components';
 import PageNotFound from '../../common/components/ErrorPage';
-import {App} from '../../features/Home/App';
 import Counter from '../../features/counter/components';
 import {HelpPage, TermsAndConditions} from '../../common/components';
 import {QuickpayUnauth} from '../../features/QuickpayUnauth/QuickpayUnauth';
@@ -29,7 +28,7 @@ export const RouteConfig = {
     {path: '/termsAndconditions', component: TermsAndConditions, key: 'random'},
     {path: '/quickpayu', component: QuickpayUnauth, key: 'quickpayunauth'},
     {path: '/billviewu', component: BillViewUnauth, key: 'billviewunauth'},
-    {path: '/', component: App, isExact: true, key: 'homeslash'},
+    {path: '/', component: League, isExact: true, key: 'homeslash'},
     {path: '*', component: PageNotFound, key: 'pageNotFound'},
   ],
 };
