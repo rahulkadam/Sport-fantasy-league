@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'FSAlbertPro';
+  src: local('FSAlbertPro'), url('./common/fonts/fsalbert_pro.otf') format('opentype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'FSAlbertPro';
+  src: local('FSAlbertPro-Bold'), url('./common/fonts/fsalbert_pro-bold.otf') format('opentype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'FSAlbertPro';
+  src: local('FSAlbertPro-ExtraBold'), url('./common/fonts/fsalbert_pro-extrabold.otf') format('opentype');
+  font-weight: 800;
+}
+
+* {
+  font-family: FSAlbertPro;
+  color: #333333;
+  letter-spacing: normal;
+  font-stretch: normal;
+  font-style: normal;
+
+  .apg-h1 {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .apg-paragraph {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.38;
+  }
+
+  .apg-link {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.43;
+    color: #e6007d;
+  }
+
+  ::placeholder {
+    color: #bbbbbb !important;
+  }
+}
+
+.apgContainer {
+  padding: 0 1rem;
+  margin: 1.5rem 0;
+
+  .row {
+    margin: 0 1rem;
+
+    .col {
+      padding: 0;
+    }
+  }
+}
+
+.raised {
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
