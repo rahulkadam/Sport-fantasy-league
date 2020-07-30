@@ -9,7 +9,7 @@ import {axiosInstance, useAuthentication, formUrl, headers} from './httpUtil';
  */
 function Get(url: string, config?: AxiosRequestConfig) {
   const fullUrl = formUrl(url);
-  // config = {headers: headers(config, url), ...config};
+  config = {headers: headers(config, url), ...config};
   return axiosInstance.get(fullUrl, config).then(
     response => {
       return response.data;
@@ -41,8 +41,11 @@ function GetWithAuthentication(url: string, config?: AxiosRequestConfig) {
  */
 function Post(url: string, config?: AxiosRequestConfig) {
   const fullUrl = formUrl(url);
+  const data = config && config.data;
+  config = {};
+  // config = {headers: headers(config, url), ...config};
   return axiosInstance
-    .post(fullUrl, config)
+    .post(fullUrl, data, config)
     .then(
       (response: any) => {
         console.log(response.data);

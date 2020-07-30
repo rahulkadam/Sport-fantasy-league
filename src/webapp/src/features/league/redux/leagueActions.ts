@@ -63,8 +63,8 @@ const joinLeagueAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    () => {
-      joinLeague('XVKSFSS')
+    (leagueCode: any) => {
+      joinLeague(leagueCode)
         .then((data: any) => {
           dispatch({
             type: GET_PUBLIC_LEAGUE_LIST,

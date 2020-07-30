@@ -72,7 +72,8 @@ function headers(Config: any, url: string) {
   if (isAbsoluteUrl(url)) return;
   const header = Config && Config.headers;
   return {
-    securitySignature: headerSecuritySignature(url),
+    'Access-Control-Allow-Origin': '*',
+    // securitySignature: headerSecuritySignature(url),
     ...header,
   };
 }
