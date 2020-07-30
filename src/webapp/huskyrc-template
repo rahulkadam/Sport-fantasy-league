@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "pre-commit": "npx lint-staged",
+    "pre-commit": "npm --version",
      "prepare-commit-msg": "git-commit-template",
      "pre-push": "npm --version"
   }

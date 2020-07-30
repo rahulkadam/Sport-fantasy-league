@@ -181,7 +181,7 @@
   "husky": {
     "hooks": {
       "prepare-commit-msg": "git-commit-template",
-      "pre-commit": "npx lint-staged",
+      "pre-commit": "npm --version",
       "pre-push": "npm --version"
     }
   },
