@@ -22,6 +22,7 @@ const League = () => {
   const tabName = query.get('tab') || 'overview';
 
   useEffect(() => {
+    console.log('component will Mount only once, render everytime');
     fetchUserLeagueList();
   }, []);
   useEffect(() => {

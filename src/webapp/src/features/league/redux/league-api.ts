@@ -37,7 +37,7 @@ export function fetchActiveLeaguesList() {
 }
 
 export function fetchUserLeaguesDetails() {
-  return Get('fantasy/league/list/byuser/17').then(
+  return Get('/fantasy/league/list/byuser/17').then(
     (data: any) => {
       return data;
     },
