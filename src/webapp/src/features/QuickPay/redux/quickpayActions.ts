@@ -15,13 +15,13 @@ export const FetchBillAction = () => {
     dispatchAction(dispatch, FETCH_ACCOUNT_BILL_STARTED),
     (accountNumber: number) => {
       fetchPaymentDetailsByAccountNumber(accountNumber)
-        .then(data => {
+        .then((data: any) => {
           dispatch({
             type: FETCH_ACCOUNT_BILL,
             data: data,
           });
         })
-        .catch(error => {
+        .catch((error: any) => {
           dispatch({
             type: FETCH_ACCOUNT_BILL_ERROR,
           });

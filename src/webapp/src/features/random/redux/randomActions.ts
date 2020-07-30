@@ -14,13 +14,13 @@ const fetchRandomNumberAction = () => {
     dispatchAction(dispatch, GET_RANDOM_NUMBER_PENDING),
     () => {
       fetchRandomNumberAPI()
-        .then(data => {
+        .then((data: any) => {
           dispatch({
             type: GET_RANDOM_NUMBER,
             payload: data,
           });
         })
-        .catch(error => {
+        .catch((error: any) => {
           dispatch({
             type: GET_RANDOM_NUMBER_REJECTED,
             payload: error.message,

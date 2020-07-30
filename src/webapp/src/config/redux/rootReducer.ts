@@ -5,6 +5,7 @@ import {AuthenticationReducer} from 'features/Authentication/redux';
 import {BillViewReducer} from 'features/QuickPay/redux';
 import storage from 'redux-persist/lib/storage';
 import {connectRouter} from 'connected-react-router';
+import leagueReducer from '../../features/league/redux/leagueReducer';
 
 const persistenceConfigs = {
   key: 'apg',
@@ -23,6 +24,7 @@ const rootReducer = (history: any) =>
     random: RandomReducer,
     user: AuthenticationReducer,
     billview: BillViewReducer,
+    league: leagueReducer,
   });
 
 export {rootReducer, persistenceConfigs};

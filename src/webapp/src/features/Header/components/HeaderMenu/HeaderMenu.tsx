@@ -21,10 +21,10 @@ const HeaderMenu = () => {
           <Navbar.Collapse>
             <Nav>
               <Nav.Link as={Link} to="/" href="#">
-                QuickPay
+                IPL
               </Nav.Link>
               <Nav.Link as={Link} to="/counter" href="#">
-                APG View
+                Team
               </Nav.Link>
               {loggedUser.username && (
                 <Nav.Link as={Link} to="/random" href="#">

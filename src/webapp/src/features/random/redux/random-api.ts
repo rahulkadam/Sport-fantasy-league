@@ -7,10 +7,10 @@ export const obj = Object.freeze({
 
 export function fetchRandomNumberAPI() {
   return Get(obj.randomAPI).then(
-    data => {
+    (data: any) => {
       return data;
     },
-    error => {
+    (error: any) => {
       throw error;
     }
   );

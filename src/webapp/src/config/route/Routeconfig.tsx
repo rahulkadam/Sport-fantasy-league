@@ -9,9 +9,11 @@ import Counter from '../../features/counter/components';
 import {HelpPage, TermsAndConditions} from '../../common/components';
 import {QuickpayUnauth} from '../../features/QuickpayUnauth/QuickpayUnauth';
 import {BillViewUnauth} from '../../features/BillViewUnauth/BillViewUnauth';
+import {League} from '../../features/league';
 
 export const RouteConfig = {
   PublicRouteConfig: [
+    {path: '/league', component: League, key: 'league'},
     {path: '/counter', component: Counter, key: 'counter'},
     {path: '/billview', component: BillView, key: 'billView'},
     {path: '/login', component: Login, key: 'login'},

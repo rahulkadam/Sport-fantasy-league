@@ -4,12 +4,12 @@ import {GetMockAdapterInstance} from './test/testAxiosApi';
 /**
  * default custom Instance
  */
-// const axiosInstance = axios.create();
+const axiosInstance = axios.create();
 
 /**
  *  Get Mock Instance of axios, which will return mock static response
  */
-const axiosInstance = GetMockAdapterInstance(axios);
+// const axiosInstance = GetMockAdapterInstance(axios);
 axiosInstance.defaults.timeout = 2500;
 axiosInstance.defaults.baseURL = 'https://api.example.com';
 axiosInstance.defaults.headers.post['Content-Type'] = 'json';
@@ -87,7 +87,7 @@ function apiBaseRootUrl() {
   const host = window && window.location && window.location.host;
 
   if (hostname === 'localhost') {
-    backendHost = 'http://localhost:8089';
+    backendHost = 'http://localhost:8080/';
   } else {
     backendHost = 'https://' + host;
   }

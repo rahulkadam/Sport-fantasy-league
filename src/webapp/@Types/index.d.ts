@@ -1,5 +1,6 @@
 declare module 'react-loading-overlay';
 declare module 'react-helmet';
+declare module 'react-helmet';
 declare module '*.scss';
 declare module '*.css';
 declare module '*.qcss';

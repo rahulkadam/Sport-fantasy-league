@@ -3,4 +3,5 @@ export interface RootState {
   billview: BillView;
   user: User;
   count: Count;
+  league: League;
 }
