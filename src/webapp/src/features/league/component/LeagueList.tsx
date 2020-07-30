@@ -23,6 +23,7 @@ const LeagueList = (props: LeagueUserListProps) => {
     return (
       <Row>
         <Col>Name</Col>
+        <Col>Points</Col>
         <Col>Ranking</Col>
         <Col>Total Members</Col>
       </Row>

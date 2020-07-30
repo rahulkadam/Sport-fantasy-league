@@ -87,7 +87,7 @@ function apiBaseRootUrl() {
   const host = window && window.location && window.location.host;
 
   if (hostname === 'localhost') {
-    backendHost = 'http://localhost:8080/';
+    backendHost = 'http://localhost:8080';
   } else {
     backendHost = 'https://' + host;
   }

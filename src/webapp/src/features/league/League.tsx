@@ -1,5 +1,9 @@
 import React, {useEffect, Fragment} from 'react';
-import {getLeagueData, fetchUserLeagueListAction} from './redux';
+import {
+  getLeagueData,
+  fetchUserLeagueListAction,
+  joinLeagueAction,
+} from './redux';
 import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
 import {Col, Nav, Row, Tab} from 'react-bootstrap';
@@ -10,6 +14,7 @@ const League = () => {
   const leagueObjdata = leagueStoreData.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const fetchUserLeagueList = fetchUserLeagueListAction();
+  const joinLeague = joinLeagueAction();
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
@@ -29,13 +34,15 @@ const League = () => {
         {userleagueList.length > 0 && (
           <LeagueList userleagueList={userleagueList} />
         )}
-        {userleagueList.length == 0 && <JoinLeague />}
+        {userleagueList.length == 0 && (
+          <JoinLeague data={{joinleague: joinLeague}} />
+        )}
       </Fragment>
     );
   }
 
   function renderJoinLeague() {
-    return <JoinLeague />;
+    return <JoinLeague data={{joinleague: joinLeague}} />;
   }
 
   function renderTabContainerForLeague() {

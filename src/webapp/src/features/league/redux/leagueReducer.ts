@@ -22,13 +22,11 @@ export default (state: League = initialState, action: any): League => {
         data: action.data,
       };
     case GET_USER_LEAGUE:
-      const userLeagueListArray: any = [];
-      userLeagueListArray.push(action.userleagueList);
       return {
         isFulfilled: true,
         isLoading: false,
         hasError: false,
-        data: {...state.data, userleagueList: userLeagueListArray},
+        data: {...state.data, userleagueList: action.userleagueList},
       };
     case ACTION_START:
       return {

@@ -1,7 +1,10 @@
-import {Get} from 'API';
+import {Get, Post} from 'API';
 
 export function joinLeague(leagueCode: any) {
-  return Get('/league/join/' + leagueCode).then(
+  console.log('join league by this code' + leagueCode);
+  return Post('/fantasy/league/join/bycode', {
+    data: {leagueCode: leagueCode, add: 23},
+  }).then(
     (data: any) => {
       return data;
     },
@@ -34,7 +37,7 @@ export function fetchActiveLeaguesList() {
 }
 
 export function fetchUserLeaguesDetails() {
-  return Get('fantasy/league/get/28').then(
+  return Get('fantasy/league/list/byuser/17').then(
     (data: any) => {
       return data;
     },

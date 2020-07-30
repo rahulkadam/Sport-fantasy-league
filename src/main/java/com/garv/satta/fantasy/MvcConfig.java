@@ -18,8 +18,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:static/index.html");
-        registry.addViewController("/view").setViewName("forward:static/index.html");
-        registry.addViewController("/view1").setViewName("forward:static/index.html");
+        registry.addViewController("/league").setViewName("forward:static/index.html");
     }
 
 }

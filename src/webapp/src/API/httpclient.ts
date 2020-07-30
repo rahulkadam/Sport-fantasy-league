@@ -44,7 +44,7 @@ function Post(url: string, config?: AxiosRequestConfig) {
   return axiosInstance
     .post(fullUrl, config)
     .then(
-      response => {
+      (response: any) => {
         console.log(response.data);
         console.log(response.status);
         console.log(response.statusText);
@@ -52,11 +52,11 @@ function Post(url: string, config?: AxiosRequestConfig) {
         console.log(response.config);
         return response.data;
       },
-      error => {
+      (error: any) => {
         throw error.config;
       }
     )
-    .catch(error => {
+    .catch((error: any) => {
       console.log(error.request);
       console.log(error.response);
       console.log(error.message);

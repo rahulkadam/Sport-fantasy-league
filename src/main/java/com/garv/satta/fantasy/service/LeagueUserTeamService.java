@@ -14,6 +14,8 @@ import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LeagueUserTeamService {
 
@@ -32,9 +34,9 @@ public class LeagueUserTeamService {
     @Autowired
     private PlayerValidator playerValidator;
 
-    public LeagueUserTeamDTO getUserTeamByUser(Long id) {
-        LeagueUserTeam leagueUserTeam = repository.findLeagueUserTeamByUserId(id);
-        return converter.convertToFullDTO(leagueUserTeam);
+    public List<LeagueUserTeamDTO> getUserTeamByUser(Long id) {
+        List<LeagueUserTeam> leagueUserTeamlist = repository.findLeagueUserTeamByUserId(id);
+        return converter.convertToDTOList(leagueUserTeamlist);
     }
 
     public LeagueUserTeamDTO getUserTeamById(Long id) {

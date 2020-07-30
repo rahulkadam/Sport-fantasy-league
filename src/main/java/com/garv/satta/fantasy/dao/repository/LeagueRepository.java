@@ -10,6 +10,7 @@ public interface LeagueRepository extends CrudRepository<League, Long> {
     List<League> findAll();
     List<League> findLeagueByName(String name);
     League findLeagueById(Long id);
+    League findLeagueByLeagueCode(String leagueCode);
 
     List<League> findLeagueByTournamentId(Long id);
 }

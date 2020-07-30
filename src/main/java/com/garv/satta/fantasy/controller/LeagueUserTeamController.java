@@ -6,6 +6,8 @@ import com.garv.satta.fantasy.service.LeagueUserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/fantasy/userteam")
 public class LeagueUserTeamController {
@@ -14,7 +16,7 @@ public class LeagueUserTeamController {
     private LeagueUserTeamService service;
 
     @GetMapping(value = "/get/user/{id}")
-    public LeagueUserTeamDTO getUserTeamByUser(@PathVariable(name = "id") Long id) {
+    public List<LeagueUserTeamDTO> getUserTeamByUser(@PathVariable(name = "id") Long id) {
         return service.getUserTeamByUser(id);
     }
 

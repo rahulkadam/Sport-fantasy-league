@@ -1,5 +1,9 @@
 import {useDispatch} from 'react-redux';
-import {fetchUserLeaguesDetails, fetchActiveLeaguesList} from './league-api';
+import {
+  fetchUserLeaguesDetails,
+  fetchActiveLeaguesList,
+  joinLeague,
+} from './league-api';
 import {
   ACTION_START,
   ACTION_ERROR,
@@ -54,4 +58,31 @@ const fetchPublicLeagueListAction = () => {
   );
 };
 
-export {fetchUserLeagueListAction, fetchPublicLeagueListAction};
+const joinLeagueAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    () => {
+      joinLeague('XVKSFSS')
+        .then((data: any) => {
+          dispatch({
+            type: GET_PUBLIC_LEAGUE_LIST,
+            data: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: ACTION_ERROR,
+            data: error,
+          });
+        });
+    }
+  );
+};
+
+export {
+  fetchUserLeagueListAction,
+  fetchPublicLeagueListAction,
+  joinLeagueAction,
+};

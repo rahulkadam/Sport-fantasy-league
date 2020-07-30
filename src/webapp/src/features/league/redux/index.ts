@@ -3,4 +3,5 @@ export {default as getLeagueData} from './leagueHooks';
 export {
   fetchUserLeagueListAction,
   fetchPublicLeagueListAction,
+  joinLeagueAction,
 } from './leagueActions';
