@@ -6,8 +6,10 @@ import {
 } from './redux';
 import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
-import {Col, Nav, Row, Tab} from 'react-bootstrap';
-import {useLocation} from 'react-router-dom';
+import {CreateLeague} from './component/CreateLeague';
+import {StatusMessage} from 'common/components';
+import {TabContainer} from 'common/components';
+import './League.styles.scss';
 
 const League = () => {
   const leagueStoreData = getLeagueData();
@@ -15,11 +17,7 @@ const League = () => {
   const userleagueList = leagueObjdata.userleagueList || [];
   const fetchUserLeagueList = fetchUserLeagueListAction();
   const joinLeague = joinLeagueAction();
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
-  const query = useQuery();
-  const tabName = query.get('tab') || 'overview';
+  const tabName = 'overview';
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
@@ -46,39 +44,40 @@ const League = () => {
     return <JoinLeague data={{joinleague: joinLeague}} />;
   }
 
-  function renderTabContainerForLeague() {
-    return (
-      <div>
-        <Tab.Container id="left-tabs-example" defaultActiveKey={tabName}>
-          <Row>
-            <Col sm={3}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="overview">League Overview</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="register">Join League</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-            <Col sm={9}>
-              <Tab.Content>
-                <Tab.Pane eventKey="overview">
-                  {renderLeagueOverview()}
-                </Tab.Pane>
-                <Tab.Pane eventKey="register">{renderJoinLeague()}</Tab.Pane>
-              </Tab.Content>
-            </Col>
-          </Row>
-        </Tab.Container>
-      </div>
-    );
+  function renderCreateLeague() {
+    return <CreateLeague data={{joinleague: joinLeague}} />;
+  }
+
+  const tabConfig: TabConfig[] = [
+    {
+      key: 'overview',
+      title: 'League Overview',
+      renderfunction: renderLeagueOverview(),
+    },
+    {
+      key: 'joinLeague',
+      title: 'Join League',
+      renderfunction: renderJoinLeague(),
+    },
+    {
+      key: 'createLeague',
+      title: 'Create League',
+      renderfunction: renderCreateLeague(),
+    },
+  ];
+  function renderStatusMessage(isError: boolean, statusMessage: string) {
+    const statusClassName = leagueStoreData.hasError ? 'error' : 'success';
+    return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
   return (
     <div>
-      IPL League Details
-      {renderTabContainerForLeague()}
+      League Summary
+      {renderStatusMessage(
+        leagueStoreData.hasError,
+        leagueStoreData.statusMessage
+      )}
+      <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>
   );
 };

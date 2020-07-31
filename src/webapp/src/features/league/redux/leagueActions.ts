@@ -9,6 +9,8 @@ import {
   ACTION_ERROR,
   GET_USER_LEAGUE,
   GET_PUBLIC_LEAGUE_LIST,
+  JOIN_LEAGUE,
+  JOIN_LEAGUE_ERROR,
 } from './leagueConstants';
 import {dispatchActionWrapper, dispatchAction} from 'common/util';
 
@@ -67,13 +69,13 @@ const joinLeagueAction = () => {
       joinLeague(leagueCode)
         .then((data: any) => {
           dispatch({
-            type: GET_PUBLIC_LEAGUE_LIST,
+            type: JOIN_LEAGUE,
             data: data,
           });
         })
         .catch((error: any) => {
           dispatch({
-            type: ACTION_ERROR,
+            type: JOIN_LEAGUE_ERROR,
             data: error.message,
           });
         });

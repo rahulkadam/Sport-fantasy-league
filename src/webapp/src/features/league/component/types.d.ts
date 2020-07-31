@@ -5,3 +5,7 @@ declare type LeagueUserListProps = {
 declare type JoinLeagueProps = {
   data: any;
 };
+
+declare type CreateLeagueProps = {
+  data: any;
+};
