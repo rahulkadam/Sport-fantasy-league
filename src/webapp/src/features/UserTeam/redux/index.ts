@@ -1,5 +1,5 @@
 export {default as leagueReducer} from './userteamReducer';
-export {default as getLeagueData} from './userteamHooks';
+export {getUserTeamData} from './userteamHooks';
 export {
   fetchUserLeagueListAction,
   fetchPublicLeagueListAction,
