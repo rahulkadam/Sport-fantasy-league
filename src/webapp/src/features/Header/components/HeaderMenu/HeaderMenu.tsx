@@ -24,7 +24,7 @@ const HeaderMenu = () => {
                 League
               </Nav.Link>
               <Nav.Link as={Link} to="/counter" href="#">
-                Team
+                User Team
               </Nav.Link>
               {loggedUser.username && (
                 <Nav.Link as={Link} to="/random" href="#">

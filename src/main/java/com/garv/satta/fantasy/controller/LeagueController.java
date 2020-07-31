@@ -61,8 +61,6 @@ public class LeagueController {
     @GetMapping(value = "list/byuser/{id}")
     public List<LeagueDTO> getLeagueByUserId(@PathVariable(name = "id") Long id) {
         return leagueService.getLeagueByUserId(id);
-
-
     }
 
 }
