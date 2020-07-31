@@ -123,6 +123,7 @@ const UserTeamPlayerDetails = (props: UserTeamListProps) => {
         subHeader
         subHeaderComponent={renderCustomSearch}
         subHeaderAlign="left"
+        striped
       />
     </div>
   );
