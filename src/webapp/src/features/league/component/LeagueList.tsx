@@ -4,10 +4,15 @@ import {Row, Col} from 'react-bootstrap';
 const LeagueList = (props: LeagueUserListProps) => {
   const userLeagueList: any = props.userleagueList || [];
   function renderLeague(userleagueList: any) {
+    const leagueStatus = userleagueList.status ? 'Active' : 'InActive';
     return (
-      <Row>
-        <Col>{userleagueList.name}</Col>
-        <Col>{userleagueList.status}</Col>
+      <Row key={userleagueList.id}>
+        <Col>
+          {userleagueList.name} ({userleagueList.id})
+        </Col>
+        <Col>{userleagueList.leagueCode}</Col>
+        <Col>{leagueStatus}</Col>
+        <Col>{userleagueList.totalUserCount}</Col>
       </Row>
     );
   }
@@ -23,7 +28,7 @@ const LeagueList = (props: LeagueUserListProps) => {
     return (
       <Row>
         <Col>Name</Col>
-        <Col>Points</Col>
+        <Col>Code</Col>
         <Col>Ranking</Col>
         <Col>Total Members</Col>
       </Row>

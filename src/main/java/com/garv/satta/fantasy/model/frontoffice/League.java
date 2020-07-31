@@ -23,6 +23,8 @@ public class League extends BaseDaoObject {
 
     private Boolean status;
 
+    private Integer totalUserCount;
+
     @NotNull
     @Column(unique = true)
     private String leagueCode;
@@ -55,6 +57,7 @@ public class League extends BaseDaoObject {
         if (leagueMembers == null) {
             leagueMembers = new ArrayList<>();
             leagueMembers.add(leagueUserTeam);
+            this.setTotalUserCount(1);
             return;
         }
 
@@ -63,6 +66,7 @@ public class League extends BaseDaoObject {
         if (findLeagueMember == null) {
             leagueMembers.add(leagueUserTeam);
         }
+        this.setTotalUserCount(leagueMembers.size());
     }
 
     public void removeLeague(LeagueUserTeam leagueUserTeam) {
@@ -71,6 +75,7 @@ public class League extends BaseDaoObject {
         }
         Predicate<LeagueUserTeam> isLeagueMemberMatch = leagueUserTeam1 -> leagueUserTeam1.getId() == leagueUserTeam.getId();
         leagueMembers.removeIf(isLeagueMemberMatch);
+        this.setTotalUserCount(leagueMembers.size());
     }
 
 }

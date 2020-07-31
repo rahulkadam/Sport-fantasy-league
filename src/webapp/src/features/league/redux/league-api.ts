@@ -1,7 +1,6 @@
 import {Get, Post} from 'API';
 
 export function joinLeague(leagueCode: any) {
-  console.log('join league by this code' + leagueCode);
   return Post('/fantasy/league/join/bycode', {
     data: {leagueCode: leagueCode, add: 23},
   });
@@ -16,6 +15,5 @@ export function fetchActiveLeaguesList() {
 }
 
 export function fetchUserLeaguesDetails() {
-  console.log('fetchUserLeaguesDetails for 17');
-  return Get('/fantasy/league/list/byuser/17');
+  return Get('/fantasy/league/list/');
 }

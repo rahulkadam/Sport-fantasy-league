@@ -2,5 +2,6 @@ declare type League = {
   data: any;
   isLoading: boolean;
   hasError: boolean;
-  isFulfilled: boolean;
+  errorMessage: string;
+  successMessage: string;
 };

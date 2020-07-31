@@ -3,47 +3,59 @@ import {
   ACTION_ERROR,
   GET_USER_LEAGUE,
   GET_PUBLIC_LEAGUE_LIST,
+  JOIN_LEAGUE,
+  JOIN_LEAGUE_ERROR,
 } from './leagueConstants';
 
 const initialState: League = {
-  data: {key: 'keyyyy'},
+  data: {userleagueList: []},
   isLoading: false,
   hasError: false,
-  isFulfilled: false,
+  errorMessage: '',
+  successMessage: '',
 };
 
 export default (state: League = initialState, action: any): League => {
+  let userLeaguestate = {...state};
   switch (action.type) {
     case GET_PUBLIC_LEAGUE_LIST:
-      return {
-        isFulfilled: true,
-        isLoading: false,
-        hasError: false,
-        data: action.data,
-      };
+      return userLeaguestate;
     case GET_USER_LEAGUE:
-      return {
-        isFulfilled: true,
-        isLoading: false,
-        hasError: false,
-        data: {...state.data, userleagueList: action.userleagueList},
-      };
-    case ACTION_START:
-      return {
+      const data = {...state.data, userleagueList: action.userleagueList};
+      userLeaguestate = {
         ...state,
-        isFulfilled: false,
+        data: data,
+        isLoading: false,
+      };
+      return userLeaguestate;
+    case JOIN_LEAGUE:
+      return userLeaguestate;
+    case ACTION_START:
+      userLeaguestate = {
+        ...state,
         isLoading: true,
         hasError: false,
-        data: action.data,
+        successMessage: '',
+        errorMessage: '',
       };
+      return userLeaguestate;
     case ACTION_ERROR:
-      return {
-        isFulfilled: false,
+      userLeaguestate = {
+        ...state,
         isLoading: false,
         hasError: true,
-        data: action.data,
+        errorMessage:
+          'Error Occured while performing action, please check your last action',
       };
-
+      return userLeaguestate;
+    case JOIN_LEAGUE_ERROR:
+      userLeaguestate = {
+        ...state,
+        isLoading: false,
+        hasError: true,
+        errorMessage: 'Error Occured while creating League',
+      };
+      return userLeaguestate;
     default:
       return state;
   }

@@ -8,6 +8,7 @@ import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
 import {Col, Nav, Row, Tab} from 'react-bootstrap';
 import {useLocation} from 'react-router-dom';
+import './League.styles.scss';
 
 const League = () => {
   const leagueStoreData = getLeagueData();
@@ -75,9 +76,24 @@ const League = () => {
     );
   }
 
+  function renderSuccessErrorDetails() {
+    const statusClassName = leagueStoreData.hasError
+      ? 'errorMessage'
+      : 'successMessage';
+    return (
+      <div className={statusClassName}>
+        {leagueStoreData.hasError && <div>{leagueStoreData.errorMessage}</div>}
+        {leagueStoreData.successMessage && (
+          <div>{leagueStoreData.successMessage}</div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div>
-      IPL League Details
+      League Summary
+      {renderSuccessErrorDetails()}
       {renderTabContainerForLeague()}
     </div>
   );
