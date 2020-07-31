@@ -1,68 +1,140 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Quickstart React Redux App
 
-## Available Scripts
+Redux, React Typescript Project with eslint and stylelint configurations.
 
-In the project directory, you can run:
+## Usage
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    shell script
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+    npm run start
 
-### `npm test`
+    Or
+    
+    shell script
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    npm run install
 
-### `npm run build`
+    npm run start
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+`npm` is Node package manager for managing Project dependency, all dependency are mentioned in `package.json`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## React 
 
-### `npm run eject`
+#####React Documentation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. https://reactjs.org/docs/getting-started.html
+2. https://create-react-app.dev/docs/getting-started
+3. https://reactjs.org/docs/introducing-jsx.html
+4. https://reactjs.org/docs/hooks-intro.html
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Redux
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#####Redux Documentation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. https://react-redux.js.org/introduction/quick-start
+2. https://thoughtbot.com/blog/using-redux-with-react-hooks
+3. https://react-redux.js.org/api/hooks
+4. https://dev.to/bouhm/react-redux-flow-terminologies-and-example-104b
+5. https://medium.com/codingthesmartway-com-blog/learn-redux-introduction-to-state-management-with-react-b87bc570b12a
 
-## Learn More
+## TypeScript
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#####Typescript Documentation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. https://www.typescriptlang.org/docs/home.html
+2. https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
+3. https://www.typescriptlang.org/docs/handbook/jsx.html
 
-### Code Splitting
+## Testing
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Project will have standard Testing framework!
 
-### Analyzing the Bundle Size
+## Code quality tools
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Code quality tools provide static check of your code and try to fix errors. Checks are triggered inside pre-commit hook. To run them manually:
 
-### Making a Progressive Web App
+```shell script
+npm lint:js # runs eslint in src directory   
+npm fix:js # runs eslint in src directory with --fix parameter   
+npm lint:style # runs stylelint in src directory   
+npm fix:style # runs stylelint in src directory with --fix parameter   
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### eslint
 
-### Advanced Configuration
+ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
+Eslint and prettier avaialble for clean development process.
+https://eslint.org/docs/user-guide/getting-started
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### stylelint and Styling
 
-### Deployment
+A mighty, modern linter that helps you avoid errors and enforce conventions in your styles.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+https://stylelint.io/
 
-### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Git hooks
+
+Git hooks management is used in project for code quality, checking code before pushing to git repo.
+we can find husky hook configuration in `package.json`
+
+## Contents
+
+```shell script
+├── .env # dot env config file
+├── .eslintrc # eslint configutation
+├── .lintstagedrc # lintstaged configutation
+├── .nvmrc # required Node version
+├── .prettierrc # prettier configutation
+├── .stylelintrc # stylelint configutation
+├── README.md # this file
+├── README_CRA.md # original Readme from CRA
+├── .gitignore
+├── huskyrc-template # template for husky configuration
+├── tsconfig.json # Typescript configuration
+├── public # public assets
+├── @Types # define type and export module if required for typescript type definition
+└── src
+    ├── API # React components folder
+    ├── common
+        ├── components # All common component required in project e.g footer, help page, T&C page
+        ├── config  # common configuration related to project, history, location object
+        ├── images  # contain all common images of project
+        ├── styles  # common styles for project
+    ├── config   # configuration related to project , pwd, redux, route, test
+        ├── pwa   # Progressive web ap configuration using service workers
+        ├── redux  # all redux configuration of project
+        ├── route  # This contain all project required route
+        ├── test   # contain all test related configuration for project
+    ├── features # features logic folder
+        ├── FeatureName   # each feature will have separate folder in project
+          ├── component  # This will contain all rendering component tsx files
+          ├── redux  # all redux configuration of project + reducer + action + types + constant + index + hook
+    ├── index.tsx # entry point file
+```
+
+## Project URL
+Following are the URL which created
+
+1. [/](localhost:3000/)
+2. [/home](localhost:3000/home)
+3. [/billview](localhost:3000/billview)
+4. [/random](localhost:3000/random)
+5. [/counter](localhost:3000/counter)
+
+##Important concept to Read 
+
+1. What is ts, tsx, jsx?
+2. What is css,qscc,sass style?
+3. What is redux, reducer, action, store in redux ?
+4. what is hooks, component rendering in React?
+5. How typescript helps project in reducing error and how to define types?
+6. how react route works?
+7. how jsx render component?
+8. what is JS syntax?
+9. how to pass props to Component?
+10. how to import, export function, module, constant?
+11. understand current react project structure?
+12. how to write test for React component and other functions?

@@ -8,6 +8,6 @@ import java.util.List;
 public interface LeagueUserTeamRepository extends CrudRepository<LeagueUserTeam, Long> {
 
     List<LeagueUserTeam> findAll();
-    LeagueUserTeam findLeagueUserTeamByUserId(Long id);
+    List<LeagueUserTeam> findLeagueUserTeamByUserId(Long id);
     LeagueUserTeam findLeagueUserTeamById(Long id);
 }

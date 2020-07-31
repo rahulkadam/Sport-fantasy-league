@@ -17,4 +17,5 @@ public class RequestDTO extends BaseDTO {
     private Long removeFrom;
     private Long remove;
     private List<Long> removeList;
+    private String leagueCode;
 }

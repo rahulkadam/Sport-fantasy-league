@@ -1,0 +1,7 @@
+{
+  "hooks": {
+    "pre-commit": "npm --version",
+     "prepare-commit-msg": "git-commit-template",
+     "pre-push": "npm --version"
+  }
+}

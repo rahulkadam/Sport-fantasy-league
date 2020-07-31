@@ -1,0 +1,36 @@
+.footer {
+    padding-top: 20px;
+    margin-top: 56px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.bgDark {
+
+    background-color: #333333;
+}
+
+.footerLinks {
+    display: flex;
+    font-size: 12px;
+    padding: 0;
+}
+
+.footerText {
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+}
+
+.horizontal-line {
+    background-color: #707070;
+}
+
+.footerSpan {
+    padding: 0 4px;
+}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/fantasy/league")
 public class LeagueController {
 
@@ -41,6 +42,14 @@ public class LeagueController {
         return "User Team added successfully";
     }
 
+    @PostMapping(value = "/join/bycode")
+    public String joinLeagueByCode(@RequestBody RequestDTO dto) {
+        String leagueCode = dto.getLeagueCode();
+        Long userTeamID = dto.getAdd();
+        leagueService.joinLeagueByCode(leagueCode, userTeamID);
+        return "League Joined successfully";
+    }
+
     @PostMapping(value = "/remove/userteam")
     public String removeUserTeamFromLeague(@RequestBody RequestDTO dto) {
         Long leagueId = dto.getRemoveFrom();
@@ -48,4 +57,10 @@ public class LeagueController {
         leagueService.removeUserTeamFromLeague(leagueId, userTeamID);
         return "User Team Removed successfully";
     }
+
+    @GetMapping(value = "list/byuser/{id}")
+    public List<LeagueDTO> getLeagueByUserId(@PathVariable(name = "id") Long id) {
+        return leagueService.getLeagueByUserId(id);
+    }
+
 }

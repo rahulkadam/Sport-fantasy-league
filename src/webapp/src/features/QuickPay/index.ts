@@ -1,0 +1,1 @@
+export {Quickpay} from './Quickpay';

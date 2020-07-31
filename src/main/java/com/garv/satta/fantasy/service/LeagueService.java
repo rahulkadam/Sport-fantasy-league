@@ -56,23 +56,29 @@ public class LeagueService {
         return converter.convertToFullDTO(league);
     }
 
+    public void joinLeagueByCode(String leagueCode, Long userTeamId) {
+        League league = repository.findLeagueByLeagueCode(leagueCode);
+        addRemoveUserTeamFromLeague(league, userTeamId, OperationEnum.ADD);
+    }
+
     public void addUserTeamToLeague(Long leagueId, Long userTeamId) {
-        addRemoveUserTeamFromLeague(leagueId, userTeamId, OperationEnum.ADD);
+        League league = repository.findLeagueById(leagueId);
+        addRemoveUserTeamFromLeague(league, userTeamId, OperationEnum.ADD);
     }
 
     public void removeUserTeamFromLeague(Long leagueId, Long userTeamId) {
-        addRemoveUserTeamFromLeague(leagueId, userTeamId, OperationEnum.REMOVE);
+        League league = repository.findLeagueById(leagueId);
+        addRemoveUserTeamFromLeague(league, userTeamId, OperationEnum.REMOVE);
     }
 
     /**
      * Function to add or remove UserTeam from League
-     * @param leagueId
+     * @param league
      * @param userTeamId
      * @param operation
      */
-    private void addRemoveUserTeamFromLeague(Long leagueId, Long userTeamId, OperationEnum operation) {
+    private void addRemoveUserTeamFromLeague(League league, Long userTeamId, OperationEnum operation) {
         LeagueUserTeam userTeam = leagueUserTeamRepository.findLeagueUserTeamById(userTeamId);
-        League league = repository.findLeagueById(leagueId);
         if (userTeam == null || league == null) {
             throw new GenericException("UserTeam Or League is not valid");
         }
@@ -82,6 +88,16 @@ public class LeagueService {
             league.removeLeague(userTeam);
         }
         repository.save(league);
+    }
+
+    public List<LeagueDTO> getLeagueByUserId(Long id) {
+        List<LeagueUserTeam> leagueUserTeamList = leagueUserTeamRepository.findLeagueUserTeamByUserId(id);
+        LeagueUserTeam leagueUserTeam = leagueUserTeamList.stream().findFirst().orElse(null);
+        if (leagueUserTeam == null) {
+            throw new GenericException("Unable to find League for User");
+        }
+        List<League> userLeagueList = leagueUserTeam.getLeagues();
+        return converter.convertToDTOList(userLeagueList);
     }
 
 }
