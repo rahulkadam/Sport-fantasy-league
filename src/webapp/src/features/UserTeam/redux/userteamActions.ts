@@ -1,58 +1,32 @@
 import {useDispatch} from 'react-redux';
-import {
-  fetchUserLeaguesDetails,
-  fetchActiveLeaguesList,
-  joinLeague,
-} from './userteam-api';
+import {fetchAllPlayerlist, fetchPlayerlistByUser} from './userteam-api';
 import {
   ACTION_START,
   ACTION_ERROR,
   GET_USER_LEAGUE,
-  GET_PUBLIC_LEAGUE_LIST,
-  JOIN_LEAGUE,
-  JOIN_LEAGUE_ERROR,
+  FETCH_ALL_PLAYER_LIST,
+  FETCH_ALL_PLAYER_LIST_ERROR,
+  FETCH_PLAYER_LIST_BY_USER,
+  FETCH_PLAYER_LIST_BY_USER_ERROR,
 } from './userteamConstants';
 import {dispatchActionWrapper, dispatchAction} from 'common/util';
 
-const fetchUserLeagueListAction = () => {
+const fetchAllPlayerListAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
     () => {
-      fetchUserLeaguesDetails()
+      fetchAllPlayerlist()
         .then((data: any) => {
           dispatch({
-            type: GET_USER_LEAGUE,
-            userleagueList: data,
+            type: FETCH_ALL_PLAYER_LIST,
+            playerList: data,
           });
         })
         .catch((error: any) => {
           dispatch({
-            type: ACTION_ERROR,
-            data: error,
-          });
-        });
-    }
-  );
-};
-
-const fetchPublicLeagueListAction = () => {
-  const dispatch = useDispatch();
-  return dispatchActionWrapper(
-    dispatch,
-    dispatchAction(dispatch, ACTION_START),
-    () => {
-      fetchActiveLeaguesList()
-        .then((data: any) => {
-          dispatch({
-            type: GET_PUBLIC_LEAGUE_LIST,
-            data: data,
-          });
-        })
-        .catch((error: any) => {
-          dispatch({
-            type: ACTION_ERROR,
+            type: FETCH_ALL_PLAYER_LIST_ERROR,
             data: error.message,
           });
         });
@@ -60,22 +34,22 @@ const fetchPublicLeagueListAction = () => {
   );
 };
 
-const joinLeagueAction = () => {
+const fetchPlayerListByUserAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (leagueCode: any) => {
-      joinLeague(leagueCode)
+    (userid: number) => {
+      fetchPlayerlistByUser(userid)
         .then((data: any) => {
           dispatch({
-            type: JOIN_LEAGUE,
-            data: data,
+            type: FETCH_PLAYER_LIST_BY_USER,
+            userTeamPlayers: data,
           });
         })
         .catch((error: any) => {
           dispatch({
-            type: JOIN_LEAGUE_ERROR,
+            type: FETCH_PLAYER_LIST_BY_USER_ERROR,
             data: error.message,
           });
         });
@@ -83,8 +57,4 @@ const joinLeagueAction = () => {
   );
 };
 
-export {
-  fetchUserLeagueListAction,
-  fetchPublicLeagueListAction,
-  joinLeagueAction,
-};
+export {fetchPlayerListByUserAction, fetchAllPlayerListAction};

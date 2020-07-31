@@ -1,52 +1,12 @@
 import React, {useMemo} from 'react';
 import DataTable from 'react-data-table-component';
 import {Form} from 'react-bootstrap';
+import {customStyles} from 'common/components/DataTable';
 
-const UserTeamPlayerDetails = (props: UserTeamListProps) => {
+const UserTeamPlayerDetails = ({data}: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
-  const UserteamData = props;
-  const customStyles = {
-    rows: {
-      style: {
-        minHeight: '32px', // override the row height
-      },
-    },
-    headCells: {
-      style: {
-        paddingLeft: '4px', // override the cell padding for head cells
-        paddingRight: '4px',
-      },
-    },
-    cells: {
-      style: {
-        paddingLeft: '4px', // override the cell padding for data cells
-        paddingRight: '4px',
-      },
-    },
-  };
 
-  const data = [
-    {id: 1, name: 'Sachin', type: 'Batsman', value: '5.6', country: 'India'},
-    {id: 2, name: 'Saurav', type: 'Bowler', value: '9.8', team: 'Kolkata'},
-    {id: 13, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 23, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 33, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 43, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 53, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 63, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 73, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 83, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 93, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {id: 983, name: 'Dravid', type: 'All Rounder', value: '10', team: 'Mumbai'},
-    {
-      id: 831,
-      name: 'Dravid',
-      type: 'All Rounder',
-      value: '10',
-      team: 'Mumbai',
-    },
-  ];
-  function find(row: any) {
+  function customName(row: any) {
     return (
       <div>
         {row.name} ({row.id})
@@ -59,7 +19,7 @@ const UserTeamPlayerDetails = (props: UserTeamListProps) => {
       name: 'Name',
       selector: 'name',
       sortable: true,
-      cell: find,
+      cell: customName,
     },
     {
       name: 'T',
@@ -89,6 +49,7 @@ const UserTeamPlayerDetails = (props: UserTeamListProps) => {
     console.log(state.name);
     console.log('Selected Rows: ', state.selectedRows);
   }
+
   const renderCustomSearch = useMemo(() => {
     return (
       <div>
@@ -102,29 +63,34 @@ const UserTeamPlayerDetails = (props: UserTeamListProps) => {
     );
   }, [filterText]);
 
-  const filteredRows = data.filter(
-    (item: any) =>
-      item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
-  );
+  const filteredRows =
+    data &&
+    data.filter(
+      (item: any) =>
+        item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
+    );
 
   return (
     <div>
-      <DataTable
-        title="Your Fantasy Team"
-        columns={columns}
-        customStyles={customStyles}
-        data={filteredRows}
-        selectableRows
-        onRowClicked={onRowSelected}
-        onSelectedRowsChange={onRowSelected}
-        pagination
-        paginationPerPage={50}
-        paginationResetDefaultPage
-        subHeader
-        subHeaderComponent={renderCustomSearch}
-        subHeaderAlign="left"
-        striped
-      />
+      {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
+      {data && data.length > 0 && (
+        <DataTable
+          title="Your Fantasy Team"
+          columns={columns}
+          customStyles={customStyles}
+          data={filteredRows}
+          selectableRows
+          onRowClicked={onRowSelected}
+          onSelectedRowsChange={onRowSelected}
+          pagination
+          paginationPerPage={50}
+          paginationResetDefaultPage
+          subHeader
+          subHeaderComponent={renderCustomSearch}
+          subHeaderAlign="left"
+          striped
+        />
+      )}
     </div>
   );
 };

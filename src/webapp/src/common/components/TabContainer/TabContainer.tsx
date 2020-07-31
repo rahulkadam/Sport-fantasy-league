@@ -4,9 +4,11 @@ import {Col, Nav, Row, Tab} from 'react-bootstrap';
 const TabContainer = ({tabConfig, defaultKey}: TabContainerProps) => {
   function renderflexLeftColum(key: string, title: string) {
     return (
-      <Fragment>
+      <Fragment key={'Fragment' + key}>
         <Nav.Item>
-          <Nav.Link eventKey={key}>{title}</Nav.Link>{' '}
+          <Nav.Link key={key} eventKey={key}>
+            {title}
+          </Nav.Link>{' '}
         </Nav.Item>
       </Fragment>
     );

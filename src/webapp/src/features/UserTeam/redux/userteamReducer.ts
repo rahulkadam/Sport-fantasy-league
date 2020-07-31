@@ -1,33 +1,30 @@
 import {
   ACTION_START,
   ACTION_ERROR,
-  GET_USER_LEAGUE,
-  GET_PUBLIC_LEAGUE_LIST,
-  JOIN_LEAGUE,
-  JOIN_LEAGUE_ERROR,
+  FETCH_ALL_PLAYER_LIST,
+  FETCH_ALL_PLAYER_LIST_ERROR,
+  FETCH_PLAYER_LIST_BY_USER,
+  FETCH_PLAYER_LIST_BY_USER_ERROR,
 } from './userteamConstants';
 
 const initialState: UserTeam = {
-  data: {userleagueList: []},
+  data: {playerList: []},
   isLoading: false,
   hasError: false,
   statusMessage: '',
+  playerList: [],
+  userTeamPlayers: [],
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
   let userLeaguestate = {...state};
   switch (action.type) {
-    case GET_PUBLIC_LEAGUE_LIST:
-      return userLeaguestate;
-    case GET_USER_LEAGUE:
-      const data = {...state.data, userleagueList: action.userleagueList};
+    case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
         ...state,
-        data: data,
+        playerList: action.playerList,
         isLoading: false,
       };
-      return userLeaguestate;
-    case JOIN_LEAGUE:
       return userLeaguestate;
     case ACTION_START:
       userLeaguestate = {
@@ -46,12 +43,29 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
           'Error Occured while performing action, please check your last action',
       };
       return userLeaguestate;
-    case JOIN_LEAGUE_ERROR:
+    case FETCH_ALL_PLAYER_LIST_ERROR:
       userLeaguestate = {
         ...state,
         isLoading: false,
         hasError: true,
-        statusMessage: 'Error Occured while creating League',
+        statusMessage:
+          'Error Occured while fetching Player List, please try again',
+      };
+      return userLeaguestate;
+    case FETCH_PLAYER_LIST_BY_USER:
+      userLeaguestate = {
+        ...state,
+        userTeamPlayers: action.userTeamPlayers,
+        isLoading: false,
+      };
+      return userLeaguestate;
+    case FETCH_PLAYER_LIST_BY_USER_ERROR:
+      userLeaguestate = {
+        ...state,
+        isLoading: false,
+        hasError: true,
+        statusMessage:
+          'Error Occured while fetching your team, please try again',
       };
       return userLeaguestate;
     default:

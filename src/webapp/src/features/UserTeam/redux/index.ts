@@ -1,7 +1,6 @@
-export {default as leagueReducer} from './userteamReducer';
+export {default as userTeamReducer} from './userteamReducer';
 export {getUserTeamData} from './userteamHooks';
 export {
-  fetchUserLeagueListAction,
-  fetchPublicLeagueListAction,
-  joinLeagueAction,
+  fetchAllPlayerListAction,
+  fetchPlayerListByUserAction,
 } from './userteamActions';

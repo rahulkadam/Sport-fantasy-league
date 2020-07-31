@@ -3,4 +3,6 @@ declare type UserTeam = {
   isLoading: boolean;
   hasError: boolean;
   statusMessage: string;
+  playerList: any;
+  userTeamPlayers: any;
 };

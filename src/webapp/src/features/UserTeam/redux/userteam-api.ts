@@ -6,14 +6,10 @@ export function joinLeague(leagueCode: any) {
   });
 }
 
-export function fetchUserRankingInLeague(leagueId: any) {
-  return Get('/users/league/ranking/' + leagueId);
+export function fetchAllPlayerlist() {
+  return Get('/fantasy/player/list');
 }
 
-export function fetchActiveLeaguesList() {
-  return Get('/leagues/list');
-}
-
-export function fetchUserLeaguesDetails() {
-  return Get('/fantasy/league/list/');
+export function fetchPlayerlistByUser(id: number) {
+  return Get('/fantasy/player/list/byuser/' + id);
 }
