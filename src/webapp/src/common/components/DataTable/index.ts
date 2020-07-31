@@ -1,0 +1,1 @@
+export {customStyles} from './TableConfig';

@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.controller;
 import com.garv.satta.fantasy.dto.PlayerDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
+import com.garv.satta.fantasy.service.LeagueUserTeamService;
 import com.garv.satta.fantasy.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/fantasy/player")
 public class PlayerController {
 
@@ -17,14 +19,25 @@ public class PlayerController {
     private PlayerService playerService;
 
     @Autowired
+    private LeagueUserTeamService leagueUserTeamService;
+
+    @Autowired
     private PlayerConverter playerConverter;
 
     @GetMapping(value = "/list")
     @ResponseBody
     public List<PlayerDTO> getPlayerList() {
-        List<PlayerDTO> playerList =  (List)playerService.getPlayerList();
+        List<PlayerDTO> playerList =  playerService.getPlayerList();
         return playerList;
     }
+
+    @GetMapping(value = "/list/byuser/{id}")
+    @ResponseBody
+    public List<PlayerDTO> getPlayerListByUserTeamId(@PathVariable(name = "id") Long id) {
+        List<PlayerDTO> playerList =  leagueUserTeamService.getPlayerListByUserTeamId(id);
+        return playerList;
+    }
+
 
     @PostMapping(value = "/create")
     @ResponseBody

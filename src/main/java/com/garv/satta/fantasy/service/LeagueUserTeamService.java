@@ -4,7 +4,9 @@ import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
+import com.garv.satta.fantasy.dto.PlayerDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueUserTeamConverter;
+import com.garv.satta.fantasy.dto.converter.PlayerConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
@@ -34,6 +36,9 @@ public class LeagueUserTeamService {
     @Autowired
     private PlayerValidator playerValidator;
 
+    @Autowired
+    private PlayerConverter playerConverter;
+
     public List<LeagueUserTeamDTO> getUserTeamByUser(Long id) {
         List<LeagueUserTeam> leagueUserTeamlist = repository.findLeagueUserTeamByUserId(id);
         return converter.convertToDTOList(leagueUserTeamlist);
@@ -42,6 +47,16 @@ public class LeagueUserTeamService {
     public LeagueUserTeamDTO getUserTeamById(Long id) {
         LeagueUserTeam leagueUserTeam = repository.findLeagueUserTeamById(id);
         return converter.convertToFullDTO(leagueUserTeam);
+    }
+
+    public List<PlayerDTO> getPlayerListByUserTeamId(Long id) {
+        LeagueUserTeam leagueUserTeam = repository.findLeagueUserTeamById(id);
+        if (leagueUserTeam == null){
+           throw new GenericException("User is not valid, please check again");
+        }
+
+        List<Player> playerList = leagueUserTeam.getTeamPlayers();
+        return playerConverter.convertToDTOList(playerList);
     }
 
     public LeagueUserTeamDTO createLeagueUserTeam(LeagueUserTeamDTO userTeamDTO) {
