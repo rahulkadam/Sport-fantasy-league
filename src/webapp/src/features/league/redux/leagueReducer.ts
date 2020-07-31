@@ -11,8 +11,7 @@ const initialState: League = {
   data: {userleagueList: []},
   isLoading: false,
   hasError: false,
-  errorMessage: '',
-  successMessage: '',
+  statusMessage: '',
 };
 
 export default (state: League = initialState, action: any): League => {
@@ -35,8 +34,7 @@ export default (state: League = initialState, action: any): League => {
         ...state,
         isLoading: true,
         hasError: false,
-        successMessage: '',
-        errorMessage: '',
+        statusMessage: '',
       };
       return userLeaguestate;
     case ACTION_ERROR:
@@ -44,7 +42,7 @@ export default (state: League = initialState, action: any): League => {
         ...state,
         isLoading: false,
         hasError: true,
-        errorMessage:
+        statusMessage:
           'Error Occured while performing action, please check your last action',
       };
       return userLeaguestate;
@@ -53,7 +51,7 @@ export default (state: League = initialState, action: any): League => {
         ...state,
         isLoading: false,
         hasError: true,
-        errorMessage: 'Error Occured while creating League',
+        statusMessage: 'Error Occured while creating League',
       };
       return userLeaguestate;
     default:
