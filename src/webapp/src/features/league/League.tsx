@@ -6,6 +6,7 @@ import {
 } from './redux';
 import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
+import {CreateLeague} from './component/CreateLeague';
 import {Col, Nav, Row, Tab} from 'react-bootstrap';
 import {useLocation} from 'react-router-dom';
 import './League.styles.scss';
@@ -47,29 +48,91 @@ const League = () => {
     return <JoinLeague data={{joinleague: joinLeague}} />;
   }
 
+  function renderCreateLeague() {
+    return <CreateLeague data={{joinleague: joinLeague}} />;
+  }
+
+  function fetchTabConfig() {
+    const config = [
+      {
+        key: 'overview',
+        title: 'League Overview',
+        renderfunction: renderLeagueOverview(),
+      },
+      {
+        key: 'joinLeague',
+        title: 'Join League',
+        renderfunction: renderJoinLeague(),
+      },
+      {
+        key: 'createLeague',
+        title: 'Create League',
+        renderfunction: renderCreateLeague(),
+      },
+    ];
+    return config;
+  }
+
+  function renderflexLeftColum(key: string, title: string) {
+    return (
+      <Fragment>
+        <Nav.Item>
+          <Nav.Link eventKey={key}>{title}</Nav.Link>{' '}
+        </Nav.Item>
+      </Fragment>
+    );
+  }
+
+  function renderLeftColumnPane() {
+    const element: any = [];
+    const configList = fetchTabConfig();
+    configList.forEach(config => {
+      element.push(renderflexLeftColum(config.key, config.title));
+    });
+    return (
+      <Fragment>
+        <Nav variant="pills" className="flex-column">
+          {element}
+        </Nav>
+      </Fragment>
+    );
+  }
+
+  function renderRightPaneColumn(key: string) {
+    const element: any = [];
+    const configList = fetchTabConfig();
+    configList
+      .filter(config => config.key == key)
+      .forEach(config => {
+        element.push(config.renderfunction);
+      });
+    return (
+      <Fragment>
+        <Tab.Pane eventKey={key}>{element}</Tab.Pane>
+      </Fragment>
+    );
+  }
+
+  function renderRightPage() {
+    const element: any = [];
+    const configList = fetchTabConfig();
+    configList.forEach(config => {
+      element.push(renderRightPaneColumn(config.key));
+    });
+    return (
+      <Fragment>
+        <Tab.Content>{element}</Tab.Content>
+      </Fragment>
+    );
+  }
+
   function renderTabContainerForLeague() {
     return (
       <div>
         <Tab.Container id="left-tabs-example" defaultActiveKey={tabName}>
           <Row>
-            <Col sm={3}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="overview">League Overview</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="register">Join League</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-            <Col sm={9}>
-              <Tab.Content>
-                <Tab.Pane eventKey="overview">
-                  {renderLeagueOverview()}
-                </Tab.Pane>
-                <Tab.Pane eventKey="register">{renderJoinLeague()}</Tab.Pane>
-              </Tab.Content>
-            </Col>
+            <Col sm={3}>{renderLeftColumnPane()}</Col>
+            <Col sm={9}>{renderRightPage()}</Col>
           </Row>
         </Tab.Container>
       </div>
