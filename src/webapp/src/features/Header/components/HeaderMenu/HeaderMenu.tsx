@@ -2,7 +2,7 @@ import React from 'react';
 import {Nav, Navbar} from 'react-bootstrap';
 import {Link, Route} from 'react-router-dom';
 
-import {Logo} from '../../../../common/components/Logo/Logo';
+import {Logo} from 'common/components/Logo/Logo';
 import {GetLoginStoreData} from '../../../Authentication/redux';
 import {HeaderUser} from '../HeaderUser/HeaderUser';
 import {fantasyLogo} from '@logos/index';
@@ -23,17 +23,17 @@ const HeaderMenu = () => {
               <Nav.Link as={Link} to="/league" href="#">
                 League
               </Nav.Link>
-              <Nav.Link as={Link} to="/counter" href="#">
+              <Nav.Link as={Link} to="/team" href="#">
                 User Team
               </Nav.Link>
               {loggedUser.username && (
-                <Nav.Link as={Link} to="/random" href="#">
-                  APG Stats
+                <Nav.Link as={Link} to="/back/team" href="#">
+                  Admin Team
                 </Nav.Link>
               )}
               {loggedUser.username && (
-                <Nav.Link as={Link} to="/autodebit" href="#">
-                  Auto Debit
+                <Nav.Link as={Link} to="/back/league" href="#">
+                  Admin League
                 </Nav.Link>
               )}
             </Nav>
