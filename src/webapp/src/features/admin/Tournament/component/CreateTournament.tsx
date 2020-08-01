@@ -4,7 +4,7 @@ import {Button, FormControl, Row, Col} from 'react-bootstrap';
 const CreateTournament = ({createTournamentAction}: CreateTournamentProps) => {
   const [tournamentName, setTournamentName] = useState('');
   const [countryName, setCountryName] = useState('');
-  const [sportName, setSportName] = useState('');
+  const [sportName, setSportName] = useState('CRICKET');
 
   function createTeam() {
     createTournamentAction(tournamentName, countryName, sportName);
@@ -42,15 +42,13 @@ const CreateTournament = ({createTournamentAction}: CreateTournamentProps) => {
               />
             </Col>
             <Col>
-              <FormControl
-                value={sportName}
-                placeholder="Sport Name"
-                aria-label="sportName"
-                aria-describedby="basic-addon2"
+              <select
+                className="form-control"
                 onChange={event =>
-                  updateTournamentDetails(event.target.value, 2)
-                }
-              />
+                  updateTournamentDetails(event.target.value, 3)
+                }>
+                <option>CRICKET</option>
+              </select>
             </Col>
             <Col>
               <FormControl
