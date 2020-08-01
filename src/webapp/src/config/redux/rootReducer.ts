@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import {connectRouter} from 'connected-react-router';
 import leagueReducer from 'features/league/redux/leagueReducer';
 import userteamReducer from 'features/UserTeam/redux/userteamReducer';
+import tournamentReducer from 'features/admin/Tournament/redux/tournamentReducer';
 
 const persistenceConfigs = {
   key: 'fantasysport',
@@ -21,6 +22,7 @@ const rootReducer = (history: any) =>
     user: AuthenticationReducer,
     league: leagueReducer,
     userteam: userteamReducer,
+    tournament: tournamentReducer,
   });
 
 export {rootReducer, persistenceConfigs};

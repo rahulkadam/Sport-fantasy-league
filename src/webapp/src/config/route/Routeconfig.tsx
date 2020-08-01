@@ -4,16 +4,17 @@ import PageNotFound from '../../common/components/ErrorPage';
 import {HelpPage, TermsAndConditions} from '../../common/components';
 import {League} from 'features/league';
 import {UserTeam} from 'features/UserTeam';
+import {Tournament} from 'features/admin/Tournament';
 
 export const RouteConfig = {
   PublicRouteConfig: [
     {path: '/league', component: League, key: 'league'},
     {path: '/team', component: UserTeam, key: 'team'},
     {
-      path: '/back/team',
-      component: <UserTeam />,
+      path: '/back/tournament',
+      component: <Tournament />,
       isPrivate: true,
-      key: 'backleague',
+      key: 'backtournament',
     },
     {
       path: '/back/league',
