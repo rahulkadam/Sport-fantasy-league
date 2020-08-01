@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/fantasy/team")
+@CrossOrigin
 public class TeamController {
 
     @Autowired
