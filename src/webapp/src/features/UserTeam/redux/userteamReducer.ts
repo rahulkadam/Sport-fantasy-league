@@ -5,6 +5,9 @@ import {
   FETCH_ALL_PLAYER_LIST_ERROR,
   FETCH_PLAYER_LIST_BY_USER,
   FETCH_PLAYER_LIST_BY_USER_ERROR,
+  UPDATE_INTERNAL_USER_TEAM,
+  FETCH_USER_TEAM,
+  FETCH_USER_TEAM_ERROR,
 } from './userteamConstants';
 
 const initialState: UserTeam = {
@@ -14,6 +17,8 @@ const initialState: UserTeam = {
   statusMessage: '',
   playerList: [],
   userTeamPlayers: [],
+  currentUserTeamPlayers: [],
+  userteam: {},
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
@@ -56,6 +61,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       userLeaguestate = {
         ...state,
         userTeamPlayers: action.userTeamPlayers,
+        currentUserTeamPlayers: action.userTeamPlayers,
         isLoading: false,
       };
       return userLeaguestate;
@@ -66,6 +72,30 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         hasError: true,
         statusMessage:
           'Error Occured while fetching your team, please try again',
+      };
+      return userLeaguestate;
+    case UPDATE_INTERNAL_USER_TEAM:
+      const currentUserTeamPlayers = state.userTeamPlayers.concat(action.rows);
+      userLeaguestate = {
+        ...state,
+        currentUserTeamPlayers: currentUserTeamPlayers,
+        isLoading: false,
+      };
+      return userLeaguestate;
+    case FETCH_USER_TEAM:
+      userLeaguestate = {
+        ...state,
+        userteam: action.userteam,
+        isLoading: false,
+      };
+      return userLeaguestate;
+    case FETCH_USER_TEAM_ERROR:
+      userLeaguestate = {
+        ...state,
+        isLoading: false,
+        hasError: true,
+        statusMessage:
+          'Error Occured while fetching your User team, please try again',
       };
       return userLeaguestate;
     default:

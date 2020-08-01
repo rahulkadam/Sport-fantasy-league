@@ -5,6 +5,7 @@ import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
 import com.garv.satta.fantasy.dto.PlayerDTO;
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueUserTeamConverter;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
@@ -71,7 +72,10 @@ public class LeagueUserTeamService {
         return converter.convertToFullDTO(leagueUserTeam);
     }
 
-    public void addPlayerToUserTeam(Long leagueuserTeamId, Long playerId) {
+    public void addPlayerToUserTeam(RequestDTO dto) {
+        Long leagueuserTeamId = dto.getAddTo();
+        Long playerId = dto.getAdd();
+        List<Long> addList = dto.getAddList();
         addRemovePlayerToUserTeam(leagueuserTeamId, playerId, OperationEnum.ADD);
     }
 

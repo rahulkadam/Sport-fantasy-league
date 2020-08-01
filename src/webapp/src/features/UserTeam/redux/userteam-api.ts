@@ -13,3 +13,7 @@ export function fetchAllPlayerlist() {
 export function fetchPlayerlistByUser(id: number) {
   return Get('/fantasy/player/list/byuser/' + id);
 }
+
+export function fetchUserTeamByUser(id: number) {
+  return Get('/fantasy/userteam/get/user/' + id);
+}
