@@ -7,6 +7,7 @@ import {UserTeam} from 'features/UserTeam';
 import {Tournament} from 'features/admin/Tournament';
 import {SportTeam} from 'features/admin/SportTeam';
 import {Player} from 'features/admin/player';
+import {Venue} from 'features/admin/venue';
 
 export const RouteConfig = {
   PublicRouteConfig: [
@@ -29,6 +30,12 @@ export const RouteConfig = {
       component: <Player />,
       isPrivate: true,
       key: 'backplayer',
+    },
+    {
+      path: '/back/venue',
+      component: <Venue />,
+      isPrivate: true,
+      key: 'backvenue',
     },
     {path: '/login', component: Login, key: 'login'},
     {path: '/home', redirect: '/', isRedirect: true, key: 'home'},

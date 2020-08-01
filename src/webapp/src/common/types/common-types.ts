@@ -5,4 +5,5 @@ export interface RootState {
   tournament: Tournament;
   sportteam: SportTeam;
   playeradmin: Player;
+  venueadmin: Venue;
 }
