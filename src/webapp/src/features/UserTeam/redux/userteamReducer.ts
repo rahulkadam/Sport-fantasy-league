@@ -87,7 +87,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
     case FETCH_USER_TEAM:
       userLeaguestate = {
         ...state,
-        userteam: action.userteam,
+        userteam: action.userteam[0],
         isLoading: false,
       };
       return userLeaguestate;

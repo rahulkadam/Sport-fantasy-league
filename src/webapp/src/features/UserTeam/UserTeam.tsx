@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {UserTeamPlayerDetails} from './component';
+import {UserTeamPlayerDetails, TeamDetails, CreateTeam} from './component';
 import {
   fetchAllPlayerListAction,
   getUserTeamData,
@@ -17,11 +17,13 @@ const UserTeam = () => {
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
   const saveUserTeam = saveUserTeamAction();
   const tabName = 'teamDetails';
+  const isUserTeamAvailable =
+    userteamDataProps.userteam && userteamDataProps.userteam.id;
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
     fetchPlayerList();
-    fetchPlayerListByUser(18);
+    fetchPlayerListByUser(17);
   }, []);
   useEffect(() => {
     console.log('component will Mount, render everytime');
@@ -31,15 +33,16 @@ const UserTeam = () => {
     updateCurrentUserTeam(selectedRows);
   }
 
+  function createTeam(teamName: string) {
+    console.log('creating team :', teamName);
+  }
+
   function renderTeamDetails() {
-    return (
-      <Fragment>
-        <UserTeamPlayerDetails
-          title="Your Fantasy Team"
-          data={userteamDataProps.userTeamPlayers}
-        />
-      </Fragment>
-    );
+    if (isUserTeamAvailable) {
+      return <TeamDetails data={userteamDataProps} />;
+    } else {
+      return <CreateTeam createTeamAction={createTeam} />;
+    }
   }
 
   function saveTeam() {

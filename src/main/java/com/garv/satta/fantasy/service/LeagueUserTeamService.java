@@ -63,6 +63,7 @@ public class LeagueUserTeamService {
     public LeagueUserTeamDTO createLeagueUserTeam(LeagueUserTeamDTO userTeamDTO) {
         LeagueUserTeam leagueUserTeam = converter.convertToFullEntity(userTeamDTO);
         userValidator.validateUserId(userTeamDTO.getUserId());
+        leagueUserTeam.setStatus(Boolean.TRUE);
         leagueUserTeam.setTotal_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
         leagueUserTeam.setTotal_score(0);
         leagueUserTeam.setRemained_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
