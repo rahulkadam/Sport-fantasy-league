@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/fantasy/userteam")
 public class LeagueUserTeamController {
 
@@ -32,9 +33,7 @@ public class LeagueUserTeamController {
 
     @PostMapping(value = "/add/player")
     public String addPlayerToUserTeam(@RequestBody RequestDTO dto) {
-        Long leagueuserTeamId = dto.getAddTo();
-        Long playerId = dto.getAdd();
-        service.addPlayerToUserTeam(leagueuserTeamId, playerId);
+        service.addPlayerToUserTeam(dto);
         return "Player added successfully";
     }
 

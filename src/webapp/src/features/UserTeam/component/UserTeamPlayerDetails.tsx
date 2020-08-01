@@ -3,7 +3,11 @@ import DataTable from 'react-data-table-component';
 import {Form} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 
-const UserTeamPlayerDetails = ({data}: UserTeamPlayerDetails) => {
+const UserTeamPlayerDetails = ({
+  data,
+  title,
+  onRowSelected,
+}: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
 
   function customName(row: any) {
@@ -22,7 +26,7 @@ const UserTeamPlayerDetails = ({data}: UserTeamPlayerDetails) => {
       cell: customName,
     },
     {
-      name: 'T',
+      name: 'Type',
       selector: 'type',
       sortable: true,
     },
@@ -45,9 +49,15 @@ const UserTeamPlayerDetails = ({data}: UserTeamPlayerDetails) => {
     },
   ];
 
-  function onRowSelected(state: any) {
-    console.log(state.name);
+  function onRowSelectedAction(state: any) {
     console.log('Selected Rows: ', state.selectedRows);
+    if (onRowSelected) {
+      onRowSelected(state.selectedRows);
+    }
+  }
+
+  function onRowClickedAction(row: any, e: any) {
+    console.log(row.name);
   }
 
   const renderCustomSearch = useMemo(() => {
@@ -75,13 +85,13 @@ const UserTeamPlayerDetails = ({data}: UserTeamPlayerDetails) => {
       {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
-          title="Your Fantasy Team"
+          title={title}
           columns={columns}
           customStyles={customStyles}
           data={filteredRows}
           selectableRows
-          onRowClicked={onRowSelected}
-          onSelectedRowsChange={onRowSelected}
+          onRowClicked={onRowClickedAction}
+          onSelectedRowsChange={onRowSelectedAction}
           pagination
           paginationPerPage={50}
           paginationResetDefaultPage
