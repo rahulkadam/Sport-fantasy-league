@@ -6,6 +6,7 @@ import leagueReducer from 'features/league/redux/leagueReducer';
 import userteamReducer from 'features/UserTeam/redux/userteamReducer';
 import tournamentReducer from 'features/admin/Tournament/redux/tournamentReducer';
 import sportteamReducer from 'features/admin/SportTeam/redux/sportteamReducer';
+import playerReducer from 'features/admin/player/redux/playerReducer';
 
 const persistenceConfigs = {
   key: 'fantasysport',
@@ -25,6 +26,7 @@ const rootReducer = (history: any) =>
     userteam: userteamReducer,
     tournament: tournamentReducer,
     sportteam: sportteamReducer,
+    playeradmin: playerReducer,
   });
 
 export {rootReducer, persistenceConfigs};
