@@ -27,8 +27,8 @@ const HeaderMenu = () => {
                 User Team
               </Nav.Link>
               {loggedUser.username && (
-                <Nav.Link as={Link} to="/back/team" href="#">
-                  Admin Team
+                <Nav.Link as={Link} to="/back/tournament" href="#">
+                  Tournament
                 </Nav.Link>
               )}
               {loggedUser.username && (
