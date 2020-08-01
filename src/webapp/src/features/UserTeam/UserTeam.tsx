@@ -6,6 +6,7 @@ import {
   getUserTeamData,
   fetchPlayerListByUserAction,
   addRemovePlayerToInternalUserTeamAction,
+  saveUserTeamAction,
 } from './redux';
 import {Button} from 'react-bootstrap';
 
@@ -14,6 +15,7 @@ const UserTeam = () => {
   const fetchPlayerList = fetchAllPlayerListAction();
   const fetchPlayerListByUser = fetchPlayerListByUserAction();
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
+  const saveUserTeam = saveUserTeamAction();
   const tabName = 'teamDetails';
 
   useEffect(() => {
@@ -45,6 +47,8 @@ const UserTeam = () => {
       'saving team with team player',
       userteamDataProps.currentUserTeamPlayers.length
     );
+    const userteamId = 76;
+    saveUserTeam(userteamId, userteamDataProps.currentUserTeamPlayers);
   }
 
   function renderManageTransfer() {

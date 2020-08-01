@@ -3,6 +3,7 @@ import {
   fetchAllPlayerlist,
   fetchPlayerlistByUser,
   fetchUserTeamByUser,
+  saveTeamForUser,
 } from './userteam-api';
 import {
   ACTION_START,
@@ -13,6 +14,8 @@ import {
   FETCH_PLAYER_LIST_BY_USER_ERROR,
   FETCH_USER_TEAM_ERROR,
   FETCH_USER_TEAM,
+  SAVE_USER_TEAM,
+  SAVE_USER_TEAM_ERROR,
 } from './userteamConstants';
 import {dispatchActionWrapper, dispatchAction} from 'common/util';
 
@@ -89,8 +92,32 @@ const addRemovePlayerToInternalUserTeamAction = () => {
   );
 };
 
+const saveUserTeamAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (userteamId: number, playerList: any) => {
+      saveTeamForUser(userteamId, playerList)
+        .then((data: any) => {
+          dispatch({
+            type: SAVE_USER_TEAM,
+            saveuserTeamData: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: SAVE_USER_TEAM_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
 export {
   fetchPlayerListByUserAction,
   fetchAllPlayerListAction,
   addRemovePlayerToInternalUserTeamAction,
+  saveUserTeamAction,
 };

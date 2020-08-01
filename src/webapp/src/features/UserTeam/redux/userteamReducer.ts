@@ -8,6 +8,8 @@ import {
   UPDATE_INTERNAL_USER_TEAM,
   FETCH_USER_TEAM,
   FETCH_USER_TEAM_ERROR,
+  SAVE_USER_TEAM,
+  SAVE_USER_TEAM_ERROR,
 } from './userteamConstants';
 
 const initialState: UserTeam = {
@@ -96,6 +98,21 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         hasError: true,
         statusMessage:
           'Error Occured while fetching your User team, please try again',
+      };
+      return userLeaguestate;
+    case SAVE_USER_TEAM:
+      userLeaguestate = {
+        ...state,
+        statusMessage: action.saveuserTeamData,
+        isLoading: false,
+      };
+      return userLeaguestate;
+    case SAVE_USER_TEAM_ERROR:
+      userLeaguestate = {
+        ...state,
+        isLoading: false,
+        hasError: true,
+        statusMessage: action.data,
       };
       return userLeaguestate;
     default:

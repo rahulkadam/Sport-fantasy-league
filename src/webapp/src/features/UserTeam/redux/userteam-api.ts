@@ -1,8 +1,12 @@
 import {Get, Post} from 'API';
 
-export function joinLeague(leagueCode: any) {
-  return Post('/fantasy/league/join/bycode', {
-    data: {leagueCode: leagueCode, add: 23},
+export function saveTeamForUser(userteamId: number, playerList: any) {
+  const playerIds: any = [];
+  playerList.forEach((player: any) => {
+    playerIds.push(player.id);
+  });
+  return Post('/fantasy/userteam/add/player', {
+    data: {addto: userteamId, addList: playerIds},
   });
 }
 
