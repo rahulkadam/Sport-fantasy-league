@@ -1,10 +1,11 @@
 import React from 'react';
-import Login from '../../features/Authentication/components';
-import PageNotFound from '../../common/components/ErrorPage';
-import {HelpPage, TermsAndConditions} from '../../common/components';
+import Login from 'features/Authentication/components';
+import PageNotFound from 'common/components/ErrorPage';
+import {HelpPage, TermsAndConditions} from 'common/components';
 import {League} from 'features/league';
 import {UserTeam} from 'features/UserTeam';
 import {Tournament} from 'features/admin/Tournament';
+import {SportTeam} from 'features/admin/SportTeam';
 
 export const RouteConfig = {
   PublicRouteConfig: [
@@ -17,10 +18,10 @@ export const RouteConfig = {
       key: 'backtournament',
     },
     {
-      path: '/back/league',
-      component: <League />,
+      path: '/back/team',
+      component: <SportTeam />,
       isPrivate: true,
-      key: 'backleague',
+      key: 'backteam',
     },
     {path: '/login', component: Login, key: 'login'},
     {path: '/home', redirect: '/', isRedirect: true, key: 'home'},

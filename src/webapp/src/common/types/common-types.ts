@@ -3,4 +3,5 @@ export interface RootState {
   league: League;
   userteam: UserTeam;
   tournament: Tournament;
+  sportteam: SportTeam;
 }

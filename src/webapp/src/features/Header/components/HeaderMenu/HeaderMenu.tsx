@@ -32,8 +32,8 @@ const HeaderMenu = () => {
                 </Nav.Link>
               )}
               {loggedUser.username && (
-                <Nav.Link as={Link} to="/back/league" href="#">
-                  Admin League
+                <Nav.Link as={Link} to="/back/team" href="#">
+                  Sport Team
                 </Nav.Link>
               )}
             </Nav>
