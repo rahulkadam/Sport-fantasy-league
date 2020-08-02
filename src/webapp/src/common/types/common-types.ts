@@ -6,4 +6,5 @@ export interface RootState {
   sportteam: SportTeam;
   playeradmin: Player;
   venueadmin: Venue;
+  matchadmin: Match;
 }
