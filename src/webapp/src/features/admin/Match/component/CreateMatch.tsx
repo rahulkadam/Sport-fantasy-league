@@ -1,25 +1,28 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
+import {FantasyDropDown} from 'common/components';
 
 const CreateMatch = (props: CreateMatchProps) => {
   const createMatchAction = props.createMatchAction;
   const venueList = props.venueList;
   const teamList = props.teamList;
-  const [playerName, setPlayerName] = useState('');
+  const tournamentList = props.tournamentList;
+  const [description, setDescription] = useState('');
+  const [tournamentId, setTournamentId] = useState('');
   const [countryName, setCountryName] = useState('INDIA');
   const [type, setType] = useState('BATSMAN');
-  const [value, setValue] = useState('9');
+  const [matchTime, setMatchTime] = useState('');
 
-  function createPlayer() {
-    createMatchAction(playerName, countryName, type, value);
+  function createMatch() {
+    createMatchAction(description, countryName, type, matchTime);
   }
-  function updatePlayerDetails(text: string, type: number) {
+  function updateMatchDetails(text: string, type: number) {
     switch (type) {
       case 1:
-        setPlayerName(text);
+        setDescription(text);
         break;
       case 2:
-        setValue(text);
+        setMatchTime(text);
         break;
       case 3:
         setType(text);
@@ -31,59 +34,77 @@ const CreateMatch = (props: CreateMatchProps) => {
     return;
   }
 
-  function renderCreatePlayer() {
+  const tournamentList1 = [
+    {id: 1, name: 'IPL'},
+    {id: 2, name: 'IPL 20'},
+    {id: 3, name: 'IPL19'},
+  ];
+
+  function onSelectTournament(value: string) {
+    console.log('selected tournamenr', value);
+  }
+
+  function onSelectTeam1(value: string) {
+    console.log('selected team1', value);
+  }
+
+  function onSelectTeam2(value: string) {
+    console.log('selected team2', value);
+  }
+
+  function onSelectVenue(value: string) {
+    console.log('selected venue', value);
+  }
+
+  function renderCreateMatch() {
     return (
       <Fragment>
         Welcome to Fantasy League , you do not have any team, Please Create Team
         <div className="mb-3">
           <Row>
             <Col>
+              <FantasyDropDown
+                onSelect={onSelectTournament}
+                list={tournamentList1}
+              />
+            </Col>
+            <Col>
+              <FantasyDropDown onSelect={onSelectTeam1} list={teamList} />
+            </Col>
+            <Col>
+              <FantasyDropDown onSelect={onSelectTeam2} list={teamList} />
+            </Col>
+            <Col>
+              <FantasyDropDown onSelect={onSelectVenue} list={venueList} />
+            </Col>
+            <Col>
               <FormControl
-                value={playerName}
-                placeholder="Team Name"
-                aria-label="teamName"
+                value={description}
+                placeholder="Description"
+                aria-label="matchName"
                 aria-describedby="basic-addon1"
-                onChange={event => updatePlayerDetails(event.target.value, 1)}
+                onChange={event => updateMatchDetails(event.target.value, 1)}
               />
             </Col>
             <Col>
               <FormControl
-                value={value}
-                placeholder="Player Value"
-                aria-label="playervalue"
+                value={matchTime}
+                placeholder="Match Time"
+                aria-label="matchTime"
                 aria-describedby="basic-addon2"
-                onChange={event => updatePlayerDetails(event.target.value, 2)}
+                onChange={event => updateMatchDetails(event.target.value, 2)}
               />
-            </Col>
-            <Col>
-              <select
-                className="form-control"
-                onChange={event => updatePlayerDetails(event.target.value, 3)}>
-                <option>BATSMAN</option>
-                <option>BOWLER</option>
-                <option>ALLROUNDER</option>
-                <option>WICKETKEEPER</option>
-              </select>
-            </Col>
-            <Col>
-              <select
-                className="form-control"
-                onChange={event => updatePlayerDetails(event.target.value, 4)}>
-                <option>INDIA</option>
-                <option>AUSTRALIA</option>
-                <option>SRILANKA</option>
-              </select>
             </Col>
           </Row>
         </div>
-        <Button variant="primary" onClick={() => createPlayer()}>
-          Create Team
+        <Button variant="primary" onClick={() => createMatch()}>
+          Create Match
         </Button>
       </Fragment>
     );
   }
 
-  return <div>{renderCreatePlayer()}</div>;
+  return <div>{renderCreateMatch()}</div>;
 };
 
 export {CreateMatch};
