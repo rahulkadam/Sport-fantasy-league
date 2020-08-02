@@ -8,3 +8,10 @@ declare type SportTeamDetailsProps = {
   title: string;
   onRowSelected?: any;
 };
+
+declare type UpdateTeamProps = {
+  tournamentList?: any;
+  teamList?: any;
+  addTournamentToTeamAction?: any;
+  loadTournamentList?: any;
+};

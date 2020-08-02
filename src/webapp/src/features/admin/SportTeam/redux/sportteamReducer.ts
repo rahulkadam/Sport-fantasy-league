@@ -12,6 +12,7 @@ const initialState: SportTeam = {
   hasError: false,
   statusMessage: '',
   teamList: [],
+  tournamentList: [],
 };
 
 export default (state: SportTeam = initialState, action: any): SportTeam => {

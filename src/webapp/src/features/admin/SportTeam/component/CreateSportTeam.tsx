@@ -29,7 +29,6 @@ const CreateSportTeam = ({createTeamAction}: CreateSportTeamProps) => {
   function renderCreateTeam() {
     return (
       <Fragment>
-        Welcome to Fantasy League , you do not have any team, Please Create Team
         <div className="mb-3">
           <Row>
             <Col>

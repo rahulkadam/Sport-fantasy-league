@@ -4,4 +4,5 @@ declare type SportTeam = {
   hasError: boolean;
   statusMessage: string;
   teamList: any;
+  tournamentList?: any;
 };
