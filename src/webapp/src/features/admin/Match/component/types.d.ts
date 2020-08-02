@@ -35,3 +35,12 @@ declare type UploadMatchPointProps = {
   loadMatchList?: any;
   loadTeamList?: any;
 };
+
+declare type CreateMatchRequestObject = {
+  description: string;
+  homeTeamId: number;
+  awayTeamId: number;
+  tournamentId: number;
+  venueId: number;
+  isoMatchTime: string;
+};

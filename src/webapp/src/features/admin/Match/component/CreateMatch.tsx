@@ -2,6 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
 import {getVenueData, fetchVenueListAction} from '../../venue/redux';
+import DateTimePicker from 'react-datetime-picker';
 
 const CreateMatch = (props: CreateMatchProps) => {
   const createMatchAction = props.createMatchAction;
@@ -12,50 +13,64 @@ const CreateMatch = (props: CreateMatchProps) => {
   const fetchVenueList = fetchVenueListAction();
   const [description, setDescription] = useState('');
   const [tournamentId, setTournamentId] = useState('');
+  const [homeTeamId, setHomeTeamId] = useState('');
+  const [awayTeamId, setAwayTeamId] = useState('');
+  const [venueId, setVenueId] = useState('');
   const [countryName, setCountryName] = useState('INDIA');
   const [type, setType] = useState('BATSMAN');
-  const [matchTime, setMatchTime] = useState('');
+  const [matchTime, setMatchTime] = useState(new Date());
   useEffect(() => {
     if (!venueList || venueList.length == 0) {
       fetchVenueList();
     }
   }, []);
 
-  function createMatch() {
-    createMatchAction(description, countryName, type, matchTime);
+  function getDefaultId(text: string, list: any[]) {
+    let defaultId = text;
+    if (defaultId.length == 0) {
+      defaultId = list[0].id;
+    }
+    return defaultId;
   }
-  function updateMatchDetails(text: string, type: number) {
+
+  function createMatch() {
+    const isoMatchTime = matchTime.toISOString();
+    const defaultHomeTeamId = getDefaultId(homeTeamId, teamList);
+    const defaultAwayTeamId = getDefaultId(awayTeamId, teamList);
+    const defaultTournamentId = getDefaultId(tournamentId, tournamentList);
+    const defaultVenueId = getDefaultId(venueId, venueList);
+    const requestObject = {
+      description: description,
+      homeTeamId: defaultHomeTeamId,
+      awayTeamId: defaultAwayTeamId,
+      tournamentId: defaultTournamentId,
+      venueId: defaultVenueId,
+      isoMatchTime: isoMatchTime,
+    };
+    createMatchAction(requestObject);
+  }
+  function updateMatchDetails(text: any, type: number) {
     switch (type) {
       case 1:
-        setDescription(text);
+        setTournamentId(text);
         break;
       case 2:
+        setHomeTeamId(text);
+        break;
+      case 3:
+        setAwayTeamId(text);
+        break;
+      case 4:
+        setDescription(text);
+        break;
+      case 5:
         setMatchTime(text);
         break;
-      case 3:
-        setType(text);
-        break;
-      case 3:
-        setCountryName(text);
+      case 6:
+        setVenueId(text);
         break;
     }
     return;
-  }
-
-  function onSelectTournament(value: string) {
-    console.log('selected tournamenr', value);
-  }
-
-  function onSelectTeam1(value: string) {
-    console.log('selected team1', value);
-  }
-
-  function onSelectTeam2(value: string) {
-    console.log('selected team2', value);
-  }
-
-  function onSelectVenue(value: string) {
-    console.log('selected venue', value);
   }
 
   function renderCreateMatch() {
@@ -66,42 +81,63 @@ const CreateMatch = (props: CreateMatchProps) => {
             <Col>Tournament</Col>
             <Col>Home Team</Col>
             <Col>Away Team</Col>
-            <Col>Venue</Col>
-            <Col>Match Name</Col>
-            <Col>Time</Col>
           </Row>
           <Row>
             <Col>
               <FantasyDropDown
-                onSelect={onSelectTournament}
+                onSelect={(value: any) => {
+                  updateMatchDetails(value, 1);
+                }}
                 list={tournamentList}
               />
             </Col>
             <Col>
-              <FantasyDropDown onSelect={onSelectTeam1} list={teamList} />
+              <FantasyDropDown
+                onSelect={(value: any) => {
+                  updateMatchDetails(value, 2);
+                }}
+                list={teamList}
+              />
             </Col>
             <Col>
-              <FantasyDropDown onSelect={onSelectTeam2} list={teamList} />
+              <FantasyDropDown
+                onSelect={(value: any) => {
+                  updateMatchDetails(value, 3);
+                }}
+                list={teamList}
+              />
             </Col>
-            <Col>
-              <FantasyDropDown onSelect={onSelectVenue} list={venueList} />
-            </Col>
+          </Row>
+          <Row>
+            <Col>Match Name</Col>
+            <Col>Time</Col>
+            <Col>Venue</Col>
+          </Row>
+          <Row>
             <Col>
               <FormControl
                 value={description}
                 placeholder="Description"
                 aria-label="matchName"
                 aria-describedby="basic-addon1"
-                onChange={event => updateMatchDetails(event.target.value, 1)}
+                onChange={event => updateMatchDetails(event.target.value, 4)}
               />
             </Col>
             <Col>
-              <FormControl
+              <DateTimePicker
+                onChange={(value: any) => {
+                  updateMatchDetails(value, 5);
+                }}
+                disableClock
                 value={matchTime}
-                placeholder="Match Time"
-                aria-label="matchTime"
-                aria-describedby="basic-addon2"
-                onChange={event => updateMatchDetails(event.target.value, 2)}
+              />
+            </Col>
+            <Col>
+              <FantasyDropDown
+                onSelect={(value: any) => {
+                  updateMatchDetails(value, 6);
+                }}
+                list={venueList}
               />
             </Col>
           </Row>

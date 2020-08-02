@@ -1,13 +1,15 @@
 import {Get, Post} from 'API';
 
-export function createMatch(
-  name: string,
-  country: string,
-  value: number,
-  type: string
-) {
+export function createMatch(requestObject: CreateMatchRequestObject) {
   return Post('/fantasy/match/create', {
-    data: {name: name, country: country, value: value, type: type},
+    data: {
+      description: requestObject.description,
+      matchTime: requestObject.isoMatchTime,
+      venueId: requestObject.venueId,
+      tournament_id: requestObject.tournamentId,
+      team_host_id: requestObject.homeTeamId,
+      team_away_id: requestObject.awayTeamId,
+    },
   });
 }
 

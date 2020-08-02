@@ -33,14 +33,8 @@ const Match = () => {
   useEffect(() => {
     console.log('component will Mount, render everytime');
   });
-  function createMatchFromAdmin(
-    name: string,
-    country: string,
-    type: string,
-    value: number
-  ) {
-    console.log('creating Match :', name);
-    createMatch(name, country, value, type);
+  function createMatchFromAdmin(requestObject: CreateMatchRequestObject) {
+    createMatch(requestObject);
   }
 
   function renderCreateMatch() {
