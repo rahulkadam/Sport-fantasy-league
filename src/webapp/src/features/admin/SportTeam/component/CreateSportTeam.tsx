@@ -1,5 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
+import {FantasyDropDown} from 'common/components';
+import {countryList} from 'common/components/FantasyDropDown';
 
 const CreateSportTeam = ({createTeamAction}: CreateSportTeamProps) => {
   const [teamName, setTeamName] = useState('');
@@ -27,8 +29,12 @@ const CreateSportTeam = ({createTeamAction}: CreateSportTeamProps) => {
   function renderCreateTeam() {
     return (
       <Fragment>
-        Welcome to Fantasy League , you do not have any team, Please Create Team
         <div className="mb-3">
+          <Row>
+            <Col>Team Name</Col>
+            <Col>Owner Name</Col>
+            <Col>Country</Col>
+          </Row>
           <Row>
             <Col>
               <FormControl
@@ -49,13 +55,10 @@ const CreateSportTeam = ({createTeamAction}: CreateSportTeamProps) => {
               />
             </Col>
             <Col>
-              <select
-                className="form-control"
-                onChange={event => updateTeamDetails(event.target.value, 3)}>
-                <option>INDIA</option>
-                <option>AUSTRALIA</option>
-                <option>SRILANKA</option>
-              </select>
+              <FantasyDropDown
+                onSelect={(value: string) => updateTeamDetails(value, 3)}
+                list={countryList}
+              />
             </Col>
           </Row>
         </div>

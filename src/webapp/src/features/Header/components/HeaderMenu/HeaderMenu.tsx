@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Nav, Navbar} from 'react-bootstrap';
 import {Link, Route} from 'react-router-dom';
 
@@ -20,17 +20,21 @@ const HeaderMenu = () => {
           </Navbar.Brand>
           <Navbar.Collapse>
             <Nav>
-              <Nav.Link as={Link} to="/league" href="#">
-                League
+              <Nav.Link
+                as={Link}
+                to={!loggedUser.username ? '/league' : '/back/tournament'}
+                href="#">
+                {!loggedUser.username && 'League'}
+                {loggedUser.username && 'Tournament'}
               </Nav.Link>
-              <Nav.Link as={Link} to="/team" href="#">
-                User Team
-              </Nav.Link>
-              {loggedUser.username && (
-                <Nav.Link as={Link} to="/back/tournament" href="#">
-                  Tournament
-                </Nav.Link>
-              )}
+
+              <Fragment>
+                {!loggedUser.username && (
+                  <Nav.Link as={Link} to="/team" href="#">
+                    User Team
+                  </Nav.Link>
+                )}
+              </Fragment>
               {loggedUser.username && (
                 <Nav.Link as={Link} to="/back/team" href="#">
                   Sport Team

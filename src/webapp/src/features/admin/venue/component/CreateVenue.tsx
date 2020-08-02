@@ -1,5 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
+import {FantasyDropDown} from '../../../../common/components';
+import {countryList} from '../../../../common/components/FantasyDropDown';
 
 const CreateVenue = ({createVenueAction}: CreateVenueProps) => {
   const [venueName, setVenueName] = useState('');
@@ -27,13 +29,15 @@ const CreateVenue = ({createVenueAction}: CreateVenueProps) => {
   function renderCreateVenue() {
     return (
       <Fragment>
-        Welcome to Fantasy League , you do not have any team, Please Create Team
         <div className="mb-3">
+          <Row>
+            <Col>Create Venue</Col>
+          </Row>
           <Row>
             <Col>
               <FormControl
                 value={venueName}
-                placeholder="Team Name"
+                placeholder="Venue Name"
                 aria-label="teamName"
                 aria-describedby="basic-addon1"
                 onChange={event => updateVenueDetails(event.target.value, 1)}
@@ -49,17 +53,15 @@ const CreateVenue = ({createVenueAction}: CreateVenueProps) => {
               />
             </Col>
             <Col>
-              <select
-                className="form-control"
-                onChange={event => updateVenueDetails(event.target.value, 3)}>
-                <option>INDIA</option>
-                <option>AUSTRALIA</option>
-              </select>
+              <FantasyDropDown
+                onSelect={(value: string) => updateVenueDetails(value, 3)}
+                list={countryList}
+              />
             </Col>
           </Row>
         </div>
         <Button variant="primary" onClick={() => createVenue()}>
-          Create Team
+          Create Venue
         </Button>
       </Fragment>
     );

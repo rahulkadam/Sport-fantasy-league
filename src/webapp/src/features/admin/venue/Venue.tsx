@@ -27,7 +27,7 @@ const Venue = () => {
   function renderVenueListView() {
     return (
       <div>
-        <VenueDetails title="Player List" data={dataProps.venueList} />
+        <VenueDetails title="Venue List" data={dataProps.venueList} />
       </div>
     );
   }

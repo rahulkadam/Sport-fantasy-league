@@ -61,6 +61,13 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
       <Fragment>
         <div className="mb-3">
           <Row>
+            <Col>Tournament</Col>
+            <Col>Match</Col>
+            <Col>Winner Team</Col>
+            <Col>Player of the Match</Col>
+            <Col>Comments</Col>
+          </Row>
+          <Row>
             <Col>
               <FantasyDropDown
                 onSelect={onSelectTournament}

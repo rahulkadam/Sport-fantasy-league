@@ -59,8 +59,15 @@ const CreateMatch = (props: CreateMatchProps) => {
   function renderCreateMatch() {
     return (
       <Fragment>
-        Welcome to Fantasy League , you do not have any team, Please Create Team
         <div className="mb-3">
+          <Row>
+            <Col>Tournament</Col>
+            <Col>Home Team</Col>
+            <Col>Away Team</Col>
+            <Col>Venue</Col>
+            <Col>Match Name</Col>
+            <Col>Time</Col>
+          </Row>
           <Row>
             <Col>
               <FantasyDropDown

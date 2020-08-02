@@ -1,9 +1,11 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
+import {FantasyDropDown} from 'common/components';
+import {countryList, sportList} from 'common/components/FantasyDropDown';
 
 const CreateTournament = ({createTournamentAction}: CreateTournamentProps) => {
   const [tournamentName, setTournamentName] = useState('');
-  const [countryName, setCountryName] = useState('');
+  const [countryName, setCountryName] = useState('INDIA');
   const [sportName, setSportName] = useState('CRICKET');
 
   function createTeam() {
@@ -24,53 +26,45 @@ const CreateTournament = ({createTournamentAction}: CreateTournamentProps) => {
     return;
   }
 
-  function renderCreateTeam() {
+  function renderCreateTournament() {
     return (
       <Fragment>
-        Welcome to Fantasy League , you do not have any team, Please Create Team
         <div className="mb-3">
+          <Row>
+            <Col>Create Tournament</Col>
+          </Row>
           <Row>
             <Col>
               <FormControl
                 value={tournamentName}
-                placeholder="Team Name"
-                aria-label="teamName"
-                aria-describedby="basic-addon1"
+                placeholder="Tournament Name"
                 onChange={event =>
                   updateTournamentDetails(event.target.value, 1)
                 }
               />
             </Col>
             <Col>
-              <select
-                className="form-control"
-                onChange={event =>
-                  updateTournamentDetails(event.target.value, 3)
-                }>
-                <option>CRICKET</option>
-              </select>
+              <FantasyDropDown
+                onSelect={(value: string) => updateTournamentDetails(value, 2)}
+                list={sportList}
+              />
             </Col>
             <Col>
-              <FormControl
-                value={countryName}
-                placeholder="Country Name"
-                aria-label="countryName"
-                aria-describedby="basic-addon3"
-                onChange={event =>
-                  updateTournamentDetails(event.target.value, 3)
-                }
+              <FantasyDropDown
+                onSelect={(value: string) => updateTournamentDetails(value, 3)}
+                list={countryList}
               />
             </Col>
           </Row>
         </div>
         <Button variant="primary" onClick={() => createTeam()}>
-          Create Team
+          Create Tournament
         </Button>
       </Fragment>
     );
   }
 
-  return <div>{renderCreateTeam()}</div>;
+  return <div>{renderCreateTournament()}</div>;
 };
 
 export {CreateTournament};
