@@ -1,6 +1,11 @@
 import React, {useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {MatchDetails, CreateMatch} from './component';
+import {
+  MatchDetails,
+  CreateMatch,
+  UploadMatchResult,
+  UploadMatchPoint,
+} from './component';
 import {fetchMatchListAction, createMatchAction, getMatchData} from './redux';
 
 const Match = () => {
@@ -37,6 +42,32 @@ const Match = () => {
       </div>
     );
   }
+  function uploadMatchResultAction() {
+    console.log('upload match result');
+  }
+  function renderUploadMatchResult() {
+    return (
+      <UploadMatchResult
+        uploadMatchResultAction={uploadMatchResultAction}
+        data={dataProps}
+        matchList={dataProps.matchList}
+        teamList={dataProps.teamList}
+        playerList={dataProps.playerList}
+      />
+    );
+  }
+
+  function renderUploadMatchPoint() {
+    return (
+      <UploadMatchPoint
+        uploadMatchResultAction={uploadMatchResultAction}
+        data={dataProps}
+        matchList={dataProps.matchList}
+        teamList={dataProps.teamList}
+        playerList={dataProps.playerList}
+      />
+    );
+  }
 
   const tabConfig: TabConfig[] = [
     {
@@ -48,6 +79,16 @@ const Match = () => {
       key: 'createMatch',
       title: 'Create Match',
       renderfunction: renderCreateMatch(),
+    },
+    {
+      key: 'uploadmatchResult',
+      title: 'Upload Match Result',
+      renderfunction: renderUploadMatchResult(),
+    },
+    {
+      key: 'uploadmatchPoint',
+      title: 'Upload Match Point',
+      renderfunction: renderUploadMatchPoint(),
     },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {

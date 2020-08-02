@@ -62,8 +62,8 @@ const TabContainer = ({tabConfig, defaultKey}: TabContainerProps) => {
       <div>
         <Tab.Container id="left-tabs-example" defaultActiveKey={defaultKey}>
           <Row>
-            <Col sm={3}>{renderLeftColumnPane()}</Col>
-            <Col sm={9}>{renderRightPage()}</Col>
+            <Col sm={2}>{renderLeftColumnPane()}</Col>
+            <Col sm={10}>{renderRightPage()}</Col>
           </Row>
         </Tab.Container>
       </div>

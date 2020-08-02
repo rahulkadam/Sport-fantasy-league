@@ -11,3 +11,21 @@ declare type MatchDetailsProps = {
   title: string;
   onRowSelected?: any;
 };
+
+declare type UploadMatchResultProps = {
+  uploadMatchResultAction: any;
+  data: any;
+  matchList: any;
+  teamList: any;
+  playerList: any;
+  tournamentList?: any;
+};
+
+declare type UploadMatchPointProps = {
+  uploadMatchResultAction: any;
+  data: any;
+  matchList: any;
+  teamList: any;
+  playerList: any;
+  tournamentList?: any;
+};

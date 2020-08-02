@@ -83,7 +83,7 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
 
   return (
     <div>
-      {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
+      {data && data.length == 0 && <div>List is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
           title={title}
