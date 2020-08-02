@@ -14,6 +14,10 @@ public class MatchDTO extends BaseDTO {
     private Long team_host_id;
     private Long team_away_id;
     private Long tournament_id;
+    private String team_host_name;
+    private String team_away_name;
+    private String tournament_name;
+    private String venue_name;
     private VenueDTO venueDTO;
     private TeamDTO team_hostTeamDTO;
     private TeamDTO team_awayTeamDTO;

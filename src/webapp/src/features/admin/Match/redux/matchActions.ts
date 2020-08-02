@@ -37,8 +37,8 @@ const createMatchAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (name: string, country: string, value: number, type: string) => {
-      createMatch(name, country, value, type)
+    (matchRequestObject: CreateMatchRequestObject) => {
+      createMatch(matchRequestObject)
         .then((data: any) => {
           dispatch({
             type: CREATE_MATCH,

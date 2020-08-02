@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Button, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
+import {getIdFromSelectList} from '../../../../common/util';
 
 const UpdatePlayer = (props: UpdatePlayerProps) => {
   const playerList = props.playerList;
@@ -15,24 +16,17 @@ const UpdatePlayer = (props: UpdatePlayerProps) => {
     }
   }, []);
   function updatePlayerWithTeam() {
-    let playerDefaultId = playerId;
-    let teamDefaultId = teamId;
-    if (playerDefaultId.length == 0) {
-      playerDefaultId = playerList[0].id;
-    }
-
-    if (teamDefaultId.length == 0) {
-      teamDefaultId = teamList[0].id;
-    }
-    addPlayerToTeam(teamDefaultId, playerDefaultId);
+    const playerDefaultId = getIdFromSelectList(playerId, playerList);
+    const teamDefaultId = getIdFromSelectList(teamId, teamList);
+    addPlayerToTeam(playerDefaultId, teamDefaultId);
   }
   function updatePlayerDetails(text: string, type: number) {
     switch (type) {
       case 1:
-        setTeamId(text);
+        setPlayerId(text);
         break;
       case 2:
-        setPlayerId(text);
+        setTeamId(text);
         break;
     }
     return;

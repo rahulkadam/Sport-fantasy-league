@@ -33,6 +33,12 @@ const PlayerDetails = ({data, title}: PlayerDetailsProps) => {
       right: true,
     },
     {
+      name: 'Teams',
+      selector: 'teamsNameList',
+      sortable: true,
+      right: true,
+    },
+    {
       name: 'Country',
       selector: 'country',
       sortable: true,

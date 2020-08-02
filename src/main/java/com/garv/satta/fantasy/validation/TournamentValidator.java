@@ -39,9 +39,9 @@ public class TournamentValidator {
         List<Team> teamList = tournament.getTeams();
         List<Long> tournamentTeamIds = teamList.stream().map(team -> team.getId()).collect(Collectors.toList());
 
-        teamIdList.removeIf(te -> tournamentTeamIds.remove(te));
+        long emptyList = teamIdList.stream().filter(teamId -> tournamentTeamIds.contains(teamId)).count();
 
-        if (teamIdList != null) {
+        if (emptyList == teamIdList.size()) {
             throw new GenericException("Team is not exist in Tournament : " + tournament + " team: " + teamIdList);
         }
     }

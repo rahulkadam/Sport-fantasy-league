@@ -1,7 +1,12 @@
 import React, {useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
 import {SportTeamDetails, CreateSportTeam} from './component';
-import {fetchTeamListAction, createTeamAction, getTeamData} from './redux';
+import {
+  fetchTeamListAction,
+  createTeamAction,
+  getTeamData,
+  addTournamentToTeamAction,
+} from './redux';
 import {
   fetchTournamentListAction,
   getTournamentData,
@@ -13,6 +18,7 @@ const SportTeam = () => {
   const dataProps = getTeamData();
   const fetchTeamList = fetchTeamListAction();
   const fetchTournamentList = fetchTournamentListAction();
+  const addTournamentToTeam = addTournamentToTeamAction();
   const createTournamentTeam = createTeamAction();
   const tabName = 'teamoverview';
 
@@ -28,9 +34,12 @@ const SportTeam = () => {
     createTournamentTeam(name, country, sport);
   }
 
-  function addTournamentToTeamAction(teamId: number, tournamentId: number) {
+  /*
+  function addTournamentToTeam(teamId: number, tournamentId: number) {
     console.log('id ', tournamentId);
+    addTournamentToTeamAction(teamId, tournamentId);
   }
+  */
 
   function renderCreateTeam() {
     return <CreateSportTeam createTeamAction={createTeam} />;
@@ -53,7 +62,7 @@ const SportTeam = () => {
       <UpdateTeam
         teamList={dataProps.teamList}
         tournamentList={tournamentData.tournamentList}
-        addTournamentToTeamAction={addTournamentToTeamAction}
+        addTournamentToTeamAction={addTournamentToTeam}
         loadTournamentList={loadTournamentList}
       />
     );

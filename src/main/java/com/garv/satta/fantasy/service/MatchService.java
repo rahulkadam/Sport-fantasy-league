@@ -30,7 +30,7 @@ public class MatchService {
 
     public List<MatchDTO> getMatchList() {
         List<Match> matches = repository.findAll();
-        return converter.convertToDTOList(matches);
+        return converter.convertToFullDTOList(matches);
     }
 
     public MatchDTO getMatchById(Long id) {

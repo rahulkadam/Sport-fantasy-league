@@ -33,7 +33,7 @@ public class PlayerService {
 
     public List<PlayerDTO> getPlayerList() {
         List<Player> playerList = playerRepository.findAll();
-        return playerConverter.convertToDTOList(playerList);
+        return playerConverter.convertToFullDTOList(playerList);
     }
 
     public PlayerDTO createPlayer(PlayerDTO playerDTO) {

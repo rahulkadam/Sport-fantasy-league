@@ -1,5 +1,9 @@
 import {useDispatch} from 'react-redux';
-import {createTeam, fetchAllTeamList} from './sportteam-api';
+import {
+  createTeam,
+  fetchAllTeamList,
+  addTournamentToTeam,
+} from './sportteam-api';
 import {
   ACTION_START,
   CREATE_SPORT_TEAM,
@@ -55,4 +59,27 @@ const createTeamAction = () => {
   );
 };
 
-export {fetchTeamListAction, createTeamAction};
+const addTournamentToTeamAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (teamId: number, tournamentId: number) => {
+      addTournamentToTeam(teamId, tournamentId)
+        .then((data: any) => {
+          dispatch({
+            type: CREATE_SPORT_TEAM,
+            message: 'Created successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: CREATE_SPORT_TEAM_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
+export {fetchTeamListAction, createTeamAction, addTournamentToTeamAction};

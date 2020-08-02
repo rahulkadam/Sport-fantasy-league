@@ -9,3 +9,9 @@ export function createTeam(name: string, country: string, owner: string) {
 export function fetchAllTeamList() {
   return Get('/fantasy/team/list');
 }
+
+export function addTournamentToTeam(teamId: number, tournamentId: number) {
+  return Post('/fantasy/team/add/tournament', {
+    data: {addTo: teamId, add: tournamentId},
+  });
+}
