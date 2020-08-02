@@ -15,7 +15,16 @@ const UpdateTeam = (props: UpdateTeamProps) => {
     }
   }, []);
   function createTeam() {
-    addTournamentToTeam(teamId, tournamentId);
+    let tournamentDefaultId = tournamentId;
+    let teamDefaultId = teamId;
+    if (tournamentDefaultId.length == 0) {
+      tournamentDefaultId = tournamentList[0].id;
+    }
+
+    if (teamDefaultId.length == 0) {
+      teamDefaultId = teamList[0].id;
+    }
+    addTournamentToTeam(teamDefaultId, tournamentDefaultId);
   }
   function updateTeamDetails(text: string, type: number) {
     switch (type) {

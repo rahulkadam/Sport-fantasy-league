@@ -29,7 +29,7 @@ const SportTeam = () => {
   }
 
   function addTournamentToTeamAction(teamId: number, tournamentId: number) {
-    console.log('id ', teamId);
+    console.log('id ', tournamentId);
   }
 
   function renderCreateTeam() {

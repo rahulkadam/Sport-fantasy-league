@@ -57,6 +57,14 @@ const UploadMatchPoint = (props: UploadMatchPointProps) => {
       <Fragment>
         <div className="mb-3">
           <Row>
+            <Col>Match</Col>
+            <Col>Player</Col>
+            <Col>Point</Col>
+            <Col>Runs</Col>
+            <Col>Wickets</Col>
+            <Col>Catches</Col>
+          </Row>
+          <Row>
             <Col>
               <FantasyDropDown onSelect={onSelectMatch} list={matchList} />
             </Col>

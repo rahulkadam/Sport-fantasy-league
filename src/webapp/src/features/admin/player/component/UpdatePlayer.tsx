@@ -14,8 +14,17 @@ const UpdatePlayer = (props: UpdatePlayerProps) => {
       loadTeamData();
     }
   }, []);
-  function createTeam() {
-    addPlayerToTeam(teamId, playerId);
+  function updatePlayerWithTeam() {
+    let playerDefaultId = playerId;
+    let teamDefaultId = teamId;
+    if (playerDefaultId.length == 0) {
+      playerDefaultId = playerList[0].id;
+    }
+
+    if (teamDefaultId.length == 0) {
+      teamDefaultId = teamList[0].id;
+    }
+    addPlayerToTeam(teamDefaultId, playerDefaultId);
   }
   function updatePlayerDetails(text: string, type: number) {
     switch (type) {
@@ -52,7 +61,7 @@ const UpdatePlayer = (props: UpdatePlayerProps) => {
             </Col>
           </Row>
         </div>
-        <Button variant="primary" onClick={() => createTeam()}>
+        <Button variant="primary" onClick={() => updatePlayerWithTeam()}>
           Add Player To Team
         </Button>
       </Fragment>
