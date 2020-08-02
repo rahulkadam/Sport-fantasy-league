@@ -31,6 +31,11 @@ const CreateSportTeam = ({createTeamAction}: CreateSportTeamProps) => {
       <Fragment>
         <div className="mb-3">
           <Row>
+            <Col>Team Name</Col>
+            <Col>Owner Name</Col>
+            <Col>Country</Col>
+          </Row>
+          <Row>
             <Col>
               <FormControl
                 value={teamName}

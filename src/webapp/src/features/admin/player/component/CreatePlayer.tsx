@@ -35,7 +35,10 @@ const CreatePlayer = ({createPlayerAction}: CreatePlayerProps) => {
       <Fragment>
         <div className="mb-3">
           <Row>
-            <Col>Create Player</Col>
+            <Col>Player Name</Col>
+            <Col>Player Value</Col>
+            <Col>Type</Col>
+            <Col>Country</Col>
           </Row>
           <Row>
             <Col>

@@ -49,10 +49,6 @@ const SportTeam = () => {
   }
 
   function renderUpdateTeam() {
-    if (tournamentData.tournamentList.length == 0) {
-      console.log('loading tournament', tournamentData.tournamentList.length);
-      // fetchTournamentList();
-    }
     return (
       <UpdateTeam
         teamList={dataProps.teamList}

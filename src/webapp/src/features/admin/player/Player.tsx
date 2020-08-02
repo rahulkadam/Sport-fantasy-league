@@ -1,15 +1,18 @@
 import React, {useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {PlayerDetails, CreatePlayer} from './component';
+import {PlayerDetails, CreatePlayer, UpdatePlayer} from './component';
 import {
   fetchPlayerListAction,
   createPlayerAction,
   getPlayerData,
 } from './redux';
+import {getTeamData, fetchTeamListAction} from '../SportTeam/redux';
 
 const Player = () => {
   const dataProps = getPlayerData();
+  const teamDataProps = getTeamData();
   const fetchPlayerList = fetchPlayerListAction();
+  const fetchTeamList = fetchTeamListAction();
   const createPlayer = createPlayerAction();
   const tabName = 'playeroverview';
 
@@ -34,6 +37,21 @@ const Player = () => {
     return <CreatePlayer createPlayerAction={createPlayerFromAdmin} />;
   }
 
+  function addPlayerToTeamAction(playerId: number, teamId: number) {
+    console.log('playerId', playerId);
+  }
+
+  function renderUpdatePlayer() {
+    return (
+      <UpdatePlayer
+        addPlayerToTeamAction={addPlayerToTeamAction}
+        teamList={teamDataProps.teamList}
+        playerList={dataProps.playerList}
+        loadTeamList={fetchTeamList}
+      />
+    );
+  }
+
   function renderTeamListView() {
     return (
       <div>
@@ -52,6 +70,11 @@ const Player = () => {
       key: 'createPlayer',
       title: 'Create Player',
       renderfunction: renderCreatePlayer(),
+    },
+    {
+      key: 'updatePlayer',
+      title: 'Update Player',
+      renderfunction: renderUpdatePlayer(),
     },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {

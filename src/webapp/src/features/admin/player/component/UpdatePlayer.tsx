@@ -2,64 +2,64 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {Button, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
 
-const UpdateTeam = (props: UpdateTeamProps) => {
-  const tournamentList = props.tournamentList;
+const UpdatePlayer = (props: UpdatePlayerProps) => {
+  const playerList = props.playerList;
   const teamList = props.teamList;
-  const addTournamentToTeam = props.addTournamentToTeamAction;
-  const loadTournamentData = props.loadTournamentList;
+  const addPlayerToTeam = props.addPlayerToTeamAction;
+  const loadTeamData = props.loadTeamList;
   const [teamId, setTeamId] = useState('');
-  const [tournamentId, setTournamentId] = useState('');
+  const [playerId, setPlayerId] = useState('');
   useEffect(() => {
-    if (!tournamentList || tournamentList.length == 0) {
-      loadTournamentData();
+    if (!teamList || teamList.length == 0) {
+      loadTeamData();
     }
   }, []);
   function createTeam() {
-    addTournamentToTeam(teamId, tournamentId);
+    addPlayerToTeam(teamId, playerId);
   }
-  function updateTeamDetails(text: string, type: number) {
+  function updatePlayerDetails(text: string, type: number) {
     switch (type) {
       case 1:
         setTeamId(text);
         break;
       case 2:
-        setTournamentId(text);
+        setPlayerId(text);
         break;
     }
     return;
   }
 
-  function renderUpdateTeam() {
+  function renderPlayerTeam() {
     return (
       <Fragment>
         <div className="mb-3">
           <Row>
+            <Col>Select Player</Col>
             <Col>Select Team</Col>
-            <Col>Select Tournament</Col>
           </Row>
           <Row>
             <Col>
               <FantasyDropDown
-                onSelect={(value: string) => updateTeamDetails(value, 1)}
-                list={teamList}
+                onSelect={(value: string) => updatePlayerDetails(value, 1)}
+                list={playerList}
               />
             </Col>
             <Col>
               <FantasyDropDown
-                onSelect={(value: string) => updateTeamDetails(value, 2)}
-                list={tournamentList}
+                onSelect={(value: string) => updatePlayerDetails(value, 2)}
+                list={teamList}
               />
             </Col>
           </Row>
         </div>
         <Button variant="primary" onClick={() => createTeam()}>
-          Add Team To Tournament
+          Add Player To Team
         </Button>
       </Fragment>
     );
   }
 
-  return <div>{renderUpdateTeam()}</div>;
+  return <div>{renderPlayerTeam()}</div>;
 };
 
-export {UpdateTeam};
+export {UpdatePlayer};

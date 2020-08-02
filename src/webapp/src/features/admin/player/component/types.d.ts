@@ -8,3 +8,9 @@ declare type PlayerDetailsProps = {
   title: string;
   onRowSelected?: any;
 };
+declare type UpdatePlayerProps = {
+  playerList?: any;
+  teamList?: any;
+  addPlayerToTeamAction?: any;
+  loadTeamList?: any;
+};
