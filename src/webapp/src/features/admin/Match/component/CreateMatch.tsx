@@ -1,17 +1,25 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
+import {getVenueData, fetchVenueListAction} from '../../venue/redux';
 
 const CreateMatch = (props: CreateMatchProps) => {
   const createMatchAction = props.createMatchAction;
-  const venueList = props.venueList;
   const teamList = props.teamList;
   const tournamentList = props.tournamentList;
+  const venueProps = getVenueData();
+  const venueList = venueProps.venueList;
+  const fetchVenueList = fetchVenueListAction();
   const [description, setDescription] = useState('');
   const [tournamentId, setTournamentId] = useState('');
   const [countryName, setCountryName] = useState('INDIA');
   const [type, setType] = useState('BATSMAN');
   const [matchTime, setMatchTime] = useState('');
+  useEffect(() => {
+    if (!venueList || venueList.length == 0) {
+      fetchVenueList();
+    }
+  }, []);
 
   function createMatch() {
     createMatchAction(description, countryName, type, matchTime);
@@ -33,12 +41,6 @@ const CreateMatch = (props: CreateMatchProps) => {
     }
     return;
   }
-
-  const tournamentList1 = [
-    {id: 1, name: 'IPL'},
-    {id: 2, name: 'IPL 20'},
-    {id: 3, name: 'IPL19'},
-  ];
 
   function onSelectTournament(value: string) {
     console.log('selected tournamenr', value);
@@ -72,7 +74,7 @@ const CreateMatch = (props: CreateMatchProps) => {
             <Col>
               <FantasyDropDown
                 onSelect={onSelectTournament}
-                list={tournamentList1}
+                list={tournamentList}
               />
             </Col>
             <Col>

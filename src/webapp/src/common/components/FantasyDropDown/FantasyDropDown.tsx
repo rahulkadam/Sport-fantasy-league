@@ -7,7 +7,7 @@ const FantasyDropDown = ({onSelect, list}: FantasyDropDown) => {
       list.forEach((dropDownItem: any) => {
         optionList.push(
           <option key={dropDownItem.id} value={dropDownItem.id}>
-            {dropDownItem.name}
+            {dropDownItem.name || dropDownItem.description}
           </option>
         );
       });

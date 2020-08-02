@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
 
@@ -8,11 +8,25 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
   const teamList = props.teamList;
   const matchList = props.matchList;
   const tournamentList = props.tournamentList;
+  const loadTournamentList = props.loadTournamentList;
+  const loadPlayerList = props.loadPlayerList;
+  const loadTeamList = props.loadTeamList;
   const [description, setDescription] = useState('');
   const [countryName, setCountryName] = useState('INDIA');
   const [type, setType] = useState('BATSMAN');
   const [matchTime, setMatchTime] = useState('');
+  useEffect(() => {
+    if (!teamList || teamList.length == 0) {
+      loadTeamList();
+    }
+    if (!playerList || playerList.length == 0) {
+      loadPlayerList();
+    }
 
+    if (!tournamentList || tournamentList.length == 0) {
+      loadTournamentList();
+    }
+  }, []);
   function uploadMatchResult() {
     uploadMatchResultAction(description, countryName, type, matchTime);
   }
@@ -33,13 +47,6 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
     }
     return;
   }
-
-  const tournamentList1 = [
-    {id: 1, name: 'IPL'},
-    {id: 2, name: 'IPL 20'},
-    {id: 3, name: 'IPL19'},
-  ];
-
   function onSelectTournament(value: string) {
     console.log('selected Match', value);
   }
@@ -71,7 +78,7 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
             <Col>
               <FantasyDropDown
                 onSelect={onSelectTournament}
-                list={tournamentList1}
+                list={tournamentList}
               />
             </Col>
             <Col>

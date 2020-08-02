@@ -7,10 +7,22 @@ import {
   UploadMatchPoint,
 } from './component';
 import {fetchMatchListAction, createMatchAction, getMatchData} from './redux';
+import {fetchTeamListAction, getTeamData} from '../SportTeam/redux';
+import {fetchPlayerListAction, getPlayerData} from '../player/redux';
+import {
+  fetchTournamentListAction,
+  getTournamentData,
+} from '../Tournament/redux';
 
 const Match = () => {
-  const dataProps = getMatchData();
+  const matchProps = getMatchData();
+  const playerProps = getPlayerData();
+  const teamProps = getTeamData();
   const fetchMatchList = fetchMatchListAction();
+  const fetchTeamList = fetchTeamListAction();
+  const fetchPlayerList = fetchPlayerListAction();
+  const fetchTournamentList = fetchTournamentListAction();
+  const tournamentProps = getTournamentData();
   const createMatch = createMatchAction();
   const tabName = 'matchoverview';
 
@@ -32,13 +44,19 @@ const Match = () => {
   }
 
   function renderCreateMatch() {
-    return <CreateMatch createMatchAction={createMatchFromAdmin} />;
+    return (
+      <CreateMatch
+        createMatchAction={createMatchFromAdmin}
+        teamList={teamProps.teamList}
+        tournamentList={tournamentProps.tournamentList}
+      />
+    );
   }
 
   function renderMatchListView() {
     return (
       <div>
-        <MatchDetails title="Match List" data={dataProps.matchList} />
+        <MatchDetails title="Match List" data={matchProps.matchList} />
       </div>
     );
   }
@@ -49,10 +67,14 @@ const Match = () => {
     return (
       <UploadMatchResult
         uploadMatchResultAction={uploadMatchResultAction}
-        data={dataProps}
-        matchList={dataProps.matchList}
-        teamList={dataProps.teamList}
-        playerList={dataProps.playerList}
+        data={matchProps}
+        matchList={matchProps.matchList}
+        teamList={teamProps.teamList}
+        playerList={playerProps.playerList}
+        tournamentList={tournamentProps.tournamentList}
+        loadTeamList={fetchTeamList}
+        loadPlayerList={fetchPlayerList}
+        loadTournamentList={fetchTournamentList}
       />
     );
   }
@@ -61,10 +83,13 @@ const Match = () => {
     return (
       <UploadMatchPoint
         uploadMatchResultAction={uploadMatchResultAction}
-        data={dataProps}
-        matchList={dataProps.matchList}
-        teamList={dataProps.teamList}
-        playerList={dataProps.playerList}
+        data={matchProps}
+        matchList={matchProps.matchList}
+        teamList={teamProps.teamList}
+        playerList={playerProps.playerList}
+        loadTeamList={fetchTeamList}
+        loadMatchList={fetchMatchList}
+        loadPlayerList={fetchPlayerList}
       />
     );
   }
@@ -92,12 +117,12 @@ const Match = () => {
     },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {
-    const statusClassName = dataProps.hasError ? 'error' : 'success';
+    const statusClassName = matchProps.hasError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
   return (
     <div>
-      {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
+      {renderStatusMessage(matchProps.hasError, matchProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>
   );

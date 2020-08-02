@@ -22,6 +22,7 @@ public class Team extends BaseDaoObject {
     @NotNull
     private String Country;
     private String owner;
+    private String shortName;
 
     @ManyToMany
     @JoinTable(

@@ -15,6 +15,7 @@ public class TeamDTO extends BaseDTO {
     private String name;
     private String country;
     private String owner;
+    private String shortName;
     private List<Long> tournamentIds;
     private List<TournamentDTO> tournamentDTOList;
 }
