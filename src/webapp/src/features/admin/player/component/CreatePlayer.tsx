@@ -1,5 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
+import {FantasyDropDown} from 'common/components';
+import {countryList, PlayerTypeList} from 'common/components/FantasyDropDown';
 
 const CreatePlayer = ({createPlayerAction}: CreatePlayerProps) => {
   const [playerName, setPlayerName] = useState('');
@@ -21,7 +23,7 @@ const CreatePlayer = ({createPlayerAction}: CreatePlayerProps) => {
       case 3:
         setType(text);
         break;
-      case 3:
+      case 4:
         setCountryName(text);
         break;
     }
@@ -31,13 +33,15 @@ const CreatePlayer = ({createPlayerAction}: CreatePlayerProps) => {
   function renderCreatePlayer() {
     return (
       <Fragment>
-        Welcome to Fantasy League , you do not have any team, Please Create Team
         <div className="mb-3">
+          <Row>
+            <Col>Create Player</Col>
+          </Row>
           <Row>
             <Col>
               <FormControl
                 value={playerName}
-                placeholder="Team Name"
+                placeholder="Player Name"
                 aria-label="teamName"
                 aria-describedby="basic-addon1"
                 onChange={event => updatePlayerDetails(event.target.value, 1)}
@@ -53,28 +57,21 @@ const CreatePlayer = ({createPlayerAction}: CreatePlayerProps) => {
               />
             </Col>
             <Col>
-              <select
-                className="form-control"
-                onChange={event => updatePlayerDetails(event.target.value, 3)}>
-                <option>BATSMAN</option>
-                <option>BOWLER</option>
-                <option>ALLROUNDER</option>
-                <option>WICKETKEEPER</option>
-              </select>
+              <FantasyDropDown
+                onSelect={(value: string) => updatePlayerDetails(value, 3)}
+                list={PlayerTypeList}
+              />
             </Col>
             <Col>
-              <select
-                className="form-control"
-                onChange={event => updatePlayerDetails(event.target.value, 4)}>
-                <option>INDIA</option>
-                <option>AUSTRALIA</option>
-                <option>SRILANKA</option>
-              </select>
+              <FantasyDropDown
+                onSelect={(value: string) => updatePlayerDetails(value, 4)}
+                list={countryList}
+              />
             </Col>
           </Row>
         </div>
         <Button variant="primary" onClick={() => createPlayer()}>
-          Create Team
+          Create Player
         </Button>
       </Fragment>
     );

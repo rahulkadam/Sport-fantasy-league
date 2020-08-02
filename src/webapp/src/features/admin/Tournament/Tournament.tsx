@@ -33,7 +33,7 @@ const Tournament = () => {
     return (
       <div>
         <TournamentDetails
-          title="Your Selected Fantasy Team"
+          title="Tournament List"
           data={dataProps.tournamentList}
         />
       </div>
@@ -58,7 +58,6 @@ const Tournament = () => {
   }
   return (
     <div>
-      Welcome to Tournament Team List with
       {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>

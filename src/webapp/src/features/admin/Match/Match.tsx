@@ -97,7 +97,6 @@ const Match = () => {
   }
   return (
     <div>
-      Welcome to Match List with
       {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>

@@ -15,3 +15,7 @@ export const PlayerTypeList = [
   {id: 'WICKETKEEPER', name: 'WICKETKEEPER'},
   {id: 'ALLROUNDER', name: 'ALLROUNDER'},
 ];
+export const sportList = [
+  {id: 'CRICKET', name: 'CRICKET'},
+  {id: 'FOOTBALL', name: 'FOOTBALL'},
+];

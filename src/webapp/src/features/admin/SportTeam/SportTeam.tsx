@@ -51,7 +51,6 @@ const SportTeam = () => {
   }
   return (
     <div>
-      Welcome to Team List with
       {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>
