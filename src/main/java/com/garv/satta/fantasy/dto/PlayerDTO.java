@@ -15,4 +15,5 @@ public class PlayerDTO extends BaseDTO {
     private float value;
     private List<Long> teamIds;
     private List<TeamDTO> teamDTOList;
+    private List<String> teamsNameList;
 }

@@ -5,6 +5,8 @@ import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
 import com.garv.satta.fantasy.service.LeagueUserTeamService;
 import com.garv.satta.fantasy.service.PlayerService;
+import com.garv.satta.fantasy.validation.PlayerValidator;
+import com.garv.satta.fantasy.validation.TeamValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

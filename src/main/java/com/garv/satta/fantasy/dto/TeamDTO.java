@@ -18,4 +18,5 @@ public class TeamDTO extends BaseDTO {
     private String shortName;
     private List<Long> tournamentIds;
     private List<TournamentDTO> tournamentDTOList;
+    private int playerCount;
 }

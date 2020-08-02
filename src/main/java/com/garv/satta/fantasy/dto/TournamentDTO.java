@@ -11,4 +11,5 @@ public class TournamentDTO extends BaseDTO {
     private String country;
     private String sportName;
     private Boolean status;
+    private int teamCount;
 }

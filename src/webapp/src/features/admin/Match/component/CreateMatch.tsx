@@ -3,6 +3,7 @@ import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
 import {getVenueData, fetchVenueListAction} from '../../venue/redux';
 import DateTimePicker from 'react-datetime-picker';
+import {getIdFromSelectList} from 'common/util';
 
 const CreateMatch = (props: CreateMatchProps) => {
   const createMatchAction = props.createMatchAction;
@@ -25,20 +26,15 @@ const CreateMatch = (props: CreateMatchProps) => {
     }
   }, []);
 
-  function getDefaultId(text: string, list: any[]) {
-    let defaultId = text;
-    if (defaultId.length == 0) {
-      defaultId = list[0].id;
-    }
-    return defaultId;
-  }
-
   function createMatch() {
     const isoMatchTime = matchTime.toISOString();
-    const defaultHomeTeamId = getDefaultId(homeTeamId, teamList);
-    const defaultAwayTeamId = getDefaultId(awayTeamId, teamList);
-    const defaultTournamentId = getDefaultId(tournamentId, tournamentList);
-    const defaultVenueId = getDefaultId(venueId, venueList);
+    const defaultHomeTeamId = getIdFromSelectList(homeTeamId, teamList);
+    const defaultAwayTeamId = getIdFromSelectList(awayTeamId, teamList);
+    const defaultTournamentId = getIdFromSelectList(
+      tournamentId,
+      tournamentList
+    );
+    const defaultVenueId = getIdFromSelectList(venueId, venueList);
     const requestObject = {
       description: description,
       homeTeamId: defaultHomeTeamId,

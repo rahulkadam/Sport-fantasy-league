@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Button, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
+import {getIdFromSelectList} from 'common/util';
 
 const UpdateTeam = (props: UpdateTeamProps) => {
   const tournamentList = props.tournamentList;
@@ -14,16 +15,13 @@ const UpdateTeam = (props: UpdateTeamProps) => {
       loadTournamentData();
     }
   }, []);
-  function createTeam() {
-    let tournamentDefaultId = tournamentId;
-    let teamDefaultId = teamId;
-    if (tournamentDefaultId.length == 0) {
-      tournamentDefaultId = tournamentList[0].id;
-    }
 
-    if (teamDefaultId.length == 0) {
-      teamDefaultId = teamList[0].id;
-    }
+  function createTeam() {
+    const tournamentDefaultId = getIdFromSelectList(
+      tournamentId,
+      tournamentList
+    );
+    const teamDefaultId = getIdFromSelectList(teamId, teamList);
     addTournamentToTeam(teamDefaultId, tournamentDefaultId);
   }
   function updateTeamDetails(text: string, type: number) {

@@ -28,7 +28,7 @@ const SportTeamDetails = ({data, title}: SportTeamDetailsProps) => {
     },
     {
       name: 'Total Player',
-      selector: 'totalPlayerCount',
+      selector: 'playerCount',
       sortable: true,
       right: true,
     },

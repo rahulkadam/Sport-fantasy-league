@@ -28,7 +28,7 @@ const TournamentDetails = ({data, title}: TournamentDetailsProps) => {
     },
     {
       name: 'Total League',
-      selector: 'totalLeagueCount',
+      selector: 'teamCount',
       sortable: true,
       right: true,
     },

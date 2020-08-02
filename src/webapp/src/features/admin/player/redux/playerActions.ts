@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {createPlayer, fetchAllPlayerList} from './player-api';
+import {createPlayer, fetchAllPlayerList, addTeamToPlayer} from './player-api';
 import {
   ACTION_START,
   CREATE_PLAYER,
@@ -55,4 +55,27 @@ const createPlayerAction = () => {
   );
 };
 
-export {fetchPlayerListAction, createPlayerAction};
+const addTeamToPlayerAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (playerId: number, teamId: number) => {
+      addTeamToPlayer(playerId, teamId)
+        .then((data: any) => {
+          dispatch({
+            type: CREATE_PLAYER,
+            message: 'Created successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: CREATE_PLAYER_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
+export {fetchPlayerListAction, createPlayerAction, addTeamToPlayerAction};

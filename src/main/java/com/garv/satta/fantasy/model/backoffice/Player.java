@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -61,5 +62,10 @@ public class Player extends BaseDaoObject {
         }
         Predicate<Team> isTeamMatch = team1 -> team1.getId() == team.getId();
         teams.removeIf(isTeamMatch);
+    }
+
+    public List<String> getTeamNames() {
+        return this.teams.stream().map(team ->
+                team.getName()).collect(Collectors.toList());
     }
 }

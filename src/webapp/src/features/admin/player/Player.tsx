@@ -5,6 +5,7 @@ import {
   fetchPlayerListAction,
   createPlayerAction,
   getPlayerData,
+  addTeamToPlayerAction,
 } from './redux';
 import {getTeamData, fetchTeamListAction} from '../SportTeam/redux';
 
@@ -13,6 +14,7 @@ const Player = () => {
   const teamDataProps = getTeamData();
   const fetchPlayerList = fetchPlayerListAction();
   const fetchTeamList = fetchTeamListAction();
+  const addTeamToPlayer = addTeamToPlayerAction();
   const createPlayer = createPlayerAction();
   const tabName = 'playeroverview';
 
@@ -23,28 +25,15 @@ const Player = () => {
   useEffect(() => {
     console.log('component will Mount, render everytime');
   });
-  function createPlayerFromAdmin(
-    name: string,
-    country: string,
-    type: string,
-    value: number
-  ) {
-    console.log('creating player :', name);
-    createPlayer(name, country, value, type);
-  }
 
   function renderCreatePlayer() {
-    return <CreatePlayer createPlayerAction={createPlayerFromAdmin} />;
-  }
-
-  function addPlayerToTeamAction(playerId: number, teamId: number) {
-    console.log('playerId', playerId);
+    return <CreatePlayer createPlayerAction={createPlayer} />;
   }
 
   function renderUpdatePlayer() {
     return (
       <UpdatePlayer
-        addPlayerToTeamAction={addPlayerToTeamAction}
+        addPlayerToTeamAction={addTeamToPlayer}
         teamList={teamDataProps.teamList}
         playerList={dataProps.playerList}
         loadTeamList={fetchTeamList}

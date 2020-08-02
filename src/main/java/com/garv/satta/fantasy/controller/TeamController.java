@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.controller;
 
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.TeamDTO;
 import com.garv.satta.fantasy.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,11 @@ public class TeamController {
         TeamDTO team = teamService.CreateTeamForTournament(teamDTO);
         return team;
     }
+
+    @PostMapping(value = "/add/tournament")
+    public String AddTournamentToTeam(@RequestBody RequestDTO dto) {
+        teamService.AddTournamentToTeam(dto);
+        return "Tournament Added successfully";
+    }
+
 }

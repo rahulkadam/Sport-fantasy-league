@@ -33,7 +33,10 @@ public class TeamConverter extends Converter<Team, TeamDTO> {
 
     @Override
     public TeamDTO convertToFullDTO(Team entity) {
-        return null;
+        TeamDTO teamDTO =  convertToDTO(entity);
+        int totalPlayer = entity.getPlayers().size();
+        teamDTO.setPlayerCount(totalPlayer);
+        return teamDTO;
     }
 
     @Override
@@ -44,5 +47,12 @@ public class TeamConverter extends Converter<Team, TeamDTO> {
     public List<TeamDTO> convertToDTOList(List<Team> teamList){
         return mapToDTOList(teamList, TeamDTO.class);
     }
+
+    public List<TeamDTO> convertToFullDTOList(List<Team> teamList){
+        return teamList.stream()
+                .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
+    }
+
 
 }

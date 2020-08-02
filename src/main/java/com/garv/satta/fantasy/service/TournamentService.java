@@ -20,7 +20,7 @@ public class TournamentService {
 
     public List<TournamentDTO> getTournamentList() {
         List<Tournament> tournamentList = tournamentRepository.findAll();
-        return tournamentConverter.convertToDTOList(tournamentList);
+        return tournamentConverter.convertToFullDTOList(tournamentList);
     }
 
     /**

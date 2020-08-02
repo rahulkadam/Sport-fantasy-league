@@ -5,6 +5,7 @@ import com.garv.satta.fantasy.model.backoffice.Tournament;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class TournamentConverter extends Converter<Tournament, TournamentDTO> {
@@ -26,7 +27,10 @@ public class TournamentConverter extends Converter<Tournament, TournamentDTO> {
 
     @Override
     public TournamentDTO convertToFullDTO(Tournament entity) {
-        return null;
+        int teamCount = entity.getTeams().size();
+        TournamentDTO tournamentDTO = convertToDTO(entity);
+        tournamentDTO.setTeamCount(teamCount);
+        return tournamentDTO;
     }
 
     @Override
@@ -36,5 +40,11 @@ public class TournamentConverter extends Converter<Tournament, TournamentDTO> {
 
     public List<TournamentDTO> convertToDTOList(List<Tournament> tournamentList){
         return mapToDTOList(tournamentList, TournamentDTO.class);
+    }
+
+    public List<TournamentDTO> convertToFullDTOList(List<Tournament> tournamentList){
+        return tournamentList.stream()
+                .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
     }
 }
