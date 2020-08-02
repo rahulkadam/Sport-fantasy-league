@@ -14,6 +14,11 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
     );
   }
 
+  function convertDateTime(row: any) {
+    const dateTime = new Date(row.matchTime);
+    return <div>{dateTime.toString()}</div>;
+  }
+
   const columns = [
     {
       name: 'Name',
@@ -25,28 +30,29 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
       name: 'Time',
       selector: 'matchTime',
       sortable: true,
+      cell: convertDateTime,
     },
     {
       name: 'Home Team',
-      selector: 'hometeam',
+      selector: 'team_host_name',
       sortable: true,
       right: true,
     },
     {
       name: 'Away Team',
-      selector: 'Awayteam',
+      selector: 'team_away_name',
       sortable: true,
       right: true,
     },
     {
       name: 'Tournament',
-      selector: 'Tournament',
+      selector: 'tournament_name',
       sortable: true,
       right: true,
     },
     {
       name: 'Venue',
-      selector: 'venue',
+      selector: 'venue_name',
       sortable: true,
       right: true,
     },

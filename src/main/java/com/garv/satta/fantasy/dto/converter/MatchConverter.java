@@ -8,6 +8,7 @@ import com.garv.satta.fantasy.model.backoffice.Venue;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MatchConverter extends Converter<Match, MatchDTO> {
@@ -46,6 +47,10 @@ public class MatchConverter extends Converter<Match, MatchDTO> {
         matchDTO.setTeam_away_id(entity.getTeam_away().getId());
         matchDTO.setTeam_host_id(entity.getTeam_host().getId());
         matchDTO.setTournament_id(entity.getTournament().getId());
+        matchDTO.setTeam_host_name(entity.getTeam_host().getName());
+        matchDTO.setTeam_away_name(entity.getTeam_away().getName());
+        matchDTO.setTournament_name(entity.getTournament().getName());
+        matchDTO.setVenue_name(entity.getVenue().getName());
         return matchDTO;
     }
 
@@ -56,6 +61,12 @@ public class MatchConverter extends Converter<Match, MatchDTO> {
 
     public List<MatchDTO> convertToDTOList(List<Match> entityList) {
         return mapToDTOList(entityList, MatchDTO.class);
+    }
+
+    public List<MatchDTO> convertToFullDTOList(List<Match> entityList) {
+        return entityList.stream()
+                .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
     }
 
 }
