@@ -42,6 +42,11 @@ const HeaderMenu = () => {
                 </Nav.Link>
               )}
               {loggedUser.username && (
+                <Nav.Link as={Link} to="/back/match" href="#">
+                  Match
+                </Nav.Link>
+              )}
+              {loggedUser.username && (
                 <Nav.Link as={Link} to="/back/venue" href="#">
                   Venue
                 </Nav.Link>

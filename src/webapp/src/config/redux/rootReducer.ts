@@ -8,6 +8,7 @@ import tournamentReducer from 'features/admin/Tournament/redux/tournamentReducer
 import sportteamReducer from 'features/admin/SportTeam/redux/sportteamReducer';
 import playerReducer from 'features/admin/player/redux/playerReducer';
 import venueReducer from '../../features/admin/venue/redux/venueReducer';
+import {matchReducer} from '../../features/admin/Match/redux';
 
 const persistenceConfigs = {
   key: 'fantasysport',
@@ -29,6 +30,7 @@ const rootReducer = (history: any) =>
     sportteam: sportteamReducer,
     playeradmin: playerReducer,
     venueadmin: venueReducer,
+    matchadmin: matchReducer,
   });
 
 export {rootReducer, persistenceConfigs};

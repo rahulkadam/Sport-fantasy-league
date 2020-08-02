@@ -8,11 +8,18 @@ import {Tournament} from 'features/admin/Tournament';
 import {SportTeam} from 'features/admin/SportTeam';
 import {Player} from 'features/admin/player';
 import {Venue} from 'features/admin/venue';
+import {Match} from 'features/admin/Match';
 
 export const RouteConfig = {
   PublicRouteConfig: [
     {path: '/league', component: League, key: 'league'},
     {path: '/team', component: UserTeam, key: 'team'},
+    {
+      path: '/back/match',
+      component: <Match />,
+      isPrivate: true,
+      key: 'backmatch',
+    },
     {
       path: '/back/tournament',
       component: <Tournament />,

@@ -5,3 +5,4 @@ export {UserAvatar} from './UserAvatar/UserAvatar';
 export {APGButton} from './APGButton/APGButton';
 export {StatusMessage} from './StatusMessage/StatusMessage';
 export {TabContainer} from './TabContainer/TabContainer';
+export {FantasyDropDown} from './FantasyDropDown/FantasyDropDown';
