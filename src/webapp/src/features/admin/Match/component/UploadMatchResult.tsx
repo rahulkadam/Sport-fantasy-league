@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
+import {getIdFromSelectList} from '../../../../common/util';
 
 const UploadMatchResult = (props: UploadMatchResultProps) => {
   const uploadMatchResultAction = props.uploadMatchResultAction;
@@ -12,9 +13,9 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
   const loadPlayerList = props.loadPlayerList;
   const loadTeamList = props.loadTeamList;
   const [description, setDescription] = useState('');
-  const [countryName, setCountryName] = useState('INDIA');
-  const [type, setType] = useState('BATSMAN');
-  const [matchTime, setMatchTime] = useState('');
+  const [winnerTeamId, setWinnerTeamId] = useState('');
+  const [matchPlayerId, setMatchPlayerId] = useState('');
+  const [matchId, setMatchId] = useState('');
   useEffect(() => {
     if (!teamList || teamList.length == 0) {
       loadTeamList();
@@ -28,39 +29,33 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
     }
   }, []);
   function uploadMatchResult() {
-    uploadMatchResultAction(description, countryName, type, matchTime);
+    const defaultwinnerTeam = getIdFromSelectList(winnerTeamId, teamList);
+    const defaultMatchPlayerId = getIdFromSelectList(matchPlayerId, playerList);
+    const defaultMatchId = getIdFromSelectList(matchId, matchList);
+    const requestObj = {
+      description: description,
+      team_winner_id: defaultwinnerTeam,
+      matchId: defaultMatchId,
+      matchPlayerId: defaultMatchPlayerId,
+    };
+    uploadMatchResultAction(requestObj);
   }
   function updateMatchResultDetails(text: string, type: number) {
     switch (type) {
       case 1:
-        setDescription(text);
+        setMatchId(text);
         break;
       case 2:
-        setMatchTime(text);
+        setWinnerTeamId(text);
         break;
       case 3:
-        setType(text);
+        setMatchPlayerId(text);
         break;
-      case 3:
-        setCountryName(text);
+      case 4:
+        setDescription(text);
         break;
     }
     return;
-  }
-  function onSelectTournament(value: string) {
-    console.log('selected Match', value);
-  }
-
-  function onSelectMatch(value: string) {
-    console.log('selected Match', value);
-  }
-
-  function onSelectTeam(value: string) {
-    console.log('selected team1', value);
-  }
-
-  function onSelectPlayer(value: string) {
-    console.log('selected team2', value);
   }
 
   function renderUploadMatchResult() {
@@ -77,18 +72,35 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
           <Row>
             <Col>
               <FantasyDropDown
-                onSelect={onSelectTournament}
+                onSelect={(value: string) => {
+                  updateMatchResultDetails(value, 6);
+                }}
                 list={tournamentList}
               />
             </Col>
             <Col>
-              <FantasyDropDown onSelect={onSelectMatch} list={matchList} />
+              <FantasyDropDown
+                onSelect={(value: string) => {
+                  updateMatchResultDetails(value, 1);
+                }}
+                list={matchList}
+              />
             </Col>
             <Col>
-              <FantasyDropDown onSelect={onSelectTeam} list={teamList} />
+              <FantasyDropDown
+                onSelect={(value: string) => {
+                  updateMatchResultDetails(value, 2);
+                }}
+                list={teamList}
+              />
             </Col>
             <Col>
-              <FantasyDropDown onSelect={onSelectPlayer} list={playerList} />
+              <FantasyDropDown
+                onSelect={(value: string) => {
+                  updateMatchResultDetails(value, 3);
+                }}
+                list={playerList}
+              />
             </Col>
             <Col>
               <FormControl
@@ -97,7 +109,7 @@ const UploadMatchResult = (props: UploadMatchResultProps) => {
                 aria-label="matchName"
                 aria-describedby="basic-addon1"
                 onChange={event =>
-                  updateMatchResultDetails(event.target.value, 1)
+                  updateMatchResultDetails(event.target.value, 4)
                 }
               />
             </Col>

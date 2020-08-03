@@ -44,3 +44,19 @@ declare type CreateMatchRequestObject = {
   venueId: number;
   isoMatchTime: string;
 };
+
+declare type PlayerMatchPointRequestObject = {
+  matchId: number;
+  playerId: number;
+  points: number;
+  runs: number;
+  wickets: number;
+  catches: number;
+};
+
+declare type MatchResultObject = {
+  description: string;
+  team_winner_id: number;
+  matchId: number;
+  matchPlayerId: number;
+};

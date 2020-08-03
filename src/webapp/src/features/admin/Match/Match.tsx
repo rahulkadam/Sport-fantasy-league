@@ -6,7 +6,13 @@ import {
   UploadMatchResult,
   UploadMatchPoint,
 } from './component';
-import {fetchMatchListAction, createMatchAction, getMatchData} from './redux';
+import {
+  fetchMatchListAction,
+  createMatchAction,
+  getMatchData,
+  uploadMatchPlayerPointAction,
+  uploadMatchResultAction,
+} from './redux';
 import {fetchTeamListAction, getTeamData} from '../SportTeam/redux';
 import {fetchPlayerListAction, getPlayerData} from '../player/redux';
 import {
@@ -24,6 +30,8 @@ const Match = () => {
   const fetchTournamentList = fetchTournamentListAction();
   const tournamentProps = getTournamentData();
   const createMatch = createMatchAction();
+  const uploadMatchPlayerPoint = uploadMatchPlayerPointAction();
+  const uploadMatchResult = uploadMatchResultAction();
   const tabName = 'matchoverview';
 
   useEffect(() => {
@@ -54,13 +62,11 @@ const Match = () => {
       </div>
     );
   }
-  function uploadMatchResultAction() {
-    console.log('upload match result');
-  }
+
   function renderUploadMatchResult() {
     return (
       <UploadMatchResult
-        uploadMatchResultAction={uploadMatchResultAction}
+        uploadMatchResultAction={uploadMatchResult}
         data={matchProps}
         matchList={matchProps.matchList}
         teamList={teamProps.teamList}
@@ -76,7 +82,7 @@ const Match = () => {
   function renderUploadMatchPoint() {
     return (
       <UploadMatchPoint
-        uploadMatchResultAction={uploadMatchResultAction}
+        uploadMatchResultAction={uploadMatchPlayerPoint}
         data={matchProps}
         matchList={matchProps.matchList}
         teamList={teamProps.teamList}

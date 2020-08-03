@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
+import {getIdFromSelectList} from '../../../../common/util';
 
 const UploadMatchPoint = (props: UploadMatchPointProps) => {
   const uploadMatchResultAction = props.uploadMatchResultAction;
@@ -11,10 +12,12 @@ const UploadMatchPoint = (props: UploadMatchPointProps) => {
   const loadPlayerList = props.loadPlayerList;
   const loadMatchList = props.loadMatchList;
   const loadTeamList = props.loadTeamList;
-  const [description, setDescription] = useState('');
-  const [countryName, setCountryName] = useState('INDIA');
-  const [type, setType] = useState('BATSMAN');
-  const [matchTime, setMatchTime] = useState('');
+  const [matchId, setMatchId] = useState('');
+  const [playerId, setPlayerId] = useState('');
+  const [points, setPoints] = useState('0');
+  const [runs, setRuns] = useState('0');
+  const [wickets, setWickets] = useState('0');
+  const [catches, setCatches] = useState('0');
   useEffect(() => {
     if (!matchList || matchList.length == 0) {
       loadMatchList();
@@ -27,44 +30,41 @@ const UploadMatchPoint = (props: UploadMatchPointProps) => {
     }
   }, []);
   function uploadMatchResult() {
-    uploadMatchResultAction(description, countryName, type, matchTime);
+    const defaultMatchId = getIdFromSelectList(matchId, matchList);
+    const defaultPlayerId = getIdFromSelectList(playerId, playerList);
+    const matchPointRequestObject = {
+      matchId: defaultMatchId,
+      playerId: defaultPlayerId,
+      points: points,
+      runs: runs,
+      wickets: wickets,
+      catches: catches,
+    };
+    uploadMatchResultAction(matchPointRequestObject);
   }
   function updateMatchResultDetails(text: string, type: number) {
     switch (type) {
       case 1:
-        setDescription(text);
+        setMatchId(text);
         break;
       case 2:
-        setMatchTime(text);
+        setPlayerId(text);
         break;
       case 3:
-        setType(text);
+        setPoints(text);
         break;
-      case 3:
-        setCountryName(text);
+      case 4:
+        setRuns(text);
+        break;
+      case 5:
+        setWickets(text);
+        break;
+      case 6:
+        setCatches(text);
         break;
     }
     return;
   }
-
-  const tournamentList1 = [
-    {id: 1, name: 'IPL'},
-    {id: 2, name: 'IPL 20'},
-    {id: 3, name: 'IPL19'},
-  ];
-
-  function onSelectTournament(value: string) {
-    console.log('selected Match', value);
-  }
-
-  function onSelectMatch(value: string) {
-    console.log('selected Match', value);
-  }
-
-  function onSelectPlayer(value: string) {
-    console.log('selected team2', value);
-  }
-
   function renderUploadMatchPointForPlayer() {
     return (
       <Fragment>
@@ -73,58 +73,72 @@ const UploadMatchPoint = (props: UploadMatchPointProps) => {
             <Col>Match</Col>
             <Col>Player</Col>
             <Col>Point</Col>
+          </Row>
+          <Row>
+            <Col>
+              <FantasyDropDown
+                onSelect={(value: string) => {
+                  updateMatchResultDetails(value, 1);
+                }}
+                list={matchList}
+              />
+            </Col>
+            <Col>
+              <FantasyDropDown
+                onSelect={(value: string) => {
+                  updateMatchResultDetails(value, 2);
+                }}
+                list={playerList}
+              />
+            </Col>
+            <Col>
+              <FormControl
+                value={points}
+                placeholder="Point Score"
+                aria-label="pointscore"
+                aria-describedby="basic-addon1"
+                onChange={event =>
+                  updateMatchResultDetails(event.target.value, 3)
+                }
+              />
+            </Col>
+          </Row>
+          <Row>
             <Col>Runs</Col>
             <Col>Wickets</Col>
             <Col>Catches</Col>
           </Row>
           <Row>
             <Col>
-              <FantasyDropDown onSelect={onSelectMatch} list={matchList} />
-            </Col>
-            <Col>
-              <FantasyDropDown onSelect={onSelectPlayer} list={playerList} />
-            </Col>
-            <Col>
               <FormControl
-                value={description}
-                placeholder="Point Score"
-                aria-label="pointscore"
-                aria-describedby="basic-addon1"
-                onChange={event =>
-                  updateMatchResultDetails(event.target.value, 1)
-                }
-              />
-            </Col>
-            <Col>
-              <FormControl
-                value={description}
+                value={runs}
                 placeholder="Run Score"
                 aria-label="runscore"
                 aria-describedby="basic-addon2"
                 onChange={event =>
-                  updateMatchResultDetails(event.target.value, 1)
+                  updateMatchResultDetails(event.target.value, 4)
                 }
               />
             </Col>
             <Col>
               <FormControl
-                value={description}
+                value={wickets}
                 placeholder="wicket"
                 aria-label="wickets"
                 aria-describedby="basic-addon3"
                 onChange={event =>
-                  updateMatchResultDetails(event.target.value, 1)
+                  updateMatchResultDetails(event.target.value, 5)
                 }
               />
             </Col>
             <Col>
               <FormControl
-                value={description}
+                value={catches}
                 placeholder="catches"
                 aria-label="catches"
                 aria-describedby="basic-addon4"
                 onChange={event =>
-                  updateMatchResultDetails(event.target.value, 1)
+                  updateMatchResultDetails(event.target.value, 6)
                 }
               />
             </Col>
