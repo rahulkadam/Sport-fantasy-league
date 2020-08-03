@@ -41,7 +41,7 @@ public class TournamentValidator {
 
         long emptyList = teamIdList.stream().filter(teamId -> tournamentTeamIds.contains(teamId)).count();
 
-        if (emptyList == teamIdList.size()) {
+        if (emptyList != teamIdList.size()) {
             throw new GenericException("Team is not exist in Tournament : " + tournament + " team: " + teamIdList);
         }
     }

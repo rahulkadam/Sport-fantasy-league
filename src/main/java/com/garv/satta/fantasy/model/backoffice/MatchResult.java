@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @ToString(exclude = {"team_winner", "matchPlayer", "match"}, callSuper = true)
-public class MatchDetails extends BaseDaoObject {
+public class MatchResult extends BaseDaoObject {
 
     private String description;
 
@@ -28,7 +28,7 @@ public class MatchDetails extends BaseDaoObject {
     @JoinColumn(name = "match_schedule_id", nullable = false)
     private Match match;
 
-    public MatchDetails(Long id) {
+    public MatchResult(Long id) {
         super(id);
     }
 

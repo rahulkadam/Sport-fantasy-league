@@ -12,9 +12,9 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "match_schedule")
+@Table(name = "MatchGame")
 @NoArgsConstructor
-@ToString(exclude = {"venue", "team_host", "team_away","tournament", "matchDetails", "matchPlayerScore"}, callSuper = true)
+@ToString(exclude = {"venue", "team_host", "team_away","tournament", "matchResult", "matchPlayerScore"}, callSuper = true)
 public class Match extends BaseDaoObject {
 
     private String description;
@@ -41,7 +41,7 @@ public class Match extends BaseDaoObject {
     private Tournament tournament;
 
     @OneToOne(mappedBy = "match")
-    private MatchDetails matchDetails;
+    private MatchResult matchResult;
 
     @OneToMany(mappedBy = "match")
     private List<MatchPlayerScore> matchPlayerScore;

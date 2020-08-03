@@ -16,7 +16,7 @@ public class MatchDTO extends BaseDTO {
     private Long team_host_id;
     private Long team_away_id;
     private Long tournament_id;
-    private Long matchDetailsId;
+    private Long matchResultId;
     private String team_host_name;
     private String team_away_name;
     private String tournament_name;
@@ -25,6 +25,6 @@ public class MatchDTO extends BaseDTO {
     private TeamDTO team_hostTeamDTO;
     private TeamDTO team_awayTeamDTO;
     private TournamentDTO tournamentDTO;
-    private MatchDetailsDTO matchDetailsDTO;
+    private MatchResultDTO matchResultDTO;
     private List<MatchPlayerScoreDTO> matchPlayerScoreDTOList;
 }

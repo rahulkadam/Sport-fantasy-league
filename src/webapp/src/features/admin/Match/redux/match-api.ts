@@ -22,7 +22,7 @@ export function uploadMatchPlayerPoints(
 ) {
   return Post('/fantasy/match/playerscore/upload', {
     data: {
-      matchDetailsId: request.matchId,
+      matchId: request.matchId,
       playerId: request.playerId,
       pointscore: request.points,
       run_scored: request.runs,

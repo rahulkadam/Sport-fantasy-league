@@ -10,7 +10,7 @@ const CreatePlayer = ({createPlayerAction}: CreatePlayerProps) => {
   const [value, setValue] = useState('9');
 
   function createPlayer() {
-    createPlayerAction(playerName, countryName, type, value);
+    createPlayerAction(playerName, countryName, value, type);
   }
   function updatePlayerDetails(text: string, type: number) {
     switch (type) {

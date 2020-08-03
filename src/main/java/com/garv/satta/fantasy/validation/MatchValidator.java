@@ -3,7 +3,7 @@ package com.garv.satta.fantasy.validation;
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.Match;
-import com.garv.satta.fantasy.model.backoffice.MatchDetails;
+import com.garv.satta.fantasy.model.backoffice.MatchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +33,8 @@ public class MatchValidator {
 
     public void validateResultExistforMatch(Long matchId) {
         Match match = repository.findMatchById(matchId);
-        MatchDetails matchDetails = match.getMatchDetails();
-        if (matchDetails != null) {
+        MatchResult matchResult = match.getMatchResult();
+        if (matchResult != null) {
             throw new GenericException("Match Result is already exist for : " + matchId);
         }
     }
