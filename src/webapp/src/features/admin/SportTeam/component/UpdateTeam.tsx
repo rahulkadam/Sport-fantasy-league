@@ -16,7 +16,7 @@ const UpdateTeam = (props: UpdateTeamProps) => {
     }
   }, []);
 
-  function createTeam() {
+  function updateTeamWithTournament() {
     const tournamentDefaultId = getIdFromSelectList(
       tournamentId,
       tournamentList
@@ -59,7 +59,7 @@ const UpdateTeam = (props: UpdateTeamProps) => {
             </Col>
           </Row>
         </div>
-        <Button variant="primary" onClick={() => createTeam()}>
+        <Button variant="primary" onClick={() => updateTeamWithTournament()}>
           Add Team To Tournament
         </Button>
       </Fragment>

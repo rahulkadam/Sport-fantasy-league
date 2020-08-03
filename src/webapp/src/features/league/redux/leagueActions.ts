@@ -3,6 +3,7 @@ import {
   fetchUserLeaguesDetails,
   fetchActiveLeaguesList,
   joinLeague,
+  createLeague,
 } from './league-api';
 import {
   ACTION_START,
@@ -83,8 +84,32 @@ const joinLeagueAction = () => {
   );
 };
 
+const createLeagueAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (request: CreateLeagueRequestObj) => {
+      createLeague(request)
+        .then((data: any) => {
+          dispatch({
+            type: JOIN_LEAGUE,
+            data: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: JOIN_LEAGUE_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
 export {
   fetchUserLeagueListAction,
   fetchPublicLeagueListAction,
   joinLeagueAction,
+  createLeagueAction,
 };
