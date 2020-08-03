@@ -8,12 +8,13 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Data
-@Table(name = "match_schedule")
+@Table(name = "MatchGame")
 @NoArgsConstructor
-@ToString(exclude = {"venue", "team_host", "team_away","tournament"}, callSuper = true)
+@ToString(exclude = {"venue", "team_host", "team_away","tournament", "matchResult", "matchPlayerScore"}, callSuper = true)
 public class Match extends BaseDaoObject {
 
     private String description;
@@ -38,6 +39,12 @@ public class Match extends BaseDaoObject {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
+
+    @OneToOne(mappedBy = "match")
+    private MatchResult matchResult;
+
+    @OneToMany(mappedBy = "match")
+    private List<MatchPlayerScore> matchPlayerScore;
 
     public Match(Long id) {
         super(id);

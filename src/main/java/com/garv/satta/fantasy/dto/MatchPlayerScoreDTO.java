@@ -12,7 +12,9 @@ public class MatchPlayerScoreDTO extends BaseDTO {
     private Integer wicket;
     private Integer catches;
     private Long playerId;
-    private Long matchDetailsId;
+    private Long matchId;
+    private Long tournamentId;
     private PlayerDTO playerDTO;
-    private MatchDetailsDTO matchDetailsDTO;
+    private MatchDTO matchDTO;
+    private TournamentDTO tournamentDTO;
 }

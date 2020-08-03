@@ -1,7 +1,7 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
-import com.garv.satta.fantasy.model.backoffice.MatchDetails;
+import com.garv.satta.fantasy.model.backoffice.MatchResult;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -19,7 +19,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"matchDetails", "userTeam"})
+@ToString(exclude = {"matchResult", "userTeam"})
 public class LeagueUserTeamScorePerMatch extends BaseDaoObject {
 
     private Integer current_match_point;
@@ -31,6 +31,6 @@ public class LeagueUserTeamScorePerMatch extends BaseDaoObject {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "match_details_id", nullable = false)
-    private MatchDetails matchDetails;
+    private MatchResult matchResult;
 
 }

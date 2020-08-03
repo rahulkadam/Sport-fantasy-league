@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MatchDetailsDTO extends BaseDTO {
+public class MatchResultDTO extends BaseDTO {
     private String description;
     private Long team_winner_id;
     private Long matchPlayerId;
     private Long matchId;
-    private TeamDTO teamDTO;
+    private TeamDTO winnerTeamDTO;
     private PlayerDTO matchPlayerDTO;
     private MatchDTO matchDTO;
 }

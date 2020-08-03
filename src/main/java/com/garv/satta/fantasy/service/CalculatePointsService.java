@@ -28,7 +28,7 @@ public class CalculatePointsService {
     private LeagueRepository leagueRepository;
 
     @Autowired
-    private MatchDetailsRepository matchDetailsRepository;
+    private MatchResultRepository matchResultRepository;
 
     @Autowired
     private MatchPlayerScoreRepository matchPlayerScoreRepository;
@@ -89,9 +89,8 @@ public class CalculatePointsService {
         leagueUserTeamRepository.save(leagueUserTeam);
     }
 
-    private List<MatchPlayerScore> findMatchPlayerScoreByMatchId(Long id) {
-        MatchDetails matchDetails = matchDetailsRepository.findMatchDetailsByMatchId(id);
-        List<MatchPlayerScore> matchPlayerScores = matchPlayerScoreRepository.findMatchPlayerScoreByMatchDetailsId(matchDetails.getId());
+    private List<MatchPlayerScore> findMatchPlayerScoreByMatchId(Long matchId) {
+        List<MatchPlayerScore> matchPlayerScores = matchPlayerScoreRepository.findMatchPlayerScoreByMatchId(matchId);
         return matchPlayerScores;
     }
 
