@@ -1,7 +1,7 @@
 package com.garv.satta.fantasy.dto.converter;
 
 import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
-import com.garv.satta.fantasy.model.backoffice.MatchDetails;
+import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import org.springframework.stereotype.Component;
@@ -26,8 +26,8 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
         Player player = new Player(dto.getPlayerId());
         matchPlayerScore.setPlayer(player);
 
-        MatchDetails matchDetails = new MatchDetails(dto.getMatchDetailsId());
-        matchPlayerScore.setMatchDetails(matchDetails);
+        Match match = new Match(dto.getMatchId());
+        matchPlayerScore.setMatch(match);
 
         return matchPlayerScore;
     }
@@ -37,7 +37,7 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
         MatchPlayerScoreDTO matchPlayerScoreDTO = convertToDTO(entity);
 
         matchPlayerScoreDTO.setPlayerId(entity.getPlayer().getId());
-        matchPlayerScoreDTO.setMatchDetailsId(entity.getMatchDetails().getId());
+        matchPlayerScoreDTO.setMatchId(entity.getMatch().getId());
         return matchPlayerScoreDTO;
     }
 

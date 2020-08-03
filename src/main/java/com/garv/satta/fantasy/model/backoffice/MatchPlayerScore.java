@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@ToString(exclude = {"matchDetails", "player"}, callSuper = true)
-public class MatchPlayerScore extends BaseDaoObject{
+@ToString(exclude = {"match", "player", "tournament"}, callSuper = true)
+public class MatchPlayerScore extends BaseDaoObject {
 
     private Integer pointscore;
     private Integer run_scored;
@@ -22,6 +22,10 @@ public class MatchPlayerScore extends BaseDaoObject{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "match_id", nullable = false)
-    private MatchDetails matchDetails;
+    private Match match;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
 
 }

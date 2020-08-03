@@ -6,6 +6,7 @@ import com.garv.satta.fantasy.dto.converter.MatchPlayerScoreConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
 import com.garv.satta.fantasy.validation.MatchDetailsValidator;
+import com.garv.satta.fantasy.validation.MatchValidator;
 import com.garv.satta.fantasy.validation.PlayerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,11 +29,14 @@ public class MatchPlayerScoreService {
     @Autowired
     private MatchDetailsValidator matchDetailsValidator;
 
+    @Autowired
+    private MatchValidator matchValidator;
+
     public void uploadPlayerScoreforMatch(@RequestBody MatchPlayerScoreDTO dto) {
         MatchPlayerScore playerScore = converter.convertToFullEntity(dto);
         playerScore.setId(null);
         playerValidator.validatePlayerById(dto.getPlayerId());
-        matchDetailsValidator.validateMatchDetailsId(dto.getMatchDetailsId());
+        matchValidator.validateMatchById(dto.getMatchId());
         playerValidator.validatePlayerScore(playerScore.getPointscore());
         repository.save(playerScore);
     }

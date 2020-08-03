@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.validation;
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.Match;
+import com.garv.satta.fantasy.model.backoffice.MatchDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,16 @@ public class MatchValidator {
             throw new GenericException("Match does not exist with Id : " + match.getId());
         }
 
-        if (match.getTeam_away().getId() != teamId || match.getTeam_host().getId() != teamId) {
+        if (match.getTeam_away().getId() != teamId && match.getTeam_host().getId() != teamId) {
             throw new GenericException("Team " + teamId + " is not playing in the Match : " + match.getId());
+        }
+    }
+
+    public void validateResultExistforMatch(Long matchId) {
+        Match match = repository.findMatchById(matchId);
+        MatchDetails matchDetails = match.getMatchDetails();
+        if (matchDetails != null) {
+            throw new GenericException("Match Result is already exist for : " + matchId);
         }
     }
 }

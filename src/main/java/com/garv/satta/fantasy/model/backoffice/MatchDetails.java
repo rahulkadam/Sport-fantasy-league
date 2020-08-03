@@ -24,7 +24,7 @@ public class MatchDetails extends BaseDaoObject {
     private Player matchPlayer;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "match_schedule_id", nullable = false)
     private Match match;
 

@@ -47,6 +47,7 @@ public class MatchDetailsService {
     public void uploadMatchResult(MatchDetailsDTO detailsDTO) {
         MatchDetails matchDetails = converter.convertToFullEntity(detailsDTO);
         matchValidator.isTeamIdValidForMatch(detailsDTO.getMatchId(), detailsDTO.getTeam_winner_id());
+        matchValidator.validateResultExistforMatch(detailsDTO.getMatchId());
         playerValidator.validatePlayerById(detailsDTO.getMatchPlayerId());
         teamValidator.validateTeamById(detailsDTO.getTeam_winner_id());
         repository.save(matchDetails);

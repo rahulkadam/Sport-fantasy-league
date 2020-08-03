@@ -10,7 +10,7 @@ public class MatchDetailsDTO extends BaseDTO {
     private Long team_winner_id;
     private Long matchPlayerId;
     private Long matchId;
-    private TeamDTO teamDTO;
+    private TeamDTO winnerTeamDTO;
     private PlayerDTO matchPlayerDTO;
     private MatchDTO matchDTO;
 }
