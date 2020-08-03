@@ -10,13 +10,9 @@ export function saveTeamForUser(userteamId: number, playerList: any) {
   });
 }
 
-export function createTeamForUser(
-  userId: number,
-  name: string,
-  captionPlayerId: number
-) {
-  return Post('fantasy/userteam/create', {
-    data: {userId: userId, name: name, team_captain_player_Id: captionPlayerId},
+export function createTeamForUser(userId: number, name: string) {
+  return Post('/fantasy/userteam/create', {
+    data: {userId: userId, name: name},
   });
 }
 

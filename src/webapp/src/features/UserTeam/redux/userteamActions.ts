@@ -4,6 +4,7 @@ import {
   fetchPlayerlistByUser,
   fetchUserTeamByUser,
   saveTeamForUser,
+  createTeamForUser,
 } from './userteam-api';
 import {
   ACTION_START,
@@ -54,7 +55,7 @@ const fetchPlayerListByUserAction = () => {
             type: FETCH_USER_TEAM,
             userteam: data,
           });
-          fetchPlayerlistByUser(76)
+          fetchPlayerlistByUser(data[0].id)
             .then((data: any) => {
               dispatch({
                 type: FETCH_PLAYER_LIST_BY_USER,
@@ -115,9 +116,33 @@ const saveUserTeamAction = () => {
   );
 };
 
+const createUserTeamAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (userId: number, name: string) => {
+      createTeamForUser(userId, name)
+        .then((data: any) => {
+          dispatch({
+            type: SAVE_USER_TEAM,
+            saveuserTeamData: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: SAVE_USER_TEAM_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
 export {
   fetchPlayerListByUserAction,
   fetchAllPlayerListAction,
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
+  createUserTeamAction,
 };

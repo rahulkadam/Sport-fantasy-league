@@ -5,3 +5,5 @@ export function getIdFromSelectList(text: string, list: any[]) {
   }
   return defaultId;
 }
+
+export const DefaultUserId = 7;

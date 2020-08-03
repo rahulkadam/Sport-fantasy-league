@@ -16,6 +16,7 @@ import com.garv.satta.fantasy.validation.PlayerValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -61,14 +62,21 @@ public class LeagueUserTeamService {
     }
 
     public LeagueUserTeamDTO createLeagueUserTeam(LeagueUserTeamDTO userTeamDTO) {
-        LeagueUserTeam leagueUserTeam = converter.convertToFullEntity(userTeamDTO);
+        List<LeagueUserTeam> leagueUserTeamList = repository.findLeagueUserTeamByUserId(userTeamDTO.getUserId());
+
+        if (!CollectionUtils.isEmpty(leagueUserTeamList)) {
+            throw new GenericException("Team already present, please check with support team for details");
+        }
         userValidator.validateUserId(userTeamDTO.getUserId());
+
+        LeagueUserTeam leagueUserTeam = converter.convertToFullEntity(userTeamDTO);
         leagueUserTeam.setStatus(Boolean.TRUE);
         leagueUserTeam.setTotal_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
         leagueUserTeam.setTotal_score(0);
         leagueUserTeam.setRemained_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
         leagueUserTeam.setCurrent_Used_Transfer(0);
         leagueUserTeam.setUsed_Transfer(0);
+        leagueUserTeam.setCaptain_player(null);
         leagueUserTeam = repository.save(leagueUserTeam);
         return converter.convertToFullDTO(leagueUserTeam);
     }
