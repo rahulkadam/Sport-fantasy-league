@@ -21,9 +21,10 @@ public class LeagueUserTeamConverter extends Converter<LeagueUserTeam, LeagueUse
     public LeagueUserTeam convertToFullEntity(LeagueUserTeamDTO dto) {
         LeagueUserTeam leagueUserTeam = convertToEntity(dto);
 
-
-        Player captionPlayer = new Player(dto.getTeam_captain_player_Id());
-        leagueUserTeam.setCaptain_player(captionPlayer);
+        if (dto.getTeam_captain_player_Id() != null) {
+            Player captionPlayer = new Player(dto.getTeam_captain_player_Id());
+            leagueUserTeam.setCaptain_player(captionPlayer);
+        }
 
         User user = new User(dto.getUserId());
         leagueUserTeam.setUser(user);
@@ -46,7 +47,9 @@ public class LeagueUserTeamConverter extends Converter<LeagueUserTeam, LeagueUse
     @Override
     public LeagueUserTeamDTO convertToFullDTO(LeagueUserTeam entity) {
         LeagueUserTeamDTO leagueUserTeamDTO = convertToDTO(entity);
-        leagueUserTeamDTO.setTeam_captain_player_Id(entity.getCaptain_player().getId());
+        if (entity.getCaptain_player() != null) {
+            leagueUserTeamDTO.setTeam_captain_player_Id(entity.getCaptain_player().getId());
+        }
         leagueUserTeamDTO.setUserId(entity.getUser().getId());
         return leagueUserTeamDTO;
     }

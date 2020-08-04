@@ -7,8 +7,10 @@ import {
   fetchPlayerListByUserAction,
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
+  createUserTeamAction,
 } from './redux';
 import {Button} from 'react-bootstrap';
+import {DefaultUserId} from 'common/util';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -16,6 +18,7 @@ const UserTeam = () => {
   const fetchPlayerListByUser = fetchPlayerListByUserAction();
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
   const saveUserTeam = saveUserTeamAction();
+  const createUserTeam = createUserTeamAction();
   const tabName = 'teamDetails';
   const isUserTeamAvailable =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
@@ -23,25 +26,19 @@ const UserTeam = () => {
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
     fetchPlayerList();
-    fetchPlayerListByUser(17);
+    fetchPlayerListByUser(DefaultUserId);
   }, []);
-  useEffect(() => {
-    console.log('component will Mount, render everytime');
-  });
+
   function onPlayerSelectedFromPlayerList(selectedRows: any) {
     console.log('from parent control', selectedRows);
     updateCurrentUserTeam(selectedRows);
-  }
-
-  function createTeam(teamName: string) {
-    console.log('creating team :', teamName);
   }
 
   function renderTeamDetails() {
     if (isUserTeamAvailable) {
       return <TeamDetails data={userteamDataProps} />;
     } else {
-      return <CreateTeam createTeamAction={createTeam} />;
+      return <CreateTeam createTeamAction={createUserTeam} />;
     }
   }
 
@@ -50,7 +47,7 @@ const UserTeam = () => {
       'saving team with team player',
       userteamDataProps.currentUserTeamPlayers.length
     );
-    const userteamId = 76;
+    const userteamId = 8;
     saveUserTeam(userteamId, userteamDataProps.currentUserTeamPlayers);
   }
 
@@ -91,7 +88,6 @@ const UserTeam = () => {
   }
   return (
     <div>
-      Welcome to User Team List with
       {renderStatusMessage(
         userteamDataProps.hasError,
         userteamDataProps.statusMessage

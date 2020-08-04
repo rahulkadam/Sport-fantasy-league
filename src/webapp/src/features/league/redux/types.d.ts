@@ -4,3 +4,9 @@ declare type League = {
   hasError: boolean;
   statusMessage: string;
 };
+
+declare type CreateLeagueRequestObj = {
+  name: string;
+  tournamentId: string;
+  createByUserId: string;
+};

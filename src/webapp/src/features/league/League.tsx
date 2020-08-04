@@ -3,6 +3,7 @@ import {
   getLeagueData,
   fetchUserLeagueListAction,
   joinLeagueAction,
+  createLeagueAction,
 } from './redux';
 import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
@@ -10,13 +11,16 @@ import {CreateLeague} from './component/CreateLeague';
 import {StatusMessage} from 'common/components';
 import {TabContainer} from 'common/components';
 import './League.styles.scss';
+import {getTournamentData} from '../admin/Tournament/redux';
 
 const League = () => {
   const leagueStoreData = getLeagueData();
+  const tournamentProps = getTournamentData();
   const leagueObjdata = leagueStoreData.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const fetchUserLeagueList = fetchUserLeagueListAction();
   const joinLeague = joinLeagueAction();
+  const createLeague = createLeagueAction();
   const tabName = 'overview';
 
   useEffect(() => {
@@ -45,7 +49,12 @@ const League = () => {
   }
 
   function renderCreateLeague() {
-    return <CreateLeague data={{joinleague: joinLeague}} />;
+    return (
+      <CreateLeague
+        createLeague={createLeague}
+        tournamentList={tournamentProps.tournamentList}
+      />
+    );
   }
 
   const tabConfig: TabConfig[] = [

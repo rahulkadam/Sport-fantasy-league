@@ -7,5 +7,7 @@ declare type JoinLeagueProps = {
 };
 
 declare type CreateLeagueProps = {
-  data: any;
+  data?: any;
+  createLeague: any;
+  tournamentList: any[];
 };

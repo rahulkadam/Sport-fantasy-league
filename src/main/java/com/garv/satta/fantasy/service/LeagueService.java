@@ -9,12 +9,14 @@ import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
+import com.garv.satta.fantasy.model.frontoffice.User;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LeagueService {
@@ -35,6 +37,7 @@ public class LeagueService {
     @Autowired
     private UserValidator userValidator;
 
+
     public List<LeagueDTO> getLeaguesList() {
         List<League> leagues = repository.findAll();
         return converter.convertToDTOList(leagues);
@@ -52,12 +55,21 @@ public class LeagueService {
         userValidator.validateUserId(leagueDTO.getCreateByUserId());
         String leagueCode = LeagueCodeGenerator.randomAlphaNumeric(FantasyConstant.DEFAULT_LEAGUE_CODE_LENGTH);
         league.setLeagueCode(leagueCode);
+        league.setStatus(true);
         league = repository.save(league);
+        List<LeagueUserTeam> leagueUserTeams = leagueUserTeamRepository.findLeagueUserTeamByUserId(leagueDTO.getCreateByUserId());
+        joinLeagueByCode(league.getLeagueCode(),leagueUserTeams.get(0).getId());
         return converter.convertToFullDTO(league);
     }
 
     public void joinLeagueByCode(String leagueCode, Long userTeamId) {
         League league = repository.findLeagueByLeagueCode(leagueCode);
+        LeagueUserTeam leagueUserTeam = leagueUserTeamRepository.findLeagueUserTeamById(userTeamId);
+        List<League> leagueList = leagueUserTeam.getLeagues();
+        Optional<League> leagueObject = leagueList.stream().filter(league1 -> league1.getLeagueCode().equalsIgnoreCase(leagueCode)).findFirst();
+        if (leagueObject.isPresent()) {
+            throw new GenericException("already member of league : "+ leagueObject.get().getName());
+        }
         addRemoveUserTeamFromLeague(league, userTeamId, OperationEnum.ADD);
     }
 

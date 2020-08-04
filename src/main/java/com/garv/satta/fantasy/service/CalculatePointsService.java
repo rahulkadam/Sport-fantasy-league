@@ -79,7 +79,7 @@ public class CalculatePointsService {
         for (Player player: playerList) {
             MatchPlayerScore matchPlayerScore = matchPlayerScoreMap.get(player.getId());
             if (matchPlayerScore != null) {
-                if (captainPlayer.getId() == player.getId()) {
+                if (captainPlayer != null && captainPlayer.getId() == player.getId()) {
                     score = score + matchPlayerScore.getPointscore();
                 }
                 score = score + matchPlayerScore.getPointscore();
@@ -101,9 +101,7 @@ public class CalculatePointsService {
     }
 
     private List<LeagueUserTeam> findLeagueUserTeamByTournament(Long id) {
-        List<League> leagueList = leagueRepository.findLeagueByTournamentId(id);
-        List<LeagueUserTeam> leagueUserTeams = new ArrayList<>();
-        leagueList.forEach(league -> leagueUserTeams.addAll(league.getLeagueMembers()));
+        List<LeagueUserTeam> leagueUserTeams = leagueUserTeamRepository.findLeagueUserTeamByTournamentId(id);
         return leagueUserTeams;
     }
 }

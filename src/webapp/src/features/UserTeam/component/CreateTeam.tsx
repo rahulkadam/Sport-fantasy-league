@@ -1,11 +1,12 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl} from 'react-bootstrap';
+import {DefaultUserId} from 'common/util';
 
 const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
   const [teamName, setTeamName] = useState('');
 
   function createTeam() {
-    createTeamAction(teamName);
+    createTeamAction(DefaultUserId, teamName);
   }
   function updateTeamName(teamNameTxt: string) {
     setTeamName(teamNameTxt);
