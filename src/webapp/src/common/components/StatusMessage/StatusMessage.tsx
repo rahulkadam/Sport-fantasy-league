@@ -1,8 +1,10 @@
-import React, {Fragment} from 'react';
+import React, {useState, Fragment} from 'react';
 import './StatusMessage.styles.scss';
 import {Alert} from 'react-bootstrap';
 
 const StatusMessage = ({text, type}: FantasyStatusMessageProps) => {
+  const [show, setShow] = useState(true);
+
   function renderMessage() {
     if (!text || text.length == 0) {
       return;
@@ -17,7 +19,11 @@ const StatusMessage = ({text, type}: FantasyStatusMessageProps) => {
         break;
     }
     return (
-      <Alert key={type} variant={modalType}>
+      <Alert
+        key={type}
+        onClose={() => setShow(false)}
+        dismissible
+        variant={modalType}>
         {text}
       </Alert>
     );

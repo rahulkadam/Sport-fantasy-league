@@ -79,7 +79,7 @@ public class CalculatePointsService {
         for (Player player: playerList) {
             MatchPlayerScore matchPlayerScore = matchPlayerScoreMap.get(player.getId());
             if (matchPlayerScore != null) {
-                if (captainPlayer.getId() == player.getId()) {
+                if (captainPlayer != null && captainPlayer.getId() == player.getId()) {
                     score = score + matchPlayerScore.getPointscore();
                 }
                 score = score + matchPlayerScore.getPointscore();

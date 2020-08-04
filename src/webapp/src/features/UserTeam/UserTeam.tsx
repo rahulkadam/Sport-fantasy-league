@@ -47,7 +47,7 @@ const UserTeam = () => {
       'saving team with team player',
       userteamDataProps.currentUserTeamPlayers.length
     );
-    const userteamId = 76;
+    const userteamId = 8;
     saveUserTeam(userteamId, userteamDataProps.currentUserTeamPlayers);
   }
 

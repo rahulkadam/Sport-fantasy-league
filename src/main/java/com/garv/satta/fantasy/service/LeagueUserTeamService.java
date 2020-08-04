@@ -85,7 +85,14 @@ public class LeagueUserTeamService {
         Long leagueuserTeamId = dto.getAddTo();
         Long playerId = dto.getAdd();
         List<Long> addList = dto.getAddList();
-        addRemovePlayerToUserTeam(leagueuserTeamId, playerId, OperationEnum.ADD);
+        if (addList != null) {
+            addList.stream().forEach(player -> {
+                addRemovePlayerToUserTeam(leagueuserTeamId, player, OperationEnum.ADD);
+            });
+        }
+        if (playerId != null) {
+            addRemovePlayerToUserTeam(leagueuserTeamId, playerId, OperationEnum.ADD);
+        }
     }
 
     public void removePlayerFromUserTeam(Long leagueuserTeamId, Long playerId) {

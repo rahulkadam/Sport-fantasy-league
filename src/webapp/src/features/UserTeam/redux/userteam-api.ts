@@ -6,7 +6,7 @@ export function saveTeamForUser(userteamId: number, playerList: any) {
     playerIds.push(player.id);
   });
   return Post('/fantasy/userteam/add/player', {
-    data: {addto: userteamId, addList: playerIds},
+    data: {addTo: userteamId, addList: playerIds},
   });
 }
 
