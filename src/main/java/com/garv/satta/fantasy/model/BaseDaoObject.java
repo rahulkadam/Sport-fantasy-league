@@ -18,6 +18,8 @@ public class BaseDaoObject implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    protected Boolean isActive;
+    protected Boolean isDeleted;
     protected DateTime created_at;
     protected DateTime updated_at;
 

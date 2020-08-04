@@ -2,6 +2,7 @@ package com.garv.satta.fantasy.model.frontoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Player;
+import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -42,6 +43,10 @@ public class LeagueUserTeam extends BaseDaoObject {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "captain_player_id")
     private Player captain_player;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
 
     @ManyToMany
     @JoinTable(

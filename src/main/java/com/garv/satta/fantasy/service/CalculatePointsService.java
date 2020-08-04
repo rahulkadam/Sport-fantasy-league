@@ -101,9 +101,7 @@ public class CalculatePointsService {
     }
 
     private List<LeagueUserTeam> findLeagueUserTeamByTournament(Long id) {
-        List<League> leagueList = leagueRepository.findLeagueByTournamentId(id);
-        List<LeagueUserTeam> leagueUserTeams = new ArrayList<>();
-        leagueList.forEach(league -> leagueUserTeams.addAll(league.getLeagueMembers()));
+        List<LeagueUserTeam> leagueUserTeams = leagueUserTeamRepository.findLeagueUserTeamByTournamentId(id);
         return leagueUserTeams;
     }
 }
