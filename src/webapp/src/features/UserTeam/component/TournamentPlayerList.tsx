@@ -1,13 +1,12 @@
 import React, {useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button} from 'react-bootstrap';
+import {Form, Dropdown} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 
-const UserTeamPlayerDetails = ({
+const TournamentPlayerList = ({
   data,
   title,
   onRowSelected,
-  onRemoveRowAction,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
 
@@ -19,30 +18,7 @@ const UserTeamPlayerDetails = ({
     );
   }
 
-  function removeAction(row: any) {
-    return (
-      <div>
-        <Button
-          variant="danger"
-          size="sm"
-          onClick={() => {
-            onRemoveRowAction(row);
-          }}>
-          Remove
-        </Button>
-      </div>
-    );
-  }
-
-  const actionColumn: any[] = [
-    {
-      name: 'Action',
-      sortable: true,
-      cell: removeAction,
-    },
-  ];
-
-  const columns: any[] = [
+  const columns = [
     {
       name: 'Name',
       selector: 'name',
@@ -73,9 +49,16 @@ const UserTeamPlayerDetails = ({
     },
   ];
 
-  const newColumns: any = onRemoveRowAction
-    ? actionColumn.concat(columns)
-    : columns;
+  function onRowSelectedAction(state: any) {
+    console.log('Selected Rows: ', state.selectedRows);
+    if (onRowSelected) {
+      onRowSelected(state.selectedRows);
+    }
+  }
+
+  function onRowClickedAction(row: any, e: any) {
+    console.log(row.name);
+  }
 
   const renderCustomSearch = useMemo(() => {
     return (
@@ -99,15 +82,19 @@ const UserTeamPlayerDetails = ({
 
   return (
     <div>
-      {data && data.length == 0 && <div>List is empty, please create team</div>}
+      {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
           title={title}
-          columns={newColumns}
+          columns={columns}
           customStyles={customStyles}
           data={filteredRows}
+          selectableRows
+          onRowClicked={onRowClickedAction}
+          onSelectedRowsChange={onRowSelectedAction}
           pagination
-          paginationPerPage={11}
+          paginationPerPage={50}
+          paginationResetDefaultPage
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
@@ -118,4 +105,4 @@ const UserTeamPlayerDetails = ({
   );
 };
 
-export {UserTeamPlayerDetails};
+export {TournamentPlayerList};

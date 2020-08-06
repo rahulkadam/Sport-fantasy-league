@@ -14,4 +14,5 @@ declare type UserTeamPlayerDetails = {
   data: any;
   title: string;
   onRowSelected?: any;
+  onRemoveRowAction?: any;
 };

@@ -17,6 +17,7 @@ import {
   FETCH_USER_TEAM,
   SAVE_USER_TEAM,
   SAVE_USER_TEAM_ERROR,
+  REMOVE_FROM_INTERNAL_USER_TEAM,
 } from './userteamConstants';
 import {dispatchActionWrapper, dispatchAction} from 'common/util';
 
@@ -84,11 +85,18 @@ const addRemovePlayerToInternalUserTeamAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (rows: any) => {
-      dispatch({
-        type: UPDATE_INTERNAL_USER_TEAM,
-        rows: rows,
-      });
+    (rows: any, action?: string) => {
+      if (action == 'REMOVE') {
+        dispatch({
+          type: REMOVE_FROM_INTERNAL_USER_TEAM,
+          rows: rows,
+        });
+      } else {
+        dispatch({
+          type: UPDATE_INTERNAL_USER_TEAM,
+          rows: rows,
+        });
+      }
     }
   );
 };

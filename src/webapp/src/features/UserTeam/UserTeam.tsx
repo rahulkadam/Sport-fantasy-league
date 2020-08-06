@@ -1,6 +1,11 @@
 import React, {Fragment, useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {UserTeamPlayerDetails, TeamDetails, CreateTeam} from './component';
+import {
+  UserTeamPlayerDetails,
+  TeamDetails,
+  CreateTeam,
+  TournamentPlayerList,
+} from './component';
 import {
   fetchAllPlayerListAction,
   getUserTeamData,
@@ -85,6 +90,10 @@ const UserTeam = () => {
     );
   }
 
+  function removeRowAction(row: any) {
+    updateCurrentUserTeam(row, 'REMOVE');
+  }
+
   function renderManageTransfer() {
     return (
       <div>
@@ -92,6 +101,7 @@ const UserTeam = () => {
         <UserTeamPlayerDetails
           title="Your Selected Fantasy Team"
           data={userteamDataProps.currentUserTeamPlayers}
+          onRemoveRowAction={removeRowAction}
         />
         <Button
           variant="primary"
@@ -99,8 +109,8 @@ const UserTeam = () => {
           disabled={validateSaveTeam()}>
           Save Team
         </Button>
-        <UserTeamPlayerDetails
-          title="Fantasy Player List"
+        <TournamentPlayerList
+          title="Tournament Player List"
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
         />
