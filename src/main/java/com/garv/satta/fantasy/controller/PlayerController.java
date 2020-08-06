@@ -7,6 +7,7 @@ import com.garv.satta.fantasy.service.UserTeamService;
 import com.garv.satta.fantasy.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -60,5 +61,11 @@ public class PlayerController {
         Long teamId = dto.getRemove();
         playerService.removeTeamFromPlayer(playerId, teamId);
         return "User Team Removed successfully";
+    }
+
+    @PostMapping("/upload/xls/list")
+    public String uploadPlayerList(@RequestParam("file") MultipartFile file) {
+        playerService.uploadPlayerList(file);
+        return "File Uploaded Successfully";
     }
 }
