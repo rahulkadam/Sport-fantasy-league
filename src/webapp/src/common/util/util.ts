@@ -6,4 +6,17 @@ export function getIdFromSelectList(text: string, list: any[]) {
   return defaultId;
 }
 
-export const DefaultUserId = 7;
+export const DefaultUserId = 1;
+export const DefaultUserTeamId = 5;
+
+export function returnUniqueArrayElement(arrayList: any[]) {
+  const result = [];
+  const map = new Map();
+  for (const item of arrayList) {
+    if (!map.has(item.id)) {
+      map.set(item.id, true);
+      result.push(item);
+    }
+  }
+  return result;
+}

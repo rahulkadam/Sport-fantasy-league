@@ -37,7 +37,7 @@ const UserTeamPlayerDetails = ({
     },
     {
       name: 'Team',
-      selector: 'team',
+      selector: 'teamsNameList',
       sortable: true,
       right: true,
     },

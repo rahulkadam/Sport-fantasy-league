@@ -11,6 +11,7 @@ import {
   SAVE_USER_TEAM,
   SAVE_USER_TEAM_ERROR,
 } from './userteamConstants';
+import {returnUniqueArrayElement} from 'common/util';
 
 const initialState: UserTeam = {
   data: {playerList: []},
@@ -77,7 +78,8 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       };
       return userLeaguestate;
     case UPDATE_INTERNAL_USER_TEAM:
-      const currentUserTeamPlayers = state.userTeamPlayers.concat(action.rows);
+      let currentUserTeamPlayers = state.userTeamPlayers.concat(action.rows);
+      currentUserTeamPlayers = returnUniqueArrayElement(currentUserTeamPlayers);
       userLeaguestate = {
         ...state,
         currentUserTeamPlayers: currentUserTeamPlayers,

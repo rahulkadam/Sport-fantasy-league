@@ -10,7 +10,7 @@ import {
   createUserTeamAction,
 } from './redux';
 import {Button} from 'react-bootstrap';
-import {DefaultUserId} from 'common/util';
+import {DefaultUserId, DefaultUserTeamId} from 'common/util';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -22,6 +22,7 @@ const UserTeam = () => {
   const tabName = 'teamDetails';
   const isUserTeamAvailable =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
+  const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
@@ -47,8 +48,13 @@ const UserTeam = () => {
       'saving team with team player',
       userteamDataProps.currentUserTeamPlayers.length
     );
-    const userteamId = 8;
-    saveUserTeam(userteamId, userteamDataProps.currentUserTeamPlayers);
+    const userteamId = DefaultUserTeamId;
+    saveUserTeam(userteamId, currentUserTeamPlayers);
+  }
+
+  function validateSaveTeam() {
+    const saveTeamEnable = currentUserTeamPlayers.length != 5;
+    return saveTeamEnable;
   }
 
   function renderManageTransfer() {
@@ -58,7 +64,10 @@ const UserTeam = () => {
           title="Your Selected Fantasy Team"
           data={userteamDataProps.currentUserTeamPlayers}
         />
-        <Button variant="primary" onClick={() => saveTeam()}>
+        <Button
+          variant="primary"
+          onClick={() => saveTeam()}
+          disabled={validateSaveTeam()}>
           Save Team
         </Button>
         <UserTeamPlayerDetails

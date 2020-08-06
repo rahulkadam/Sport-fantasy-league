@@ -3,29 +3,44 @@ import {UserTeamPlayerDetails} from './UserTeamPlayerDetails';
 import {Col, Row, Tab} from 'react-bootstrap';
 
 const TeamDetails = ({data}: TeamDetailsProps) => {
+  const userteam = data.userteam;
+  const userPlayerList = data.userTeamPlayers;
+
+  function teamEaligibleToPlay() {
+    if (userPlayerList && userPlayerList.length == 11) {
+      return 'Complete';
+    }
+    return <div>INCOMPLETE, Please Complete Your Team</div>;
+  }
   function renderUserTeamOverview() {
     return (
       <Fragment>
         <Row>
           <Col>Name</Col>
           <Col>Total Score</Col>
-          <Col>Transfer</Col>
+          <Col>Transfer Available</Col>
+          <Col>Transfer used</Col>
         </Row>
         <Row>
-          <Col>{data.userteam.name}</Col>
-          <Col>{data.userteam.id}</Col>
-          <Col>{data.userteam.total_score}</Col>
+          <Col>
+            {userteam.name} ({userteam.id})
+          </Col>
+          <Col>{userteam.total_score}</Col>
+          <Col>{userteam.remained_Transfer}</Col>
+          <Col>{userteam.used_Transfer}</Col>
+        </Row>
+        <Row>
+          <Col>Status</Col>
+        </Row>
+        <Row>
+          <Col>{teamEaligibleToPlay()}</Col>
         </Row>
       </Fragment>
     );
   }
-
   function renderTeamDetails() {
     return (
-      <UserTeamPlayerDetails
-        title="Your Fantasy Team"
-        data={data.userTeamPlayers}
-      />
+      <UserTeamPlayerDetails title="Your Fantasy Team" data={userPlayerList} />
     );
   }
   return (
