@@ -1,8 +1,8 @@
 package com.garv.satta.fantasy.controller;
 
-import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
+import com.garv.satta.fantasy.dto.UserTeamDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
-import com.garv.satta.fantasy.service.LeagueUserTeamService;
+import com.garv.satta.fantasy.service.UserTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,24 +11,24 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/userteam")
-public class LeagueUserTeamController {
+public class UserTeamController {
 
     @Autowired
-    private LeagueUserTeamService service;
+    private UserTeamService service;
 
     @GetMapping(value = "/get/user/{id}")
-    public List<LeagueUserTeamDTO> getUserTeamByUser(@PathVariable(name = "id") Long id) {
+    public List<UserTeamDTO> getUserTeamByUser(@PathVariable(name = "id") Long id) {
         return service.getUserTeamByUser(id);
     }
 
     @GetMapping(value = "/get/{id}")
-    public LeagueUserTeamDTO getUserTeamById(@PathVariable(name = "id") Long id) {
+    public UserTeamDTO getUserTeamById(@PathVariable(name = "id") Long id) {
         return service.getUserTeamById(id);
     }
 
     @PostMapping(value = "/create")
-    public LeagueUserTeamDTO createUserTeam(@RequestBody LeagueUserTeamDTO dto) {
-        return service.createLeagueUserTeam(dto);
+    public UserTeamDTO createUserTeam(@RequestBody UserTeamDTO dto) {
+        return service.createUserTeam(dto);
     }
 
     @PostMapping(value = "/add/player")
@@ -39,9 +39,9 @@ public class LeagueUserTeamController {
 
     @PostMapping(value = "/remove/player")
     public String removePlayerFromUserTeam(@RequestBody RequestDTO dto) {
-        Long leagueuserTeamId = dto.getRemoveFrom();
+        Long userTeamId = dto.getRemoveFrom();
         Long playerId = dto.getRemove();
-        service.removePlayerFromUserTeam(leagueuserTeamId, playerId);
+        service.removePlayerFromUserTeam(userTeamId, playerId);
         return "Player Removed successfully";
     }
 }

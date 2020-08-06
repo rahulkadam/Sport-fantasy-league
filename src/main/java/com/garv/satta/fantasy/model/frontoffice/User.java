@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"leagueUserTeamList"} , callSuper = true)
+@ToString(exclude = {"userTeamList"} , callSuper = true)
 public class User extends BaseDaoObject {
 
     @NotNull
@@ -29,7 +29,7 @@ public class User extends BaseDaoObject {
     private String role;
 
     @OneToMany(mappedBy = "user")
-    private List<LeagueUserTeam> leagueUserTeamList;
+    private List<UserTeam> userTeamList;
 
     public User(Long id) {
         super(id);

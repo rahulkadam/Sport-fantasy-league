@@ -3,10 +3,8 @@ package com.garv.satta.fantasy.controller;
 import com.garv.satta.fantasy.dto.PlayerDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
-import com.garv.satta.fantasy.service.LeagueUserTeamService;
+import com.garv.satta.fantasy.service.UserTeamService;
 import com.garv.satta.fantasy.service.PlayerService;
-import com.garv.satta.fantasy.validation.PlayerValidator;
-import com.garv.satta.fantasy.validation.TeamValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +19,7 @@ public class PlayerController {
     private PlayerService playerService;
 
     @Autowired
-    private LeagueUserTeamService leagueUserTeamService;
+    private UserTeamService userTeamService;
 
     @Autowired
     private PlayerConverter playerConverter;
@@ -36,7 +34,7 @@ public class PlayerController {
     @GetMapping(value = "/list/byuser/{id}")
     @ResponseBody
     public List<PlayerDTO> getPlayerListByUserTeamId(@PathVariable(name = "id") Long id) {
-        List<PlayerDTO> playerList =  leagueUserTeamService.getPlayerListByUserTeamId(id);
+        List<PlayerDTO> playerList =  userTeamService.getPlayerListByUserTeamId(id);
         return playerList;
     }
 

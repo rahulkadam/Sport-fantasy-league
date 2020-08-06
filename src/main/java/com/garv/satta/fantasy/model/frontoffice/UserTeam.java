@@ -17,7 +17,7 @@ import java.util.function.Predicate;
 @Data
 @ToString(exclude = {"leagues", "user", "captain_player","teamPlayers"}, callSuper = true)
 @NoArgsConstructor
-public class LeagueUserTeam extends BaseDaoObject {
+public class UserTeam extends BaseDaoObject {
 
     @NotNull
     @Column(unique = true)
@@ -50,8 +50,8 @@ public class LeagueUserTeam extends BaseDaoObject {
 
     @ManyToMany
     @JoinTable(
-            name = "leagueuserteam_player",
-            joinColumns = @JoinColumn(name = "league_user_team_id"),
+            name = "userteam_player",
+            joinColumns = @JoinColumn(name = "user_team_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
     private List<Player> teamPlayers;
 

@@ -46,34 +46,34 @@ public class League extends BaseDaoObject {
             name = "league_userteam",
             joinColumns = @JoinColumn(name = "league_id"),
             inverseJoinColumns = @JoinColumn(name = "userteam_id"))
-    private List<LeagueUserTeam> leagueMembers;
+    private List<UserTeam> leagueMembers;
 
     public League(Long id) {
         super(id);
     }
 
 
-    public void addLeagueMembers(LeagueUserTeam leagueUserTeam) {
+    public void addLeagueMembers(UserTeam userTeam) {
         if (leagueMembers == null) {
             leagueMembers = new ArrayList<>();
-            leagueMembers.add(leagueUserTeam);
+            leagueMembers.add(userTeam);
             this.setTotalUserCount(1);
             return;
         }
 
-        Predicate<LeagueUserTeam> isLeagueMemberMatch = leagueUserTeam1 -> leagueUserTeam1.getId() == leagueUserTeam.getId();
-        LeagueUserTeam findLeagueMember = leagueMembers.stream().filter(isLeagueMemberMatch).findAny().orElse(null);
+        Predicate<UserTeam> isLeagueMemberMatch = userTeam1 -> userTeam1.getId() == userTeam.getId();
+        UserTeam findLeagueMember = leagueMembers.stream().filter(isLeagueMemberMatch).findAny().orElse(null);
         if (findLeagueMember == null) {
-            leagueMembers.add(leagueUserTeam);
+            leagueMembers.add(userTeam);
         }
         this.setTotalUserCount(leagueMembers.size());
     }
 
-    public void removeLeague(LeagueUserTeam leagueUserTeam) {
+    public void removeLeague(UserTeam userTeam) {
         if (leagueMembers == null) {
             return;
         }
-        Predicate<LeagueUserTeam> isLeagueMemberMatch = leagueUserTeam1 -> leagueUserTeam1.getId() == leagueUserTeam.getId();
+        Predicate<UserTeam> isLeagueMemberMatch = userTeam1 -> userTeam1.getId() == userTeam.getId();
         leagueMembers.removeIf(isLeagueMemberMatch);
         this.setTotalUserCount(leagueMembers.size());
     }

@@ -3,13 +3,11 @@ package com.garv.satta.fantasy.service;
 import com.garv.satta.fantasy.dao.repository.*;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.*;
-import com.garv.satta.fantasy.model.frontoffice.League;
-import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
+import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +32,7 @@ public class CalculatePointsService {
     private MatchPlayerScoreRepository matchPlayerScoreRepository;
 
     @Autowired
-    private LeagueUserTeamRepository leagueUserTeamRepository;
+    private UserTeamRepository userTeamRepository;
 
     /**
      * Calculate Score for each team after Match By Match ID
@@ -46,33 +44,33 @@ public class CalculatePointsService {
             throw new GenericException("Match id is Not Valid" + id);
         }
         Tournament tournament = match.getTournament();
-        List<LeagueUserTeam> leagueUserTeams = findLeagueUserTeamByTournament(tournament.getId());
+        List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
-        processScoreUpdateforUserTeamsList(leagueUserTeams, matchPlayerScoreMap);
+        processScoreUpdateforUserTeamsList(userTeams, matchPlayerScoreMap);
     }
 
     /**
      * Process for list of User Team
-     * @param leagueUserTeams
+     * @param userTeams
      * @param matchPlayerScoreMap
      */
-    private void processScoreUpdateforUserTeamsList(List<LeagueUserTeam> leagueUserTeams, Map<Long, MatchPlayerScore> matchPlayerScoreMap) {
-        leagueUserTeams.forEach(leagueUserTeam -> processScoreUpdateforSingleUserTeam(leagueUserTeam, matchPlayerScoreMap));
+    private void processScoreUpdateforUserTeamsList(List<UserTeam> userTeams, Map<Long, MatchPlayerScore> matchPlayerScoreMap) {
+        userTeams.forEach(userTeam -> processScoreUpdateforSingleUserTeam(userTeam, matchPlayerScoreMap));
     }
 
     /**
      * Calculating score  for User Team and updating UserTeam score
-     * @param leagueUserTeam
+     * @param userTeam
      * @param matchPlayerScoreMap
      */
     @Transactional
-    private void processScoreUpdateforSingleUserTeam(LeagueUserTeam leagueUserTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap) {
-        List<Player> playerList = leagueUserTeam.getTeamPlayers();
+    private void processScoreUpdateforSingleUserTeam(UserTeam userTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap) {
+        List<Player> playerList = userTeam.getTeamPlayers();
 
-        Player captainPlayer = leagueUserTeam.getCaptain_player();
+        Player captainPlayer = userTeam.getCaptain_player();
 
-        Integer score = leagueUserTeam.getTotal_score();
+        Integer score = userTeam.getTotal_score();
         if (score == null) {
             score = 0;
         }
@@ -85,8 +83,8 @@ public class CalculatePointsService {
                 score = score + matchPlayerScore.getPointscore();
             }
         }
-        leagueUserTeam.setTotal_score(score);
-        leagueUserTeamRepository.save(leagueUserTeam);
+        userTeam.setTotal_score(score);
+        userTeamRepository.save(userTeam);
     }
 
     private List<MatchPlayerScore> findMatchPlayerScoreByMatchId(Long matchId) {
@@ -100,8 +98,8 @@ public class CalculatePointsService {
         return map;
     }
 
-    private List<LeagueUserTeam> findLeagueUserTeamByTournament(Long id) {
-        List<LeagueUserTeam> leagueUserTeams = leagueUserTeamRepository.findLeagueUserTeamByTournamentId(id);
-        return leagueUserTeams;
+    private List<UserTeam> findUserTeamByTournament(Long id) {
+        List<UserTeam> userTeams = userTeamRepository.findUserTeamByTournamentId(id);
+        return userTeams;
     }
 }

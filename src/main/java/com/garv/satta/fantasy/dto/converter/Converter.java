@@ -1,8 +1,5 @@
 package com.garv.satta.fantasy.dto.converter;
 
-import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
-import com.garv.satta.fantasy.model.backoffice.Player;
-import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

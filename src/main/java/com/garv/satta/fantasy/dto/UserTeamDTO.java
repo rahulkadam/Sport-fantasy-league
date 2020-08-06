@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LeagueUserTeamDTO extends BaseDTO {
+public class UserTeamDTO extends BaseDTO {
 
     private String name;
     private Boolean status;
