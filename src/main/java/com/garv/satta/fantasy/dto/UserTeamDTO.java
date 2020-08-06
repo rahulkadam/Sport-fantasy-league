@@ -13,6 +13,7 @@ public class UserTeamDTO extends BaseDTO {
     private String name;
     private Boolean status;
     private Integer creditbalance;
+    private Integer totalbalance;
     private Integer total_score;
     private Integer total_Transfer;
     private Integer used_Transfer;

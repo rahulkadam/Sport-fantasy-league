@@ -22,10 +22,12 @@ const initialState: UserTeam = {
   userTeamPlayers: [],
   currentUserTeamPlayers: [],
   userteam: {},
+  currentUserTeamValue: 0,
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
   let userLeaguestate = {...state};
+  let currentTeamValue = 0;
   switch (action.type) {
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
@@ -61,10 +63,14 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       };
       return userLeaguestate;
     case FETCH_PLAYER_LIST_BY_USER:
+      action.userTeamPlayers.forEach(
+        (player: any) => (currentTeamValue = currentTeamValue + player.value)
+      );
       userLeaguestate = {
         ...state,
         userTeamPlayers: action.userTeamPlayers,
         currentUserTeamPlayers: action.userTeamPlayers,
+        currentUserTeamValue: currentTeamValue,
         isLoading: false,
       };
       return userLeaguestate;
@@ -80,9 +86,13 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
     case UPDATE_INTERNAL_USER_TEAM:
       let currentUserTeamPlayers = state.userTeamPlayers.concat(action.rows);
       currentUserTeamPlayers = returnUniqueArrayElement(currentUserTeamPlayers);
+      currentUserTeamPlayers.forEach(
+        (player: any) => (currentTeamValue = currentTeamValue + player.value)
+      );
       userLeaguestate = {
         ...state,
         currentUserTeamPlayers: currentUserTeamPlayers,
+        currentUserTeamValue: currentTeamValue,
         isLoading: false,
       };
       return userLeaguestate;

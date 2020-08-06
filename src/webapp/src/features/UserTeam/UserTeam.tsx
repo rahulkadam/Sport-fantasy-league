@@ -9,7 +9,7 @@ import {
   saveUserTeamAction,
   createUserTeamAction,
 } from './redux';
-import {Button} from 'react-bootstrap';
+import {Button, Row, Col} from 'react-bootstrap';
 import {DefaultUserId, DefaultUserTeamId} from 'common/util';
 
 const UserTeam = () => {
@@ -53,13 +53,31 @@ const UserTeam = () => {
   }
 
   function validateSaveTeam() {
-    const saveTeamEnable = currentUserTeamPlayers.length != 5;
-    return saveTeamEnable;
+    const saveTeamDisable =
+      currentUserTeamPlayers.length != 5 ||
+      userteamDataProps.currentUserTeamValue > 40;
+    return saveTeamDisable;
+  }
+
+  function renderShowTransferOverview() {
+    return (
+      <Fragment>
+        <Row>
+          <Col>Available Transfer</Col>
+          <Col>Available Credit</Col>
+        </Row>
+        <Row>
+          <Col>50</Col>
+          <Col>{100 - userteamDataProps.currentUserTeamValue}</Col>
+        </Row>
+      </Fragment>
+    );
   }
 
   function renderManageTransfer() {
     return (
       <div>
+        {renderShowTransferOverview()}
         <UserTeamPlayerDetails
           title="Your Selected Fantasy Team"
           data={userteamDataProps.currentUserTeamPlayers}

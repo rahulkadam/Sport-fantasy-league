@@ -6,5 +6,6 @@ declare type UserTeam = {
   playerList: any;
   userTeamPlayers: any;
   currentUserTeamPlayers: any;
+  currentUserTeamValue: number;
   userteam: any;
 };

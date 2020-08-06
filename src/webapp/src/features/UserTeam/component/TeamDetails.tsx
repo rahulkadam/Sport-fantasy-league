@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
 import {UserTeamPlayerDetails} from './UserTeamPlayerDetails';
-import {Col, Row, Tab} from 'react-bootstrap';
+import {Col, Row} from 'react-bootstrap';
 
 const TeamDetails = ({data}: TeamDetailsProps) => {
   const userteam = data.userteam;
   const userPlayerList = data.userTeamPlayers;
 
-  function teamEaligibleToPlay() {
+  function teamEligibleToPlay() {
     if (userPlayerList && userPlayerList.length == 11) {
       return 'Complete';
     }
@@ -31,9 +31,11 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
         </Row>
         <Row>
           <Col>Status</Col>
+          <Col>Balance</Col>
         </Row>
         <Row>
-          <Col>{teamEaligibleToPlay()}</Col>
+          <Col>{teamEligibleToPlay()}</Col>
+          <Col>{userteam.creditbalance}</Col>
         </Row>
       </Fragment>
     );

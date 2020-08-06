@@ -27,6 +27,7 @@ public class UserTeam extends BaseDaoObject {
     private Boolean status;
 
     private Integer creditbalance;
+    private Integer totalbalance;
 
     private Integer total_score;
 
