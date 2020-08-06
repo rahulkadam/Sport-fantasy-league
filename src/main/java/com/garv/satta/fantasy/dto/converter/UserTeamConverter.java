@@ -34,7 +34,7 @@ public class UserTeamConverter extends Converter<UserTeam, UserTeamDTO> {
             List<League> leagueList = new ArrayList<>();
             League league = new League(leagueId);
             leagueList.add(league);
-            userTeam.setLeagues(leagueList);
+            ///userTeam.setLeagues(leagueList);
         }
 
         return userTeam;

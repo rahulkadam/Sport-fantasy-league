@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.model.frontoffice;
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -15,7 +16,8 @@ import java.util.function.Predicate;
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"created_by", "updated_by", "tournament","leagueMembers"}, callSuper = true)
+@EqualsAndHashCode(callSuper = true, of = {"id"})
+@ToString(exclude = {"created_by", "updated_by", "tournament","leagueUserTeams"}, callSuper = true)
 public class League extends BaseDaoObject {
 
     @NotNull
@@ -41,12 +43,8 @@ public class League extends BaseDaoObject {
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
-    @ManyToMany
-    @JoinTable(
-            name = "league_userteam",
-            joinColumns = @JoinColumn(name = "league_id"),
-            inverseJoinColumns = @JoinColumn(name = "userteam_id"))
-    private List<UserTeam> leagueMembers;
+    @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
+    private List<LeagueUserTeam> leagueUserTeams;
 
     public League(Long id) {
         super(id);
@@ -54,28 +52,36 @@ public class League extends BaseDaoObject {
 
 
     public void addLeagueMembers(UserTeam userTeam) {
-        if (leagueMembers == null) {
-            leagueMembers = new ArrayList<>();
-            leagueMembers.add(userTeam);
+        LeagueUserTeam leagueUserTeam = new LeagueUserTeam();
+        leagueUserTeam.setUserTeam(userTeam);
+        leagueUserTeam.setLeague(this);
+
+        if (leagueUserTeams == null) {
+            leagueUserTeams = new ArrayList<>();
+            leagueUserTeams.add(leagueUserTeam);
             this.setTotalUserCount(1);
+            leagueUserTeam.setUserrank(1);
             return;
         }
 
-        Predicate<UserTeam> isLeagueMemberMatch = userTeam1 -> userTeam1.getId() == userTeam.getId();
-        UserTeam findLeagueMember = leagueMembers.stream().filter(isLeagueMemberMatch).findAny().orElse(null);
+        leagueUserTeam.setUserrank(leagueUserTeams.size() + 1);
+
+        Predicate<LeagueUserTeam> isLeagueMemberMatch = userTeam1 -> userTeam1.getUserTeam().getId() == leagueUserTeam.getUserTeam().getId();
+        LeagueUserTeam findLeagueMember = leagueUserTeams.stream().filter(isLeagueMemberMatch).findAny().orElse(null);
         if (findLeagueMember == null) {
-            leagueMembers.add(userTeam);
+            leagueUserTeams.add(leagueUserTeam);
         }
-        this.setTotalUserCount(leagueMembers.size());
+        this.setTotalUserCount(leagueUserTeams.size());
     }
 
     public void removeLeague(UserTeam userTeam) {
-        if (leagueMembers == null) {
+
+        if (leagueUserTeams == null) {
             return;
         }
-        Predicate<UserTeam> isLeagueMemberMatch = userTeam1 -> userTeam1.getId() == userTeam.getId();
-        leagueMembers.removeIf(isLeagueMemberMatch);
-        this.setTotalUserCount(leagueMembers.size());
+        Predicate<LeagueUserTeam> isLeagueMemberMatch = userTeam1 -> userTeam1.getUserTeam().getId() == userTeam.getId();
+        leagueUserTeams.removeIf(isLeagueMemberMatch);
+        this.setTotalUserCount(leagueUserTeams.size());
     }
 
 }

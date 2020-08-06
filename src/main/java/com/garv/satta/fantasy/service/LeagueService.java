@@ -2,6 +2,7 @@ package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.LeagueRepository;
+import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.UserTeamRepository;
 import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueConverter;
@@ -28,6 +29,9 @@ public class LeagueService {
 
     @Autowired
     private UserTeamRepository userTeamRepository;
+
+    @Autowired
+    private LeagueUserTeamRepository leagueUserTeamRepository;
 
     @Autowired
     private TournamentValidator tournamentValidator;
@@ -57,14 +61,18 @@ public class LeagueService {
         league.setStatus(true);
         league = repository.save(league);
         List<UserTeam> userTeams = userTeamRepository.findUserTeamByUserId(leagueDTO.getCreateByUserId());
-        joinLeagueByCode(league.getLeagueCode(), userTeams.get(0).getId());
+        if (userTeams.size() > 0) {
+            joinLeagueByCode(league.getLeagueCode(), userTeams.get(0).getId());
+        } else {
+            throw new GenericException("Please Create User Team first");
+        }
         return converter.convertToFullDTO(league);
     }
 
     public void joinLeagueByCode(String leagueCode, Long userTeamId) {
         League league = repository.findLeagueByLeagueCode(leagueCode);
         UserTeam userTeam = userTeamRepository.findUserTeamById(userTeamId);
-        List<League> leagueList = userTeam.getLeagues();
+        List<League> leagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         Optional<League> leagueObject = leagueList.stream().filter(league1 -> league1.getLeagueCode().equalsIgnoreCase(leagueCode)).findFirst();
         if (leagueObject.isPresent()) {
             throw new GenericException("already member of league : "+ leagueObject.get().getName());
@@ -107,7 +115,7 @@ public class LeagueService {
         if (userTeam == null) {
             throw new GenericException("Unable to find League for User");
         }
-        List<League> userLeagueList = userTeam.getLeagues();
+        List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         return converter.convertToDTOList(userLeagueList);
     }
 

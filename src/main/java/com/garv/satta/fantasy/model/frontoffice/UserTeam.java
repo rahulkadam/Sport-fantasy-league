@@ -4,19 +4,21 @@ import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 
 @Entity
 @Data
-@ToString(exclude = {"leagues", "user", "captain_player","teamPlayers"}, callSuper = true)
+@ToString(exclude = {"leagueUserTeams", "user", "captain_player","tournament", "playerUserTeams"}, callSuper = true)
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true, of = {"id"})
 public class UserTeam extends BaseDaoObject {
 
     @NotNull
@@ -33,8 +35,8 @@ public class UserTeam extends BaseDaoObject {
     private Integer remained_Transfer;
     private Integer current_Used_Transfer;
 
-    @ManyToMany(mappedBy = "leagueMembers")
-    private List<League> leagues;
+    @OneToMany(mappedBy = "userTeam")
+    private Set<LeagueUserTeam> leagueUserTeams;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -48,34 +50,33 @@ public class UserTeam extends BaseDaoObject {
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
-    @ManyToMany
-    @JoinTable(
-            name = "userteam_player",
-            joinColumns = @JoinColumn(name = "user_team_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id"))
-    private List<Player> teamPlayers;
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private Set<PlayerUserTeam> playerUserTeams;
 
 
     public void addPlayer(Player player) {
-        if (teamPlayers == null) {
-            teamPlayers = new ArrayList<>();
-            teamPlayers.add(player);
+        PlayerUserTeam playerUserTeam = new PlayerUserTeam();
+        playerUserTeam.setPlayer(player);
+        playerUserTeam.setUserTeam(this);
+        if (playerUserTeams == null) {
+            playerUserTeams = new HashSet<>();
+            playerUserTeams.add(playerUserTeam);
             return;
         }
 
-        Predicate<Player> isplayerMatch = player1 -> player1.getId() == player.getId();
-        Player findPlayer = teamPlayers.stream().filter(isplayerMatch).findAny().orElse(null);
+        Predicate<PlayerUserTeam> isplayerMatch = player1 -> player1.getPlayer().getId() == playerUserTeam.getPlayer().getId();
+        PlayerUserTeam findPlayer = playerUserTeams.stream().filter(isplayerMatch).findAny().orElse(null);
         if (findPlayer == null) {
-            teamPlayers.add(player);
+            playerUserTeams.add(playerUserTeam);
         }
     }
 
     public void removePlayer(Player player) {
-        if (teamPlayers == null) {
+        if (playerUserTeams == null) {
             return;
         }
-        Predicate<Player> isplayerMatch = player1 -> player1.getId() == player.getId();
-        teamPlayers.removeIf(isplayerMatch);
+        Predicate<PlayerUserTeam> isplayerMatch = player1 -> player1.getPlayer().getId() == player.getId();
+        playerUserTeams.removeIf(isplayerMatch);
     }
 
 }

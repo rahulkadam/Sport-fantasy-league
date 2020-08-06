@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.model.backoffice;
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import com.garv.satta.fantasy.fantasyenum.PlayerEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -16,7 +17,8 @@ import java.util.stream.Collectors;
 @Entity
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"teams"}, callSuper = true)
+@ToString(exclude = {"teams", "squads"}, callSuper = true)
+@EqualsAndHashCode
 public class Player extends BaseDaoObject {
     @NotNull
     @Column(unique = true)

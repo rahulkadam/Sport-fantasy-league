@@ -32,6 +32,9 @@ public class CalculatePointsService {
     private MatchPlayerScoreRepository matchPlayerScoreRepository;
 
     @Autowired
+    private PlayerUserTeamRepository playerUserTeamRepository;
+
+    @Autowired
     private UserTeamRepository userTeamRepository;
 
     /**
@@ -66,7 +69,7 @@ public class CalculatePointsService {
      */
     @Transactional
     private void processScoreUpdateforSingleUserTeam(UserTeam userTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap) {
-        List<Player> playerList = userTeam.getTeamPlayers();
+        List<Player> playerList = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
 
         Player captainPlayer = userTeam.getCaptain_player();
 

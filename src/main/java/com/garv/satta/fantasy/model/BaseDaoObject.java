@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.joda.time.DateTime;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode(of = {"id"})
 public class BaseDaoObject implements Serializable {
 
     @Id

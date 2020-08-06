@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.Constant.FantasyConstant;
+import com.garv.satta.fantasy.dao.repository.PlayerUserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.UserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dto.UserTeamDTO;
@@ -33,6 +34,9 @@ public class UserTeamService {
     private PlayerRepository playerRepository;
 
     @Autowired
+    private PlayerUserTeamRepository playerUserTeamRepository;
+
+    @Autowired
     private UserValidator userValidator;
 
     @Autowired
@@ -57,7 +61,7 @@ public class UserTeamService {
            throw new GenericException("User is not valid, please check again");
         }
 
-        List<Player> playerList = userTeam.getTeamPlayers();
+        List<Player> playerList = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
         return playerConverter.convertToDTOList(playerList);
     }
 
