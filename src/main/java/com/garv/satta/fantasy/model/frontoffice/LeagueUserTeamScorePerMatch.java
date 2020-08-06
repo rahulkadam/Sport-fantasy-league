@@ -11,7 +11,7 @@ import javax.persistence.*;
 /**
  * LeagueUserTeamScorePerMatch will store User team  match score, so we will have score of each match for userTeam
  *
- * i.e LeagueUserTeam has name : warrior11
+ * i.e UserTeam has name : warrior11
  * here, we will get score for each match for warrior11,
  * warrior11 score in match1
  *  * warrior11 score in match2
@@ -27,7 +27,7 @@ public class LeagueUserTeamScorePerMatch extends BaseDaoObject {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_team_id", nullable = false)
-    private LeagueUserTeam userTeam;
+    private UserTeam userTeam;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "match_details_id", nullable = false)

@@ -28,13 +28,13 @@ public class ExcelFileService {
         return true;
     }
 
-    public Iterator<Row> readData(MultipartFile file, String sheetname) {
+    public Iterator<Row> readData(MultipartFile file) {
         try {
             if (!hasExcelFormat(file)) {
                 throw new GenericException("Invalid file format");
             }
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
-            Sheet sheet = workbook.getSheet(sheetname);
+            Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
             return rows;
         } catch (Exception e) {

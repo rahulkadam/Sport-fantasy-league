@@ -3,13 +3,13 @@ package com.garv.satta.fantasy.service;
 import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.LeagueRepository;
 import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
+import com.garv.satta.fantasy.dao.repository.UserTeamRepository;
 import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.frontoffice.League;
-import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
-import com.garv.satta.fantasy.model.frontoffice.User;
+import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,9 @@ public class LeagueService {
 
     @Autowired
     private LeagueConverter converter;
+
+    @Autowired
+    private UserTeamRepository userTeamRepository;
 
     @Autowired
     private LeagueUserTeamRepository leagueUserTeamRepository;
@@ -57,15 +60,19 @@ public class LeagueService {
         league.setLeagueCode(leagueCode);
         league.setStatus(true);
         league = repository.save(league);
-        List<LeagueUserTeam> leagueUserTeams = leagueUserTeamRepository.findLeagueUserTeamByUserId(leagueDTO.getCreateByUserId());
-        joinLeagueByCode(league.getLeagueCode(),leagueUserTeams.get(0).getId());
+        List<UserTeam> userTeams = userTeamRepository.findUserTeamByUserId(leagueDTO.getCreateByUserId());
+        if (userTeams.size() > 0) {
+            joinLeagueByCode(league.getLeagueCode(), userTeams.get(0).getId());
+        } else {
+            throw new GenericException("Please Create User Team first");
+        }
         return converter.convertToFullDTO(league);
     }
 
     public void joinLeagueByCode(String leagueCode, Long userTeamId) {
         League league = repository.findLeagueByLeagueCode(leagueCode);
-        LeagueUserTeam leagueUserTeam = leagueUserTeamRepository.findLeagueUserTeamById(userTeamId);
-        List<League> leagueList = leagueUserTeam.getLeagues();
+        UserTeam userTeam = userTeamRepository.findUserTeamById(userTeamId);
+        List<League> leagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         Optional<League> leagueObject = leagueList.stream().filter(league1 -> league1.getLeagueCode().equalsIgnoreCase(leagueCode)).findFirst();
         if (leagueObject.isPresent()) {
             throw new GenericException("already member of league : "+ leagueObject.get().getName());
@@ -90,7 +97,7 @@ public class LeagueService {
      * @param operation
      */
     private void addRemoveUserTeamFromLeague(League league, Long userTeamId, OperationEnum operation) {
-        LeagueUserTeam userTeam = leagueUserTeamRepository.findLeagueUserTeamById(userTeamId);
+        UserTeam userTeam = userTeamRepository.findUserTeamById(userTeamId);
         if (userTeam == null || league == null) {
             throw new GenericException("UserTeam Or League is not valid");
         }
@@ -103,12 +110,12 @@ public class LeagueService {
     }
 
     public List<LeagueDTO> getLeagueByUserId(Long id) {
-        List<LeagueUserTeam> leagueUserTeamList = leagueUserTeamRepository.findLeagueUserTeamByUserId(id);
-        LeagueUserTeam leagueUserTeam = leagueUserTeamList.stream().findFirst().orElse(null);
-        if (leagueUserTeam == null) {
+        List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(id);
+        UserTeam userTeam = userTeamList.stream().findFirst().orElse(null);
+        if (userTeam == null) {
             throw new GenericException("Unable to find League for User");
         }
-        List<League> userLeagueList = leagueUserTeam.getLeagues();
+        List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         return converter.convertToDTOList(userLeagueList);
     }
 

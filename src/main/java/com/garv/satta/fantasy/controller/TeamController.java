@@ -5,6 +5,7 @@ import com.garv.satta.fantasy.dto.TeamDTO;
 import com.garv.satta.fantasy.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,6 +49,12 @@ public class TeamController {
     public String AddTournamentToTeam(@RequestBody RequestDTO dto) {
         teamService.AddTournamentToTeam(dto);
         return "Tournament Added successfully";
+    }
+
+    @PostMapping("/upload/xls/list")
+    public String uploadTeamList(@RequestParam("file") MultipartFile file) {
+        teamService.uploadTeamList(file);
+        return "File Uploaded Successfully";
     }
 
 }

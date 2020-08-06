@@ -11,6 +11,6 @@ public class LeagueUserTeamScoreHistoryDTO extends BaseDTO {
     private Integer totalPoint;
     private Long userTeamId;
     private Long matchResultId;
-    private LeagueUserTeamDTO userTeamDTO;
+    private UserTeamDTO userTeamDTO;
     private MatchResultDTO matchResultDTO;
 }
