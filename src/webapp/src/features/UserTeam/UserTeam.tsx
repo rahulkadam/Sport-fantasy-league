@@ -9,8 +9,9 @@ import {
   saveUserTeamAction,
   createUserTeamAction,
 } from './redux';
-import {Button, Row, Col} from 'react-bootstrap';
+import {Button, Row, Col, Badge} from 'react-bootstrap';
 import {DefaultUserId, DefaultUserTeamId} from 'common/util';
+import {bool} from 'prop-types';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -55,20 +56,30 @@ const UserTeam = () => {
   function validateSaveTeam() {
     const saveTeamDisable =
       currentUserTeamPlayers.length != 5 ||
-      userteamDataProps.currentUserTeamValue > 40;
+      userteamDataProps.currentUserTeamValue > 100;
     return saveTeamDisable;
   }
 
   function renderShowTransferOverview() {
+    const validateTeam = validateSaveTeam();
+    const statusValue = !validateTeam
+      ? {message: 'COMPLETE', type: 'success'}
+      : {message: 'INCOMPLETE', type: 'danger'};
     return (
       <Fragment>
         <Row>
           <Col>Available Transfer</Col>
           <Col>Available Credit</Col>
+          <Col>Status</Col>
         </Row>
         <Row>
           <Col>50</Col>
           <Col>{100 - userteamDataProps.currentUserTeamValue}</Col>
+          <Col>
+            <Badge pill variant={statusValue.type}>
+              {statusValue.message}
+            </Badge>
+          </Col>
         </Row>
       </Fragment>
     );

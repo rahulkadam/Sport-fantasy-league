@@ -5,9 +5,9 @@ export function getIdFromSelectList(text: string, list: any[]) {
   }
   return defaultId;
 }
-
-export const DefaultUserId = 1;
-export const DefaultUserTeamId = 5;
+// 83 84   1-5
+export const DefaultUserId = 83;
+export const DefaultUserTeamId = 84;
 
 export function returnUniqueArrayElement(arrayList: any[]) {
   const result = [];

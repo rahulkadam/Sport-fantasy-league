@@ -63,14 +63,10 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       };
       return userLeaguestate;
     case FETCH_PLAYER_LIST_BY_USER:
-      action.userTeamPlayers.forEach(
-        (player: any) => (currentTeamValue = currentTeamValue + player.value)
-      );
       userLeaguestate = {
         ...state,
         userTeamPlayers: action.userTeamPlayers,
         currentUserTeamPlayers: action.userTeamPlayers,
-        currentUserTeamValue: currentTeamValue,
         isLoading: false,
       };
       return userLeaguestate;
@@ -100,6 +96,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       userLeaguestate = {
         ...state,
         userteam: action.userteam[0],
+        currentUserTeamValue: action.userteam[0].creditbalance,
         isLoading: false,
       };
       return userLeaguestate;

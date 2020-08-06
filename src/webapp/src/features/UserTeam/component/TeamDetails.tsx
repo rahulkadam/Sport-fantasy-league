@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {UserTeamPlayerDetails} from './UserTeamPlayerDetails';
-import {Col, Row} from 'react-bootstrap';
+import {Col, Row, Badge} from 'react-bootstrap';
 
 const TeamDetails = ({data}: TeamDetailsProps) => {
   const userteam = data.userteam;
@@ -8,9 +8,17 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
 
   function teamEligibleToPlay() {
     if (userPlayerList && userPlayerList.length == 11) {
-      return 'Complete';
+      return (
+        <Badge pill variant="success">
+          COMPLETE
+        </Badge>
+      );
     }
-    return <div>INCOMPLETE, Please Complete Your Team</div>;
+    return (
+      <Badge pill variant="danger">
+        INCOMPLETE
+      </Badge>
+    );
   }
   function renderUserTeamOverview() {
     return (
