@@ -154,7 +154,8 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
     case SAVE_USER_TEAM:
       userLeaguestate = {
         ...state,
-        statusMessage: action.saveuserTeamData,
+        statusMessage:
+          'Team Created Successfully, Please refresh to add player',
         isLoading: false,
       };
       return userLeaguestate;

@@ -100,7 +100,6 @@ const UserTeamPlayerDetails = ({
 
   return (
     <div>
-      {data && data.length == 0 && <div>List is empty, please create team</div>}
       {data && data.length > 0 && (
         <DataTable
           title={title}
