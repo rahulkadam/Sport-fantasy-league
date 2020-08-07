@@ -15,4 +15,6 @@ declare type UserTeamPlayerDetails = {
   title: string;
   onRowSelected?: any;
   onRemoveRowAction?: any;
+  rowDisabledCriteria?: any;
+  currentUserTeamPlayers?: any;
 };

@@ -2,11 +2,12 @@ import React, {useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
 import {Form, Button} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
+import {ExpandPlayerRow} from './ExpandPlayerRow';
+import {Icon} from '../../../common/styles/Icon';
 
 const UserTeamPlayerDetails = ({
   data,
   title,
-  onRowSelected,
   onRemoveRowAction,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
@@ -22,14 +23,13 @@ const UserTeamPlayerDetails = ({
   function removeAction(row: any) {
     return (
       <div>
-        <Button
-          variant="danger"
-          size="sm"
+        <Icon
+          name="delete"
+          color="green"
           onClick={() => {
             onRemoveRowAction(row);
-          }}>
-          Remove
-        </Button>
+          }}
+        />
       </div>
     );
   }
@@ -112,6 +112,8 @@ const UserTeamPlayerDetails = ({
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           striped
+          expandableRows
+          expandableRowsComponent={<ExpandPlayerRow />}
         />
       )}
     </div>

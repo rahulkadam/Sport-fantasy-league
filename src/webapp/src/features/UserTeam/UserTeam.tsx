@@ -113,6 +113,7 @@ const UserTeam = () => {
           title="Tournament Player List"
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
+          currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
         />
       </div>
     );

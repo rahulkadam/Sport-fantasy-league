@@ -20,3 +20,13 @@ export function returnUniqueArrayElement(arrayList: any[]) {
   }
   return result;
 }
+
+export function returnMapFromList(arrayList: any[]) {
+  const map = new Map();
+  for (const item of arrayList) {
+    if (!map.has(item.id)) {
+      map.set(item.id, true);
+    }
+  }
+  return map;
+}

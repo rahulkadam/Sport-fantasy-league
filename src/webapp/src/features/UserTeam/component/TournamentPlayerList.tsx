@@ -1,14 +1,18 @@
 import React, {useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Dropdown} from 'react-bootstrap';
+import {Form, Dropdown, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
+import {returnMapFromList} from 'common/util';
+import {ExpandPlayerRow} from './ExpandPlayerRow';
 
 const TournamentPlayerList = ({
   data,
   title,
   onRowSelected,
+  currentUserTeamPlayers,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
+  const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
 
   function customName(row: any) {
     return (
@@ -80,6 +84,10 @@ const TournamentPlayerList = ({
         item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
     );
 
+  function checkDisabledPlayer(row: any) {
+    return currentUserPlayerMap.get(row.id);
+  }
+
   return (
     <div>
       {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
@@ -99,6 +107,9 @@ const TournamentPlayerList = ({
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           striped
+          selectableRowDisabled={checkDisabledPlayer}
+          expandableRows
+          expandableRowsComponent={<ExpandPlayerRow />}
         />
       )}
     </div>
