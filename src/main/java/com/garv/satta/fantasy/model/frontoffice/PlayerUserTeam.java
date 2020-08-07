@@ -19,13 +19,19 @@ import java.io.Serializable;
 public class PlayerUserTeam implements Serializable {
 
     @Id
+    private Long user_team_id;
+
+    @Id
+    private Long league_id;
+
+    @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_team_id")
+    @JoinColumn(name = "user_team_id", insertable=false,  updatable=false)
     private UserTeam userTeam;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_id")
+    @JoinColumn(name = "player_id", insertable=false,  updatable=false)
     private Player player;
 
     private Boolean caption;
