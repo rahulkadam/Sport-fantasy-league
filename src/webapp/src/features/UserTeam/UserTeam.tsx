@@ -60,7 +60,7 @@ const UserTeam = () => {
 
   function validateSaveTeam() {
     const saveTeamDisable =
-      currentUserTeamPlayers.length != 5 ||
+      currentUserTeamPlayers.length != 11 ||
       userteamDataProps.currentUserTeamValue > 100;
     return saveTeamDisable;
   }
