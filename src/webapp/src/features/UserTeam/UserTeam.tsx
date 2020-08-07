@@ -1,6 +1,11 @@
 import React, {Fragment, useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {UserTeamPlayerDetails, TeamDetails, CreateTeam} from './component';
+import {
+  UserTeamPlayerDetails,
+  TeamDetails,
+  CreateTeam,
+  TournamentPlayerList,
+} from './component';
 import {
   fetchAllPlayerListAction,
   getUserTeamData,
@@ -9,8 +14,9 @@ import {
   saveUserTeamAction,
   createUserTeamAction,
 } from './redux';
-import {Button} from 'react-bootstrap';
-import {DefaultUserId} from 'common/util';
+import {Button, Row, Col, Badge} from 'react-bootstrap';
+import {DefaultUserId, DefaultUserTeamId} from 'common/util';
+import {bool} from 'prop-types';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -22,6 +28,7 @@ const UserTeam = () => {
   const tabName = 'teamDetails';
   const isUserTeamAvailable =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
+  const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
@@ -47,24 +54,66 @@ const UserTeam = () => {
       'saving team with team player',
       userteamDataProps.currentUserTeamPlayers.length
     );
-    const userteamId = 8;
-    saveUserTeam(userteamId, userteamDataProps.currentUserTeamPlayers);
+    const userteamId = DefaultUserTeamId;
+    saveUserTeam(userteamId, currentUserTeamPlayers);
+  }
+
+  function validateSaveTeam() {
+    const saveTeamDisable =
+      currentUserTeamPlayers.length != 11 ||
+      userteamDataProps.currentUserTeamValue > 100;
+    return saveTeamDisable;
+  }
+
+  function renderShowTransferOverview() {
+    const validateTeam = validateSaveTeam();
+    const statusValue = !validateTeam
+      ? {message: 'COMPLETE', type: 'success'}
+      : {message: 'INCOMPLETE', type: 'danger'};
+    return (
+      <Fragment>
+        <Row>
+          <Col>Available Transfer</Col>
+          <Col>Available Credit</Col>
+          <Col>Status</Col>
+        </Row>
+        <Row>
+          <Col>50</Col>
+          <Col>{100 - userteamDataProps.currentUserTeamValue}</Col>
+          <Col>
+            <Badge pill variant={statusValue.type}>
+              {statusValue.message}
+            </Badge>
+          </Col>
+        </Row>
+      </Fragment>
+    );
+  }
+
+  function removeRowAction(row: any) {
+    updateCurrentUserTeam(row, 'REMOVE');
   }
 
   function renderManageTransfer() {
     return (
       <div>
+        {renderShowTransferOverview()}
         <UserTeamPlayerDetails
           title="Your Selected Fantasy Team"
           data={userteamDataProps.currentUserTeamPlayers}
+          onRemoveRowAction={removeRowAction}
         />
-        <Button variant="primary" onClick={() => saveTeam()}>
+        <Button
+          variant="primary"
+          onClick={() => saveTeam()}
+          disabled={validateSaveTeam()}>
           Save Team
         </Button>
-        <UserTeamPlayerDetails
-          title="Fantasy Player List"
+        <TournamentPlayerList
+          title="Tournament Player List"
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
+          currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
         />
       </div>
     );

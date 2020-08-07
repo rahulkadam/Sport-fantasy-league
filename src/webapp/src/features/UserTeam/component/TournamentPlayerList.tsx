@@ -1,16 +1,18 @@
 import React, {useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button} from 'react-bootstrap';
+import {Form, Dropdown, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
+import {returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
-import {Icon} from '../../../common/styles/Icon';
 
-const UserTeamPlayerDetails = ({
+const TournamentPlayerList = ({
   data,
   title,
-  onRemoveRowAction,
+  onRowSelected,
+  currentUserTeamPlayers,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
+  const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
 
   function customName(row: any) {
     return (
@@ -20,29 +22,7 @@ const UserTeamPlayerDetails = ({
     );
   }
 
-  function removeAction(row: any) {
-    return (
-      <div>
-        <Icon
-          name="delete"
-          color="green"
-          onClick={() => {
-            onRemoveRowAction(row);
-          }}
-        />
-      </div>
-    );
-  }
-
-  const actionColumn: any[] = [
-    {
-      name: 'Action',
-      sortable: true,
-      cell: removeAction,
-    },
-  ];
-
-  const columns: any[] = [
+  const columns = [
     {
       name: 'Name',
       selector: 'name',
@@ -73,9 +53,16 @@ const UserTeamPlayerDetails = ({
     },
   ];
 
-  const newColumns: any = onRemoveRowAction
-    ? actionColumn.concat(columns)
-    : columns;
+  function onRowSelectedAction(state: any) {
+    console.log('Selected Rows: ', state.selectedRows);
+    if (onRowSelected) {
+      onRowSelected(state.selectedRows);
+    }
+  }
+
+  function onRowClickedAction(row: any, e: any) {
+    console.log(row.name);
+  }
 
   const renderCustomSearch = useMemo(() => {
     return (
@@ -97,21 +84,30 @@ const UserTeamPlayerDetails = ({
         item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
     );
 
+  function checkDisabledPlayer(row: any) {
+    return currentUserPlayerMap.get(row.id);
+  }
+
   return (
     <div>
-      {data && data.length == 0 && <div>List is empty, please create team</div>}
+      {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
           title={title}
-          columns={newColumns}
+          columns={columns}
           customStyles={customStyles}
           data={filteredRows}
+          selectableRows
+          onRowClicked={onRowClickedAction}
+          onSelectedRowsChange={onRowSelectedAction}
           pagination
-          paginationPerPage={11}
+          paginationPerPage={50}
+          paginationResetDefaultPage
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           striped
+          selectableRowDisabled={checkDisabledPlayer}
           expandableRows
           expandableRowsComponent={<ExpandPlayerRow />}
         />
@@ -120,4 +116,4 @@ const UserTeamPlayerDetails = ({
   );
 };
 
-export {UserTeamPlayerDetails};
+export {TournamentPlayerList};

@@ -5,5 +5,28 @@ export function getIdFromSelectList(text: string, list: any[]) {
   }
   return defaultId;
 }
+// 83 84   1-5
+export const DefaultUserId = 83;
+export const DefaultUserTeamId = 84;
 
-export const DefaultUserId = 7;
+export function returnUniqueArrayElement(arrayList: any[]) {
+  const result = [];
+  const map = new Map();
+  for (const item of arrayList) {
+    if (!map.has(item.id)) {
+      map.set(item.id, true);
+      result.push(item);
+    }
+  }
+  return result;
+}
+
+export function returnMapFromList(arrayList: any[]) {
+  const map = new Map();
+  for (const item of arrayList) {
+    if (!map.has(item.id)) {
+      map.set(item.id, true);
+    }
+  }
+  return map;
+}

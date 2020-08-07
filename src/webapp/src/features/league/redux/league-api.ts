@@ -1,8 +1,9 @@
 import {Get, Post} from 'API';
+import {DefaultUserTeamId} from '../../../common/util';
 
 export function joinLeague(leagueCode: any) {
   return Post('/fantasy/league/join/bycode', {
-    data: {leagueCode: leagueCode, add: 8},
+    data: {leagueCode: leagueCode, add: DefaultUserTeamId},
   });
 }
 

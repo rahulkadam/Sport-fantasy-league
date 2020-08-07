@@ -10,7 +10,9 @@ import {
   FETCH_USER_TEAM_ERROR,
   SAVE_USER_TEAM,
   SAVE_USER_TEAM_ERROR,
+  REMOVE_FROM_INTERNAL_USER_TEAM,
 } from './userteamConstants';
+import {returnUniqueArrayElement} from 'common/util';
 
 const initialState: UserTeam = {
   data: {playerList: []},
@@ -21,10 +23,13 @@ const initialState: UserTeam = {
   userTeamPlayers: [],
   currentUserTeamPlayers: [],
   userteam: {},
+  currentUserTeamValue: 0,
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
   let userLeaguestate = {...state};
+  let currentTeamValue = 0;
+  let currentUserTeamPlayers = state.currentUserTeamPlayers;
   switch (action.type) {
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
@@ -77,10 +82,29 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       };
       return userLeaguestate;
     case UPDATE_INTERNAL_USER_TEAM:
-      const currentUserTeamPlayers = state.userTeamPlayers.concat(action.rows);
+      currentUserTeamPlayers = state.currentUserTeamPlayers.concat(action.rows);
+      currentUserTeamPlayers = returnUniqueArrayElement(currentUserTeamPlayers);
+      currentUserTeamPlayers.forEach(
+        (player: any) => (currentTeamValue = currentTeamValue + player.value)
+      );
       userLeaguestate = {
         ...state,
         currentUserTeamPlayers: currentUserTeamPlayers,
+        currentUserTeamValue: currentTeamValue,
+        isLoading: false,
+      };
+      return userLeaguestate;
+    case REMOVE_FROM_INTERNAL_USER_TEAM:
+      currentUserTeamPlayers = currentUserTeamPlayers.filter(
+        (player: any) => player.id != action.rows.id
+      );
+      currentUserTeamPlayers.forEach(
+        (player: any) => (currentTeamValue = currentTeamValue + player.value)
+      );
+      userLeaguestate = {
+        ...state,
+        currentUserTeamPlayers: currentUserTeamPlayers,
+        currentUserTeamValue: currentTeamValue,
         isLoading: false,
       };
       return userLeaguestate;
@@ -88,6 +112,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       userLeaguestate = {
         ...state,
         userteam: action.userteam[0],
+        currentUserTeamValue: action.userteam[0].creditbalance,
         isLoading: false,
       };
       return userLeaguestate;
