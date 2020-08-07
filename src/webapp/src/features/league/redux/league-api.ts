@@ -15,8 +15,8 @@ export function fetchActiveLeaguesList() {
   return Get('/leagues/list');
 }
 
-export function fetchUserLeaguesDetails() {
-  return Get('/fantasy/league/list/');
+export function fetchUserLeaguesDetails(userId: number) {
+  return Get('/fantasy/league/list/byuser/' + userId);
 }
 
 export function createLeague(request: CreateLeagueRequestObj) {

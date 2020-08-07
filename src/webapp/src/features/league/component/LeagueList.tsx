@@ -72,6 +72,10 @@ const LeagueList = (props: LeagueUserListProps) => {
             striped
             expandableRows
             expandableRowsComponent={<ExpandLeagueRow />}
+            expandOnRowClicked
+            onRowClicked={(row: any, action) => {
+              console.log('clicked row', row.id);
+            }}
           />
         )}
       </Fragment>

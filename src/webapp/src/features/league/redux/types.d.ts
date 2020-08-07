@@ -3,6 +3,8 @@ declare type League = {
   isLoading: boolean;
   hasError: boolean;
   statusMessage: string;
+  tabName?: string;
+  shouldRefresh?: boolean;
 };
 
 declare type CreateLeagueRequestObj = {

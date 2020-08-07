@@ -12,6 +12,9 @@ import {
   GET_PUBLIC_LEAGUE_LIST,
   JOIN_LEAGUE,
   JOIN_LEAGUE_ERROR,
+  CREATE_LEAGUE,
+  CREATE_LEAGUE_ERROR,
+  CLEAR_STATUS_MESSAGE,
 } from './leagueConstants';
 import {dispatchActionWrapper, dispatchAction} from 'common/util';
 
@@ -20,8 +23,8 @@ const fetchUserLeagueListAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    () => {
-      fetchUserLeaguesDetails()
+    (userId: number) => {
+      fetchUserLeaguesDetails(userId)
         .then((data: any) => {
           dispatch({
             type: GET_USER_LEAGUE,
@@ -93,17 +96,25 @@ const createLeagueAction = () => {
       createLeague(request)
         .then((data: any) => {
           dispatch({
-            type: JOIN_LEAGUE,
+            type: CREATE_LEAGUE,
             data: data,
           });
         })
         .catch((error: any) => {
           dispatch({
-            type: JOIN_LEAGUE_ERROR,
+            type: CREATE_LEAGUE_ERROR,
             data: error.message,
           });
         });
     }
+  );
+};
+
+const clearStatusMessageAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, CLEAR_STATUS_MESSAGE)
   );
 };
 
@@ -112,4 +123,5 @@ export {
   fetchPublicLeagueListAction,
   joinLeagueAction,
   createLeagueAction,
+  clearStatusMessageAction,
 };
