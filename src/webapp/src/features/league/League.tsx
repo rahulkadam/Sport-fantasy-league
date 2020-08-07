@@ -81,7 +81,6 @@ const League = () => {
 
   return (
     <div>
-      League Summary
       {renderStatusMessage(
         leagueStoreData.hasError,
         leagueStoreData.statusMessage

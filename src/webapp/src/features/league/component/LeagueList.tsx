@@ -1,46 +1,84 @@
-import React, {Fragment} from 'react';
-import {Row, Col} from 'react-bootstrap';
+import React, {Fragment, useMemo} from 'react';
+import {Row, Col, Form} from 'react-bootstrap';
+import DataTable from 'react-data-table-component';
+import {customStyles} from '../../../common/components/DataTable';
+import {ExpandLeagueRow} from './ExpandLeagueRow';
 
 const LeagueList = (props: LeagueUserListProps) => {
   const userLeagueList: any = props.userleagueList || [];
-  function renderLeague(userleagueList: any) {
-    const leagueStatus = userleagueList.status ? 'Active' : 'InActive';
-    return (
-      <Row key={userleagueList.id}>
-        <Col>
-          {userleagueList.name} ({userleagueList.id})
-        </Col>
-        <Col>{userleagueList.leagueCode}</Col>
-        <Col>{leagueStatus}</Col>
-        <Col>{userleagueList.totalUserCount}</Col>
-      </Row>
+  const [filterText, setFilterText] = React.useState('');
+
+  const columns = [
+    {
+      name: 'Name',
+      selector: 'name',
+      sortable: true,
+    },
+    {
+      name: 'Code',
+      selector: 'leagueCode',
+      sortable: true,
+    },
+    {
+      name: 'Total User',
+      selector: 'totalUserCount',
+      sortable: true,
+    },
+    {
+      name: 'Rank',
+      selector: 'totalUserCount',
+      sortable: true,
+    },
+  ];
+
+  const filteredRows =
+    userLeagueList &&
+    userLeagueList.filter(
+      (item: any) =>
+        item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
     );
-  }
+
+  const renderCustomSearch = useMemo(() => {
+    return (
+      <div>
+        <Form.Control
+          type="text"
+          placeholder="Player Name"
+          onChange={(e: any) => setFilterText(e.target.value)}
+          value={filterText}
+        />
+      </div>
+    );
+  }, [filterText]);
+
   function renderLeagueList() {
-    const renderLeagueList: any = [];
-    userLeagueList.forEach((league: any) =>
-      renderLeagueList.push(renderLeague(league))
-    );
-    return renderLeagueList;
-  }
-
-  function renderHeader() {
     return (
-      <Row>
-        <Col>Name</Col>
-        <Col>Code</Col>
-        <Col>Ranking</Col>
-        <Col>Total Members</Col>
-      </Row>
+      <Fragment>
+        {userLeagueList.length == 0 && (
+          <div>LIst is empty, please fetch again</div>
+        )}
+        {userLeagueList && userLeagueList.length > 0 && (
+          <DataTable
+            title="League List"
+            columns={columns}
+            customStyles={customStyles}
+            data={filteredRows}
+            pagination
+            paginationPerPage={10}
+            paginationResetDefaultPage
+            subHeader
+            subHeaderComponent={renderCustomSearch}
+            subHeaderAlign="left"
+            striped
+            expandableRows
+            expandableRowsComponent={<ExpandLeagueRow />}
+          />
+        )}
+      </Fragment>
     );
   }
 
-  return (
-    <Fragment>
-      {renderHeader()}
-      {renderLeagueList()}
-    </Fragment>
-  );
+  return <Fragment>{renderLeagueList()}</Fragment>;
 };
 
 export {LeagueList};
