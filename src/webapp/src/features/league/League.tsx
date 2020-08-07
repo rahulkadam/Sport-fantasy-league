@@ -4,6 +4,7 @@ import {
   fetchUserLeagueListAction,
   joinLeagueAction,
   createLeagueAction,
+  clearStatusMessageAction,
 } from './redux';
 import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
@@ -12,6 +13,7 @@ import {StatusMessage} from 'common/components';
 import {TabContainer} from 'common/components';
 import './League.styles.scss';
 import {getTournamentData} from '../admin/Tournament/redux';
+import {DefaultUserId} from 'common/util';
 
 const League = () => {
   const leagueStoreData = getLeagueData();
@@ -19,15 +21,19 @@ const League = () => {
   const leagueObjdata = leagueStoreData.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const fetchUserLeagueList = fetchUserLeagueListAction();
+  const clearStatusMessage = clearStatusMessageAction();
   const joinLeague = joinLeagueAction();
   const createLeague = createLeagueAction();
-  const tabName = 'overview';
+  const tabName = leagueStoreData.tabName || 'overview';
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
-    fetchUserLeagueList();
+    fetchUserLeagueList(DefaultUserId);
   }, []);
   useEffect(() => {
+    if (leagueStoreData.shouldRefresh) {
+      // fetchUserLeagueList(DefaultUserId);
+    }
     console.log('component will Mount, render everytime');
   });
 
@@ -81,7 +87,6 @@ const League = () => {
 
   return (
     <div>
-      League Summary
       {renderStatusMessage(
         leagueStoreData.hasError,
         leagueStoreData.statusMessage

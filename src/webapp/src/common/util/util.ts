@@ -5,9 +5,9 @@ export function getIdFromSelectList(text: string, list: any[]) {
   }
   return defaultId;
 }
-// 83 84   1-5
-export const DefaultUserId = 83;
-export const DefaultUserTeamId = 84;
+// 83 84   1-5  108
+export const DefaultUserId = 110;
+export const DefaultUserTeamId = 109;
 
 export function returnUniqueArrayElement(arrayList: any[]) {
   const result = [];
@@ -29,4 +29,21 @@ export function returnMapFromList(arrayList: any[]) {
     }
   }
   return map;
+}
+
+export function findCountDifferenceInList(
+  arrayList1: any[],
+  arrayList2: any[]
+) {
+  const map = new Map();
+  for (const item of arrayList1) {
+    map.set(item.id, true);
+  }
+  let difference = 0;
+  for (const item of arrayList2) {
+    if (!map.has(item.id)) {
+      difference = difference + 1;
+    }
+  }
+  return difference;
 }

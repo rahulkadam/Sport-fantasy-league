@@ -50,7 +50,17 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
   }
   function renderTeamDetails() {
     return (
-      <UserTeamPlayerDetails title="Your Fantasy Team" data={userPlayerList} />
+      <Fragment>
+        {userPlayerList.length > 0 && (
+          <UserTeamPlayerDetails
+            title="Your Fantasy Team"
+            data={userPlayerList}
+          />
+        )}
+        {userPlayerList.length == 0 && (
+          <div>Please click on Manager Transfer, to Add player first Time</div>
+        )}
+      </Fragment>
     );
   }
   return (

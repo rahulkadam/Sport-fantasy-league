@@ -5,6 +5,9 @@ import {
   GET_PUBLIC_LEAGUE_LIST,
   JOIN_LEAGUE,
   JOIN_LEAGUE_ERROR,
+  CREATE_LEAGUE,
+  CREATE_LEAGUE_ERROR,
+  CLEAR_STATUS_MESSAGE,
 } from './leagueConstants';
 
 const initialState: League = {
@@ -12,6 +15,8 @@ const initialState: League = {
   isLoading: false,
   hasError: false,
   statusMessage: '',
+  shouldRefresh: false,
+  tabName: 'overview',
 };
 
 export default (state: League = initialState, action: any): League => {
@@ -25,16 +30,33 @@ export default (state: League = initialState, action: any): League => {
         ...state,
         data: data,
         isLoading: false,
+        shouldRefresh: false,
+        tabName: 'overview',
       };
       return userLeaguestate;
     case JOIN_LEAGUE:
-      return userLeaguestate;
+      return {
+        ...state,
+        isLoading: false,
+        hasError: false,
+        statusMessage: 'League Joined Succesfully, PLease refresh Page',
+        shouldRefresh: true,
+        tabName: 'overview',
+      };
+    case CREATE_LEAGUE:
+      return {
+        ...state,
+        isLoading: false,
+        hasError: false,
+        shouldRefresh: true,
+        tabName: 'overview',
+        statusMessage: 'League Created Succesfully, Please refresh Page',
+      };
     case ACTION_START:
       userLeaguestate = {
         ...state,
         isLoading: true,
         hasError: false,
-        statusMessage: '',
       };
       return userLeaguestate;
     case ACTION_ERROR:
@@ -51,7 +73,22 @@ export default (state: League = initialState, action: any): League => {
         ...state,
         isLoading: false,
         hasError: true,
-        statusMessage: 'Error Occured while creating League',
+        statusMessage: 'Error Occured while Joining League, please check code',
+      };
+      return userLeaguestate;
+    case CREATE_LEAGUE_ERROR:
+      userLeaguestate = {
+        ...state,
+        isLoading: false,
+        hasError: true,
+        statusMessage:
+          'Error Occured while Creating League, please check/refresh again',
+      };
+      return userLeaguestate;
+    case CLEAR_STATUS_MESSAGE:
+      userLeaguestate = {
+        ...state,
+        statusMessage: '',
       };
       return userLeaguestate;
     default:
