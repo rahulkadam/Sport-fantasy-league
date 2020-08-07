@@ -8,4 +8,5 @@ declare type UserTeam = {
   currentUserTeamPlayers: any;
   currentUserTeamValue: number;
   userteam: any;
+  currentTransferChanges?: number;
 };

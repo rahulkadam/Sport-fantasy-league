@@ -30,6 +30,7 @@ const UserTeamPlayerDetails = ({
             onRemoveRowAction(row);
           }}
         />
+        {row.isNew && <span>Newly Added</span>}
       </div>
     );
   }

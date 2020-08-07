@@ -16,7 +16,6 @@ import {
 } from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
 import {DefaultUserId, DefaultUserTeamId} from 'common/util';
-import {bool} from 'prop-types';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -76,6 +75,7 @@ const UserTeam = () => {
           <Col>Available Transfer</Col>
           <Col>Available Credit</Col>
           <Col>Status</Col>
+          <Col>Transfer Used Now</Col>
         </Row>
         <Row>
           <Col>50</Col>
@@ -85,6 +85,7 @@ const UserTeam = () => {
               {statusValue.message}
             </Badge>
           </Col>
+          <Col>{userteamDataProps.currentTransferChanges}</Col>
         </Row>
       </Fragment>
     );

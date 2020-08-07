@@ -30,3 +30,20 @@ export function returnMapFromList(arrayList: any[]) {
   }
   return map;
 }
+
+export function findCountDifferenceInList(
+  arrayList1: any[],
+  arrayList2: any[]
+) {
+  const map = new Map();
+  for (const item of arrayList1) {
+    map.set(item.id, true);
+  }
+  let difference = 0;
+  for (const item of arrayList2) {
+    if (!map.has(item.id)) {
+      difference = difference + 1;
+    }
+  }
+  return difference;
+}

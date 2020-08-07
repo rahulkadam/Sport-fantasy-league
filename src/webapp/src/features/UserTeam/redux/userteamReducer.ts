@@ -12,7 +12,11 @@ import {
   SAVE_USER_TEAM_ERROR,
   REMOVE_FROM_INTERNAL_USER_TEAM,
 } from './userteamConstants';
-import {returnUniqueArrayElement} from 'common/util';
+import {
+  findCountDifferenceInList,
+  returnMapFromList,
+  returnUniqueArrayElement,
+} from 'common/util';
 
 const initialState: UserTeam = {
   data: {playerList: []},
@@ -24,12 +28,14 @@ const initialState: UserTeam = {
   currentUserTeamPlayers: [],
   userteam: {},
   currentUserTeamValue: 0,
+  currentTransferChanges: 0,
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
   let userLeaguestate = {...state};
   let currentTeamValue = 0;
   let currentUserTeamPlayers = state.currentUserTeamPlayers;
+  let transferCount = state.currentTransferChanges;
   switch (action.type) {
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
@@ -69,6 +75,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         userTeamPlayers: action.userTeamPlayers,
         currentUserTeamPlayers: action.userTeamPlayers,
+        currentTransferChanges: 0,
         isLoading: false,
       };
       return userLeaguestate;
@@ -82,15 +89,28 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       };
       return userLeaguestate;
     case UPDATE_INTERNAL_USER_TEAM:
+      const rowMap = returnMapFromList(action.rows);
       currentUserTeamPlayers = state.currentUserTeamPlayers.concat(action.rows);
       currentUserTeamPlayers = returnUniqueArrayElement(currentUserTeamPlayers);
+      currentUserTeamPlayers = currentUserTeamPlayers.map((player: any) => {
+        if (rowMap.get(player.id)) {
+          return {...player, isNew: true};
+        }
+        return player;
+      });
+
       currentUserTeamPlayers.forEach(
         (player: any) => (currentTeamValue = currentTeamValue + player.value)
+      );
+      transferCount = findCountDifferenceInList(
+        state.userTeamPlayers,
+        currentUserTeamPlayers
       );
       userLeaguestate = {
         ...state,
         currentUserTeamPlayers: currentUserTeamPlayers,
         currentUserTeamValue: currentTeamValue,
+        currentTransferChanges: transferCount,
         isLoading: false,
       };
       return userLeaguestate;
@@ -101,10 +121,16 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       currentUserTeamPlayers.forEach(
         (player: any) => (currentTeamValue = currentTeamValue + player.value)
       );
+      transferCount = findCountDifferenceInList(
+        state.userTeamPlayers,
+        currentUserTeamPlayers
+      );
+
       userLeaguestate = {
         ...state,
         currentUserTeamPlayers: currentUserTeamPlayers,
         currentUserTeamValue: currentTeamValue,
+        currentTransferChanges: transferCount,
         isLoading: false,
       };
       return userLeaguestate;

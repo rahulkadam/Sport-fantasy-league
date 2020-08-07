@@ -85,7 +85,7 @@ const TournamentPlayerList = ({
     );
 
   function checkDisabledPlayer(row: any) {
-    return currentUserPlayerMap.get(row.id);
+    return currentUserPlayerMap.size == 11 || currentUserPlayerMap.get(row.id);
   }
 
   return (
