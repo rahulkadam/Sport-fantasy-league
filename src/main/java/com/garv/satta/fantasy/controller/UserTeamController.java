@@ -37,11 +37,4 @@ public class UserTeamController {
         return "Player added successfully";
     }
 
-    @PostMapping(value = "/remove/player")
-    public String removePlayerFromUserTeam(@RequestBody RequestDTO dto) {
-        Long userTeamId = dto.getRemoveFrom();
-        Long playerId = dto.getRemove();
-        service.removePlayerFromUserTeam(userTeamId, playerId);
-        return "Player Removed successfully";
-    }
 }

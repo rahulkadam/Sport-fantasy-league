@@ -160,7 +160,7 @@ const fetchGameCriteriaByNameAction = () => {
         .then((data: any) => {
           dispatch({
             type: FETCH_GAME_CRITERIA,
-            playerList: data,
+            gameCriteria: data,
           });
         })
         .catch((error: any) => {

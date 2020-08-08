@@ -175,7 +175,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
     case FETCH_GAME_CRITERIA:
       userLeaguestate = {
         ...state,
-        teamcriteria: action.data,
+        teamcriteria: action.gameCriteria,
         isLoading: false,
       };
       return userLeaguestate;
