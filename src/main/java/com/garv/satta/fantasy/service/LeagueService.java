@@ -116,7 +116,7 @@ public class LeagueService {
             throw new GenericException("Unable to find League for User");
         }
         List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
-        return converter.convertToDTOList(userLeagueList);
+        return converter.convertToFullDTOList(userLeagueList);
     }
 
 }

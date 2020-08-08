@@ -1,15 +1,21 @@
 package com.garv.satta.fantasy.dto.converter;
 
 import com.garv.satta.fantasy.dto.LeagueDTO;
+import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class LeagueConverter extends Converter<League, LeagueDTO> {
+
+    @Autowired
+    private LeagueUserTeamConverter userTeamConverter;
 
     public League convertToEntity(LeagueDTO dto) {
         return mapper.map(dto, League.class);
@@ -36,6 +42,11 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
         dto.setTournamentId(entity.getTournament().getId());
         dto.setCreateByUserId(entity.getCreated_by().getId());
         dto.setUpdatedByUserId(entity.getUpdated_by().getId());
+        if (!entity.getLeagueUserTeams().isEmpty()) {
+            List<LeagueUserTeamDTO> leagueUserTeamDTOS = userTeamConverter.convertToDTOList(entity.getLeagueUserTeams());
+            dto.setLeagueUserTeamDTOS(leagueUserTeamDTOS);
+        }
+
         return dto;
     }
 
@@ -46,6 +57,12 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
 
     public List<LeagueDTO> convertToDTOList(List<League> entityList) {
         return mapToDTOList(entityList, LeagueDTO.class);
+    }
+
+    public List<LeagueDTO> convertToFullDTOList(List<League> entityList) {
+        return entityList.stream()
+                .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
     }
 
 }
