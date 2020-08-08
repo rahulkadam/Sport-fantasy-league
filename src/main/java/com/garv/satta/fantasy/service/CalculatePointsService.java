@@ -3,14 +3,14 @@ package com.garv.satta.fantasy.service;
 import com.garv.satta.fantasy.dao.repository.*;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.*;
+import com.garv.satta.fantasy.model.frontoffice.League;
+import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CalculatePointsService {
@@ -36,6 +36,9 @@ public class CalculatePointsService {
 
     @Autowired
     private UserTeamRepository userTeamRepository;
+
+    @Autowired
+    private LeagueUserTeamRepository leagueUserTeamRepository;
 
     /**
      * Calculate Score for each team after Match By Match ID
@@ -105,4 +108,25 @@ public class CalculatePointsService {
         List<UserTeam> userTeams = userTeamRepository.findUserTeamByTournamentId(id);
         return userTeams;
     }
+
+    public void updateRankingForLeague(Long tournamentId) {
+        List<League> leagueList = leagueRepository.findLeagueByTournamentId(tournamentId);
+        leagueList.forEach(league -> {
+            updateRankingForLeague(league);
+        });
+    }
+
+    private void updateRankingForLeague(League league) {
+        List<LeagueUserTeam> leagueUserTeams = league.getLeagueUserTeams();
+        Collections.sort(leagueUserTeams, compareByTotalScore.reversed());
+        int ranking = 1;
+        for(LeagueUserTeam leagueUserTeam: leagueUserTeams) {
+            leagueUserTeam.setUserrank(ranking);
+            leagueUserTeam.setScore(leagueUserTeam.getUserTeam().getTotal_score());
+            ranking ++;
+        }
+        leagueUserTeamRepository.saveAll(leagueUserTeams);
+    }
+
+    protected Comparator<LeagueUserTeam> compareByTotalScore = Comparator.comparing((o1) -> o1.getUserTeam().getTotal_score());
 }

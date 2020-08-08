@@ -19,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class UserTeamService {
@@ -99,6 +101,55 @@ public class UserTeamService {
         if (playerId != null) {
             addRemovePlayerToUserTeam(userTeamId, playerId, OperationEnum.ADD);
         }
+    }
+
+    public void addPlayerListToUserTeam(RequestDTO dto) {
+        Long userTeamId = dto.getAddTo();
+        List<Long> addList = dto.getAddList();
+        if (addList.size() != FantasyConstant.DEFAULT_SQUAD_LENGTH) {
+            throw new GenericException("Please check team player list again again");
+        }
+        List<Player> playerList = new ArrayList<>();
+        final AtomicReference<Float> teamValue = new AtomicReference<>(0f);
+        if (addList != null) {
+            addList.stream().forEach(playerId -> {
+                Player player = playerRepository.findPlayerById(playerId);
+                if (player == null) {
+                    throw new GenericException("Player is not Valid :" + playerId);
+                }
+                playerList.add(player);
+                Float value = teamValue.get() + player.getValue();
+                teamValue.set(value);
+            });
+        }
+
+        UserTeam userTeam = repository.findUserTeamById(userTeamId);
+
+        Float creditBalance = userTeam.getTotalbalance() - teamValue.get();
+        if (creditBalance < 0) {
+            throw new GenericException("Team value exceeded, please check again");
+        }
+        userTeam.setCreditbalance(creditBalance);
+        if (userTeam == null) {
+            throw new GenericException("UserTeam is not Valid");
+        }
+
+        List<Player> playerList1 = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
+        if (playerList1.isEmpty()) {
+         userTeam.setUsed_Transfer(0);
+         userTeam.setCreditbalance(creditBalance);
+        } else {
+            long transferCount = playerList1.size() - playerList1.stream().filter(player -> addList.contains(player.getId())).count();
+            Integer usedTransafer = (int) (userTeam.getUsed_Transfer() + transferCount);
+            if (usedTransafer > userTeam.getTotal_Transfer()) {
+                throw new GenericException("Transfer count exceeded is not Valid");
+            }
+            userTeam.setUsed_Transfer(usedTransafer);
+            userTeam.setRemained_Transfer(userTeam.getTotal_Transfer() - usedTransafer);
+        }
+
+        userTeam.resetPlayerList(playerList);
+        repository.save(userTeam);
     }
 
     public void removePlayerFromUserTeam(Long userTeamId, Long playerId) {

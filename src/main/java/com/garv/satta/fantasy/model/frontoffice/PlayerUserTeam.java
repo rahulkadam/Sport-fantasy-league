@@ -19,14 +19,28 @@ import java.io.Serializable;
 public class PlayerUserTeam implements Serializable {
 
     @Id
+    @EqualsAndHashCode.Include
+    private Long user_team_id;
+
+    @Id
+    @EqualsAndHashCode.Include
+    private Long player_id;
+
+    @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_team_id")
+    @JoinColumn(name = "user_team_id", insertable=false,  updatable=false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private UserTeam userTeam;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_id")
+    @JoinColumn(name = "player_id", insertable=false,  updatable=false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Player player;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Boolean caption;
 }

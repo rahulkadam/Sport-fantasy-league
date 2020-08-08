@@ -1,11 +1,7 @@
 package com.garv.satta.fantasy.model.idclass;
 
-import com.garv.satta.fantasy.model.frontoffice.League;
-import com.garv.satta.fantasy.model.frontoffice.UserTeam;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -13,18 +9,17 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class LeagueUserTeamId implements Serializable {
 
-    private UserTeam userTeam;
-    private League league;
+    private Long user_team_id;
+
+    private Long league_id;
 
     public LeagueUserTeamId() {
 
     }
 
-    public LeagueUserTeamId(UserTeam userteam , League league) {
-        this.userTeam = userteam;
-        this.league = league;
+    public LeagueUserTeamId(Long user_team_id , Long league_id) {
+        this.user_team_id = user_team_id;
+        this.league_id = league_id;
     }
-
-
 
 }

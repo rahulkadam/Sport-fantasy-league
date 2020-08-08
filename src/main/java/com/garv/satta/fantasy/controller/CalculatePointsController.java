@@ -17,4 +17,10 @@ public class CalculatePointsController {
         service.calculateByMatchId(id);
         return "Points calculated and updated successfully for match : "+ id;
     }
+
+    @GetMapping(value = "/league/ranking/tournament/{id}")
+    public String updateLeagueRankingByTournament(@PathVariable(name = "id") Long id) {
+        service.updateRankingForLeague(id);
+        return "Ranking calculated and updated successfully for Tournament : "+ id;
+    }
 }

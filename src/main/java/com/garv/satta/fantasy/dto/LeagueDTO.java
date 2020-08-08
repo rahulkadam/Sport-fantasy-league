@@ -19,5 +19,5 @@ public class LeagueDTO extends BaseDTO {
     private UserDTO created_by_UserDTO;
     private UserDTO updated_by_UserDTO;
     private TournamentDTO tournamentDTO;
-    private List<UserTeamDTO> userTeamDTOS;
+    private List<LeagueUserTeamDTO> leagueUserTeamDTOS;
 }
