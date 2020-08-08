@@ -33,7 +33,7 @@ public class UserTeamController {
 
     @PostMapping(value = "/add/player")
     public String addPlayerToUserTeam(@RequestBody RequestDTO dto) {
-        service.addPlayerToUserTeam(dto);
+        service.addPlayerListToUserTeam(dto);
         return "Player added successfully";
     }
 

@@ -11,12 +11,12 @@ public class PlayerUserTeamId implements Serializable {
 
     private Long user_team_id;
 
-    private Long league_id;
+    private Long player_id;
 
     public PlayerUserTeamId(){};
 
-    public PlayerUserTeamId(Long user_team_id, Long league_id) {
-        this.league_id = league_id;
+    public PlayerUserTeamId(Long user_team_id, Long player_id) {
+        this.player_id = player_id;
         this.user_team_id = user_team_id;
     }
 }

@@ -118,7 +118,7 @@ public class CalculatePointsService {
 
     private void updateRankingForLeague(League league) {
         List<LeagueUserTeam> leagueUserTeams = league.getLeagueUserTeams();
-        Collections.sort(leagueUserTeams, compareByTotalScore1.reversed());
+        Collections.sort(leagueUserTeams, compareByTotalScore.reversed());
         int ranking = 1;
         for(LeagueUserTeam leagueUserTeam: leagueUserTeams) {
             leagueUserTeam.setUserrank(ranking);
@@ -128,6 +128,5 @@ public class CalculatePointsService {
         leagueUserTeamRepository.saveAll(leagueUserTeams);
     }
 
-    Comparator<LeagueUserTeam> compareByTotalScore1 = Comparator.comparing((o1) -> o1.getUserTeam().getTotal_score());
-    private Comparator<LeagueUserTeam> compareByTotalScore = (LeagueUserTeam o1, LeagueUserTeam o2) -> o1.getUserTeam().getTotal_score().compareTo( o2.getUserTeam().getTotal_score());
+    protected Comparator<LeagueUserTeam> compareByTotalScore = Comparator.comparing((o1) -> o1.getUserTeam().getTotal_score());
 }

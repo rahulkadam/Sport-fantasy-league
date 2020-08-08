@@ -7,7 +7,7 @@ export function getIdFromSelectList(text: string, list: any[]) {
 }
 // 83 84   1-5  108
 export const DefaultUserId = 110;
-export const DefaultUserTeamId = 109;
+export const DefaultUserTeamId = 111;
 
 export function returnUniqueArrayElement(arrayList: any[]) {
   const result = [];

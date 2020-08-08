@@ -55,7 +55,8 @@ public class League extends BaseDaoObject {
         LeagueUserTeam leagueUserTeam = new LeagueUserTeam();
         leagueUserTeam.setUserTeam(userTeam);
         leagueUserTeam.setLeague(this);
-
+        leagueUserTeam.setLeague_id(this.getId());
+        leagueUserTeam.setUser_team_id(userTeam.getId());
         if (leagueUserTeams == null) {
             leagueUserTeams = new ArrayList<>();
             leagueUserTeams.add(leagueUserTeam);

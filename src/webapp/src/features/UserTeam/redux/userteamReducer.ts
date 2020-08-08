@@ -102,6 +102,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       currentUserTeamPlayers.forEach(
         (player: any) => (currentTeamValue = currentTeamValue + player.value)
       );
+      currentTeamValue = state.userteam.totalbalance - currentTeamValue;
       transferCount = findCountDifferenceInList(
         state.userTeamPlayers,
         currentUserTeamPlayers
@@ -121,6 +122,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       currentUserTeamPlayers.forEach(
         (player: any) => (currentTeamValue = currentTeamValue + player.value)
       );
+      currentTeamValue = state.userteam.totalbalance - currentTeamValue;
       transferCount = findCountDifferenceInList(
         state.userTeamPlayers,
         currentUserTeamPlayers

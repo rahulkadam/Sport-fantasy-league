@@ -7,10 +7,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -26,8 +29,8 @@ public class UserTeam extends BaseDaoObject {
     private String name;
     private Boolean status;
 
-    private Integer creditbalance;
-    private Integer totalbalance;
+    private Float creditbalance;
+    private Float totalbalance;
 
     private Integer total_score;
 
@@ -51,14 +54,28 @@ public class UserTeam extends BaseDaoObject {
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userTeam", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<PlayerUserTeam> playerUserTeams;
 
+    public void resetPlayerUserTeam() {
+        playerUserTeams.clear();
+    }
+
+    public void resetPlayerList(List<Player> playerList) {
+        resetPlayerUserTeam();
+        addPlayerList(playerList);
+    }
+
+    public void addPlayerList(List<Player> players) {
+        players.forEach(player -> addPlayer(player));
+    }
 
     public void addPlayer(Player player) {
         PlayerUserTeam playerUserTeam = new PlayerUserTeam();
         playerUserTeam.setPlayer(player);
         playerUserTeam.setUserTeam(this);
+        playerUserTeam.setPlayer_id(playerUserTeam.getPlayer().getId());
+        playerUserTeam.setUser_team_id(this.id);
         if (playerUserTeams == null) {
             playerUserTeams = new HashSet<>();
             playerUserTeams.add(playerUserTeam);

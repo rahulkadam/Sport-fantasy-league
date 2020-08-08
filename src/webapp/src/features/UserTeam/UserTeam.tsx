@@ -60,12 +60,14 @@ const UserTeam = () => {
   function validateSaveTeam() {
     const saveTeamDisable =
       currentUserTeamPlayers.length != 11 ||
-      userteamDataProps.currentUserTeamValue > 100;
+      userteamDataProps.currentUserTeamValue >
+        userteamDataProps.userteam.totalbalance;
     return saveTeamDisable;
   }
 
   function renderShowTransferOverview() {
     const validateTeam = validateSaveTeam();
+    const availableBalance = userteamDataProps.currentUserTeamValue;
     const statusValue = !validateTeam
       ? {message: 'COMPLETE', type: 'success'}
       : {message: 'INCOMPLETE', type: 'danger'};
@@ -78,8 +80,8 @@ const UserTeam = () => {
           <Col>Transfer Used Now</Col>
         </Row>
         <Row>
-          <Col>50</Col>
-          <Col>{100 - userteamDataProps.currentUserTeamValue}</Col>
+          <Col>{userteamDataProps.userteam.remained_Transfer}</Col>
+          <Col>{availableBalance}</Col>
           <Col>
             <Badge pill variant={statusValue.type}>
               {statusValue.message}

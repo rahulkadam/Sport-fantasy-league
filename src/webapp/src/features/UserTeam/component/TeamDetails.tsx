@@ -20,6 +20,7 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
       </Badge>
     );
   }
+
   function renderUserTeamOverview() {
     return (
       <Fragment>
