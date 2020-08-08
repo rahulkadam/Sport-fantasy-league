@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MatchPlayerScoreDTO extends BaseDTO {
+public class MatchPlayerScoreDTO extends ShortBaseDTO {
 
     private Integer pointscore;
     private Integer run_scored;

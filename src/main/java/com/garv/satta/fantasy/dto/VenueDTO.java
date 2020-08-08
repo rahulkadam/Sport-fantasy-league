@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class VenueDTO extends BaseDTO {
+public class VenueDTO extends ShortBaseDTO {
     private String name;
     private String city;
     private String Country;

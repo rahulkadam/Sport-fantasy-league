@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PlayerDTO extends BaseDTO {
+public class PlayerDTO extends ShortBaseDTO {
     private String name;
     private PlayerEnum type;
     private String Country;
