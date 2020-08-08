@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TeamSquadDTO extends BaseDTO {
+public class TeamSquadDTO extends ShortBaseDTO {
 
     private String name;
     private Boolean status;

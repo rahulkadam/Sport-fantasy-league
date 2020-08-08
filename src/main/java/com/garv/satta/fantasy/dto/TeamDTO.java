@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TeamDTO extends BaseDTO {
+public class TeamDTO extends ShortBaseDTO {
 
     @NotNull
     private String name;

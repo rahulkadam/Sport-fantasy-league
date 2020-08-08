@@ -6,4 +6,5 @@ export {
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
   createUserTeamAction,
+  fetchGameCriteriaByNameAction,
 } from './userteamActions';

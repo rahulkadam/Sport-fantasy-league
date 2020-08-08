@@ -5,19 +5,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Data
-@ToString(callSuper = true)
+@ToString(exclude = {"teamCriteria", "playerCriteriaList"},callSuper = true)
 public class Game extends BaseDaoObject {
 
     @Column(unique = true)
     private String name;
     private String description;
     private Integer playerCount;
+
+    @OneToOne(mappedBy = "game", fetch = FetchType.LAZY)
+    private TeamCriteria teamCriteria;
+
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
+    private List<PlayerCriteria> playerCriteriaList;
 
     public Game(Long id) {
         super(id);

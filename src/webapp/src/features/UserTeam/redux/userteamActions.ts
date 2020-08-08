@@ -5,6 +5,7 @@ import {
   fetchUserTeamByUser,
   saveTeamForUser,
   createTeamForUser,
+  fetchGameCriteriaByName,
 } from './userteam-api';
 import {
   ACTION_START,
@@ -18,6 +19,8 @@ import {
   SAVE_USER_TEAM,
   SAVE_USER_TEAM_ERROR,
   REMOVE_FROM_INTERNAL_USER_TEAM,
+  FETCH_GAME_CRITERIA,
+  FETCH_GAME_CRITERIA_ERROR,
 } from './userteamConstants';
 import {dispatchActionWrapper, dispatchAction} from 'common/util';
 
@@ -147,10 +150,34 @@ const createUserTeamAction = () => {
   );
 };
 
+const fetchGameCriteriaByNameAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (name: string) => {
+      fetchGameCriteriaByName(name)
+        .then((data: any) => {
+          dispatch({
+            type: FETCH_GAME_CRITERIA,
+            gameCriteria: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: FETCH_GAME_CRITERIA_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
 export {
   fetchPlayerListByUserAction,
   fetchAllPlayerListAction,
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
   createUserTeamAction,
+  fetchGameCriteriaByNameAction,
 };

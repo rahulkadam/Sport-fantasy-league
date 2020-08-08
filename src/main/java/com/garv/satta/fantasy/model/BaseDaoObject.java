@@ -12,7 +12,7 @@ import java.io.Serializable;
 @MappedSuperclass
 @Data
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"created_at", "updated_at"})
 @EqualsAndHashCode(of = {"id"})
 public class BaseDaoObject implements Serializable {
 

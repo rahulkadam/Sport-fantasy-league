@@ -13,6 +13,7 @@ import {
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
   createUserTeamAction,
+  fetchGameCriteriaByNameAction,
 } from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
 import {DefaultUserId, DefaultUserTeamId} from 'common/util';
@@ -22,6 +23,7 @@ const UserTeam = () => {
   const fetchPlayerList = fetchAllPlayerListAction();
   const fetchPlayerListByUser = fetchPlayerListByUserAction();
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
+  const fetchGameCriteriaByName = fetchGameCriteriaByNameAction();
   const saveUserTeam = saveUserTeamAction();
   const createUserTeam = createUserTeamAction();
   const tabName = 'teamDetails';
@@ -33,6 +35,7 @@ const UserTeam = () => {
     console.log('component will Mount only once, render everytime');
     fetchPlayerList();
     fetchPlayerListByUser(DefaultUserId);
+    fetchGameCriteriaByName('CRICKET');
   }, []);
 
   function onPlayerSelectedFromPlayerList(selectedRows: any) {
