@@ -56,7 +56,7 @@ public class GameTeamValidator {
         Integer minPerTeam = playerCriteria.getMinPerTeam();
         String type = playerCriteria.getType();
         Long playerCount = playerByType.get(type);
-        Assert.isTrue(playerCount > maxPerTeam, "Player max limit exceed for type" + type);
-        Assert.isTrue(playerCount < minPerTeam, "Player min limit exceed for type" + type);
+        Assert.isTrue(playerCount <= maxPerTeam, "Player max limit exceed for type" + type);
+        Assert.isTrue(playerCount >= minPerTeam, "Player min limit exceed for type" + type);
     }
 }

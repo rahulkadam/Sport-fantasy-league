@@ -116,7 +116,7 @@ public class UserTeamService {
             long transferCount = playerList1.size() - playerList1.stream().filter(player -> playerIdList.contains(player.getId())).count();
             Integer usedTransafer = (int) (userTeam.getUsed_Transfer() + transferCount);
             Integer totalTransfer = userTeam.getTotal_Transfer();
-            Assert.isTrue(usedTransafer > totalTransfer, "Transfer count exceeded is not Valid");
+            Assert.isTrue(usedTransafer < totalTransfer, "Transfer count exceeded is not Valid");
             userTeam.setUsed_Transfer(usedTransafer);
             userTeam.setRemained_Transfer(userTeam.getTotal_Transfer() - usedTransafer);
         }
