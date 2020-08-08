@@ -49,9 +49,19 @@ public class GameService {
         return converter.convertToDTO(game);
     }
 
+    public GameDTO findGameByName(String name) {
+        Game game = repository.findGameByName(name);
+        return converter.convertToFullDTO(game);
+    }
+
     public List<GameDTO> getGameList() {
         List<Game> list = repository.findAll();
         return converter.convertToFullDTOList(list);
+    }
+
+    public List<GameDTO> getGameShortList() {
+        List<Game> list = repository.findAll();
+        return converter.convertToDTOList(list);
     }
 
     public TeamCriteriaDTO addTeamCriteria(TeamCriteriaDTO teamCriteriaDTO) {

@@ -27,9 +27,20 @@ public class GameController {
         return service.findGameById(id);
     }
 
+    @GetMapping(value = "/get/byname/{name}")
+    public GameDTO getGameByUserTeamId(@PathVariable(name = "name") String name) {
+        return service.findGameByName(name);
+    }
+
+
     @GetMapping(value = "/list")
     public List<GameDTO> getGameList() {
         return service.getGameList();
+    }
+
+    @GetMapping(value = "/short/list")
+    public List<GameDTO> getGameShortList() {
+        return service.getGameShortList();
     }
 
     @PostMapping(value = "/addTeamCriteria")

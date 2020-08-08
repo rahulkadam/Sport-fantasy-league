@@ -27,3 +27,7 @@ export function fetchPlayerlistByUser(id: number) {
 export function fetchUserTeamByUser(id: number) {
   return Get('/fantasy/userteam/get/user/' + id);
 }
+
+export function fetchGameCriteriaByName(name: string) {
+  return Get('/fantasy/game/get/byname/' + name);
+}

@@ -11,6 +11,8 @@ import {
   SAVE_USER_TEAM,
   SAVE_USER_TEAM_ERROR,
   REMOVE_FROM_INTERNAL_USER_TEAM,
+  FETCH_GAME_CRITERIA,
+  FETCH_GAME_CRITERIA_ERROR,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -29,6 +31,7 @@ const initialState: UserTeam = {
   userteam: {},
   currentUserTeamValue: 0,
   currentTransferChanges: 0,
+  teamcriteria: {},
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
@@ -167,6 +170,19 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         isLoading: false,
         hasError: true,
         statusMessage: action.data,
+      };
+      return userLeaguestate;
+    case FETCH_GAME_CRITERIA:
+      userLeaguestate = {
+        ...state,
+        teamcriteria: action.data,
+        isLoading: false,
+      };
+      return userLeaguestate;
+    case FETCH_GAME_CRITERIA_ERROR:
+      userLeaguestate = {
+        ...state,
+        isLoading: false,
       };
       return userLeaguestate;
     default:
