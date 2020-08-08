@@ -14,6 +14,7 @@ import {
   saveUserTeamAction,
   createUserTeamAction,
   fetchGameCriteriaByNameAction,
+  validateTeam,
 } from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
 import {DefaultUserId, DefaultUserTeamId} from 'common/util';
@@ -60,18 +61,17 @@ const UserTeam = () => {
     saveUserTeam(userteamId, currentUserTeamPlayers);
   }
 
-  function validateSaveTeam() {
-    const saveTeamDisable =
-      currentUserTeamPlayers.length != 11 ||
-      userteamDataProps.currentUserTeamValue >
-        userteamDataProps.userteam.totalbalance;
-    return saveTeamDisable;
+  const validateTeamTransfer: string[] = validateTeam(userteamDataProps);
+  const teamValid = validateTeamTransfer.length == 0;
+
+  function renderStatusMessage(isError: boolean, statusMessage: string) {
+    const statusClassName = isError ? 'error' : 'success';
+    return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
   function renderShowTransferOverview() {
-    const validateTeam = validateSaveTeam();
     const availableBalance = userteamDataProps.currentUserTeamValue;
-    const statusValue = !validateTeam
+    const statusValue = teamValid
       ? {message: 'COMPLETE', type: 'success'}
       : {message: 'INCOMPLETE', type: 'danger'};
     return (
@@ -100,6 +100,14 @@ const UserTeam = () => {
     updateCurrentUserTeam(row, 'REMOVE');
   }
 
+  function renderError() {
+    const errorStatusMessage: any = [];
+    validateTeamTransfer.forEach((message: string) =>
+      errorStatusMessage.push(renderStatusMessage(true, message))
+    );
+    return errorStatusMessage;
+  }
+
   function renderManageTransfer() {
     return (
       <div>
@@ -109,10 +117,11 @@ const UserTeam = () => {
           data={userteamDataProps.currentUserTeamPlayers}
           onRemoveRowAction={removeRowAction}
         />
+        {renderError()}
         <Button
           variant="primary"
           onClick={() => saveTeam()}
-          disabled={validateSaveTeam()}>
+          disabled={!teamValid}>
           Save Team
         </Button>
         <TournamentPlayerList
@@ -137,10 +146,7 @@ const UserTeam = () => {
       renderfunction: renderManageTransfer(),
     },
   ];
-  function renderStatusMessage(isError: boolean, statusMessage: string) {
-    const statusClassName = userteamDataProps.hasError ? 'error' : 'success';
-    return <StatusMessage text={statusMessage} type={statusClassName} />;
-  }
+
   return (
     <div>
       {renderStatusMessage(
