@@ -13,6 +13,7 @@ import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import com.garv.satta.fantasy.validation.GameTeamValidator;
 import com.garv.satta.fantasy.validation.PlayerValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class UserTeamService {
 
     @Autowired
     private PlayerConverter playerConverter;
+
+    @Autowired
+    private GameTeamValidator gameTeamValidator;
 
     public List<UserTeamDTO> getUserTeamByUser(Long id) {
         List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
@@ -124,6 +128,8 @@ public class UserTeamService {
         }
 
         UserTeam userTeam = repository.findUserTeamById(userTeamId);
+        String gameName = userTeam.getTournament().getName();
+        gameTeamValidator.validateTeamForGame(gameName, playerList);
 
         Float creditBalance = userTeam.getTotalbalance() - teamValue.get();
         if (creditBalance < 0) {
