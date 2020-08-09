@@ -1,15 +1,11 @@
-export function validateTeamCriteria(
-  teamCriteria: any,
-  playerList: any[]
-): string[] {
-  const error: string[] = [];
-  if (!teamCriteria) return error;
-  const maxPerTeam = teamCriteria.maxPlayerPerTeam;
-  const totalCount = teamCriteria.totalPlayerCount;
-  const totalCredit = teamCriteria.totalCredits;
-  const playerCount = playerList.length;
+export function teamValueByPlayerList(playerList: any) {
   let teamValue = 0;
+  if (!playerList) return teamValue;
   playerList.forEach((player: any) => (teamValue = teamValue + player.value));
+  return teamValue;
+}
+
+export function getTeamWithMaxPlayer(playerList: any) {
   const map = new Map();
   let maxValue = 0;
   let key = '';
@@ -28,18 +24,36 @@ export function validateTeamCriteria(
       map.set(type, 1);
     }
   });
-  if (maxValue > maxPerTeam) {
+
+  return {key: key, value: maxValue};
+}
+
+export function validateTeamCriteria(
+  teamCriteria: any,
+  playerList: any[]
+): string[] {
+  const error: string[] = [];
+  if (!teamCriteria) return error;
+  const maxPerTeam = teamCriteria.maxPlayerPerTeam;
+  const totalCount = teamCriteria.totalPlayerCount;
+  const totalCredit = teamCriteria.totalCredits;
+  const playerCount = playerList.length;
+  const teamValue = teamValueByPlayerList(playerList);
+  const maxPlayerTeam = getTeamWithMaxPlayer(playerList);
+  if (maxPlayerTeam.value > maxPerTeam) {
     error.push(
       'User can select max ' +
         maxPerTeam +
         ' Player from one Team (' +
-        key +
+        maxPlayerTeam.key +
         ')'
     );
   }
   if (totalCredit < teamValue) {
     error.push(
-      'You have exceeded your credit Limit, Please form team with Credit ' +
+      'You have exceeded your credit Limit (' +
+        teamValue +
+        '), Please form team with Credit ' +
         totalCredit
     );
   }

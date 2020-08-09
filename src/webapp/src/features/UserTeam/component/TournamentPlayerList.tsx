@@ -10,6 +10,7 @@ import {
   PlayerTypeListWithALl,
   teamListWithALl,
 } from 'common/components/FantasyDropDown';
+import {teamValueByPlayerList} from '../redux';
 
 const TournamentPlayerList = ({
   data,
@@ -23,6 +24,7 @@ const TournamentPlayerList = ({
   const [filterByCountry, setFilterByCountry] = React.useState('ALL');
   const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
   const [toggleCleared, setToggleCleared] = useState(false);
+  const teamValueByPlayers = teamValueByPlayerList(currentUserTeamPlayers);
 
   function customName(row: any) {
     return (
@@ -117,6 +119,10 @@ const TournamentPlayerList = ({
   }, [filterText]);
 
   function checkDisabledPlayer(row: any) {
+    return currentUserTeamPlayers.length == 11 || teamValueByPlayers > 100;
+  }
+
+  function isPlayerExistInUserTeam(row: any) {
     return currentUserPlayerMap.get(row.id);
   }
 
@@ -138,7 +144,7 @@ const TournamentPlayerList = ({
         filterByTeam == 'ALL' || filterByTeam.toLowerCase().includes(teamList);
       return (
         isvalid &&
-        !checkDisabledPlayer(row) &&
+        !isPlayerExistInUserTeam(row) &&
         isTypeValid &&
         isTeamValid &&
         isCountryValid
