@@ -47,3 +47,11 @@ export function findCountDifferenceInList(
   }
   return difference;
 }
+
+export function getErrorMessage(error: any) {
+  const errorResponse = error.response;
+  if (errorResponse && errorResponse.data) {
+    return errorResponse.data.error;
+  }
+  return 'Error occured while performing action, please check again';
+}

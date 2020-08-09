@@ -40,6 +40,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
   let currentTeamValue = 0;
   let currentUserTeamPlayers = state.currentUserTeamPlayers;
   let transferCount = state.currentTransferChanges;
+  let userteam = state.userteam;
   switch (action.type) {
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
@@ -62,8 +63,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         isLoading: false,
         hasError: true,
-        statusMessage:
-          'Error Occured while performing action, please check your last action',
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case FETCH_ALL_PLAYER_LIST_ERROR:
@@ -71,8 +71,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         isLoading: false,
         hasError: true,
-        statusMessage:
-          'Error Occured while fetching Player List, please try again',
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case FETCH_PLAYER_LIST_BY_USER:
@@ -89,8 +88,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         isLoading: false,
         hasError: true,
-        statusMessage:
-          'Error Occured while fetching your team, please try again',
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case UPDATE_INTERNAL_USER_TEAM:
@@ -142,10 +140,11 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       };
       return userLeaguestate;
     case FETCH_USER_TEAM:
+      userteam = action.userteam.length > 0 ? action.userteam[0] : {};
       userLeaguestate = {
         ...state,
-        userteam: action.userteam[0],
-        currentUserTeamValue: action.userteam[0].creditbalance,
+        userteam: userteam,
+        currentUserTeamValue: userteam.creditbalance,
         isLoading: false,
       };
       return userLeaguestate;
@@ -154,8 +153,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         isLoading: false,
         hasError: true,
-        statusMessage:
-          'Error Occured while fetching your User team, please try again',
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case SAVE_USER_TEAM:
