@@ -17,3 +17,30 @@ export const customStyles = {
     },
   },
 };
+
+export const playerRowStyles = [
+  {
+    when: (row: any) => row.type == 'BATSMAN',
+    style: {
+      backgroundColor: 'rgba(63, 195, 128, 0.9)',
+    },
+  },
+  {
+    when: (row: any) => row.type == 'BOWLER',
+    style: {
+      backgroundColor: 'rgb(223, 220, 182)',
+    },
+  },
+  {
+    when: (row: any) => row.type == 'ALLROUNDER',
+    style: {
+      backgroundColor: '#AAC9FF',
+    },
+  },
+  {
+    when: (row: any) => row.type == 'WICKETKEEPER',
+    style: {
+      backgroundColor: 'rgb(0, 255, 135)',
+    },
+  },
+];
