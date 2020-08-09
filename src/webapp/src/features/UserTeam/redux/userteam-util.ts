@@ -60,12 +60,10 @@ export function validatePlayerCriteria(
   return error;
 }
 
-export function validatePlayerCriteriaList(
-  playerCriteriaList: any,
-  playerList: any[]
-): string[] {
-  let error: string[] = [];
+export function getPlayerMapByType(playerList: any) {
   const map = new Map();
+  if (!playerList) return map;
+  if (playerList.length == 0) return map;
   playerList.forEach((player: any) => {
     const type = player.type;
     if (map.get(type)) {
@@ -75,7 +73,15 @@ export function validatePlayerCriteriaList(
       map.set(type, 1);
     }
   });
+  return map;
+}
 
+export function validatePlayerCriteriaList(
+  playerCriteriaList: any,
+  playerList: any[]
+): string[] {
+  let error: string[] = [];
+  const map = getPlayerMapByType(playerList);
   playerCriteriaList.forEach((playerCriteria: any) => {
     error = error.concat(validatePlayerCriteria(playerCriteria, map));
   });

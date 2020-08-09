@@ -1,1 +1,1 @@
-export {countryList, PlayerTypeList, sportList} from './DropDownConfig';
+export * from './DropDownConfig';
