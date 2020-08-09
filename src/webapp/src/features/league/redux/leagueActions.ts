@@ -16,7 +16,11 @@ import {
   CREATE_LEAGUE_ERROR,
   CLEAR_STATUS_MESSAGE,
 } from './leagueConstants';
-import {dispatchActionWrapper, dispatchAction} from 'common/util';
+import {
+  dispatchActionWrapper,
+  dispatchAction,
+  getErrorMessage,
+} from 'common/util';
 
 const fetchUserLeagueListAction = () => {
   const dispatch = useDispatch();
@@ -34,7 +38,7 @@ const fetchUserLeagueListAction = () => {
         .catch((error: any) => {
           dispatch({
             type: ACTION_ERROR,
-            data: error,
+            errorMessage: getErrorMessage(error),
           });
         });
     }
@@ -57,7 +61,7 @@ const fetchPublicLeagueListAction = () => {
         .catch((error: any) => {
           dispatch({
             type: ACTION_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }
@@ -80,7 +84,7 @@ const joinLeagueAction = () => {
         .catch((error: any) => {
           dispatch({
             type: JOIN_LEAGUE_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }
@@ -103,7 +107,7 @@ const createLeagueAction = () => {
         .catch((error: any) => {
           dispatch({
             type: CREATE_LEAGUE_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }

@@ -6,8 +6,8 @@ export function getIdFromSelectList(text: string, list: any[]) {
   return defaultId;
 }
 // 83 84   1-5  108  127 128
-export const DefaultUserId = 1;
-export const DefaultUserTeamId = 5;
+export const DefaultUserId = 1000;
+export const DefaultUserTeamId = 500;
 
 export function returnUniqueArrayElement(arrayList: any[]) {
   const result = [];
@@ -46,4 +46,12 @@ export function findCountDifferenceInList(
     }
   }
   return difference;
+}
+
+export function getErrorMessage(error: any) {
+  const errorResponse = error.response;
+  if (errorResponse && errorResponse.data) {
+    return errorResponse.data.error;
+  }
+  return 'Error occured while performing action, please check again';
 }

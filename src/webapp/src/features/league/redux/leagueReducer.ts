@@ -66,8 +66,7 @@ export default (state: League = initialState, action: any): League => {
         isLoading: false,
         hasError: true,
         shouldRefresh: false,
-        statusMessage:
-          'Error Occured while performing action, please check your last action',
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case JOIN_LEAGUE_ERROR:
@@ -76,7 +75,7 @@ export default (state: League = initialState, action: any): League => {
         isLoading: false,
         hasError: true,
         shouldRefresh: false,
-        statusMessage: 'Error Occured while Joining League, please check code',
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case CREATE_LEAGUE_ERROR:
@@ -85,8 +84,7 @@ export default (state: League = initialState, action: any): League => {
         isLoading: false,
         hasError: true,
         shouldRefresh: false,
-        statusMessage:
-          'Error Occured while Creating League, please check/refresh again',
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     default:
