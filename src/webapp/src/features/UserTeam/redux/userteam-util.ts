@@ -1,15 +1,11 @@
-export function validateTeamCriteria(
-  teamCriteria: any,
-  playerList: any[]
-): string[] {
-  const error: string[] = [];
-  if (!teamCriteria) return error;
-  const maxPerTeam = teamCriteria.maxPlayerPerTeam;
-  const totalCount = teamCriteria.totalPlayerCount;
-  const totalCredit = teamCriteria.totalCredits;
-  const playerCount = playerList.length;
+export function teamValueByPlayerList(playerList: any) {
   let teamValue = 0;
+  if (!playerList) return teamValue;
   playerList.forEach((player: any) => (teamValue = teamValue + player.value));
+  return teamValue;
+}
+
+export function getTeamWithMaxPlayer(playerList: any) {
   const map = new Map();
   let maxValue = 0;
   let key = '';
@@ -28,15 +24,47 @@ export function validateTeamCriteria(
       map.set(type, 1);
     }
   });
-  if (maxValue > maxPerTeam) {
-    error.push('One Team can have max' + maxPerTeam + 'per squad');
+
+  return {key: key, value: maxValue};
+}
+
+export function validateTeamCriteria(
+  teamCriteria: any,
+  playerList: any[]
+): string[] {
+  const error: string[] = [];
+  if (!teamCriteria) return error;
+  const maxPerTeam = teamCriteria.maxPlayerPerTeam;
+  const totalCount = teamCriteria.totalPlayerCount;
+  const totalCredit = teamCriteria.totalCredits;
+  const playerCount = playerList.length;
+  const teamValue = teamValueByPlayerList(playerList);
+  const maxPlayerTeam = getTeamWithMaxPlayer(playerList);
+  if (maxPlayerTeam.value > maxPerTeam) {
+    error.push(
+      'User can select max ' +
+        maxPerTeam +
+        ' Player from one Team (' +
+        maxPlayerTeam.key +
+        ')'
+    );
   }
   if (totalCredit < teamValue) {
-    error.push('Team value should not cross limit' + totalCredit);
+    error.push(
+      'You have exceeded your credit Limit (' +
+        teamValue +
+        '), Please form team with Credit ' +
+        totalCredit
+    );
   }
 
   if (totalCount != playerCount) {
-    error.push('Player Count should match properly');
+    const diff = totalCount - playerCount;
+    const message =
+      diff > 0
+        ? 'Please add ' + diff + ' more Player to Team'
+        : 'Please remove ' + Math.abs(diff) + ' Player from Team';
+    error.push('Team should have ' + totalCount + ' Player, ' + message);
   }
   return error;
 }
@@ -51,21 +79,21 @@ export function validatePlayerCriteria(
   const minPerTeam = playerCriteria.minPerTeam;
   const type = playerCriteria.type;
   const playerCountByType = playerTypeMap.get(type);
-  if (playerCountByType > maxPerTeam) {
-    error.push('Max ' + maxPerTeam + 'player allowed for ' + type);
+  if (!playerCountByType || playerCountByType < minPerTeam) {
+    error.push(type + ' : Please select atleast ' + minPerTeam + ' ' + type);
   }
-  if (playerCountByType < minPerTeam) {
-    error.push('Min ' + minPerTeam + 'player should be in Team for ' + type);
+  if (playerCountByType > maxPerTeam) {
+    error.push(
+      type + ' : You should select only upto ' + maxPerTeam + ' ' + type
+    );
   }
   return error;
 }
 
-export function validatePlayerCriteriaList(
-  playerCriteriaList: any,
-  playerList: any[]
-): string[] {
-  let error: string[] = [];
+export function getPlayerMapByType(playerList: any) {
   const map = new Map();
+  if (!playerList) return map;
+  if (playerList.length == 0) return map;
   playerList.forEach((player: any) => {
     const type = player.type;
     if (map.get(type)) {
@@ -75,7 +103,15 @@ export function validatePlayerCriteriaList(
       map.set(type, 1);
     }
   });
+  return map;
+}
 
+export function validatePlayerCriteriaList(
+  playerCriteriaList: any,
+  playerList: any[]
+): string[] {
+  let error: string[] = [];
+  const map = getPlayerMapByType(playerList);
   playerCriteriaList.forEach((playerCriteria: any) => {
     error = error.concat(validatePlayerCriteria(playerCriteria, map));
   });

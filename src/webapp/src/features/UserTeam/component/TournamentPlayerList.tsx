@@ -1,9 +1,16 @@
 import React, {useState, useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Dropdown, Row, Col} from 'react-bootstrap';
+import {Form, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
+import {FantasyDropDown} from 'common/components';
+import {
+  countryListWithAll,
+  PlayerTypeListWithALl,
+  teamListWithALl,
+} from 'common/components/FantasyDropDown';
+import {teamValueByPlayerList} from '../redux';
 
 const TournamentPlayerList = ({
   data,
@@ -12,8 +19,12 @@ const TournamentPlayerList = ({
   currentUserTeamPlayers,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
+  const [filterPlayerType, setFilterPlayerType] = React.useState('ALL');
+  const [filterByTeam, setFilterByTeam] = React.useState('ALL');
+  const [filterByCountry, setFilterByCountry] = React.useState('ALL');
   const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
   const [toggleCleared, setToggleCleared] = useState(false);
+  const teamValueByPlayers = teamValueByPlayerList(currentUserTeamPlayers);
 
   function customName(row: any) {
     return (
@@ -69,17 +80,49 @@ const TournamentPlayerList = ({
   const renderCustomSearch = useMemo(() => {
     return (
       <div>
-        <Form.Control
-          type="text"
-          placeholder="Player Name"
-          onChange={(e: any) => setFilterText(e.target.value)}
-          value={filterText}
-        />
+        <Row>
+          <Col>
+            <Form.Control
+              type="text"
+              placeholder="Player Name"
+              onChange={(e: any) => setFilterText(e.target.value)}
+              value={filterText}
+            />
+          </Col>
+          <Col>
+            <FantasyDropDown
+              onSelect={(value: string) => {
+                setFilterPlayerType(value);
+              }}
+              list={PlayerTypeListWithALl}
+            />
+          </Col>
+          <Col>
+            <FantasyDropDown
+              onSelect={(value: string) => {
+                setFilterByTeam(value);
+              }}
+              list={teamListWithALl}
+            />
+          </Col>
+          <Col>
+            <FantasyDropDown
+              onSelect={(value: string) => {
+                setFilterByCountry(value);
+              }}
+              list={countryListWithAll}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }, [filterText]);
 
   function checkDisabledPlayer(row: any) {
+    return currentUserTeamPlayers.length == 11 || teamValueByPlayers > 100;
+  }
+
+  function isPlayerExistInUserTeam(row: any) {
     return currentUserPlayerMap.get(row.id);
   }
 
@@ -88,8 +131,24 @@ const TournamentPlayerList = ({
     data.filter((row: any) => {
       const userSearchText = filterText.toLowerCase();
       const name = row.name || '';
+      const teamList = row.teamsNameList
+        ? row.teamsNameList.toLocaleString().toLowerCase()
+        : '';
       const isvalid = name.toLowerCase().includes(userSearchText);
-      return isvalid && !checkDisabledPlayer(row);
+      const isTypeValid =
+        filterPlayerType == 'ALL' || filterPlayerType.includes(row.type);
+      const isCountryValid =
+        filterByCountry == 'ALL' ||
+        filterByCountry.toLowerCase().includes(row.country.toLowerCase());
+      const isTeamValid =
+        filterByTeam == 'ALL' || filterByTeam.toLowerCase().includes(teamList);
+      return (
+        isvalid &&
+        !isPlayerExistInUserTeam(row) &&
+        isTypeValid &&
+        isTeamValid &&
+        isCountryValid
+      );
     });
 
   return (
