@@ -1,6 +1,6 @@
 import React, {useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Badge, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import {Icon} from 'common/styles/Icon';
@@ -27,12 +27,15 @@ const UserTeamPlayerDetails = ({
       <div>
         <Icon
           name="delete"
-          color="green"
           onClick={() => {
             onRemoveRowAction(row);
           }}
         />
-        {row.isNew && <span>Newly Added</span>}
+        {row.isNew && (
+          <Badge pill variant={'success'}>
+            New
+          </Badge>
+        )}
       </div>
     );
   }
