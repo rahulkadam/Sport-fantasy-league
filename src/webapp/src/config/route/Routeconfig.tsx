@@ -1,5 +1,8 @@
 import React from 'react';
-import Login from 'features/Authentication/components';
+import Login, {
+  RedirectSuccessHandler,
+  UserInfo,
+} from 'features/Authentication/components';
 import PageNotFound from 'common/components/ErrorPage';
 import {HelpPage, TermsAndConditions} from 'common/components';
 import {League} from 'features/league';
@@ -14,6 +17,16 @@ export const RouteConfig = {
   PublicRouteConfig: [
     {path: '/league', component: League, key: 'league'},
     {path: '/team', component: UserTeam, key: 'team'},
+    {
+      path: '/redirect/success',
+      component: RedirectSuccessHandler,
+      key: 'redirectsuccess',
+    },
+    {
+      path: '/userinfo',
+      component: UserInfo,
+      key: 'userinfo',
+    },
     {
       path: '/back/match',
       component: <Match />,
