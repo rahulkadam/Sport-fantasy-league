@@ -79,16 +79,18 @@ const TournamentPlayerList = ({
     );
   }, [filterText]);
 
-  const filteredRows =
-    data &&
-    data.filter(
-      (item: any) =>
-        item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
-    );
-
   function checkDisabledPlayer(row: any) {
     return currentUserPlayerMap.get(row.id);
   }
+
+  const filteredRows =
+    data &&
+    data.filter((row: any) => {
+      const userSearchText = filterText.toLowerCase();
+      const name = row.name || '';
+      const isvalid = name.toLowerCase().includes(userSearchText);
+      return isvalid && !checkDisabledPlayer(row);
+    });
 
   return (
     <div>

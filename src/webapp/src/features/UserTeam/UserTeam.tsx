@@ -44,6 +44,12 @@ const UserTeam = () => {
     fetchGameCriteriaByName('CRICKET');
   }, []);
 
+  useEffect(() => {
+    if (userteamDataProps.shouldRefresh) {
+      fetchPlayerListByUser(DefaultUserId);
+    }
+    console.log('component will Mount, render everytime');
+  });
   function onPlayerSelectedFromPlayerList(selectedRows: any) {
     console.log('from parent control', selectedRows);
     updateCurrentUserTeam(selectedRows);

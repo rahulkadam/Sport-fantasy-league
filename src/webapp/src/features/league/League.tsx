@@ -35,7 +35,7 @@ const League = () => {
   }, []);
   useEffect(() => {
     if (leagueStoreData.shouldRefresh) {
-      // fetchUserLeagueList(DefaultUserId);
+      fetchUserLeagueList(DefaultUserId);
     }
     console.log('component will Mount, render everytime');
   });
