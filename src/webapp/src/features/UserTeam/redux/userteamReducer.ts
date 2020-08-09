@@ -32,6 +32,7 @@ const initialState: UserTeam = {
   currentUserTeamValue: 0,
   currentTransferChanges: 0,
   teamcriteria: {},
+  shouldRefresh: false,
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
@@ -53,6 +54,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         isLoading: true,
         hasError: false,
         statusMessage: '',
+        shouldRefresh: false,
       };
       return userLeaguestate;
     case ACTION_ERROR:
@@ -162,6 +164,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         statusMessage:
           'Team Created Successfully, Please refresh to add player',
         isLoading: false,
+        shouldRefresh: true,
       };
       return userLeaguestate;
     case SAVE_USER_TEAM_ERROR:

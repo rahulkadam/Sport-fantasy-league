@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
 import {
   UserTeamPlayerDetails,
@@ -27,10 +27,15 @@ const UserTeam = () => {
   const fetchGameCriteriaByName = fetchGameCriteriaByNameAction();
   const saveUserTeam = saveUserTeamAction();
   const createUserTeam = createUserTeamAction();
-  const tabName = 'teamDetails';
   const isUserTeamAvailable =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
   const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
+  const defaultTabKey = 'teamDetails';
+  const [tabName, setTabName] = useState(defaultTabKey);
+
+  if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
+    setTabName(defaultTabKey);
+  }
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
@@ -153,7 +158,12 @@ const UserTeam = () => {
         userteamDataProps.hasError,
         userteamDataProps.statusMessage
       )}
-      <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
+      <TabContainer
+        defaultKey={tabName}
+        tabConfig={tabConfig}
+        activeKey={tabName}
+        onSelect={(key: string) => setTabName(key)}
+      />
     </div>
   );
 };

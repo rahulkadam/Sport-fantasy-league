@@ -1,10 +1,9 @@
-import React, {useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import {
   getLeagueData,
   fetchUserLeagueListAction,
   joinLeagueAction,
   createLeagueAction,
-  clearStatusMessageAction,
 } from './redux';
 import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
@@ -21,10 +20,14 @@ const League = () => {
   const leagueObjdata = leagueStoreData.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const fetchUserLeagueList = fetchUserLeagueListAction();
-  const clearStatusMessage = clearStatusMessageAction();
   const joinLeague = joinLeagueAction();
   const createLeague = createLeagueAction();
-  const tabName = leagueStoreData.tabName || 'overview';
+  const defaultTabKey = 'overview';
+  const [tabName, setTabName] = useState(leagueStoreData.tabName);
+
+  if (leagueStoreData.shouldRefresh && tabName != defaultTabKey) {
+    setTabName(defaultTabKey);
+  }
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
@@ -91,7 +94,12 @@ const League = () => {
         leagueStoreData.hasError,
         leagueStoreData.statusMessage
       )}
-      <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
+      <TabContainer
+        defaultKey="overview"
+        tabConfig={tabConfig}
+        activeKey={tabName}
+        onSelect={(key: string) => setTabName(key)}
+      />
     </div>
   );
 };

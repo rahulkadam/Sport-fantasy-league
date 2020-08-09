@@ -10,4 +10,5 @@ declare type UserTeam = {
   userteam: any;
   currentTransferChanges?: number;
   teamcriteria?: any;
+  shouldRefresh?: boolean;
 };

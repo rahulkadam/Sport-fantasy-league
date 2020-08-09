@@ -19,13 +19,17 @@ const StatusMessage = ({text, type}: FantasyStatusMessageProps) => {
         break;
     }
     return (
-      <Alert
-        key={type}
-        onClose={() => setShow(false)}
-        dismissible
-        variant={modalType}>
-        {text}
-      </Alert>
+      <Fragment>
+        {show && (
+          <Alert
+            key={type}
+            onClose={() => setShow(false)}
+            dismissible
+            variant={modalType}>
+            {text}
+          </Alert>
+        )}
+      </Fragment>
     );
   }
   return <Fragment>{renderMessage()}</Fragment>;

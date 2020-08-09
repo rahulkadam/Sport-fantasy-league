@@ -1,7 +1,17 @@
 import React, {Fragment} from 'react';
 import {Col, Nav, Row, Tab} from 'react-bootstrap';
 
-const TabContainer = ({tabConfig, defaultKey}: TabContainerProps) => {
+const TabContainer = ({
+  tabConfig,
+  defaultKey,
+  activeKey,
+  onSelect,
+}: TabContainerProps) => {
+  const tabActiveKey = activeKey;
+  function defaultTabSelectAction() {
+    console.log('key selected');
+  }
+  const tabOnSelect = onSelect || defaultTabSelectAction();
   function renderflexLeftColum(key: string, title: string) {
     return (
       <Fragment key={'Fragment' + key}>
@@ -60,7 +70,11 @@ const TabContainer = ({tabConfig, defaultKey}: TabContainerProps) => {
   function renderTabContainer() {
     return (
       <div>
-        <Tab.Container id="left-tabs-example" defaultActiveKey={defaultKey}>
+        <Tab.Container
+          id="left-tabs-example"
+          defaultActiveKey={defaultKey}
+          activeKey={tabActiveKey}
+          onSelect={tabOnSelect}>
           <Row>
             <Col sm={2}>{renderLeftColumnPane()}</Col>
             <Col sm={10}>{renderRightPage()}</Col>
