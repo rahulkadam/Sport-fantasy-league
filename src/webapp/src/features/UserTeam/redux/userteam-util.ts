@@ -29,14 +29,28 @@ export function validateTeamCriteria(
     }
   });
   if (maxValue > maxPerTeam) {
-    error.push('One Team can have max' + maxPerTeam + 'per squad');
+    error.push(
+      'User can select max ' +
+        maxPerTeam +
+        ' Player from one Team (' +
+        key +
+        ')'
+    );
   }
   if (totalCredit < teamValue) {
-    error.push('Team value should not cross limit' + totalCredit);
+    error.push(
+      'You have exceeded your credit Limit, Please form team with Credit ' +
+        totalCredit
+    );
   }
 
   if (totalCount != playerCount) {
-    error.push('Player Count should match properly');
+    const diff = totalCount - playerCount;
+    const message =
+      diff > 0
+        ? 'Please add ' + diff + ' more Player to Team'
+        : 'Please remove ' + Math.abs(diff) + ' Player from Team';
+    error.push('Team should have ' + totalCount + ' Player, ' + message);
   }
   return error;
 }
@@ -51,11 +65,13 @@ export function validatePlayerCriteria(
   const minPerTeam = playerCriteria.minPerTeam;
   const type = playerCriteria.type;
   const playerCountByType = playerTypeMap.get(type);
-  if (playerCountByType > maxPerTeam) {
-    error.push('Max ' + maxPerTeam + 'player allowed for ' + type);
+  if (!playerCountByType || playerCountByType < minPerTeam) {
+    error.push(type + ' : Please select atleast ' + minPerTeam + ' ' + type);
   }
-  if (playerCountByType < minPerTeam) {
-    error.push('Min ' + minPerTeam + 'player should be in Team for ' + type);
+  if (playerCountByType > maxPerTeam) {
+    error.push(
+      type + ' : You should select only upto ' + maxPerTeam + ' ' + type
+    );
   }
   return error;
 }
