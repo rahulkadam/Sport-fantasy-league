@@ -1,4 +1,4 @@
-import React, {useMemo, Fragment} from 'react';
+import React, {useState, useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
 import {Form, Dropdown, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
@@ -13,6 +13,7 @@ const TournamentPlayerList = ({
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
   const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
+  const [toggleCleared, setToggleCleared] = useState(false);
 
   function customName(row: any) {
     return (
@@ -55,6 +56,7 @@ const TournamentPlayerList = ({
 
   function onRowSelectedAction(state: any) {
     console.log('Selected Rows: ', state.selectedRows);
+    setToggleCleared(!toggleCleared);
     if (onRowSelected) {
       onRowSelected(state.selectedRows);
     }
@@ -85,7 +87,7 @@ const TournamentPlayerList = ({
     );
 
   function checkDisabledPlayer(row: any) {
-    return currentUserPlayerMap.size == 11 || currentUserPlayerMap.get(row.id);
+    return currentUserPlayerMap.get(row.id);
   }
 
   return (
@@ -110,6 +112,9 @@ const TournamentPlayerList = ({
           selectableRowDisabled={checkDisabledPlayer}
           expandableRows
           expandableRowsComponent={<ExpandPlayerRow />}
+          clearSelectedRows={toggleCleared}
+          selectableRowsHighlight={false}
+          selectableRowsNoSelectAll={true}
         />
       )}
     </div>

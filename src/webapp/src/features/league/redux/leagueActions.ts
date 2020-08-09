@@ -110,18 +110,9 @@ const createLeagueAction = () => {
   );
 };
 
-const clearStatusMessageAction = () => {
-  const dispatch = useDispatch();
-  return dispatchActionWrapper(
-    dispatch,
-    dispatchAction(dispatch, CLEAR_STATUS_MESSAGE)
-  );
-};
-
 export {
   fetchUserLeagueListAction,
   fetchPublicLeagueListAction,
   joinLeagueAction,
   createLeagueAction,
-  clearStatusMessageAction,
 };

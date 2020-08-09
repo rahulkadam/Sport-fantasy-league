@@ -5,5 +5,4 @@ export {
   fetchPublicLeagueListAction,
   joinLeagueAction,
   createLeagueAction,
-  clearStatusMessageAction,
 } from './leagueActions';

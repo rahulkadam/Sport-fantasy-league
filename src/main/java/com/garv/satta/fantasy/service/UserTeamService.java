@@ -65,7 +65,7 @@ public class UserTeamService {
         Assert.notNull(userTeam, "User Team is not valid, Please check again");
 
         List<Player> playerList = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
-        return playerConverter.convertToDTOList(playerList);
+        return playerConverter.convertToFullDTOList(playerList);
     }
 
     public UserTeamDTO createUserTeam(UserTeamDTO userTeamDTO) {

@@ -41,7 +41,13 @@ public class GameTeamValidator {
         Double teamValue = playerList.stream().mapToDouble(player -> player.getValue()).sum();
         Assert.isTrue(teamValue <= totalCredit , "Team credit limit exceed, please add proper player again");
 
-        Map<String, Long> playerByTeam = playerList.stream().collect(Collectors.groupingBy(player -> player.getTeams().get(0).getName(), Collectors.counting()));
+        Map<String, Long> playerByTeam = playerList.stream().collect(Collectors.groupingBy(player -> {
+            if(player.getTeams().size() > 0) {
+                return player.getTeams().get(0).getName();
+            } else {
+                return "Team Not Present";
+            }
+        }, Collectors.counting()));
         Optional<Map.Entry<String, Long>> maxEntry = playerByTeam.entrySet().stream().max(Comparator.comparing((e) -> e.getValue()));
         Assert.isTrue(maxEntry.get().getValue() <= maxPerTeam , "Team should not exeedd more player for single team");
     }
