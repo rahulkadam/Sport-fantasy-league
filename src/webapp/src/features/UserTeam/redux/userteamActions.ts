@@ -22,7 +22,11 @@ import {
   FETCH_GAME_CRITERIA,
   FETCH_GAME_CRITERIA_ERROR,
 } from './userteamConstants';
-import {dispatchActionWrapper, dispatchAction} from 'common/util';
+import {
+  dispatchActionWrapper,
+  dispatchAction,
+  getErrorMessage,
+} from 'common/util';
 
 const fetchAllPlayerListAction = () => {
   const dispatch = useDispatch();
@@ -40,7 +44,7 @@ const fetchAllPlayerListAction = () => {
         .catch((error: any) => {
           dispatch({
             type: FETCH_ALL_PLAYER_LIST_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }
@@ -69,14 +73,14 @@ const fetchPlayerListByUserAction = () => {
             .catch((error: any) => {
               dispatch({
                 type: FETCH_PLAYER_LIST_BY_USER_ERROR,
-                data: error.message,
+                errorMessage: getErrorMessage(error),
               });
             });
         })
         .catch((error: any) => {
           dispatch({
             type: FETCH_USER_TEAM_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }
@@ -120,7 +124,7 @@ const saveUserTeamAction = () => {
         .catch((error: any) => {
           dispatch({
             type: SAVE_USER_TEAM_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }
@@ -143,7 +147,7 @@ const createUserTeamAction = () => {
         .catch((error: any) => {
           dispatch({
             type: SAVE_USER_TEAM_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }
@@ -166,7 +170,7 @@ const fetchGameCriteriaByNameAction = () => {
         .catch((error: any) => {
           dispatch({
             type: FETCH_GAME_CRITERIA_ERROR,
-            data: error.message,
+            errorMessage: getErrorMessage(error),
           });
         });
     }

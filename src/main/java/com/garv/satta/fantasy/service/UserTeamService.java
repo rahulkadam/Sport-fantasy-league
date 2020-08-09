@@ -52,6 +52,7 @@ public class UserTeamService {
 
     public List<UserTeamDTO> getUserTeamByUser(Long id) {
         List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
+        Assert.notEmpty(userTeamlist, "User does not have any team");
         return converter.convertToDTOList(userTeamlist);
     }
 

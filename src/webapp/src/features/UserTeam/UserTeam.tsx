@@ -58,10 +58,6 @@ const UserTeam = () => {
   }
 
   function saveTeam() {
-    console.log(
-      'saving team with team player',
-      userteamDataProps.currentUserTeamPlayers.length
-    );
     const userteamId = DefaultUserTeamId;
     saveUserTeam(userteamId, currentUserTeamPlayers);
   }
@@ -113,9 +109,9 @@ const UserTeam = () => {
     return errorStatusMessage;
   }
 
-  function renderManageTransfer() {
+  function renderUserTeamDetails() {
     return (
-      <div>
+      <Fragment>
         {renderShowTransferOverview()}
         <UserTeamPlayerDetails
           title="Your Selected Fantasy Team"
@@ -135,6 +131,17 @@ const UserTeam = () => {
           onRowSelected={onPlayerSelectedFromPlayerList}
           currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
         />
+      </Fragment>
+    );
+  }
+
+  function renderManageTransfer() {
+    return (
+      <div>
+        {isUserTeamAvailable && renderUserTeamDetails()}
+        {!isUserTeamAvailable && (
+          <CreateTeam createTeamAction={createUserTeam} />
+        )}
       </div>
     );
   }

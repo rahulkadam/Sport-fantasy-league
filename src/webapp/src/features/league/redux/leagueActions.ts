@@ -14,7 +14,6 @@ import {
   JOIN_LEAGUE_ERROR,
   CREATE_LEAGUE,
   CREATE_LEAGUE_ERROR,
-  CLEAR_STATUS_MESSAGE,
 } from './leagueConstants';
 import {
   dispatchActionWrapper,
