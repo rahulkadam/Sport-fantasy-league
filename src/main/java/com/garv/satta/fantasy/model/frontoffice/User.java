@@ -27,6 +27,8 @@ public class User extends BaseDaoObject {
     private String refresh_token;
     private String mobileNumber;
     private String role;
+    private String provider;
+    private String providerId;
 
     @OneToMany(mappedBy = "user")
     private List<UserTeam> userTeamList;
