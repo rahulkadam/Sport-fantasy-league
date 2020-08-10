@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, FormControl} from 'react-bootstrap';
 
-const JoinLeague = ({data}: JoinLeagueProps) => {
+const JoinLeague = ({data, userid}: JoinLeagueProps) => {
   const [leagueCode, setLeagueCode] = useState('');
   const joinLeagueAction = data && data.joinleague;
 
@@ -10,7 +10,7 @@ const JoinLeague = ({data}: JoinLeagueProps) => {
   }
 
   function joinLeague() {
-    joinLeagueAction(leagueCode);
+    joinLeagueAction(leagueCode, userid);
     console.log('league joinged with code ' + leagueCode);
   }
 

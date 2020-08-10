@@ -17,10 +17,11 @@ import {
   validateTeam,
 } from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
-import {DefaultUserId, DefaultUserTeamId} from 'common/util';
+import {GetLoginStoreData} from '../Authentication/redux';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
+  const userProps = GetLoginStoreData();
   const fetchPlayerList = fetchAllPlayerListAction();
   const fetchPlayerListByUser = fetchPlayerListByUserAction();
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
@@ -28,6 +29,8 @@ const UserTeam = () => {
   const saveUserTeam = saveUserTeamAction();
   const createUserTeam = createUserTeamAction();
   const isUserTeamAvailable =
+    userteamDataProps.userteam && userteamDataProps.userteam.id;
+  const userTeamId =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
   const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
   const defaultTabKey = 'teamDetails';
@@ -40,13 +43,13 @@ const UserTeam = () => {
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
     fetchPlayerList();
-    fetchPlayerListByUser(DefaultUserId);
+    fetchPlayerListByUser(userProps.id);
     fetchGameCriteriaByName('CRICKET');
   }, []);
 
   useEffect(() => {
     if (userteamDataProps.shouldRefresh) {
-      fetchPlayerListByUser(DefaultUserId);
+      fetchPlayerListByUser(userProps.id);
     }
   });
   function onPlayerSelectedFromPlayerList(selectedRows: any) {
@@ -57,12 +60,14 @@ const UserTeam = () => {
     if (isUserTeamAvailable) {
       return <TeamDetails data={userteamDataProps} />;
     } else {
-      return <CreateTeam createTeamAction={createUserTeam} />;
+      return (
+        <CreateTeam createTeamAction={createUserTeam} userProps={userProps} />
+      );
     }
   }
 
   function saveTeam() {
-    const userteamId = DefaultUserTeamId;
+    const userteamId = userTeamId;
     saveUserTeam(userteamId, currentUserTeamPlayers);
   }
 
@@ -144,7 +149,7 @@ const UserTeam = () => {
       <div>
         {isUserTeamAvailable && renderUserTeamDetails()}
         {!isUserTeamAvailable && (
-          <CreateTeam createTeamAction={createUserTeam} />
+          <CreateTeam createTeamAction={createUserTeam} userProps={userProps} />
         )}
       </div>
     );

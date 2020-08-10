@@ -8,6 +8,7 @@ declare type TeamDetailsProps = {
 
 declare type CreateTeamProps = {
   createTeamAction: any;
+  userProps: User;
 };
 
 declare type UserTeamPlayerDetails = {

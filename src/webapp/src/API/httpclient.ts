@@ -44,6 +44,7 @@ function Post(url: string, config?: AxiosRequestConfig) {
   const fullUrl = formUrl(url);
   const data = config && config.data;
   config = {};
+  config = useAuthentication(config);
   // config = {headers: headers(config, url), ...config};
   return axiosInstance.post(fullUrl, data, config).then(
     (response: any) => {
