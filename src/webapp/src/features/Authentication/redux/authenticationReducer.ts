@@ -2,7 +2,6 @@ import {
   START_LOGGED_IN_USER,
   LOGGED_IN_USER,
   LOGGED_IN_USER_SUCCESS,
-  LOGGED_IN_USER_FAILURE,
   LOGGED_OUT_USER,
   LOAD_USER_INFO_DETAILS,
   LOAD_USER_INFO_DETAILS_ERROR,
@@ -46,7 +45,7 @@ export default (state: User = initialState, action: any): User => {
     case ACTION_START:
       return state;
     case LOGGED_OUT_USER:
-      return state;
+      return initialState;
     default:
       return state;
   }

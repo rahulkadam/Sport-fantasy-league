@@ -9,4 +9,5 @@ declare type User = {
   name?: string;
   provider?: string;
   id?: number;
+  role?: string;
 };

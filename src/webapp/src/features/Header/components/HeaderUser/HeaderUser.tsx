@@ -2,20 +2,25 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
-import {GetLoginStoreData} from '../../../Authentication/redux';
-import {UserAvatar} from '../../../../common/components';
+import {
+  GetLoginStoreData,
+  UserLogOutActions,
+} from '../../../Authentication/redux';
+import {UserAvatar} from 'common/components';
 
 const HeaderUser = () => {
   const loggedUser = GetLoginStoreData();
   const history = useHistory();
+  const userLogOutAction = UserLogOutActions();
 
   function loginUser() {
     history.replace(`/login`);
   }
 
   function logoutUser() {
+    userLogOutAction();
     localStorage.removeItem('fantasy_access_token');
-    history.replace(`/league`);
+    history.replace(`/home`);
   }
 
   return (

@@ -1,0 +1,1 @@
+export {FantasyHome} from './FantasyHome';

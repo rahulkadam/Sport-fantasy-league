@@ -3,8 +3,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const UserAvatar = ({user, logout}: UserAvatarPropType) => {
-  const dropdownTitle =
-    user.firstname?.substr(0, 1) + ' ' + user.lastname?.substr(0, 1);
+  const dropdownTitle = user.username;
 
   return (
     <Fragment>

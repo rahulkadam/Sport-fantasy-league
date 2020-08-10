@@ -4,6 +4,7 @@ import {
   LOAD_USER_INFO_DETAILS,
   LOAD_USER_INFO_DETAILS_ERROR,
   LOGGED_IN_USER,
+  LOGGED_OUT_USER,
 } from './authenticationConstants';
 import {
   dispatchAction,
@@ -18,6 +19,15 @@ export const LogActions = () => {
     dispatch({
       type: LOGGED_IN_USER,
       value: {...authUser},
+    });
+  });
+};
+
+export const UserLogOutActions = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(dispatch, (authUser: any) => {
+    dispatch({
+      type: LOGGED_OUT_USER,
     });
   });
 };

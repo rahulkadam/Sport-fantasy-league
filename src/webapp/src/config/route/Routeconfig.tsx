@@ -12,11 +12,62 @@ import {SportTeam} from 'features/admin/SportTeam';
 import {Player} from 'features/admin/player';
 import {Venue} from 'features/admin/venue';
 import {Match} from 'features/admin/Match';
+import {FantasyHome} from 'features/home';
+
+const UserRole = 'ROLE_USER';
+const AdminRole = 'ROLE_ADMIN';
 
 export const RouteConfig = {
   PublicRouteConfig: [
-    {path: '/league', component: League, key: 'league'},
-    {path: '/team', component: UserTeam, key: 'team'},
+    {
+      path: '/league',
+      component: <League />,
+      key: 'league',
+      isPrivate: true,
+      role: UserRole,
+    },
+    {
+      path: '/team',
+      component: <UserTeam />,
+      key: 'team',
+      isPrivate: true,
+      role: UserRole,
+    },
+    {
+      path: '/back/match',
+      component: <Match />,
+      isPrivate: true,
+      key: 'backmatch',
+      role: AdminRole,
+    },
+    {
+      path: '/back/tournament',
+      component: <Tournament />,
+      isPrivate: true,
+      key: 'backtournament',
+      role: AdminRole,
+    },
+    {
+      path: '/back/team',
+      component: <SportTeam />,
+      isPrivate: true,
+      key: 'backteam',
+      role: AdminRole,
+    },
+    {
+      path: '/back/player',
+      component: <Player />,
+      isPrivate: true,
+      key: 'backplayer',
+      role: AdminRole,
+    },
+    {
+      path: '/back/venue',
+      component: <Venue />,
+      isPrivate: true,
+      key: 'backvenue',
+      role: AdminRole,
+    },
     {
       path: '/redirect/success',
       component: RedirectSuccessHandler,
@@ -27,41 +78,11 @@ export const RouteConfig = {
       component: UserInfo,
       key: 'userinfo',
     },
-    {
-      path: '/back/match',
-      component: <Match />,
-      isPrivate: true,
-      key: 'backmatch',
-    },
-    {
-      path: '/back/tournament',
-      component: <Tournament />,
-      isPrivate: true,
-      key: 'backtournament',
-    },
-    {
-      path: '/back/team',
-      component: <SportTeam />,
-      isPrivate: true,
-      key: 'backteam',
-    },
-    {
-      path: '/back/player',
-      component: <Player />,
-      isPrivate: true,
-      key: 'backplayer',
-    },
-    {
-      path: '/back/venue',
-      component: <Venue />,
-      isPrivate: true,
-      key: 'backvenue',
-    },
     {path: '/login', component: Login, key: 'login'},
     {path: '/home', redirect: '/', isRedirect: true, key: 'home'},
     {path: '/helppage', component: HelpPage, key: 'random'},
     {path: '/termsAndconditions', component: TermsAndConditions, key: 'random'},
-    {path: '/', component: League, isExact: true, key: 'homeslash'},
+    {path: '/', component: FantasyHome, isExact: true, key: 'homeslash'},
     {path: '*', component: PageNotFound, key: 'pageNotFound'},
   ],
 };
@@ -74,4 +95,5 @@ export interface RouteConfigObject {
   isExact?: boolean;
   isPrivate?: boolean;
   redirect?: any;
+  role?: string;
 }

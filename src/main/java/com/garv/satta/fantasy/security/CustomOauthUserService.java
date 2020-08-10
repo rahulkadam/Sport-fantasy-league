@@ -45,12 +45,12 @@ public class CustomOauthUserService extends OidcUserService {
         User user = findUserByEmail(userDTO.getEmail());
         if (user == null) {
             user = userConverter.convertToEntity(userDTO);
+            user.setRole("ROLE_USER");
+            user.setProvider("google");
+            user.setIsActive(true);
+            user.setIsDeleted(false);
+            userRepository.save(user);
         }
-        user.setRole("ROLE_USER");
-        user.setProvider("google");
-        user.setIsActive(true);
-        user.setIsDeleted(false);
-        userRepository.save(user);
     }
 
     private User findUserByEmail(String email) {
@@ -82,6 +82,7 @@ public class CustomOauthUserService extends OidcUserService {
         userAttributes.put("name", user.getName());
         userAttributes.put("id" , user.getId());
         authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         OAuth2User oidcUser = new DefaultOAuth2User(authorities, userAttributes, "email");
         return oidcUser;
     }
