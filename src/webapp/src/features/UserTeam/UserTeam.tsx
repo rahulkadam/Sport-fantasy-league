@@ -81,7 +81,7 @@ const UserTeam = () => {
   }
 
   function renderShowTransferOverview() {
-    const availableBalance = currentUserTeamPlayers;
+    const availableBalance = userteamDataProps.currentUserTeamValue;
     const statusValue = teamValid
       ? {message: 'COMPLETE', type: 'success'}
       : {message: 'INCOMPLETE', type: 'danger'};

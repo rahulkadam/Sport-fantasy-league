@@ -1,3 +1,3 @@
 const fantasyLogo = require('./fantasylogo.png');
-
-export {fantasyLogo};
+const googleLogo = require('./google-icon.svg');
+export {fantasyLogo, googleLogo};
