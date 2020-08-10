@@ -59,6 +59,7 @@ function Post(url: string, config?: AxiosRequestConfig) {
       return response.data;
     },
     (error: any) => {
+      checkInvalidAccess(error);
       throw error;
     }
   );

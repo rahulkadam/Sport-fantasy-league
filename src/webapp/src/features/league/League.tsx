@@ -12,23 +12,23 @@ import {StatusMessage} from 'common/components';
 import {TabContainer} from 'common/components';
 import './League.styles.scss';
 import {getTournamentData} from '../admin/Tournament/redux';
-import {GetLoginStoreData} from '../Authentication/redux';
+import {checkUserAccess, GetLoginStoreData} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 
 const League = () => {
-  const leagueStoreData = getLeagueData();
+  const leagueProps = getLeagueData();
   const tournamentProps = getTournamentData();
   const userProps = GetLoginStoreData();
-  const leagueObjdata = leagueStoreData.data || {};
+  const leagueObjdata = leagueProps.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const fetchUserLeagueList = fetchUserLeagueListAction();
   const joinLeague = joinLeagueAction();
   const createLeague = createLeagueAction();
   const defaultTabKey = 'overview';
-  const [tabName, setTabName] = useState(leagueStoreData.tabName);
+  const [tabName, setTabName] = useState(leagueProps.tabName);
   const userId = userProps.id || 9999;
 
-  if (leagueStoreData.shouldRefresh && tabName != defaultTabKey) {
+  if (leagueProps.shouldRefresh && tabName != defaultTabKey) {
     setTabName(defaultTabKey);
   }
 
@@ -37,7 +37,7 @@ const League = () => {
     fetchUserLeagueList(userId);
   }, []);
   useEffect(() => {
-    if (leagueStoreData.shouldRefresh) {
+    if (leagueProps.shouldRefresh) {
       fetchUserLeagueList(userId);
     }
     console.log('component will Mount, render everytime');
@@ -88,20 +88,18 @@ const League = () => {
     },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {
-    const statusClassName = leagueStoreData.hasError ? 'error' : 'success';
+    const statusClassName = leagueProps.hasError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
   return (
     <div>
       <LoadingOverlay
-        active={leagueStoreData.isLoading}
+        active={leagueProps.isLoading}
         spinner
-        text="Loading User Team Details ...">
-        {renderStatusMessage(
-          leagueStoreData.hasError,
-          leagueStoreData.statusMessage
-        )}
+        text="Loading League Details ...">
+        {renderStatusMessage(leagueProps.hasError, leagueProps.statusMessage)}
+        {checkUserAccess(leagueProps.statusMessage)}
         <TabContainer
           defaultKey="overview"
           tabConfig={tabConfig}

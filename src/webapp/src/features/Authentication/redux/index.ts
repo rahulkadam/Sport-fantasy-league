@@ -6,3 +6,4 @@ export {
   UserLogOutActions,
 } from './authenticationActions';
 export {loadUserInfo} from './authentication-api';
+export * from './auth-util';

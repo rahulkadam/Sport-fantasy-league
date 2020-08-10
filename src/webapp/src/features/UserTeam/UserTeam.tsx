@@ -17,7 +17,7 @@ import {
   validateTeam,
 } from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
-import {GetLoginStoreData} from '../Authentication/redux';
+import {GetLoginStoreData, checkUserAccess} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 
 const UserTeam = () => {
@@ -81,7 +81,7 @@ const UserTeam = () => {
   }
 
   function renderShowTransferOverview() {
-    const availableBalance = userteamDataProps.currentUserTeamValue;
+    const availableBalance = currentUserTeamPlayers;
     const statusValue = teamValid
       ? {message: 'COMPLETE', type: 'success'}
       : {message: 'INCOMPLETE', type: 'danger'};
@@ -185,6 +185,7 @@ const UserTeam = () => {
           userteamDataProps.hasError,
           userteamDataProps.statusMessage
         )}
+        {checkUserAccess(userteamDataProps.statusMessage)}
         <TabContainer
           defaultKey={tabName}
           tabConfig={tabConfig}
