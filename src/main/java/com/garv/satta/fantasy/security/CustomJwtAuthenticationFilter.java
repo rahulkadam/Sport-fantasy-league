@@ -2,7 +2,6 @@ package com.garv.satta.fantasy.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -11,11 +10,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Creating Custom Filter for authorization of accessToken
@@ -82,7 +79,6 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authenticationToken = getAuthenticatedUserByToken(accessToken,
                     request, response);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            response.addCookie(new Cookie("authorization_token", authenticationToken.getName()));
         }
     }
 
@@ -98,10 +94,8 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
         UsernamePasswordAuthenticationToken authentication = null;
         OAuth2User user = customOauthUserService.findUserByToken(token);
         if (user != null) {
-            authentication = new UsernamePasswordAuthenticationToken(user,
-                    null, Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+            authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            response.addCookie(new Cookie("apg_fantasy_token", "sdasadda"));
         }
         return authentication;
     }

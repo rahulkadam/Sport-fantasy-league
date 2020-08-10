@@ -8,6 +8,7 @@ import {axiosInstance, useAuthentication, formUrl, headers} from './httpUtil';
  * @constructor
  */
 function Get(url: string, config?: AxiosRequestConfig) {
+  config = useAuthentication(config);
   const fullUrl = formUrl(url);
   config = {headers: headers(config, url), ...config};
   return axiosInstance.get(fullUrl, config).then(

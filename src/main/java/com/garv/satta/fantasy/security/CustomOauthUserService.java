@@ -15,7 +15,6 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -38,19 +37,25 @@ public class CustomOauthUserService extends OidcUserService {
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail((String) attributes.get("email"));
         userDTO.setName((String) attributes.get("name"));
-        System.out.println(oidcUser);
-        System.out.println(" Oidc User : "+ oidcUser.getEmail());
         updateUser(userDTO);
         return oidcUser;
     }
 
     private void updateUser(UserDTO userDTO) {
-        User user = userRepository.findByEmail(userDTO.getEmail());
+        User user = findUserByEmail(userDTO.getEmail());
         if (user == null) {
             user = userConverter.convertToEntity(userDTO);
-            user.setProvider("google");
-            userRepository.save(user);
         }
+        user.setRole("ROLE_USER");
+        user.setProvider("google");
+        user.setIsActive(true);
+        user.setIsDeleted(false);
+        userRepository.save(user);
+    }
+
+    private User findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user;
     }
 
     public String fetchTokenFromOneTimeToken(String oneTimeToken) {
@@ -59,40 +64,36 @@ public class CustomOauthUserService extends OidcUserService {
 
     public OAuth2User findUserByToken(String token) {
 
-        if (StringUtils.isEmpty(token)){
+        String email = verifyToken(token);
+        if (email == null) {
             return null;
         }
+        OAuth2User oidcUser = getUserForAuthentication(email);
+        return oidcUser;
+    }
 
-        if (!verifyToken(token)) {
-            return null;
-        }
+    private OAuth2User getUserForAuthentication(String email) {
+        User user = findUserByEmail(email);
 
         Map<String, Object> userAttributes = new HashMap<>();
         Set<GrantedAuthority> authorities = new LinkedHashSet<>();
 
-        userAttributes.put("email", "kadamrahul581@gmail.com");
-        userAttributes.put("token", token);
-        userAttributes.put("name", "Rahul");
-        authorities.add(new SimpleGrantedAuthority("SCOPE_USER"));
+        userAttributes.put("email", user.getEmail());
+        userAttributes.put("name", user.getName());
+        userAttributes.put("id" , user.getId());
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
         OAuth2User oidcUser = new DefaultOAuth2User(authorities, userAttributes, "email");
-
         return oidcUser;
     }
 
-    public boolean verifyToken(String token) {
+    public String verifyToken(String token) {
         TokenVerifier tokenVerifier = TokenVerifier.newBuilder().build();
         try {
             JsonWebSignature jsonWebSignature = tokenVerifier.verify(token);
-
-            // optionally verify additional claims
-            if (!"expected-value".equals(jsonWebSignature.getPayload().get("additional-claim"))) {
-                // handle custom verification error
-                System.out.println("found token");
-            }
-            return true;
+            String email = (String) jsonWebSignature.getPayload().get("email");
+            return email;
         } catch (TokenVerifier.VerificationException e) {
-            // invalid token
-            return false;
+            return null;
         }
     }
 }

@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
         http.
                 authorizeRequests()
-                .antMatchers("/league").hasRole("USER")
+                .antMatchers("/league", "/fantasy/user/**").hasRole("USER")
                 .antMatchers("/team").authenticated()
                 .and()
                 .oauth2Login()

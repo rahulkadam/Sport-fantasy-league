@@ -32,6 +32,7 @@ export default (state: User = initialState, action: any): User => {
       return {
         ...state,
         ...userObj,
+        username: userObj.name,
       };
     case LOAD_USER_INFO_DETAILS_ERROR:
       userObj = action.value;
