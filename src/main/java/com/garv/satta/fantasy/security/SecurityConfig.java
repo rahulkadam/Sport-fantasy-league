@@ -23,29 +23,11 @@ import org.springframework.security.web.context.SecurityContextRepository;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /**
-     * spring authorization
-     * https://www.youtube.com/watch?v=payxWrmF_0k
-     *
-     * @param http
-     * @throws Exception
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.
-                authorizeRequests()
-                .antMatchers("/*").permitAll();
-        http.csrf().disable();
-        //http.cors().disable();
-    }
-     */
-
     @Autowired
     private CustomOauthUserService customOauthUserService;
 
     /**
      * spring authorization
-     * https://www.youtube.com/watch?v=payxWrmF_0k
      *
      * @param http
      * @throws Exception
@@ -82,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
         http.
                 authorizeRequests()
-                .antMatchers("/league", "/fantasy/user/**").hasRole("USER")
+                .antMatchers("/league", "/fantasy/**").hasRole("USER")
                 .antMatchers("/team").authenticated()
                 .and()
                 .oauth2Login()
