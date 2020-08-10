@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {getIdFromSelectList} from '../../../common/util';
 import {fetchTournamentListAction} from '../../admin/Tournament/redux';
-import {FantasyDropDown} from '../../../common/components';
+import {FantasyDropDown, StatusMessage} from '../../../common/components';
 
 const CreateLeague = ({
   createLeague,
@@ -47,10 +47,13 @@ const CreateLeague = ({
     }
   }
 
+  const createleagueMsg = 'Create Private league and share code with friends';
+
   return (
     <div>
       Welcome to Fantasy League
       <div className="mb-3">
+        <StatusMessage type={'primary'} text={createleagueMsg} />
         <Row>
           <Col>
             <FantasyDropDown

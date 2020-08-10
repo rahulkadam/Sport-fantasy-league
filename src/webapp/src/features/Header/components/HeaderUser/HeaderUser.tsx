@@ -1,12 +1,13 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
+import {Button, Navbar} from 'react-bootstrap';
 
 import {
   GetLoginStoreData,
   UserLogOutActions,
 } from '../../../Authentication/redux';
-import {UserAvatar} from 'common/components';
+import {Logo, UserAvatar} from 'common/components';
+import {fantasyLogo, googleLogo} from '@logos/index';
 
 const HeaderUser = () => {
   const loggedUser = GetLoginStoreData();

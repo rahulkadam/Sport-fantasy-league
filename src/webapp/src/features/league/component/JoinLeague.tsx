@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Button, FormControl} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
+import {StatusMessage} from '../../../common/components';
 
 const JoinLeague = ({data, userid}: JoinLeagueProps) => {
   const [leagueCode, setLeagueCode] = useState('');
@@ -14,11 +15,15 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
     console.log('league joinged with code ' + leagueCode);
   }
 
+  const joinleageMsg =
+    'Ask friends to share league code with you to directly enter into private league';
+
   return (
     <div>
       Welcome to Fantasy League
       <div className="mb-3">
-        <FormControl
+        <StatusMessage type={'primary'} text={joinleageMsg} />
+        <Form.Control
           value={leagueCode}
           placeholder="IPL League Code"
           aria-label="leagueCode"
