@@ -1,5 +1,11 @@
 import {AxiosRequestConfig} from 'axios';
-import {axiosInstance, useAuthentication, formUrl, headers} from './httpUtil';
+import {
+  axiosInstance,
+  useAuthentication,
+  formUrl,
+  headers,
+  checkInvalidAccess,
+} from './httpUtil';
 
 /**
  * axios get Request
@@ -18,6 +24,7 @@ function Get(url: string, config?: AxiosRequestConfig) {
     (error: any) => {
       console.log(error.message);
       console.log(error.config);
+      checkInvalidAccess(error);
       throw error;
     }
   );
@@ -52,6 +59,7 @@ function Post(url: string, config?: AxiosRequestConfig) {
       return response.data;
     },
     (error: any) => {
+      checkInvalidAccess(error);
       throw error;
     }
   );

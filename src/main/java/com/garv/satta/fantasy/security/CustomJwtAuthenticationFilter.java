@@ -38,8 +38,8 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
             ExchangeforFantasyToken(req, res);
             authorizeAPGToken(req, res);
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Exception occured in CustomJwtAuthenticationFilter : " + e.getMessage());
+            e.printStackTrace();
         }
         chain.doFilter(req, res);
     }

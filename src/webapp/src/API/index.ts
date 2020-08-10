@@ -5,3 +5,4 @@ export {
   PostWithAuthentication,
   Delete,
 } from './httpclient';
+export * from './AccessTokenClient';

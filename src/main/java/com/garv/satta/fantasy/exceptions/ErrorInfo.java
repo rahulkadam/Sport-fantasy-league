@@ -1,5 +1,8 @@
 package com.garv.satta.fantasy.exceptions;
 
+import lombok.Data;
+
+@Data
 public class ErrorInfo {
     public final String error_description;
     public final String error;

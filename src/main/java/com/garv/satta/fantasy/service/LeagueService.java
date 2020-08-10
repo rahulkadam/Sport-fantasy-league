@@ -41,6 +41,9 @@ public class LeagueService {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private UserService userService;
+
 
     public List<LeagueDTO> getLeaguesList() {
         List<League> leagues = repository.findAll();
@@ -56,16 +59,16 @@ public class LeagueService {
         League league = converter.convertToFullEntity(leagueDTO);
         league.setId(null);
         tournamentValidator.validateTournamentById(leagueDTO.getTournamentId());
-        userValidator.validateUserId(leagueDTO.getCreateByUserId());
         String leagueCode = LeagueCodeGenerator.randomAlphaNumeric(FantasyConstant.DEFAULT_LEAGUE_CODE_LENGTH);
         league.setLeagueCode(leagueCode);
         league.setStatus(true);
         league = repository.save(league);
-        joinLeagueByCode(league.getLeagueCode(), leagueDTO.getCreateByUserId());
+        joinLeagueByCode(league.getLeagueCode(), userService.getCurrentUserId());
         return converter.convertToFullDTO(league);
     }
 
     public void joinLeagueByCode(String leagueCode, Long userId) {
+        userId = userService.getCurrentUserId();
         League league = repository.findLeagueByLeagueCode(leagueCode);
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(userId);
         Assert.isTrue(userTeamList.size() == 1, "User does not have proper team, please create teams");
@@ -96,9 +99,8 @@ public class LeagueService {
      */
     private void addRemoveUserTeamFromLeague(League league, Long userTeamId, OperationEnum operation) {
         UserTeam userTeam = userTeamRepository.findUserTeamById(userTeamId);
-        if (userTeam == null || league == null) {
-            throw new GenericException("UserTeam Or League is not valid");
-        }
+        Assert.notNull(userTeam, "User id is missing, Please logout and login again");
+        Assert.notNull(league,"League not found, please check with League admin again");
         if (OperationEnum.ADD.equals(operation)) {
             league.addLeagueMembers(userTeam);
         } else {

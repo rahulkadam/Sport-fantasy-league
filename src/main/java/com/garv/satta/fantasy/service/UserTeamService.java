@@ -2,6 +2,7 @@ package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.PlayerUserTeamRepository;
+import com.garv.satta.fantasy.dao.repository.TournamentRepository;
 import com.garv.satta.fantasy.dao.repository.UserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dto.UserTeamDTO;
@@ -12,6 +13,7 @@ import com.garv.satta.fantasy.dto.converter.PlayerConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.GameEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
+import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.validation.GameTeamValidator;
 import com.garv.satta.fantasy.validation.PlayerValidator;
@@ -50,6 +52,12 @@ public class UserTeamService {
     @Autowired
     private GameTeamValidator gameTeamValidator;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TournamentRepository tournamentRepository;
+
     public List<UserTeamDTO> getUserTeamByUser(Long id) {
         List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
         Assert.notEmpty(userTeamlist, "User does not have any team");
@@ -70,14 +78,20 @@ public class UserTeamService {
     }
 
     public UserTeamDTO createUserTeam(UserTeamDTO userTeamDTO) {
-        List<UserTeam> userTeamList = repository.findUserTeamByUserId(userTeamDTO.getUserId());
+        Long userId = userService.getCurrentUserId();
+        List<UserTeam> userTeamList = repository.findUserTeamByUserId(userId);
 
         if (!CollectionUtils.isEmpty(userTeamList)) {
             throw new GenericException("Team already present, please check with support team for details");
         }
-        userValidator.validateUserId(userTeamDTO.getUserId());
+        userValidator.validateUserId(userId);
+
+        List<Tournament> tournamentList = tournamentRepository.findAll();
+        Assert.notEmpty(tournamentList, "Tournament Not found, please refresh/ login again");
 
         UserTeam userTeam = converter.convertToFullEntity(userTeamDTO);
+        // TODO tournament logic we will move to front end
+        userTeam.setTournament(tournamentList.get(0));
         userTeam.setStatus(Boolean.TRUE);
         userTeam.setTotal_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
         userTeam.setTotal_score(0);
@@ -96,12 +110,14 @@ public class UserTeamService {
      * @param dto
      */
     public void addPlayerListToUserTeam(RequestDTO dto) {
-        Long userTeamId = dto.getAddTo();
+
         List<Long> playerIdList = dto.getAddList();
+        Long userId = userService.getCurrentUserId();
+        List<UserTeam> userTeamList = repository.findUserTeamByUserId(userId);
+        Assert.notEmpty(userTeamList, "User Team is not valid, Please check again");
 
         List<Player> playerList = playerRepository.findAllByIdIn(playerIdList);
-        UserTeam userTeam = repository.findUserTeamById(userTeamId);
-        Assert.notNull(userTeam, "User Team is not valid, Please check again");
+        UserTeam userTeam = userTeamList.get(0);
         GameEnum gameName = userTeam.getTournament().getSportName();
         gameTeamValidator.validateTeamForGame(gameName.toString(), playerList);
 

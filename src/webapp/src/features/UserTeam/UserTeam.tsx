@@ -17,7 +17,8 @@ import {
   validateTeam,
 } from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
-import {GetLoginStoreData} from '../Authentication/redux';
+import {GetLoginStoreData, checkUserAccess} from '../Authentication/redux';
+import LoadingOverlay from 'react-loading-overlay';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -80,7 +81,7 @@ const UserTeam = () => {
   }
 
   function renderShowTransferOverview() {
-    const availableBalance = userteamDataProps.currentUserTeamValue;
+    const availableBalance = currentUserTeamPlayers;
     const statusValue = teamValid
       ? {message: 'COMPLETE', type: 'success'}
       : {message: 'INCOMPLETE', type: 'danger'};
@@ -112,9 +113,15 @@ const UserTeam = () => {
 
   function renderError() {
     const errorStatusMessage: any = [];
-    validateTeamTransfer.forEach((message: string) =>
-      errorStatusMessage.push(renderStatusMessage(true, message))
-    );
+    if (currentUserTeamPlayers && currentUserTeamPlayers.length > 0) {
+      validateTeamTransfer.forEach((message: string) =>
+        errorStatusMessage.push(renderStatusMessage(true, message))
+      );
+    } else {
+      const teamCreateMsg =
+        'Please select player from below list and save Team';
+      errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
+    }
     return errorStatusMessage;
   }
 
@@ -170,16 +177,22 @@ const UserTeam = () => {
 
   return (
     <div>
-      {renderStatusMessage(
-        userteamDataProps.hasError,
-        userteamDataProps.statusMessage
-      )}
-      <TabContainer
-        defaultKey={tabName}
-        tabConfig={tabConfig}
-        activeKey={tabName}
-        onSelect={(key: string) => setTabName(key)}
-      />
+      <LoadingOverlay
+        active={userteamDataProps.isLoading}
+        spinner
+        text="Loading User Team Details ...">
+        {renderStatusMessage(
+          userteamDataProps.hasError,
+          userteamDataProps.statusMessage
+        )}
+        {checkUserAccess(userteamDataProps.statusMessage)}
+        <TabContainer
+          defaultKey={tabName}
+          tabConfig={tabConfig}
+          activeKey={tabName}
+          onSelect={(key: string) => setTabName(key)}
+        />
+      </LoadingOverlay>
     </div>
   );
 };

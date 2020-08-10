@@ -1,15 +1,29 @@
 import React, {useEffect} from 'react';
 import {GetLoginStoreData, LoadUserInfoAction} from '../redux';
+import LoadingOverlay from 'react-loading-overlay';
+import history from 'common/config/history';
 
 const UserInfo = () => {
   const userProps = GetLoginStoreData() || {};
   const loadUser = LoadUserInfoAction();
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     loadUser();
   }, []);
 
-  return <div>authentication things {userProps.username}</div>;
+  function goToHome() {
+    history.push('/home');
+  }
+
+  return (
+    <div>
+      <LoadingOverlay
+        active={!userProps.username}
+        spinner
+        text="Loading User Info Details ...">
+        {userProps.username && goToHome()}
+      </LoadingOverlay>
+    </div>
+  );
 };
 
 export {UserInfo};

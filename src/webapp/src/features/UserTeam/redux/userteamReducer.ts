@@ -170,7 +170,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         isLoading: false,
         hasError: true,
-        statusMessage: action.data,
+        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case FETCH_GAME_CRITERIA:

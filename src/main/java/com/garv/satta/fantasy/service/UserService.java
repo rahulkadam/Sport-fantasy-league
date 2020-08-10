@@ -23,16 +23,16 @@ public class UserService {
     @Autowired
     private UserConverter converter;
 
+    @Autowired
+    private UserService userService;
+
     public List<UserDTO> getUserList() {
         List<User> userList = (List) userRepository.findAll();
         return converter.convertToDTOList(userList);
     }
 
     public UserDTO getUserByMe() {
-        OAuth2User principal = (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Assert.notNull(principal, "User is Not Authenticated");
-        Long id = principal.getAttribute("id");
-        Assert.notNull(id, "User is Not Authenticated");
+        Long id = userService.getCurrentUserId();
         return getUserById(id);
     }
 
@@ -46,6 +46,14 @@ public class UserService {
         User user = converter.convertToEntity(dto);
         user = userRepository.save(user);
         return converter.convertToDTO(user);
+    }
+
+    public Long getCurrentUserId() {
+        OAuth2User principal = (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Assert.notNull(principal, "User is Not Authenticated");
+        Long id = principal.getAttribute("id");
+        Assert.notNull(id, "User is Not Authenticated");
+        return id;
     }
 
 }

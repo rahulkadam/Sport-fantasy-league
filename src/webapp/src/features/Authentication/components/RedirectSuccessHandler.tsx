@@ -1,5 +1,6 @@
 import React from 'react';
 import history from 'common/config/history';
+import {setAccessToken} from 'API';
 
 const RedirectSuccessHandler = () => {
   function useQuery() {
@@ -7,10 +8,9 @@ const RedirectSuccessHandler = () => {
   }
   const query = useQuery();
   const accesstoken = query.get('exchange_for_fantasy_token');
-  console.log(localStorage.getItem('fantasy_access_token'));
 
   function redirectToUserInfo() {
-    accesstoken && localStorage.setItem('fantasy_access_token', accesstoken);
+    accesstoken && setAccessToken(accesstoken);
     accesstoken && history.push('/userInfo');
   }
 
