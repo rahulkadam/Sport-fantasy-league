@@ -19,6 +19,7 @@ public class UserTeamDTO extends BaseDTO {
     private Integer used_Transfer;
     private Integer remained_Transfer;
     private Integer current_Used_Transfer;
+    private Long tournament_id;
     private List<LeagueDTO> leagueDTOList;
     private UserDTO userDTO;
     private PlayerDTO captain_playerDTO;

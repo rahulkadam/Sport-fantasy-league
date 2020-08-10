@@ -136,8 +136,8 @@ const createUserTeamAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (userId: number, name: string) => {
-      createTeamForUser(userId, name)
+    (name: string) => {
+      createTeamForUser(name)
         .then((data: any) => {
           dispatch({
             type: SAVE_USER_TEAM,

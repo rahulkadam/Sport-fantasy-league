@@ -13,6 +13,7 @@ import {TabContainer} from 'common/components';
 import './League.styles.scss';
 import {getTournamentData} from '../admin/Tournament/redux';
 import {GetLoginStoreData} from '../Authentication/redux';
+import LoadingOverlay from 'react-loading-overlay';
 
 const League = () => {
   const leagueStoreData = getLeagueData();
@@ -93,16 +94,21 @@ const League = () => {
 
   return (
     <div>
-      {renderStatusMessage(
-        leagueStoreData.hasError,
-        leagueStoreData.statusMessage
-      )}
-      <TabContainer
-        defaultKey="overview"
-        tabConfig={tabConfig}
-        activeKey={tabName}
-        onSelect={(key: string) => setTabName(key)}
-      />
+      <LoadingOverlay
+        active={leagueStoreData.isLoading}
+        spinner
+        text="Loading User Team Details ...">
+        {renderStatusMessage(
+          leagueStoreData.hasError,
+          leagueStoreData.statusMessage
+        )}
+        <TabContainer
+          defaultKey="overview"
+          tabConfig={tabConfig}
+          activeKey={tabName}
+          onSelect={(key: string) => setTabName(key)}
+        />
+      </LoadingOverlay>
     </div>
   );
 };
