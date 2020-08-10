@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {GetMockAdapterInstance} from './test/testAxiosApi';
+import {getBearerToken, removeAccessToken} from './AccessTokenClient';
 
 /**
  * default custom Instance
@@ -36,8 +37,7 @@ axiosInstance.defaults.httpsAgent = {
 };
 
 function useAuthentication(config?: AxiosRequestConfig) {
-  let token = localStorage.getItem('fantasy_access_token');
-  token = 'Bearer ' + token;
+  const token = getBearerToken();
   if (config && config.headers) {
     config.headers.common['Authorization'] = token;
   } else {
@@ -108,6 +108,12 @@ function formUrl(url: string) {
   return domainName() + url;
 }
 
+function checkInvalidAccess(error: any) {
+  if (error.response.status == 401) {
+    removeAccessToken();
+  }
+}
+
 export {
   headers,
   domainName,
@@ -116,4 +122,5 @@ export {
   axiosInstance,
   useAuthentication,
   headerSecuritySignature,
+  checkInvalidAccess,
 };

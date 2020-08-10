@@ -90,7 +90,6 @@ public class CustomOauthUserService extends OidcUserService {
     public String verifyToken(String token) {
         TokenVerifier tokenVerifier = TokenVerifier.newBuilder().build();
         try {
-
             JsonWebSignature jsonWebSignature = tokenVerifier.verify(token);
             String email = (String) jsonWebSignature.getPayload().get("email");
             return email;
