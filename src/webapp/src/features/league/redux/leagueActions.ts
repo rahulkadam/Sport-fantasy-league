@@ -72,8 +72,8 @@ const joinLeagueAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (leagueCode: any) => {
-      joinLeague(leagueCode)
+    (leagueCode: string, userId: number) => {
+      joinLeague(leagueCode, userId)
         .then((data: any) => {
           dispatch({
             type: JOIN_LEAGUE,

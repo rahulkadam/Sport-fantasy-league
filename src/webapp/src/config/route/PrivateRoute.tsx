@@ -6,11 +6,16 @@ import {GetLoginStoreData} from 'features/Authentication/redux';
 const PrivateRoute = ({children, ...rest}: {[key: string]: any}) => {
   const loggedUser = GetLoginStoreData();
 
+  function isValid() {
+    console.log('ROle ', rest.role);
+    return loggedUser.id && loggedUser.role == rest.role;
+  }
+
   return (
     <Route
       {...rest}
       render={location =>
-        loggedUser.username ? (
+        isValid() ? (
           children
         ) : (
           <Redirect

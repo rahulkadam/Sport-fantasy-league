@@ -5,4 +5,9 @@ declare type User = {
   lastname?: string;
   userid?: string;
   isauthenticating?: boolean;
+  email?: string;
+  name?: string;
+  provider?: string;
+  id?: number;
+  role?: string;
 };

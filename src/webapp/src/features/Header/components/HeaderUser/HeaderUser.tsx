@@ -2,39 +2,35 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
-import {GetLoginStoreData, LogActions} from '../../../Authentication/redux';
-import {UserAvatar} from '../../../../common/components';
+import {
+  GetLoginStoreData,
+  UserLogOutActions,
+} from '../../../Authentication/redux';
+import {UserAvatar} from 'common/components';
 
 const HeaderUser = () => {
   const loggedUser = GetLoginStoreData();
-  const logUser = LogActions();
   const history = useHistory();
+  const userLogOutAction = UserLogOutActions();
 
   function loginUser() {
     history.replace(`/login`);
   }
 
   function logoutUser() {
-    logUser({
-      username: '',
-      firstname: '',
-      lastname: '',
-      userid: '',
-      isAuthenticated: false,
-    });
-    history.replace(`/`);
+    userLogOutAction();
+    localStorage.removeItem('fantasy_access_token');
+    history.replace(`/home`);
   }
 
   return (
     <div>
-      {!loggedUser.username && (
+      {!loggedUser.id && (
         <Button variant="primary" onClick={() => loginUser()}>
           Login
         </Button>
       )}
-      {loggedUser.username && (
-        <UserAvatar user={loggedUser} logout={logoutUser} />
-      )}
+      {loggedUser.id && <UserAvatar user={loggedUser} logout={logoutUser} />}
     </div>
   );
 };

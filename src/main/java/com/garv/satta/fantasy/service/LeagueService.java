@@ -14,6 +14,7 @@ import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,24 +61,21 @@ public class LeagueService {
         league.setLeagueCode(leagueCode);
         league.setStatus(true);
         league = repository.save(league);
-        List<UserTeam> userTeams = userTeamRepository.findUserTeamByUserId(leagueDTO.getCreateByUserId());
-        if (userTeams.size() > 0) {
-            joinLeagueByCode(league.getLeagueCode(), userTeams.get(0).getId());
-        } else {
-            throw new GenericException("Please Create User Team first");
-        }
+        joinLeagueByCode(league.getLeagueCode(), leagueDTO.getCreateByUserId());
         return converter.convertToFullDTO(league);
     }
 
-    public void joinLeagueByCode(String leagueCode, Long userTeamId) {
+    public void joinLeagueByCode(String leagueCode, Long userId) {
         League league = repository.findLeagueByLeagueCode(leagueCode);
-        UserTeam userTeam = userTeamRepository.findUserTeamById(userTeamId);
+        List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(userId);
+        Assert.isTrue(userTeamList.size() == 1, "User does not have proper team, please create teams");
+        UserTeam userTeam = userTeamList.get(0);
         List<League> leagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         Optional<League> leagueObject = leagueList.stream().filter(league1 -> league1.getLeagueCode().equalsIgnoreCase(leagueCode)).findFirst();
         if (leagueObject.isPresent()) {
             throw new GenericException("already member of league : "+ leagueObject.get().getName());
         }
-        addRemoveUserTeamFromLeague(league, userTeamId, OperationEnum.ADD);
+        addRemoveUserTeamFromLeague(league, userTeam.getId(), OperationEnum.ADD);
     }
 
     public void addUserTeamToLeague(Long leagueId, Long userTeamId) {

@@ -45,8 +45,8 @@ public class LeagueController {
     @PostMapping(value = "/join/bycode")
     public String joinLeagueByCode(@RequestBody RequestDTO dto) {
         String leagueCode = dto.getLeagueCode();
-        Long userTeamID = dto.getAdd();
-        leagueService.joinLeagueByCode(leagueCode, userTeamID);
+        Long userId = dto.getAdd();
+        leagueService.joinLeagueByCode(leagueCode, userId);
         return "League Joined successfully";
     }
 

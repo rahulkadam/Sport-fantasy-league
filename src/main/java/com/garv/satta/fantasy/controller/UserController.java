@@ -27,6 +27,13 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+
+    @GetMapping(value = "/me")
+    @ResponseBody
+    public UserDTO getUserByMe() {
+        return userService.getUserByMe();
+    }
+
     @PostMapping(value = "/create")
     @ResponseBody
     public UserDTO createUser(@RequestBody UserDTO userDTO) {

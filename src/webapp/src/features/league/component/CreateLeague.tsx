@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
-import {DefaultUserId, getIdFromSelectList} from '../../../common/util';
+import {getIdFromSelectList} from '../../../common/util';
 import {fetchTournamentListAction} from '../../admin/Tournament/redux';
 import {FantasyDropDown} from '../../../common/components';
 
-const CreateLeague = ({createLeague, tournamentList}: CreateLeagueProps) => {
+const CreateLeague = ({
+  createLeague,
+  tournamentList,
+  userId,
+}: CreateLeagueProps) => {
   const [leagueName, setLeagueName] = useState('');
   const [tournamentId, setTournamentId] = useState('');
   const fetchTournamentList = fetchTournamentListAction();
@@ -24,7 +28,7 @@ const CreateLeague = ({createLeague, tournamentList}: CreateLeagueProps) => {
     );
     const request: CreateLeagueRequestObj = {
       name: leagueName,
-      createByUserId: DefaultUserId + '',
+      createByUserId: userId + '',
       tournamentId: defaultTournamentId,
     };
 

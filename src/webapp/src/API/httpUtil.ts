@@ -36,12 +36,14 @@ axiosInstance.defaults.httpsAgent = {
 };
 
 function useAuthentication(config?: AxiosRequestConfig) {
+  let token = localStorage.getItem('fantasy_access_token');
+  token = 'Bearer ' + token;
   if (config && config.headers) {
-    config.headers.common['Authorization'] = 'Bearer xyzzzz';
+    config.headers.common['Authorization'] = token;
   } else {
     return {
       headers: {
-        Authorization: 'Bearer xyzzzz',
+        Authorization: token,
       },
     };
   }

@@ -10,6 +10,10 @@ import {fantasyLogo} from '@logos/index';
 const HeaderMenu = () => {
   const loggedUser = GetLoginStoreData();
 
+  const publicMenu = true;
+  const userMenu = loggedUser.id && loggedUser.role == 'ROLE_USER';
+  const adminMenu = loggedUser.id && loggedUser.role == 'ROLE_ADMIN';
+
   return (
     <div>
       <Route>
@@ -20,37 +24,42 @@ const HeaderMenu = () => {
           </Navbar.Brand>
           <Navbar.Collapse>
             <Nav>
-              <Nav.Link
-                as={Link}
-                to={!loggedUser.username ? '/league' : '/back/tournament'}
-                href="#">
-                {!loggedUser.username && 'League'}
-                {loggedUser.username && 'Tournament'}
-              </Nav.Link>
-
-              <Fragment>
-                {!loggedUser.username && (
-                  <Nav.Link as={Link} to="/team" href="#">
-                    User Team
-                  </Nav.Link>
-                )}
-              </Fragment>
-              {loggedUser.username && (
+              {publicMenu && (
+                <Nav.Link as={Link} to="/" href="#">
+                  Home
+                </Nav.Link>
+              )}
+              {userMenu && (
+                <Nav.Link as={Link} to="/league" href="#">
+                  League
+                </Nav.Link>
+              )}
+              {userMenu && (
+                <Nav.Link as={Link} to="/team" href="#">
+                  User Team
+                </Nav.Link>
+              )}
+              {adminMenu && (
+                <Nav.Link as={Link} to="/back/tournament" href="#">
+                  Tournament
+                </Nav.Link>
+              )}
+              {adminMenu && (
                 <Nav.Link as={Link} to="/back/team" href="#">
                   Sport Team
                 </Nav.Link>
               )}
-              {loggedUser.username && (
+              {adminMenu && (
                 <Nav.Link as={Link} to="/back/player" href="#">
                   Player
                 </Nav.Link>
               )}
-              {loggedUser.username && (
+              {adminMenu && (
                 <Nav.Link as={Link} to="/back/match" href="#">
                   Match
                 </Nav.Link>
               )}
-              {loggedUser.username && (
+              {adminMenu && (
                 <Nav.Link as={Link} to="/back/venue" href="#">
                   Venue
                 </Nav.Link>

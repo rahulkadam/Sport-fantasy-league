@@ -12,7 +12,7 @@ import {Footer} from '../../common/components/Footer';
 
 function renderPrivateRoute(data: RouteConfigObject): JSX.Element {
   return (
-    <PrivateRoute path={data.path} key={data.key}>
+    <PrivateRoute path={data.path} key={data.key} role={data.role}>
       {data.component}
     </PrivateRoute>
   );

@@ -12,11 +12,12 @@ import {StatusMessage} from 'common/components';
 import {TabContainer} from 'common/components';
 import './League.styles.scss';
 import {getTournamentData} from '../admin/Tournament/redux';
-import {DefaultUserId} from 'common/util';
+import {GetLoginStoreData} from '../Authentication/redux';
 
 const League = () => {
   const leagueStoreData = getLeagueData();
   const tournamentProps = getTournamentData();
+  const userProps = GetLoginStoreData();
   const leagueObjdata = leagueStoreData.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const fetchUserLeagueList = fetchUserLeagueListAction();
@@ -24,6 +25,7 @@ const League = () => {
   const createLeague = createLeagueAction();
   const defaultTabKey = 'overview';
   const [tabName, setTabName] = useState(leagueStoreData.tabName);
+  const userId = userProps.id || 9999;
 
   if (leagueStoreData.shouldRefresh && tabName != defaultTabKey) {
     setTabName(defaultTabKey);
@@ -31,11 +33,11 @@ const League = () => {
 
   useEffect(() => {
     console.log('component will Mount only once, render everytime');
-    fetchUserLeagueList(DefaultUserId);
+    fetchUserLeagueList(userId);
   }, []);
   useEffect(() => {
     if (leagueStoreData.shouldRefresh) {
-      fetchUserLeagueList(DefaultUserId);
+      fetchUserLeagueList(userId);
     }
     console.log('component will Mount, render everytime');
   });
@@ -47,14 +49,14 @@ const League = () => {
           <LeagueList userleagueList={userleagueList} />
         )}
         {userleagueList.length == 0 && (
-          <JoinLeague data={{joinleague: joinLeague}} />
+          <JoinLeague data={{joinleague: joinLeague}} userid={userId} />
         )}
       </Fragment>
     );
   }
 
   function renderJoinLeague() {
-    return <JoinLeague data={{joinleague: joinLeague}} />;
+    return <JoinLeague data={{joinleague: joinLeague}} userid={userId} />;
   }
 
   function renderCreateLeague() {
@@ -62,6 +64,7 @@ const League = () => {
       <CreateLeague
         createLeague={createLeague}
         tournamentList={tournamentProps.tournamentList}
+        userId={userId}
       />
     );
   }
