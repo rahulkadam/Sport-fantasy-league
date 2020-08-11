@@ -13,11 +13,12 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private String homeUrl = "http://localhost:3000/redirect/success";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+
+        String homeUrl = "/redirect";
 
         if (response.isCommitted()) {
             return;

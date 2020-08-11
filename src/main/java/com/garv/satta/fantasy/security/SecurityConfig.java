@@ -57,16 +57,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.gif",
                         "/**/*.svg",
                         "/**/*.jpg",
+                        "/**/*.json",
+                        "/*.json",
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/auth/**", "/oauth2/**" , "/redirect/success/**")
+                .antMatchers("/auth/**", "/oauth2/**")
                 .permitAll();
         http.
                 authorizeRequests()
-                .antMatchers("/league", "/fantasy/**").hasRole("USER")
-                .antMatchers("/team").authenticated()
+                .antMatchers( "/fantasy/**").hasRole("USER")
+                .antMatchers("/fantasy/**").authenticated()
                 .and()
                 .oauth2Login()
                 .successHandler(myAuthenticationSuccessHandler())
