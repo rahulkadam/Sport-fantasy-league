@@ -69,7 +69,7 @@ export const RouteConfig = {
       role: AdminRole,
     },
     {
-      path: '/redirect/success',
+      path: '/redirect',
       component: RedirectSuccessHandler,
       key: 'redirectsuccess',
     },
