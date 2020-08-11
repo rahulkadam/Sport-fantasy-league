@@ -13,7 +13,7 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private String homeUrl = "http://localhost:3000/redirect/success";
+    private String homeUrl = "https://sattafantasy.appspot.com/redirect/success";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
