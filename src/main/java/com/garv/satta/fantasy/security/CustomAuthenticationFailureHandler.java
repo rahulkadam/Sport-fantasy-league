@@ -16,8 +16,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
-        System.out.println("Failure handler code :" + exception.getLocalizedMessage());
-        String targetUrl = "http://sattafantasy.appspot.com/login";
+        String targetUrl = "/login";
 
         targetUrl = UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("error", exception.getLocalizedMessage())

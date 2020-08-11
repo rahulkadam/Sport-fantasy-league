@@ -13,11 +13,12 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private String homeUrl = "https://sattafantasy.appspot.com/redirect/success";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+
+        String homeUrl = "/redirect";
 
         if (response.isCommitted()) {
             return;
