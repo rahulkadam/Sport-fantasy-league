@@ -1,14 +1,12 @@
 import React, {Fragment} from 'react';
-import {GetLoginStoreData} from '../redux';
-import LoadingOverlay from 'react-loading-overlay';
-import {Logo} from '../../../common/components';
+import {getLoginRedirectionUrl, GetLoginStoreData} from '../redux';
+import {Logo} from 'common/components';
 import {googleLogo} from '@logos/index';
 
 const Login = () => {
   const loginUserData = GetLoginStoreData();
   const authUserName = loginUserData.username;
-  const GOOGLE_AUTH_URL =
-    'http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:3000/oauth2/redirect';
+  const GOOGLE_AUTH_URL = getLoginRedirectionUrl();
 
   return (
     <div>

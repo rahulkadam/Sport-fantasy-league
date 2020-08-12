@@ -6,3 +6,4 @@ export {
   Delete,
 } from './httpclient';
 export * from './AccessTokenClient';
+export * from './httpUtil';

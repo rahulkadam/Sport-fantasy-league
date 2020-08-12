@@ -32,7 +32,6 @@ public class HttpCookieOAuth2AuthorizationRequestRepository implements Authoriza
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
 
-        System.out.println("loading auth request from  cookies");
         Assert.notNull(request, "request cannot be null");
 
         request.getCookies();
@@ -63,7 +62,6 @@ public class HttpCookieOAuth2AuthorizationRequestRepository implements Authoriza
     public void saveAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request,
                                          HttpServletResponse response) {
 
-        System.out.println("saving auth request in cookies");
         Assert.notNull(request, "request cannot be null");
         Assert.notNull(response, "response cannot be null");
 
