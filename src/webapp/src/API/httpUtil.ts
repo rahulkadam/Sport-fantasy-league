@@ -11,7 +11,7 @@ const axiosInstance = axios.create();
  *  Get Mock Instance of axios, which will return mock static response
  */
 // const axiosInstance = GetMockAdapterInstance(axios);
-axiosInstance.defaults.timeout = 5000;
+axiosInstance.defaults.timeout = 20000;
 axiosInstance.defaults.baseURL = 'https://api.example.com';
 axiosInstance.defaults.headers.post['Content-Type'] = 'json';
 /**

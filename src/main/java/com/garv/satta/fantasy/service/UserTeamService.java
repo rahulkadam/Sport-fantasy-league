@@ -14,6 +14,7 @@ import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.GameEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
+import com.garv.satta.fantasy.model.frontoffice.User;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.validation.GameTeamValidator;
 import com.garv.satta.fantasy.validation.PlayerValidator;
@@ -92,6 +93,7 @@ public class UserTeamService {
         UserTeam userTeam = converter.convertToFullEntity(userTeamDTO);
         // TODO tournament logic we will move to front end
         userTeam.setTournament(tournamentList.get(0));
+        userTeam.setUser(new User(userId));
         userTeam.setStatus(Boolean.TRUE);
         userTeam.setTotal_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
         userTeam.setTotal_score(0);
