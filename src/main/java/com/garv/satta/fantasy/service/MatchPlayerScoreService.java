@@ -44,4 +44,9 @@ public class MatchPlayerScoreService {
         List<MatchPlayerScore> matchPlayerScores = repository.findMatchPlayerScoreByPlayerId(id);
         return converter.convertToDTOList(matchPlayerScores);
     }
+
+    public List<MatchPlayerScoreDTO> getTopPerformerPlayer() {
+        List<MatchPlayerScore> matchPlayerScores = repository.findAll();
+        return converter.convertToDTOList(matchPlayerScores);
+    }
 }
