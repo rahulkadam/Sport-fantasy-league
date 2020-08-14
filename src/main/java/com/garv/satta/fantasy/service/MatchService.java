@@ -6,6 +6,7 @@ import com.garv.satta.fantasy.dto.converter.MatchConverter;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.validation.TeamValidator;
 import com.garv.satta.fantasy.validation.TournamentValidator;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,12 @@ public class MatchService {
     private TournamentValidator tournamentValidator;
 
     public List<MatchDTO> getMatchList() {
+        List<Match> matches = repository.findAll();
+        return converter.convertToFullDTOList(matches);
+    }
+
+    public List<MatchDTO> getUpComingMatchList() {
+        DateTime currentTime = new DateTime();
         List<Match> matches = repository.findAll();
         return converter.convertToFullDTOList(matches);
     }

@@ -95,4 +95,10 @@ public class PlayerService {
         }
         playerRepository.saveAll(playerList);
     }
+
+
+    public List<PlayerDTO> getTopPickedPlayer() {
+        List<Player> playerList = playerRepository.findAll();
+        return playerConverter.convertToFullDTOList(playerList);
+    }
 }
