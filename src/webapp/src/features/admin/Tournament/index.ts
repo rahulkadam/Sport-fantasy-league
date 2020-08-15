@@ -1,1 +1,1 @@
-export {Tournament} from './Tournament';
+export {default as Tournament} from './Tournament';

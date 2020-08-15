@@ -53,4 +53,4 @@ const Venue = () => {
   );
 };
 
-export {Venue};
+export default Venue;

@@ -59,4 +59,4 @@ const Tournament = () => {
   );
 };
 
-export {Tournament};
+export default Tournament;

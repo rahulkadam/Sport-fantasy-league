@@ -109,4 +109,4 @@ const League = () => {
   );
 };
 
-export {League};
+export default League;

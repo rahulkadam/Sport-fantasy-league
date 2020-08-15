@@ -196,4 +196,4 @@ const UserTeam = () => {
   );
 };
 
-export {UserTeam};
+export default UserTeam;

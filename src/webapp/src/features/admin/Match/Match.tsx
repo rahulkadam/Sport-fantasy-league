@@ -35,12 +35,8 @@ const Match = () => {
   const tabName = 'matchoverview';
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchMatchList();
   }, []);
-  useEffect(() => {
-    console.log('component will Mount, render everytime');
-  });
   function createMatchFromAdmin(requestObject: CreateMatchRequestObject) {
     createMatch(requestObject);
   }
@@ -128,4 +124,4 @@ const Match = () => {
   );
 };
 
-export {Match};
+export default Match;

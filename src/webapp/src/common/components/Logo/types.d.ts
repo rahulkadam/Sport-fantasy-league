@@ -1,4 +1,4 @@
-declare type AstroLogoPropTypes = {
+declare type FantasyLogoPropTypes = {
   logoSource: string;
   width: string;
 };

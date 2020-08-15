@@ -92,4 +92,4 @@ const SportTeam = () => {
   );
 };
 
-export {SportTeam};
+export default SportTeam;

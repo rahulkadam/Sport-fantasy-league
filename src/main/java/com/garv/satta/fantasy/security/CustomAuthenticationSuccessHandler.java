@@ -19,6 +19,10 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
                                         Authentication authentication) throws IOException {
 
         String homeUrl = "/redirect";
+        boolean localDebug = true;
+         if (localDebug) {
+             homeUrl = "http://localhost:3000" + homeUrl;
+         }
 
         if (response.isCommitted()) {
             return;

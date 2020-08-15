@@ -1,1 +1,1 @@
-export {SportTeam} from './SportTeam';
+export {default as SportTeam} from './SportTeam';
