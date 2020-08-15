@@ -8,6 +8,7 @@ import {
   CREATE_LEAGUE,
   CREATE_LEAGUE_ERROR,
   CLEAR_STATUS_MESSAGE,
+  FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
 } from './leagueConstants';
 
 const initialState: League = {
@@ -51,6 +52,13 @@ export default (state: League = initialState, action: any): League => {
         shouldRefresh: true,
         tabName: 'overview',
         statusMessage: 'League Created Succesfully, Please refresh Page',
+      };
+    case FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE:
+      return {
+        ...state,
+        leagueMemberTeam: action.userTeamPlayers,
+        isLoading: false,
+        hasError: false,
       };
     case ACTION_START:
       userLeaguestate = {

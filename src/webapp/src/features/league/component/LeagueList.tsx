@@ -71,7 +71,12 @@ const LeagueList = (props: LeagueUserListProps) => {
             subHeaderAlign="left"
             striped
             expandableRows
-            expandableRowsComponent={<ExpandLeagueRow />}
+            expandableRowsComponent={
+              <ExpandLeagueRow
+                fetchTeamByUser={props.fetchTeamListByUser}
+                playerList={props.playerList}
+              />
+            }
             expandOnRowClicked
             onRowClicked={(row: any, action) => {
               console.log('clicked');
