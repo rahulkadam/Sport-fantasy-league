@@ -25,7 +25,6 @@ import java.util.function.Predicate;
 public class UserTeam extends BaseDaoObject {
 
     @NotNull
-    @Column(unique = true)
     private String name;
     private Boolean status;
 
