@@ -140,11 +140,65 @@ const FantasyHelpContent = () => {
     );
   }
 
+  function renderWhyFantasyUnique() {
+    return (
+      <div>
+        <Row className="headerRow">
+          <Col>
+            <h3>
+              <Badge variant="light">Why We are Different To Play? </Badge>
+            </h3>
+          </Col>
+        </Row>
+        <Row className="contentRow">
+          <Col md={1}>
+            <Badge variant="light">Tournament Fantasy</Badge>
+          </Col>
+          <Col md={8}>
+            User will be playing Fantasy thoughout the Tournament with Single
+            Team, Unlikes Other Leagues.
+          </Col>
+        </Row>
+        <Row className="contentRow">
+          <Col md={1}>
+            <Badge variant="light">Manage Transfer Budget</Badge>
+          </Col>
+          <Col md={8}>
+            While Playing Fantasy League, you will need to manage your transfer
+            properly, as you will be getting limited transfer for tournament.
+            Unlike other League, where you can use daily new Teams
+          </Col>
+        </Row>
+        <Row className="contentRow">
+          <Col md={1}>
+            <Badge variant="light">No Daily New Team</Badge>
+          </Col>
+          <Col md={8}>
+            User will not need to create New team daily, Based on match User
+            will only need to make some transfer in team.
+          </Col>
+        </Row>
+        <Row className="contentRow">
+          <Col md={1}>
+            <Badge variant="light">Friendly Fantasy with Friends</Badge>
+          </Col>
+          <Col md={8}>
+            Fantasy will be friendly, as We are intended not to involve money
+            prozes here, Any user can make team and play fantasy. You can
+            created friendly League amongs your friends, You can join league
+            crated by your friends.
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
   return (
     <div>
       {renderFantasyDefinition()}
       {renderFantasyRules()}
       {renderHowToPlay()}
+      {renderWhyFantasyUnique()}
     </div>
   );
 };
