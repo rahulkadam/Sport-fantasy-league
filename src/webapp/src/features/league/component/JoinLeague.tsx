@@ -12,7 +12,6 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
 
   function joinLeague() {
     joinLeagueAction(leagueCode, userid);
-    console.log('league joinged with code ' + leagueCode);
   }
 
   const joinleageMsg =

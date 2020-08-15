@@ -33,7 +33,6 @@ const CreateLeague = ({
     };
 
     createLeague(request);
-    console.log('league joinged with code ' + leagueName);
   }
 
   function updateCreateLeagueDetails(value: string, types: number) {

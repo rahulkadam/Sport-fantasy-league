@@ -14,14 +14,9 @@ const Tournament = () => {
   const tabName = 'tournamentoverview';
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchTournamentList();
   }, []);
-  useEffect(() => {
-    console.log('component will Mount, render everytime');
-  });
   function createTournament(name: string, country: string, sport: string) {
-    console.log('creating team :', name);
     createTournamentTeam(name, country, sport);
   }
 

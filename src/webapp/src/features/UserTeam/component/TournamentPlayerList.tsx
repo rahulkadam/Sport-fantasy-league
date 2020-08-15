@@ -66,7 +66,6 @@ const TournamentPlayerList = ({
   ];
 
   function onRowSelectedAction(state: any) {
-    console.log('Selected Rows: ', state.selectedRows);
     setToggleCleared(!toggleCleared);
     if (onRowSelected) {
       onRowSelected(state.selectedRows);

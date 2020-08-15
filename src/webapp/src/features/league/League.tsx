@@ -33,14 +33,12 @@ const League = () => {
   }
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchUserLeagueList(userId);
   }, []);
   useEffect(() => {
     if (leagueProps.shouldRefresh) {
       fetchUserLeagueList(userId);
     }
-    console.log('component will Mount, render everytime');
   });
 
   function renderLeagueOverview() {

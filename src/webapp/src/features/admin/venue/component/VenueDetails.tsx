@@ -35,7 +35,7 @@ const VenueDetails = ({data, title}: VenueDetailsProps) => {
   ];
 
   function onRowSelectedAction(state: any) {
-    console.log('Selected Rows: ', state.selectedRows);
+    console.log('Selected Rows: ');
   }
 
   function onRowClickedAction(row: any, e: any) {
