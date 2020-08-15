@@ -12,7 +12,6 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
   const handleMemberTeamShow = () => setShowMemberTeam(true);
 
   function fetchUserLeagueList(userId: string) {
-    console.log('fetching details for', userId);
     fetchTeamByUser(userId);
     if (showMemberTeam) {
       handleMemberTeamClose();
