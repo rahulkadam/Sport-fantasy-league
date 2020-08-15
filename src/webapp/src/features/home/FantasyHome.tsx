@@ -1,12 +1,10 @@
 import React from 'react';
+import FantasyHelpContent from './FantasyHelpContent';
 
 const FantasyHome = () => {
   return (
     <div>
-      Fantasy Home Page
-      <div>
-        <div></div>
-      </div>
+      <FantasyHelpContent />
     </div>
   );
 };
