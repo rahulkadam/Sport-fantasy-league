@@ -1,5 +1,5 @@
 import React from 'react';
-import './Home.styles.scss';
+import '../Home.styles.scss';
 import {Badge, Col, Row, Accordion, Card, Button} from 'react-bootstrap';
 import HowToPlay from './HowToPlay';
 

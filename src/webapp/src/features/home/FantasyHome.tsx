@@ -1,5 +1,5 @@
 import React from 'react';
-import FantasyHelpContent from './FantasyHelpContent';
+import FantasyHelpContent from './components/FantasyHelpContent';
 
 const FantasyHome = () => {
   return (

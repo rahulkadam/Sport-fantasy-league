@@ -1,5 +1,5 @@
 import React from 'react';
-import {Logo} from '../../common/components';
+import {Logo} from '../../../common/components';
 import {
   colorground,
   colorteam,
