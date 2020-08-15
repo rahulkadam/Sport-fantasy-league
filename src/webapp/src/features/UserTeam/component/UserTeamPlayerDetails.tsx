@@ -6,6 +6,8 @@ import {ExpandPlayerRow} from './ExpandPlayerRow';
 import {Icon} from 'common/styles/Icon';
 import '../UserTeam.styles.scss';
 import {playerRowStyles} from '../../../common/components/DataTable/TableConfig';
+import {Logo} from '../../../common/components';
+import {renderLogoByPLayerType} from '../redux';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -17,7 +19,8 @@ const UserTeamPlayerDetails = ({
   function customName(row: any) {
     return (
       <div>
-        {row.name} ({row.id})
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="20" />
+        {row.name}
       </div>
     );
   }

@@ -4,13 +4,13 @@ import {Form, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
-import {FantasyDropDown} from 'common/components';
+import {FantasyDropDown, Logo} from 'common/components';
 import {
   countryListWithAll,
   PlayerTypeListWithALl,
   teamListWithALl,
 } from 'common/components/FantasyDropDown';
-import {teamValueByPlayerList} from '../redux';
+import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 
 const TournamentPlayerList = ({
   data,
@@ -29,7 +29,8 @@ const TournamentPlayerList = ({
   function customName(row: any) {
     return (
       <div>
-        {row.name} ({row.id})
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="20" />
+        {row.name}
       </div>
     );
   }
