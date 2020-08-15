@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect, Route} from 'react-router-dom';
 import {GetLoginStoreData} from 'features/Authentication/redux';
+import {getAccessToken} from '../../API';
 
 const PrivateRoute = ({children, ...rest}: {[key: string]: any}) => {
   const loggedUser = GetLoginStoreData();
 
   function isValid() {
     console.log('ROle ', rest.role);
-    return loggedUser.id && loggedUser.role == rest.role;
+    return getAccessToken() && loggedUser.id && loggedUser.role == rest.role;
   }
 
   return (
