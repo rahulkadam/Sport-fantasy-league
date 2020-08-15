@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.styles.scss';
-import {Badge, Col, Row} from 'react-bootstrap';
+import {Badge, Col, Row, Accordion, Card, Button} from 'react-bootstrap';
 
 const FantasyHelpContent = () => {
   function renderFantasyDefinition() {
@@ -193,12 +193,47 @@ const FantasyHelpContent = () => {
     );
   }
 
+  function renderViaAccordion() {
+    return (
+      <Accordion>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+              Fantasy Rules
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>{renderFantasyRules()}</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="1">
+              How To Play
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body>{renderHowToPlay()}</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="2">
+              Why we are different
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey="2">
+            <Card.Body>{renderWhyFantasyUnique()}</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+    );
+  }
+
   return (
     <div>
       {renderFantasyDefinition()}
-      {renderFantasyRules()}
-      {renderHowToPlay()}
-      {renderWhyFantasyUnique()}
+      {renderViaAccordion()}
     </div>
   );
 };
