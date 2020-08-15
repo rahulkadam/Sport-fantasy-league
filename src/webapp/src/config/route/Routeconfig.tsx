@@ -1,18 +1,51 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import Login, {
   RedirectSuccessHandler,
   UserInfo,
 } from 'features/Authentication/components';
-import PageNotFound from 'common/components/ErrorPage';
-import {HelpPage, TermsAndConditions} from 'common/components';
-import {League} from 'features/league';
-import {UserTeam} from 'features/UserTeam';
-import {Tournament} from 'features/admin/Tournament';
-import {SportTeam} from 'features/admin/SportTeam';
-import {Player} from 'features/admin/player';
-import {Venue} from 'features/admin/venue';
-import {Match} from 'features/admin/Match';
-import {FantasyHome} from 'features/home';
+
+const Tournament = lazy(() => {
+  return import('features/admin/Tournament/Tournament');
+});
+
+const SportTeam = lazy(() => {
+  return import('features/admin/SportTeam/SportTeam');
+});
+
+const Match = lazy(() => {
+  return import('features/admin/Match/Match');
+});
+
+const Venue = lazy(() => {
+  return import('features/admin/venue/Venue');
+});
+
+const Player = lazy(() => {
+  return import('features/admin/player/Player');
+});
+const League = lazy(() => {
+  return import('features/league/League');
+});
+
+const UserTeam = lazy(() => {
+  return import('features/UserTeam/UserTeam');
+});
+
+const FantasyHome = lazy(() => {
+  return import('features/home/FantasyHome');
+});
+
+const TermsAndConditions = lazy(() => {
+  return import('common/components/TermsAndConditions');
+});
+
+const HelpPage = lazy(() => {
+  return import('common/components/HelpPage/HelpPage');
+});
+
+const PageNotFound = lazy(() => {
+  return import('common/components/ErrorPage/PageNotFound');
+});
 
 const UserRole = 'ROLE_USER';
 const AdminRole = 'ROLE_ADMIN';

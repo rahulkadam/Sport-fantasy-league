@@ -1,1 +1,1 @@
-export {UserTeam} from './UserTeam';
+export {default as UserTeam} from './UserTeam';

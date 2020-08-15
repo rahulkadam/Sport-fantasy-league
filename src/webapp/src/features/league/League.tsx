@@ -4,6 +4,7 @@ import {
   fetchUserLeagueListAction,
   joinLeagueAction,
   createLeagueAction,
+  fetchPlayerListByUserForLeagueAction,
 } from './redux';
 import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
@@ -14,6 +15,7 @@ import './League.styles.scss';
 import {getTournamentData} from '../admin/Tournament/redux';
 import {checkUserAccess, GetLoginStoreData} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
+import {fetchPlayerListByUserAction} from '../UserTeam/redux';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -21,6 +23,8 @@ const League = () => {
   const userProps = GetLoginStoreData();
   const leagueObjdata = leagueProps.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
+  const leagueMemberTeamDetails = leagueProps.leagueMemberTeam;
+  const fetchTeamListByUserForLeague = fetchPlayerListByUserForLeagueAction();
   const fetchUserLeagueList = fetchUserLeagueListAction();
   const joinLeague = joinLeagueAction();
   const createLeague = createLeagueAction();
@@ -33,21 +37,23 @@ const League = () => {
   }
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchUserLeagueList(userId);
   }, []);
   useEffect(() => {
     if (leagueProps.shouldRefresh) {
       fetchUserLeagueList(userId);
     }
-    console.log('component will Mount, render everytime');
   });
 
   function renderLeagueOverview() {
     return (
       <Fragment>
         {userleagueList.length > 0 && (
-          <LeagueList userleagueList={userleagueList} />
+          <LeagueList
+            userleagueList={userleagueList}
+            fetchTeamListByUser={fetchTeamListByUserForLeague}
+            playerList={leagueMemberTeamDetails}
+          />
         )}
         {userleagueList.length == 0 && (
           <JoinLeague data={{joinleague: joinLeague}} userid={userId} />
@@ -111,4 +117,4 @@ const League = () => {
   );
 };
 
-export {League};
+export default League;

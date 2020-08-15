@@ -11,4 +11,4 @@ const FantasyHome = () => {
   );
 };
 
-export {FantasyHome};
+export default FantasyHome;

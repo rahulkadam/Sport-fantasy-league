@@ -1,5 +1,7 @@
 declare type LeagueUserListProps = {
   userleagueList: any;
+  fetchTeamListByUser?: any;
+  playerList?: any;
 };
 
 declare type JoinLeagueProps = {
@@ -12,4 +14,12 @@ declare type CreateLeagueProps = {
   createLeague: any;
   tournamentList: any[];
   userId?: number;
+};
+
+declare type LeagueMemberTeamDetailsProps = {
+  handleClose?: any;
+  handleShow?: any;
+  playerList?: any;
+  show?: boolean;
+  data?: data;
 };

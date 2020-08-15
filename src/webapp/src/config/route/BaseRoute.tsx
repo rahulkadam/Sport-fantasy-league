@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -64,8 +64,10 @@ const BaseRoute = () => {
   return (
     <div>
       <Header />
-      <Switch>{renderRoute()}</Switch>
-      <Footer />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>{renderRoute()}</Switch>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

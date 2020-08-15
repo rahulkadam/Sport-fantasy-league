@@ -19,12 +19,8 @@ const Player = () => {
   const tabName = 'playeroverview';
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchPlayerList();
   }, []);
-  useEffect(() => {
-    console.log('component will Mount, render everytime');
-  });
 
   function renderCreatePlayer() {
     return <CreatePlayer createPlayerAction={createPlayer} />;
@@ -78,4 +74,4 @@ const Player = () => {
   );
 };
 
-export {Player};
+export default Player;

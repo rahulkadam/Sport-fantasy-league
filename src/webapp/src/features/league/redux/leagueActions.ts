@@ -14,12 +14,15 @@ import {
   JOIN_LEAGUE_ERROR,
   CREATE_LEAGUE,
   CREATE_LEAGUE_ERROR,
+  FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
+  FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE_ERROR,
 } from './leagueConstants';
 import {
   dispatchActionWrapper,
   dispatchAction,
   getErrorMessage,
 } from 'common/util';
+import {fetchPlayerlistByUser} from '../../UserTeam/redux/userteam-api';
 
 const fetchUserLeagueListAction = () => {
   const dispatch = useDispatch();
@@ -113,9 +116,33 @@ const createLeagueAction = () => {
   );
 };
 
+const fetchPlayerListByUserForLeagueAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (userid: number) => {
+      fetchPlayerlistByUser(userid)
+        .then((data: any) => {
+          dispatch({
+            type: FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
+            userTeamPlayers: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: ACTION_ERROR,
+            errorMessage: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
 export {
   fetchUserLeagueListAction,
   fetchPublicLeagueListAction,
   joinLeagueAction,
   createLeagueAction,
+  fetchPlayerListByUserForLeagueAction,
 };

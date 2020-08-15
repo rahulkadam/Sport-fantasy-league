@@ -42,7 +42,6 @@ const UserTeam = () => {
   }
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchPlayerList();
     fetchPlayerListByUser(userProps.id);
     fetchGameCriteriaByName('CRICKET');
@@ -197,4 +196,4 @@ const UserTeam = () => {
   );
 };
 
-export {UserTeam};
+export default UserTeam;

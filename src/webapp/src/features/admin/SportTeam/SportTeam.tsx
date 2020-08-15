@@ -23,14 +23,9 @@ const SportTeam = () => {
   const tabName = 'teamoverview';
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchTeamList();
   }, []);
-  useEffect(() => {
-    console.log('component will Mount, render everytime');
-  });
   function createTeam(name: string, country: string, sport: string) {
-    console.log('creating team :', name);
     createTournamentTeam(name, country, sport);
   }
 
@@ -97,4 +92,4 @@ const SportTeam = () => {
   );
 };
 
-export {SportTeam};
+export default SportTeam;

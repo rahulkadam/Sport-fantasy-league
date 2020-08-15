@@ -10,12 +10,8 @@ const Venue = () => {
   const tabName = 'venueoverview';
 
   useEffect(() => {
-    console.log('component will Mount only once, render everytime');
     fetchPlayerList();
   }, []);
-  useEffect(() => {
-    console.log('component will Mount, render everytime');
-  });
   function createVenueFromAdmin(name: string, country: string, city: string) {
     createPlayer(name, country, city);
   }
@@ -57,4 +53,4 @@ const Venue = () => {
   );
 };
 
-export {Venue};
+export default Venue;

@@ -94,4 +94,4 @@ const HelpPage = () => {
   );
 };
 
-export {HelpPage};
+export default HelpPage;

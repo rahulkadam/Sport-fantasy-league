@@ -27,5 +27,5 @@ export const GA_PageView = (page: string) => {
 history.listen(router => {
   // console.log('Triggered ' + router.pathname);
   // ReactGA.set({page: router.pathname});
-  GA_PageView('quickpay page' + router.pathname);
+  GA_PageView('Fantasy page' + router.pathname);
 });

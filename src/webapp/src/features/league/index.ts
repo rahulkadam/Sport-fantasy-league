@@ -1,1 +1,1 @@
-export {League} from './League';
+export {default as League} from './League';

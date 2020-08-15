@@ -1,1 +1,1 @@
-export {Venue} from './Venue';
+export {default as Venue} from './Venue';

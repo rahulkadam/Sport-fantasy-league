@@ -1,12 +1,16 @@
 import React, {Fragment} from 'react';
 
-import './APGButton.styles.scss';
+import './FantasyButton.styles.scss';
 
-const APGButton = ({title, isDisabled, onClick}: AstroButtonPropTypes) => {
+const FantasyButton = ({
+  title,
+  isDisabled,
+  onClick,
+}: FantasyButtonPropTypes) => {
   return (
     <Fragment>
       <button
-        className="apgButton"
+        className="fantasyButton"
         disabled={isDisabled}
         type="button"
         onClick={onClick}>
@@ -16,4 +20,4 @@ const APGButton = ({title, isDisabled, onClick}: AstroButtonPropTypes) => {
   );
 };
 
-export {APGButton};
+export {FantasyButton};

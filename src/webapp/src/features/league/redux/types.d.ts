@@ -5,6 +5,7 @@ declare type League = {
   statusMessage: string;
   tabName?: string;
   shouldRefresh?: boolean;
+  leagueMemberTeam?: any;
 };
 
 declare type CreateLeagueRequestObj = {
