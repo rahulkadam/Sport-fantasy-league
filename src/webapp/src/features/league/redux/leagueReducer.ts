@@ -40,7 +40,7 @@ export default (state: League = initialState, action: any): League => {
         ...state,
         isLoading: false,
         hasError: false,
-        statusMessage: 'League Joined Succesfully, PLease refresh Page',
+        statusMessage: 'League Joined Successfully',
         shouldRefresh: true,
         tabName: 'overview',
       };
@@ -51,7 +51,7 @@ export default (state: League = initialState, action: any): League => {
         hasError: false,
         shouldRefresh: true,
         tabName: 'overview',
-        statusMessage: 'League Created Succesfully, Please refresh Page',
+        statusMessage: 'League Created Successfully',
       };
     case FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE:
       return {

@@ -16,7 +16,7 @@ import {
   fetchGameCriteriaByNameAction,
   validateTeam,
 } from './redux';
-import {Button, Row, Col, Badge} from 'react-bootstrap';
+import {Button, Row, Col, Badge, ProgressBar} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 
@@ -110,9 +110,28 @@ const UserTeam = () => {
     updateCurrentUserTeam(row, 'REMOVE');
   }
 
+  function renderTeamCompletionProgressBar(progress: number) {
+    return (
+      <ProgressBar>
+        <ProgressBar variant="success" now={progress} label={'Complete'} />
+        <ProgressBar
+          variant="danger"
+          now={100 - progress}
+          label={'InComplete'}
+        />
+      </ProgressBar>
+    );
+  }
+
   function renderError() {
     const errorStatusMessage: any = [];
     if (currentUserTeamPlayers && currentUserTeamPlayers.length > 0) {
+      const teamCompletionProgess = (currentUserTeamPlayers.length / 11) * 100;
+      if (teamCompletionProgess < 100) {
+        errorStatusMessage.push(
+          renderTeamCompletionProgressBar(teamCompletionProgess)
+        );
+      }
       validateTeamTransfer.forEach((message: string) =>
         errorStatusMessage.push(renderStatusMessage(true, message))
       );
@@ -121,7 +140,11 @@ const UserTeam = () => {
         'Please select player from below list and save Team';
       errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
     }
-    return errorStatusMessage;
+    return (
+      <Row>
+        <Col md={6}>{errorStatusMessage}</Col>
+      </Row>
+    );
   }
 
   function renderUserTeamDetails() {
