@@ -9,7 +9,7 @@ public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
     List<Tournament> findAll();
 
-    List<Tournament> findTournamentByName(String name);
+    Tournament findTournamentByName(String name);
 
     Tournament findTournamentById(Long id);
 

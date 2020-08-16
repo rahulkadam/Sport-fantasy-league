@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,5 +33,11 @@ public class MatchController {
     @ResponseBody
     public MatchDTO createMatch(@RequestBody MatchDTO venue) {
         return service.createMatch(venue);
+    }
+
+    @PostMapping("/upload/xls/list")
+    public String uploadTeamList(@RequestParam("file") MultipartFile file) {
+        service.uploadTeamList(file);
+        return "File Uploaded Successfully";
     }
 }

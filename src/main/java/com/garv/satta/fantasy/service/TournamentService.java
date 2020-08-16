@@ -41,4 +41,8 @@ public class TournamentService {
         return tournamentConverter.convertToDTO(tournament);
     }
 
+    public TournamentDTO getTournamentByName(String name) {
+        Tournament tournament = tournamentRepository.findTournamentByName(name);
+        return tournamentConverter.convertToDTO(tournament);
+    }
 }

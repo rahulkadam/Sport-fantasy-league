@@ -54,6 +54,11 @@ public class TeamService {
         return converter.convertToDTO(team);
     }
 
+    public TeamDTO getTeamByName(String name) {
+        Team team = teamRepository.findTeamByName(name);
+        return converter.convertToDTO(team);
+    }
+
 
     public TeamDTO CreateTeamForTournament(TeamDTO teamDTO ) {
         Team team = converter.convertToFullEntity(teamDTO);
