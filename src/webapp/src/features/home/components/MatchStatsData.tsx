@@ -2,29 +2,12 @@ import React, {Fragment} from 'react';
 import {fantasyLogo} from '@logos/index';
 import {Row, Col} from 'react-bootstrap';
 import {GameCorousel} from 'common/components';
-const MatchStatsData = () => {
-  const matchScheduleList: GameCardProps[] = [
-    {
-      team1: 'CSK',
-      team2: 'MI',
-      team2logo: fantasyLogo,
-      team1logo: fantasyLogo,
-      id: 123,
-      time: '1h 45Min left',
-      venue: 'Banglore',
-      tournament: 'IPL20',
-    },
-    {
-      team1: 'PNJ',
-      team2: 'MI',
-      team2logo: fantasyLogo,
-      team1logo: fantasyLogo,
-      id: 1234,
-      time: '1h 45Min left',
-      venue: 'Mumbai',
-      tournament: 'IPL20',
-    },
-  ];
+import {getGameCardPropsData} from '../redux';
+const MatchStatsData = (props: HomeData) => {
+  const leagueMatchList = props.leagueMatchesList || [];
+  const matchScheduleList: GameCardProps[] = getGameCardPropsData(
+    leagueMatchList
+  );
   const mostScoringPlayerList: PlayerScoreCardProps[] = [
     {
       name: 'Sachin',

@@ -15,7 +15,6 @@ import './League.styles.scss';
 import {getTournamentData} from '../admin/Tournament/redux';
 import {checkUserAccess, GetLoginStoreData} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
-import {fetchPlayerListByUserAction} from '../UserTeam/redux';
 
 const League = () => {
   const leagueProps = getLeagueData();

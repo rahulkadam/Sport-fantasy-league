@@ -9,7 +9,7 @@ export function fetchMostPickedPlayer() {
 }
 
 export function fetchUpcomingMatches() {
-  return Get('/users/league/ranking/');
+  return Get('/public/home/comingmatches');
 }
 
 export function fetchTopScoreUserGlobally() {
