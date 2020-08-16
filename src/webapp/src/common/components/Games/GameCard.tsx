@@ -1,13 +1,27 @@
 import React from 'react';
-import {Card} from 'react-bootstrap';
+import {Card, Row, Col} from 'react-bootstrap';
 import './GameCard.styles.scss';
+import {Logo} from '..';
+import {getTeamLogoByName} from './Game-util';
 const GameCard = (props: GameCardProps) => {
   return (
     <Card className="gamecardcontainer">
       <Card.Body>
-        <Card.Title>{props.time}</Card.Title>
+        <Card.Title>
+          {props.tournament} , {props.venue}
+        </Card.Title>
         <Card.Text>
-          {props.team1} VS {props.team2}
+          <Row>
+            <Col>
+              <Logo logoSource={getTeamLogoByName(props.team1)} width="48" />
+              {props.team1}
+            </Col>
+            <Col>{props.time}</Col>
+            <Col>
+              <Logo logoSource={getTeamLogoByName(props.team2)} width="48" />
+              {props.team2}
+            </Col>
+          </Row>
         </Card.Text>
       </Card.Body>
     </Card>

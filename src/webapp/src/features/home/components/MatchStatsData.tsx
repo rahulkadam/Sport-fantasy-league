@@ -10,29 +10,37 @@ const MatchStatsData = () => {
       team2logo: fantasyLogo,
       team1logo: fantasyLogo,
       id: 123,
+      time: '1h 45Min left',
+      venue: 'Banglore',
+      tournament: 'IPL20',
     },
     {
-      team1: 'CSK1111',
+      team1: 'PNJ',
       team2: 'MI',
       team2logo: fantasyLogo,
       team1logo: fantasyLogo,
       id: 1234,
+      time: '1h 45Min left',
+      venue: 'Mumbai',
+      tournament: 'IPL20',
     },
   ];
-  const MostPickedList: GameCardProps[] = [
+  const mostScoringPlayerList: PlayerScoreCardProps[] = [
     {
-      team1: 'CSK',
-      team2: 'MI',
-      team2logo: fantasyLogo,
-      team1logo: fantasyLogo,
+      name: 'Sachin',
+      team: 'MI',
+      rank: 1,
+      score: 456,
+      matches: 9,
       id: 123,
     },
     {
-      team1: 'CSK1111',
-      team2: 'MI',
-      team2logo: fantasyLogo,
-      team1logo: fantasyLogo,
-      id: 1234,
+      name: 'Kohli',
+      team: 'RCB',
+      rank: 2,
+      score: 256,
+      matches: 6,
+      id: 13,
     },
   ];
   return (
@@ -49,8 +57,8 @@ const MatchStatsData = () => {
         </Col>
         <Col md={3}>
           <GameCorousel
-            type="toppickedplayer"
-            matchScheduleCard={MostPickedList}
+            type="topplayerscore"
+            mostScoringPlayerList={mostScoringPlayerList}
           />
         </Col>
       </Row>
