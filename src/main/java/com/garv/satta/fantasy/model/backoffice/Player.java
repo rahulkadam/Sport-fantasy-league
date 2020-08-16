@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @ToString(exclude = {"teams", "squads"}, callSuper = true)
 @EqualsAndHashCode
-@Where(clause = "isDeleted = false")
+@Where(clause = "is_deleted = false")
 public class Player extends BaseDaoObject {
     @NotNull
     @Column(unique = true)

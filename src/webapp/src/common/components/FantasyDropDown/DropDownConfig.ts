@@ -1,6 +1,5 @@
 export const countryList = [
   {id: 'INDIA', name: 'INDIA'},
-  {id: 'SRILANKA', name: 'SRILANKA'},
   {id: 'NEW ZEALAND', name: 'NEW ZEALAND'},
   {id: 'ENGLAND', name: 'ENGLAND'},
   {id: 'SRILANKA', name: 'SRILANKA'},
@@ -8,6 +7,7 @@ export const countryList = [
   {id: 'SOUTH AFRICA', name: 'SOUTH AFRICA'},
   {id: 'WEST INDIES', name: 'WEST INDIES'},
   {id: 'BANGLADESH', name: 'BANGLADESH'},
+  {id: 'NEPAL', name: 'NEPAL'},
 ];
 
 export const countryListWithAll = [{id: 'ALL', name: 'ALL'}].concat(

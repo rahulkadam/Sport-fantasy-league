@@ -43,7 +43,7 @@ public class PlayerService {
         return playerConverter.convertToFullDTOList(playerList);
     }
 
-    public PlayerDTO getPLayerByName(String name) {
+    public PlayerDTO getplayerbyname(String name) {
         Player player = playerRepository.findPlayerByName(name);
         return playerConverter.convertToDTO(player);
     }
