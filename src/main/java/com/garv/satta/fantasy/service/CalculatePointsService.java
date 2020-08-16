@@ -5,6 +5,7 @@ import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.*;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
+import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,9 @@ public class CalculatePointsService {
     @Autowired
     private LeagueUserTeamRepository leagueUserTeamRepository;
 
+    @Autowired
+    private LeagueUserTeamScorePerMatchService leagueUserTeamScorePerMatchService;
+
     /**
      * Calculate Score for each team after Match By Match ID
      * @param id
@@ -53,7 +57,7 @@ public class CalculatePointsService {
         List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
-        processScoreUpdateforUserTeamsList(userTeams, matchPlayerScoreMap);
+        processScoreUpdateforUserTeamsList(userTeams, matchPlayerScoreMap, match);
     }
 
     /**
@@ -61,8 +65,8 @@ public class CalculatePointsService {
      * @param userTeams
      * @param matchPlayerScoreMap
      */
-    private void processScoreUpdateforUserTeamsList(List<UserTeam> userTeams, Map<Long, MatchPlayerScore> matchPlayerScoreMap) {
-        userTeams.forEach(userTeam -> processScoreUpdateforSingleUserTeam(userTeam, matchPlayerScoreMap));
+    private void processScoreUpdateforUserTeamsList(List<UserTeam> userTeams, Map<Long, MatchPlayerScore> matchPlayerScoreMap, Match match) {
+        userTeams.forEach(userTeam -> processScoreUpdateforSingleUserTeam(userTeam, matchPlayerScoreMap, match));
     }
 
     /**
@@ -71,25 +75,29 @@ public class CalculatePointsService {
      * @param matchPlayerScoreMap
      */
     @Transactional
-    private void processScoreUpdateforSingleUserTeam(UserTeam userTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap) {
+    private void processScoreUpdateforSingleUserTeam(UserTeam userTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap, Match match) {
         List<Player> playerList = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
 
         Player captainPlayer = userTeam.getCaptain_player();
 
-        Integer score = userTeam.getTotal_score();
-        if (score == null) {
-            score = 0;
-        }
+        Integer matchScore = 0;
         for (Player player: playerList) {
             MatchPlayerScore matchPlayerScore = matchPlayerScoreMap.get(player.getId());
             if (matchPlayerScore != null) {
                 if (captainPlayer != null && captainPlayer.getId() == player.getId()) {
-                    score = score + matchPlayerScore.getPointscore();
+                    matchScore = matchScore + matchPlayerScore.getPointscore();
                 }
-                score = score + matchPlayerScore.getPointscore();
+                matchScore = matchScore + matchPlayerScore.getPointscore();
             }
         }
-        userTeam.setTotal_score(score);
+
+        Integer score = userTeam.getTotal_score();
+        Integer totalScore = matchScore;
+        if (score != null) {
+            totalScore = totalScore + score;
+        }
+        userTeam.setTotal_score(totalScore);
+        leagueUserTeamScorePerMatchService.saveLeagueUserTeamScorePerMatch(userTeam, match, matchScore, totalScore);
         userTeamRepository.save(userTeam);
     }
 

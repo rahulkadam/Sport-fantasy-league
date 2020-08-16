@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.model.frontoffice;
 
 import com.garv.satta.fantasy.model.BaseDaoObject;
+import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.MatchResult;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,10 @@ public class LeagueUserTeamScorePerMatch extends BaseDaoObject {
     private UserTeam userTeam;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "match_details_id", nullable = false)
-    private MatchResult matchResult;
+    @JoinColumn(name = "match_id", nullable = false)
+    private Match match;
 
+    public LeagueUserTeamScorePerMatch(Long id) {
+        super(id);
+    }
 }
