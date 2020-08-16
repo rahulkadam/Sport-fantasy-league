@@ -11,3 +11,10 @@ export function getGameCardPropsData(matchList: any) {
     };
   });
 }
+
+export function arrayRotate(arr: any) {
+  if (!arr || arr.length == 0) return [];
+  const arr1 = arr.slice();
+  arr1.push(arr1.shift(1));
+  return arr1;
+}
