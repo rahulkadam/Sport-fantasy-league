@@ -68,6 +68,7 @@
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-bootstrap": "^1.0.1",
+    "react-countdown": "^2.2.1",
     "react-data-table-component": "^6.9.8",
     "react-datetime-picker": "^3.0.2",
     "react-dev-utils": "^10.2.1",
