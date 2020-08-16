@@ -75,7 +75,10 @@ const CreateLeague = ({
           </Col>
         </Row>
       </div>
-      <Button variant="primary" onClick={() => createLeagueAction()}>
+      <Button
+        variant="primary"
+        onClick={() => createLeagueAction()}
+        disabled={leagueName.length == 0}>
         Create League
       </Button>
     </div>

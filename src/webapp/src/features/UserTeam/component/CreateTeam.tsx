@@ -24,7 +24,10 @@ const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
             onChange={event => updateTeamName(event.target.value)}
           />
         </div>
-        <Button variant="primary" onClick={() => createTeam()}>
+        <Button
+          variant="primary"
+          onClick={() => createTeam()}
+          disabled={teamName.length == 0}>
           Create Team
         </Button>
       </Fragment>

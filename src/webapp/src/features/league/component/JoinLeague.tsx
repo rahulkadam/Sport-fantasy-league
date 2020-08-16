@@ -30,7 +30,10 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
           onChange={event => changeLeagueCode(event.target.value)}
         />
       </div>
-      <Button variant="primary" onClick={() => joinLeague()}>
+      <Button
+        variant="primary"
+        onClick={() => joinLeague()}
+        disabled={leagueCode.length == 0}>
         Join League
       </Button>
     </div>
