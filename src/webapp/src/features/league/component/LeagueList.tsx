@@ -43,7 +43,7 @@ const LeagueList = (props: LeagueUserListProps) => {
       <div>
         <Form.Control
           type="text"
-          placeholder="Player Name"
+          placeholder="League Name"
           onChange={(e: any) => setFilterText(e.target.value)}
           value={filterText}
         />

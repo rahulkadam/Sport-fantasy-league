@@ -6,13 +6,17 @@ import {Logo} from 'common/components/Logo/Logo';
 import {GetLoginStoreData} from '../../../Authentication/redux';
 import {HeaderUser} from '../HeaderUser/HeaderUser';
 import {fantasyLogo} from '@logos/index';
+import {getAccessToken} from '../../../../API';
 
 const HeaderMenu = () => {
   const loggedUser = GetLoginStoreData();
+  const isTokenValid = getAccessToken();
 
   const publicMenu = true;
-  const userMenu = loggedUser.id && loggedUser.role == 'ROLE_USER';
-  const adminMenu = loggedUser.id && loggedUser.role == 'ROLE_ADMIN';
+  const userMenu =
+    isTokenValid && loggedUser.id && loggedUser.role == 'ROLE_USER';
+  const adminMenu =
+    isTokenValid && loggedUser.id && loggedUser.role == 'ROLE_ADMIN';
 
   return (
     <div>

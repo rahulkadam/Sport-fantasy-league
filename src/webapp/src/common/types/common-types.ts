@@ -1,6 +1,7 @@
 export interface RootState {
   user: User;
   league: League;
+  homedata: HomeData;
   userteam: UserTeam;
   tournament: Tournament;
   sportteam: SportTeam;

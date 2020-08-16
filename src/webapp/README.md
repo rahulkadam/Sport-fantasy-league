@@ -1,4 +1,4 @@
-# Quickstart React Redux App
+# Fantasy React Redux App
 
 Redux, React Typescript Project with eslint and stylelint configurations.
 
@@ -116,13 +116,6 @@ we can find husky hook configuration in `package.json`
 ```
 
 ## Project URL
-Following are the URL which created
-
-1. [/](localhost:3000/)
-2. [/home](localhost:3000/home)
-3. [/billview](localhost:3000/billview)
-4. [/random](localhost:3000/random)
-5. [/counter](localhost:3000/counter)
 
 ##Important concept to Read 
 

@@ -11,7 +11,7 @@ export function setAccessToken(token: any) {
 }
 
 export function getAccessToken() {
-  localStorage.getItem(TOKEN_KEY);
+  return localStorage.getItem(TOKEN_KEY);
 }
 
 export function removeAccessToken() {

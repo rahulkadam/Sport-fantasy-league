@@ -1,3 +1,5 @@
+import {blackar, blackball, blackbat, blackwk} from '@logos/index';
+
 export function teamValueByPlayerList(playerList: any) {
   let teamValue = 0;
   if (!playerList) return teamValue;
@@ -136,4 +138,18 @@ export function validateTeam(props: UserTeam): string[] {
     validatePlayerCriteriaList(playerCriteriaList, currentUserTeamPlayers)
   );
   return error;
+}
+
+export function renderLogoByPLayerType(type: string) {
+  switch (type) {
+    case 'ALLROUNDER':
+      return blackar;
+    case 'BOWLER':
+      return blackball;
+    case 'BATSMAN':
+      return blackbat;
+    case 'WICKETKEEPER':
+      return blackwk;
+  }
+  return blackbat;
 }

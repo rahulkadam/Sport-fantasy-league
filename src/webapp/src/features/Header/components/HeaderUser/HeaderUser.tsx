@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Button, Navbar} from 'react-bootstrap';
 
@@ -8,11 +8,18 @@ import {
 } from '../../../Authentication/redux';
 import {Logo, UserAvatar} from 'common/components';
 import {fantasyLogo, googleLogo} from '@logos/index';
+import {getAccessToken, removeAccessToken} from '../../../../API';
 
 const HeaderUser = () => {
   const loggedUser = GetLoginStoreData();
   const history = useHistory();
   const userLogOutAction = UserLogOutActions();
+
+  useEffect(() => {
+    if (!getAccessToken()) {
+      userLogOutAction();
+    }
+  });
 
   function loginUser() {
     history.replace(`/login`);
@@ -20,7 +27,7 @@ const HeaderUser = () => {
 
   function logoutUser() {
     userLogOutAction();
-    localStorage.removeItem('fantasy_access_token');
+    removeAccessToken();
     history.replace(`/home`);
   }
 
