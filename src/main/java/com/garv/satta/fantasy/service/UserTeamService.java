@@ -120,7 +120,10 @@ public class UserTeamService {
 
         List<Player> playerList = playerRepository.findAllByIdIn(playerIdList);
         UserTeam userTeam = userTeamList.get(0);
-        GameEnum gameName = userTeam.getTournament().getSportName();
+        Tournament tournament = userTeam.getTournament();
+        // ** adding changes for locking team transfer, we can improve it later by adding lock flag, for now, we will do with status flag on tournament
+        Assert.isTrue(tournament.getStatus(), "User Team updation is not valid now, please try after match for next match");
+        GameEnum gameName = tournament.getSportName();
         gameTeamValidator.validateTeamForGame(gameName.toString(), playerList);
 
         Double teamValue = playerList.stream().mapToDouble(player -> player.getValue()).sum();

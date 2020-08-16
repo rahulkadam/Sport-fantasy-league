@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @ToString(exclude = {"teams", "squads"}, callSuper = true)
 @EqualsAndHashCode
+@Where(clause = "isDeleted = false")
 public class Player extends BaseDaoObject {
     @NotNull
     @Column(unique = true)

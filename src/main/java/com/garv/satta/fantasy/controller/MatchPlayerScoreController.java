@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.service.MatchPlayerScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,4 +29,9 @@ public class MatchPlayerScoreController {
         return service.getMatchScoreByPlayer(id);
     }
 
+    @PostMapping("/upload/xls/list")
+    public String uploadPlayerList(@RequestParam("file") MultipartFile file) {
+        service.uploadMatchPlayeScoreList(file);
+        return "File Uploaded Successfully";
+    }
 }
