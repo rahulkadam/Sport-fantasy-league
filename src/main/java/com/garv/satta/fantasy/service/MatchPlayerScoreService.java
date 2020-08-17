@@ -57,12 +57,17 @@ public class MatchPlayerScoreService {
 
     public List<MatchPlayerScoreDTO> getMatchScoreByPlayer(Long id) {
         List<MatchPlayerScore> matchPlayerScores = repository.findMatchPlayerScoreByPlayerId(id);
-        return converter.convertToDTOList(matchPlayerScores);
+        return converter.convertToFullDTOList(matchPlayerScores);
+    }
+
+    public List<MatchPlayerScoreDTO> findMatchPlayerScoreByMatchId(Long id) {
+        List<MatchPlayerScore> matchPlayerScores = repository.findMatchPlayerScoreByMatchId(id);
+        return converter.convertToFullDTOList(matchPlayerScores);
     }
 
     public List<MatchPlayerScoreDTO> getTopPerformerPlayer() {
         List<MatchPlayerScore> matchPlayerScores = repository.findAll();
-        return converter.convertToDTOList(matchPlayerScores);
+        return converter.convertToFullDTOList(matchPlayerScores);
     }
 
     public void uploadMatchPlayeScoreList(MultipartFile file) {

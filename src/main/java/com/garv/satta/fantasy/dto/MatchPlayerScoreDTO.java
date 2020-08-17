@@ -13,6 +13,8 @@ public class MatchPlayerScoreDTO extends ShortBaseDTO {
     private Integer catches;
     private Long playerId;
     private Long matchId;
+    private String playerName;
+    private String matchDescription;
     private Long tournamentId;
     private PlayerDTO playerDTO;
     private MatchDTO matchDTO;

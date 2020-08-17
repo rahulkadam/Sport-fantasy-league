@@ -1,5 +1,7 @@
 package com.garv.satta.fantasy.security;
 
+import com.garv.satta.fantasy.configuration.FantasyProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -13,13 +15,15 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    @Autowired
+    private FantasyProperties properties;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
         String homeUrl = "/redirect";
-        boolean localDebug = true;
+        boolean localDebug = properties.islocal();
          if (localDebug) {
              homeUrl = "http://localhost:3000" + homeUrl;
          }

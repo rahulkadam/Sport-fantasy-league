@@ -15,4 +15,6 @@ public interface LeagueUserTeamScorePerMatchRepository extends CrudRepository<Le
 
     List<LeagueUserTeamScorePerMatch> findAllByUserTeamId(Long id);
 
+    List<LeagueUserTeamScorePerMatch> findAllByUserTeamIdAndMatchId(Long userTeamId , Long matchId);
+
 }

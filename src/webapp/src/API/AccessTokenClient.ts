@@ -2,6 +2,7 @@ const TOKEN_KEY = 'fantasy_access_token';
 
 export function getBearerToken() {
   let token = localStorage.getItem(TOKEN_KEY);
+  if (!token) return;
   token = 'Bearer ' + token;
   return token;
 }
