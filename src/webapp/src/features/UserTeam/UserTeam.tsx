@@ -20,6 +20,7 @@ import {Button, Row, Col, Badge, ProgressBar} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {useParams} from 'react-router-dom';
+import {isListEmpty} from '../../common/util';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -44,9 +45,13 @@ const UserTeam = () => {
   }
 
   useEffect(() => {
-    fetchPlayerList();
-    fetchPlayerListByUser(userProps.id);
-    fetchGameCriteriaByName('CRICKET');
+    if (isListEmpty(userteamDataProps.playerList)) {
+      fetchPlayerList();
+    }
+    if (!isUserTeamAvailable) {
+      fetchPlayerListByUser(userProps.id);
+      fetchGameCriteriaByName('CRICKET');
+    }
   }, []);
 
   useEffect(() => {
