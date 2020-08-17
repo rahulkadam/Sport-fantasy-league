@@ -22,10 +22,6 @@ export const adminMenuConfig = [
     name: 'Sport Team',
   },
   {
-    link: '/back/tournament',
-    name: 'Tournament',
-  },
-  {
     link: '/back/player',
     name: 'Player',
   },
