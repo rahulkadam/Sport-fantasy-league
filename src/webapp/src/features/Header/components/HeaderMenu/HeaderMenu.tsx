@@ -7,6 +7,12 @@ import {GetLoginStoreData} from '../../../Authentication/redux';
 import {HeaderUser} from '../HeaderUser/HeaderUser';
 import {fantasyLogo} from '@logos/index';
 import {getAccessToken} from '../../../../API';
+import {string} from 'prop-types';
+import {
+  adminMenuConfig,
+  commonPublicMenuConfig,
+  userMenuConfig,
+} from './MenuConfig';
 
 const HeaderMenu = () => {
   const loggedUser = GetLoginStoreData();
@@ -18,6 +24,22 @@ const HeaderMenu = () => {
   const adminMenu =
     isTokenValid && loggedUser.id && loggedUser.role == 'ROLE_ADMIN';
 
+  function renderMenuLink(name: string, link: string) {
+    return (
+      <Nav.Link as={Link} to={link} href="#">
+        {name}
+      </Nav.Link>
+    );
+  }
+
+  function renderMenu(config: any) {
+    const adminMenuArr: any = [];
+    config.forEach((menu: any) => {
+      adminMenuArr.push(renderMenuLink(menu.name, menu.link));
+    });
+    return adminMenuArr;
+  }
+
   return (
     <div>
       <Route>
@@ -28,46 +50,10 @@ const HeaderMenu = () => {
           </Navbar.Brand>
           <Navbar.Collapse>
             <Nav>
-              {publicMenu && (
-                <Nav.Link as={Link} to="/" href="#">
-                  Home
-                </Nav.Link>
-              )}
-              {userMenu && (
-                <Nav.Link as={Link} to="/league" href="#">
-                  League
-                </Nav.Link>
-              )}
-              {userMenu && (
-                <Nav.Link as={Link} to="/team" href="#">
-                  User Team
-                </Nav.Link>
-              )}
-              {adminMenu && (
-                <Nav.Link as={Link} to="/back/tournament" href="#">
-                  Tournament
-                </Nav.Link>
-              )}
-              {adminMenu && (
-                <Nav.Link as={Link} to="/back/team" href="#">
-                  Sport Team
-                </Nav.Link>
-              )}
-              {adminMenu && (
-                <Nav.Link as={Link} to="/back/player" href="#">
-                  Player
-                </Nav.Link>
-              )}
-              {adminMenu && (
-                <Nav.Link as={Link} to="/back/match" href="#">
-                  Match
-                </Nav.Link>
-              )}
-              {adminMenu && (
-                <Nav.Link as={Link} to="/back/venue" href="#">
-                  Venue
-                </Nav.Link>
-              )}
+              {publicMenu && renderMenuLink('Home', '/')}
+              {userMenu && renderMenu(userMenuConfig)}
+              {adminMenu && renderMenu(adminMenuConfig)}
+              {renderMenu(commonPublicMenuConfig)}
             </Nav>
             <Nav>
               <HeaderUser />
