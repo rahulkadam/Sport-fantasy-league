@@ -49,11 +49,7 @@ export const commonPublicMenuConfig = [
     name: 'Statistics',
   },
   {
-    link: '/help',
+    link: '/helppage',
     name: 'Help',
-  },
-  {
-    link: '/prizes',
-    name: 'Prizes',
   },
 ];

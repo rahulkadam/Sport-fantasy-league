@@ -3,6 +3,7 @@ import Login, {
   RedirectSuccessHandler,
   UserInfo,
 } from 'features/Authentication/components';
+import Fixtures from '../../features/fixtures/Fixtures';
 
 const Tournament = lazy(() => {
   return import('features/admin/Tournament/Tournament');
@@ -71,6 +72,12 @@ export const RouteConfig = {
       component: <UserTeam />,
       key: 'teamtransfer',
       isPrivate: true,
+      role: UserRole,
+    },
+    {
+      path: '/fixtures',
+      component: Fixtures,
+      key: 'fixtures',
       role: UserRole,
     },
     {
