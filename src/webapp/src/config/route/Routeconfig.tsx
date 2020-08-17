@@ -4,6 +4,7 @@ import Login, {
   UserInfo,
 } from 'features/Authentication/components';
 import Fixtures from '../../features/fixtures/Fixtures';
+import FantasyStats from '../../features/stats/FantasyStats';
 
 const Tournament = lazy(() => {
   return import('features/admin/Tournament/Tournament');
@@ -78,7 +79,11 @@ export const RouteConfig = {
       path: '/fixtures',
       component: Fixtures,
       key: 'fixtures',
-      role: UserRole,
+    },
+    {
+      path: '/statistics',
+      component: FantasyStats,
+      key: 'fixtures',
     },
     {
       path: '/back/match',
