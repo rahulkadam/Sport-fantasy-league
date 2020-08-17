@@ -37,6 +37,8 @@ public class BaseDaoObject implements Serializable {
     public void prePersistData() {
         this.created_at = DateTime.now();
         updated_at =  DateTime.now();
+        isDeleted = false;
+        isActive = true;
     }
 
     @PreUpdate

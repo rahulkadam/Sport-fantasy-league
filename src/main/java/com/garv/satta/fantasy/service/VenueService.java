@@ -36,6 +36,11 @@ public class VenueService {
         return converter.convertToDTO(venue);
     }
 
+    public VenueDTO getVenueByName(String name) {
+        Venue venue =  venueRepository.findByName(name);
+        return converter.convertToDTO(venue);
+    }
+
     public VenueDTO createVenue(VenueDTO venueDTO) {
         Venue venue = converter.convertToEntity(venueDTO);
         venue.setId(null);

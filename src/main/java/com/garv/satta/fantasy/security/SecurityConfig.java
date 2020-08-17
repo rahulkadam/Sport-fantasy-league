@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
+                //.antMatchers("/auth/**", "/oauth2/**", "/public/**" , "/fantasy/match/**")  // security loop for testing
                 .antMatchers("/auth/**", "/oauth2/**", "/public/**")
                 .permitAll();
         http.

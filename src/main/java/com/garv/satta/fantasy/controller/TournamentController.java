@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.controller;
 
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.TournamentDTO;
 import com.garv.satta.fantasy.service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,18 @@ public class TournamentController {
         return tournamentService.createTournament(tournamentDTO);
     }
 
+    @PostMapping(value = "/lockTournament")
+    @ResponseBody
+    public String lockTournament(@RequestBody RequestDTO dto) {
+        tournamentService.lockTournament(dto);
+        return "Tournament Locked successfully";
+    }
+
+    @PostMapping(value = "/unlockTournament")
+    @ResponseBody
+    public String unlockTournament(@RequestBody RequestDTO dto) {
+        tournamentService.unlockTournament(dto);
+        return "Tournament Locked successfully";
+    }
 
 }

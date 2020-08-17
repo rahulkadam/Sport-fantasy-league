@@ -7,6 +7,7 @@ import com.garv.satta.fantasy.model.backoffice.Player;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, MatchPlayerScoreDTO> {
@@ -36,8 +37,13 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
     public MatchPlayerScoreDTO convertToFullDTO(MatchPlayerScore entity) {
         MatchPlayerScoreDTO matchPlayerScoreDTO = convertToDTO(entity);
 
-        matchPlayerScoreDTO.setPlayerId(entity.getPlayer().getId());
-        matchPlayerScoreDTO.setMatchId(entity.getMatch().getId());
+        Player player = entity.getPlayer();
+        Match match = entity.getMatch();
+
+        matchPlayerScoreDTO.setPlayerId(player.getId());
+        matchPlayerScoreDTO.setPlayerName(player.getName());
+        matchPlayerScoreDTO.setMatchId(match.getId());
+        matchPlayerScoreDTO.setMatchDescription(match.getDescription());
         return matchPlayerScoreDTO;
     }
 
@@ -48,5 +54,11 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
 
     public List<MatchPlayerScoreDTO> convertToDTOList(List<MatchPlayerScore> entityList) {
         return mapToDTOList(entityList, MatchPlayerScoreDTO.class);
+    }
+
+    public List<MatchPlayerScoreDTO> convertToFullDTOList(List<MatchPlayerScore> entityList) {
+        return entityList.stream()
+                .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
     }
 }

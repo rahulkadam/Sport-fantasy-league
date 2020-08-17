@@ -5,6 +5,7 @@ import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class LeagueUserTeamScoreHistoryConverter extends Converter<LeagueUserTeamScorePerMatch, LeagueUserTeamScoreHistoryDTO> {
@@ -21,11 +22,15 @@ public class LeagueUserTeamScoreHistoryConverter extends Converter<LeagueUserTea
     @Override
     public LeagueUserTeamScorePerMatch convertToFullEntity(LeagueUserTeamScoreHistoryDTO dto) {
         return null;
+
     }
 
     @Override
     public LeagueUserTeamScoreHistoryDTO convertToFullDTO(LeagueUserTeamScorePerMatch entity) {
-        return null;
+        LeagueUserTeamScoreHistoryDTO dto = convertToDTO(entity);
+        dto.setMatchDesciription(entity.getMatch().getDescription());
+        dto.setUserName(entity.getUserTeam().getName());
+        return dto;
     }
 
     @Override
@@ -34,7 +39,9 @@ public class LeagueUserTeamScoreHistoryConverter extends Converter<LeagueUserTea
     }
 
     public List<LeagueUserTeamScoreHistoryDTO> convertToDTOList(List<LeagueUserTeamScorePerMatch> entityList){
-        return mapToDTOList(entityList, LeagueUserTeamScoreHistoryDTO.class);
+        return entityList.stream()
+                .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
     }
 
 }

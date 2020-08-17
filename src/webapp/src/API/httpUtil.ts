@@ -38,6 +38,7 @@ axiosInstance.defaults.httpsAgent = {
 
 function useAuthentication(config?: AxiosRequestConfig) {
   const token = getBearerToken();
+  if (!token) return config;
   if (config && config.headers) {
     config.headers.common['Authorization'] = token;
   } else {
