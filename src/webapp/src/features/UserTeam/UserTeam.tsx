@@ -19,6 +19,7 @@ import {
 import {Button, Row, Col, Badge, ProgressBar} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
+import {useParams} from 'react-router-dom';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -34,7 +35,8 @@ const UserTeam = () => {
   const userTeamId =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
   const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
-  const defaultTabKey = 'teamDetails';
+  const {tab} = useParams();
+  const defaultTabKey = tab || 'teamDetails';
   const [tabName, setTabName] = useState(defaultTabKey);
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {

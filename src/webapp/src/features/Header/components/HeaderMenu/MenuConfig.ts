@@ -8,7 +8,7 @@ export const userMenuConfig = [
     name: 'My Team',
   },
   {
-    link: '/transfer',
+    link: '/myteam/transfer',
     name: 'Transfers',
   },
 ];

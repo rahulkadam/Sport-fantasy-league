@@ -67,6 +67,13 @@ export const RouteConfig = {
       role: UserRole,
     },
     {
+      path: '/myteam/:tab',
+      component: <UserTeam />,
+      key: 'teamtransfer',
+      isPrivate: true,
+      role: UserRole,
+    },
+    {
       path: '/back/match',
       component: <Match />,
       isPrivate: true,
