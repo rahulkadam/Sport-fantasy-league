@@ -8,4 +8,5 @@ export interface RootState {
   playeradmin: Player;
   venueadmin: Venue;
   matchadmin: Match;
+  stats: FantasyStats;
 }
