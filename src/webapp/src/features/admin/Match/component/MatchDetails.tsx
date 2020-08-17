@@ -71,7 +71,7 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
       <div>
         <Form.Control
           type="text"
-          placeholder="Player Name"
+          placeholder="Match Name"
           onChange={(e: any) => setFilterText(e.target.value)}
           value={filterText}
         />
@@ -96,9 +96,6 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
           columns={columns}
           customStyles={customStyles}
           data={filteredRows}
-          selectableRows
-          onRowClicked={onRowClickedAction}
-          onSelectedRowsChange={onRowSelectedAction}
           pagination
           paginationPerPage={10}
           paginationResetDefaultPage

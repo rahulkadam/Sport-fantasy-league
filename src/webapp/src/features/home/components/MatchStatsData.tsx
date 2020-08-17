@@ -9,21 +9,11 @@ const MatchStatsData = (props: HomeData) => {
     leagueMatchList
   );
 
-  const matchScheduleListRotate1: GameCardProps[] = arrayRotate(
-    matchScheduleList
-  );
-
   return (
     <div>
       <Row>
-        <Col md={4}>
+        <Col md={8}>
           <GameCorousel type="schedule" matchScheduleCard={matchScheduleList} />
-        </Col>
-        <Col md={4}>
-          <GameCorousel
-            type="schedule"
-            matchScheduleCard={matchScheduleListRotate1}
-          />
         </Col>
       </Row>
     </div>

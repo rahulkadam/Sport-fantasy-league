@@ -3,6 +3,7 @@ import {MatchDetails} from '../admin/Match/component';
 import {fetchMatchListAction, getMatchData} from '../admin/Match/redux';
 import {StatusMessage} from '../../common/components';
 import LoadingOverlay from 'react-loading-overlay';
+import './fixtures.styles.scss';
 
 const Fixtures = () => {
   const matchProps = getMatchData();
@@ -13,8 +14,8 @@ const Fixtures = () => {
 
   function renderMatchListView() {
     return (
-      <div>
-        <MatchDetails title="Match List" data={matchProps.matchList} />
+      <div className="container">
+        <MatchDetails title="Fixtures" data={matchProps.matchList} />
       </div>
     );
   }

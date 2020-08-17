@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import FantasyHelpContent from './components/FantasyHelpContent';
 import MatchStatsData from './components/MatchStatsData';
 import {getHomeData, fetchUpComingMatchesAction} from './redux';
+import './Home.styles.scss';
 
 const FantasyHome = () => {
   const props = getHomeData();
@@ -11,7 +12,7 @@ const FantasyHome = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <MatchStatsData {...props} />
       <FantasyHelpContent />
     </div>

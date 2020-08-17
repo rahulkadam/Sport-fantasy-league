@@ -200,7 +200,7 @@ const UserTeam = () => {
   ];
 
   return (
-    <div>
+    <div className="container">
       <LoadingOverlay
         active={userteamDataProps.isLoading}
         spinner
