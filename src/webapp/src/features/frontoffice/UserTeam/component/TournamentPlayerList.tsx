@@ -7,12 +7,12 @@ import {ExpandPlayerRow} from './ExpandPlayerRow';
 import {FantasyDropDown, Logo} from 'common/components';
 import {
   countryListWithAll,
+  getLogoNameByTeam,
   PlayerTypeListWithALl,
   teamListWithALl,
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
-import {Icon} from '../../../../common/styles/Icon';
-import {getTeamLogoByName} from '../../../../common/components/Games/Game-util';
+import {Icon} from 'common/styles/Icon';
 
 const TournamentPlayerList = ({
   data,
@@ -43,7 +43,7 @@ const TournamentPlayerList = ({
       : '';
     return (
       <div>
-        <Logo logoSource={getTeamLogoByName(teamName)} width="25" />
+        <Logo logoSource={getLogoNameByTeam(teamName)} width="25" />
       </div>
     );
   }
@@ -73,7 +73,7 @@ const TournamentPlayerList = ({
   const columns = [
     {
       name: 'Team',
-      width: '10%',
+      width: '15%',
       selector: 'teamsNameList',
       sortable: true,
       cell: customTeam,

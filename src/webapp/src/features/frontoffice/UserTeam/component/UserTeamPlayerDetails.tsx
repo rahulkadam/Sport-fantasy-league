@@ -7,8 +7,8 @@ import {Icon} from 'common/styles/Icon';
 import '../UserTeam.styles.scss';
 import {Logo} from 'common/components';
 import {renderLogoByPLayerType} from '../redux';
-import {isListEmpty} from '../../../../common/util';
-import {getTeamLogoByName} from '../../../../common/components/Games/Game-util';
+import {isListEmpty} from 'common/util';
+import {getLogoNameByTeam} from 'common/components/FantasyDropDown';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -32,7 +32,7 @@ const UserTeamPlayerDetails = ({
       : '';
     return (
       <div>
-        <Logo logoSource={getTeamLogoByName(teamName)} width="25" />
+        <Logo logoSource={getLogoNameByTeam(teamName)} width="25" />
       </div>
     );
   }
