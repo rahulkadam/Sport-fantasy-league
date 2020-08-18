@@ -63,6 +63,7 @@ const TournamentPlayerList = ({
     {
       name: 'Action',
       width: '10%',
+      center: true,
       cell: addAction,
     },
   ];

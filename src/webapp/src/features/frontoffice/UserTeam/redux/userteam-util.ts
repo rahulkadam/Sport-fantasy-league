@@ -46,16 +46,16 @@ export function validateTeamCriteria(
     error.push(
       'User can select max ' +
         maxPerTeam +
-        ' Player from one Team (' +
+        ' player from one team (' +
         maxPlayerTeam.key +
         ')'
     );
   }
   if (totalCredit < teamValue) {
     error.push(
-      'You have exceeded your credit Limit (' +
+      'You have exceeded your credit limit (' +
         teamValue +
-        '), Please form team with Credit ' +
+        '), Please form team with credit ' +
         totalCredit
     );
   }
@@ -64,9 +64,9 @@ export function validateTeamCriteria(
     const diff = totalCount - playerCount;
     const message =
       diff > 0
-        ? 'Please add ' + diff + ' more Player to Team'
-        : 'Please remove ' + Math.abs(diff) + ' Player from Team';
-    error.push('Team should have ' + totalCount + ' Player, ' + message);
+        ? 'please add ' + diff + ' more'
+        : 'please remove ' + Math.abs(diff);
+    error.push('Team should have ' + totalCount + ' player, ' + message);
   }
   return error;
 }
@@ -82,12 +82,10 @@ export function validatePlayerCriteria(
   const type = playerCriteria.type;
   const playerCountByType = playerTypeMap.get(type);
   if (!playerCountByType || playerCountByType < minPerTeam) {
-    error.push(type + ' : Please select atleast ' + minPerTeam + ' ' + type);
+    error.push(type + ' : Please select atleast ' + minPerTeam);
   }
   if (playerCountByType > maxPerTeam) {
-    error.push(
-      type + ' : You should select only upto ' + maxPerTeam + ' ' + type
-    );
+    error.push(type + ' : You should select only upto ' + maxPerTeam);
   }
   return error;
 }

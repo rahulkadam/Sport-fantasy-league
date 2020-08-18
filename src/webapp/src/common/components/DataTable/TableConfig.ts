@@ -19,6 +19,14 @@ export const customStyles = {
   },
 };
 
+export const playerRowStyeForNew = [
+  {
+    when: (row: any) => row.isNew,
+    style: {
+      backgroundColor: '#fb653f',
+    },
+  },
+];
 export const playerRowStyles = [
   {
     when: (row: any) => row.type == 'BATSMAN',
