@@ -12,8 +12,7 @@ import {
   teamListWithALl,
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
-import {Icon} from 'common/styles/Icon';
-import {minuscolor, pluscolor} from '@logos/index';
+import {pluscolor} from '@logos/index';
 
 const TournamentPlayerList = ({
   data,
@@ -112,17 +111,6 @@ const TournamentPlayerList = ({
     ? columns
     : actionColumn.concat(columns);
 
-  function onRowSelectedAction(state: any) {
-    setToggleCleared(!toggleCleared);
-    if (onRowSelected) {
-      onRowSelected(state.selectedRows);
-    }
-  }
-
-  function onRowClickedAction(row: any, e: any) {
-    console.log(row.name);
-  }
-
   const renderCustomSearch = useMemo(() => {
     return (
       <div>
@@ -202,7 +190,6 @@ const TournamentPlayerList = ({
           columns={newColumns}
           customStyles={customStyles}
           data={filteredRows}
-          onRowClicked={onRowClickedAction}
           fixedHeader
           fixedHeaderScrollHeight="300px"
           pagination
