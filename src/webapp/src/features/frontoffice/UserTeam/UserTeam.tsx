@@ -122,7 +122,7 @@ const UserTeam = () => {
   function renderTeamCompletionProgressBar(progress: number) {
     return (
       <Row className="errorRow">
-        <Col>
+        <Col sm={6} md={6}>
           <ProgressBar>
             <ProgressBar variant="success" now={progress} label={'Complete'} />
             <ProgressBar
@@ -146,18 +146,20 @@ const UserTeam = () => {
         );
       }
       validateTeamTransfer.forEach((message: string) =>
-        errorStatusMessage.push(renderStatusMessage(true, message))
+        errorStatusMessage.push(
+          <Row>
+            <Col>
+              <Badge variant="danger">{message} </Badge>
+            </Col>
+          </Row>
+        )
       );
     } else {
       const teamCreateMsg =
         'Please select player from below list and save Team';
       errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
     }
-    return (
-      <Row>
-        <Col>{errorStatusMessage}</Col>
-      </Row>
-    );
+    return <div>{errorStatusMessage}</div>;
   }
 
   function renderUserTeamTransferTabDetails() {
