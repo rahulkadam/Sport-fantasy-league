@@ -93,7 +93,7 @@ const UserTeam = () => {
       : {message: 'INCOMPLETE', type: 'danger'};
     return (
       <div className="transferOverview">
-        <Row>
+        <Row className="nameColumn">
           <Col>Available Transfer</Col>
           <Col>Available Credit</Col>
           <Col>Status</Col>
@@ -158,7 +158,7 @@ const UserTeam = () => {
     );
   }
 
-  function renderUserTeamDetails() {
+  function renderUserTeamTransferTabDetails() {
     return (
       <Fragment>
         {renderShowTransferOverview()}
@@ -191,7 +191,7 @@ const UserTeam = () => {
   function renderManageTransfer() {
     return (
       <div>
-        {isUserTeamAvailable && renderUserTeamDetails()}
+        {isUserTeamAvailable && renderUserTeamTransferTabDetails()}
         {!isUserTeamAvailable && (
           <CreateTeam createTeamAction={createUserTeam} userProps={userProps} />
         )}

@@ -13,6 +13,7 @@ import {
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import {Icon} from 'common/styles/Icon';
+import {minuscolor, pluscolor} from '@logos/index';
 
 const TournamentPlayerList = ({
   data,
@@ -51,13 +52,9 @@ const TournamentPlayerList = ({
   function addAction(row: any) {
     return (
       <div>
-        <Icon
-          name="add"
-          onClick={() => {
-            onRowSelected([row]);
-          }}
-          className="removeIcon"
-        />
+        <span onClick={() => onRowSelected([row])} className="removeIcon">
+          <Logo logoSource={pluscolor} width="30" />
+        </span>
       </div>
     );
   }

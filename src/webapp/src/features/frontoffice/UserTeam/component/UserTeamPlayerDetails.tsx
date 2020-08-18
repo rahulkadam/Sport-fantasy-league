@@ -9,6 +9,7 @@ import {Logo} from 'common/components';
 import {renderLogoByPLayerType} from '../redux';
 import {isListEmpty} from 'common/util';
 import {getLogoNameByTeam} from 'common/components/FantasyDropDown';
+import {minuscolor} from '@logos/index';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -40,13 +41,9 @@ const UserTeamPlayerDetails = ({
   function removeAction(row: any) {
     return (
       <div>
-        <Icon
-          name="delete"
-          onClick={() => {
-            onRemoveRowAction(row);
-          }}
-          className="removeIcon"
-        />
+        <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
+          <Logo logoSource={minuscolor} width="30" />
+        </span>
         {row.isNew && (
           <Badge pill variant={'success'}>
             New
