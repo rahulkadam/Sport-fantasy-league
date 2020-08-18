@@ -1,6 +1,6 @@
 import React, {useState, useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Row, Col} from 'react-bootstrap';
+import {Form, Row, Col, Badge} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
@@ -11,6 +11,7 @@ import {
   teamListWithALl,
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
+import {Icon} from '../../../../common/styles/Icon';
 
 const TournamentPlayerList = ({
   data,
@@ -34,6 +35,28 @@ const TournamentPlayerList = ({
       </div>
     );
   }
+
+  function addAction(row: any) {
+    return (
+      <div>
+        <Icon
+          name="add"
+          onClick={() => {
+            onRowSelected([row]);
+          }}
+          className="removeIcon"
+        />
+      </div>
+    );
+  }
+
+  const actionColumn: any[] = [
+    {
+      name: 'Action',
+      width: '5%',
+      cell: addAction,
+    },
+  ];
 
   const columns = [
     {
@@ -65,6 +88,13 @@ const TournamentPlayerList = ({
       right: true,
     },
   ];
+
+  function checkDisabledPlayer() {
+    return currentUserTeamPlayers.length == 11 || teamValueByPlayers > 100;
+  }
+  const newColumns: any = checkDisabledPlayer()
+    ? columns
+    : actionColumn.concat(columns);
 
   function onRowSelectedAction(state: any) {
     setToggleCleared(!toggleCleared);
@@ -118,10 +148,6 @@ const TournamentPlayerList = ({
     );
   }, [filterText]);
 
-  function checkDisabledPlayer(row: any) {
-    return currentUserTeamPlayers.length == 11 || teamValueByPlayers > 100;
-  }
-
   function isPlayerExistInUserTeam(row: any) {
     return currentUserPlayerMap.get(row.id);
   }
@@ -157,10 +183,9 @@ const TournamentPlayerList = ({
       {data && data.length > 0 && (
         <DataTable
           title={title}
-          columns={columns}
+          columns={newColumns}
           customStyles={customStyles}
           data={filteredRows}
-          selectableRows
           onRowClicked={onRowClickedAction}
           onSelectedRowsChange={onRowSelectedAction}
           pagination

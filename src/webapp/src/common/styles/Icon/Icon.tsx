@@ -4,6 +4,7 @@ import {
   faEdit,
   faEye,
   faMinusSquare,
+  faPlusSquare,
   faTrashAlt,
 } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
@@ -19,6 +20,8 @@ const Icon = ({name, iconType, ...rest}: {[key: string]: any}) => {
         return faTrashAlt;
       case 'minus':
         return faMinusSquare;
+      case 'add':
+        return faPlusSquare;
       default:
         return faEye;
     }
@@ -27,7 +30,7 @@ const Icon = ({name, iconType, ...rest}: {[key: string]: any}) => {
   function renderIconType() {
     switch (iconType) {
       case 'fontawesome':
-        return <FontAwesomeIcon icon={getIconItem(name)} size="lg" {...rest} />;
+        return <FontAwesomeIcon icon={getIconItem(name)} size="xs" {...rest} />;
       case 'other':
         return <div>Other type</div>;
       default:
