@@ -119,14 +119,18 @@ const UserTeam = () => {
 
   function renderTeamCompletionProgressBar(progress: number) {
     return (
-      <ProgressBar>
-        <ProgressBar variant="success" now={progress} label={'Complete'} />
-        <ProgressBar
-          variant="danger"
-          now={100 - progress}
-          label={'InComplete'}
-        />
-      </ProgressBar>
+      <Row className="errorRow">
+        <Col>
+          <ProgressBar>
+            <ProgressBar variant="success" now={progress} label={'Complete'} />
+            <ProgressBar
+              variant="danger"
+              now={100 - progress}
+              label={'InComplete'}
+            />
+          </ProgressBar>
+        </Col>
+      </Row>
     );
   }
 

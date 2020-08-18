@@ -19,7 +19,7 @@ const UserTeamPlayerDetails = ({
   function customName(row: any) {
     return (
       <div>
-        <Logo logoSource={renderLogoByPLayerType(row.type)} width="20" />
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
         {row.name}
       </div>
     );
@@ -48,6 +48,7 @@ const UserTeamPlayerDetails = ({
     {
       name: 'Action',
       width: '5%',
+      right: true,
       cell: removeAction,
     },
   ];
@@ -75,12 +76,14 @@ const UserTeamPlayerDetails = ({
       selector: 'teamsNameList',
       sortable: true,
       right: true,
+      hide: 'sm',
     },
     {
       name: 'Country',
       selector: 'country',
       sortable: true,
       right: true,
+      hide: 'sm',
     },
   ];
 

@@ -5,14 +5,12 @@ const ExpandPlayerRow = ({data}: any) => {
   return (
     <Fragment>
       <Row>
-        <Col>Name</Col>
         <Col>Team</Col>
-        <Col>Value</Col>
+        <Col>Country</Col>
       </Row>
       <Row>
-        <Col>{data.name}</Col>
         <Col>{data.teamsNameList}</Col>
-        <Col>{data.value}</Col>
+        <Col>{data.country}</Col>
       </Row>
     </Fragment>
   );

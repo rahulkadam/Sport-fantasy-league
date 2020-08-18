@@ -30,7 +30,7 @@ const Icon = ({name, iconType, ...rest}: {[key: string]: any}) => {
   function renderIconType() {
     switch (iconType) {
       case 'fontawesome':
-        return <FontAwesomeIcon icon={getIconItem(name)} size="xs" {...rest} />;
+        return <FontAwesomeIcon icon={getIconItem(name)} size="sm" {...rest} />;
       case 'other':
         return <div>Other type</div>;
       default:

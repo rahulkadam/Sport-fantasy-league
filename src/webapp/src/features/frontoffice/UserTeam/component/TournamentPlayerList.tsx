@@ -30,7 +30,7 @@ const TournamentPlayerList = ({
   function customName(row: any) {
     return (
       <div>
-        <Logo logoSource={renderLogoByPLayerType(row.type)} width="20" />
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
         {row.name}
       </div>
     );
@@ -73,6 +73,7 @@ const TournamentPlayerList = ({
     {
       name: 'Value',
       selector: 'value',
+      width: '5%',
       sortable: true,
     },
     {
@@ -80,12 +81,14 @@ const TournamentPlayerList = ({
       selector: 'teamsNameList',
       sortable: true,
       right: true,
+      hide: 'sm',
     },
     {
       name: 'Country',
       selector: 'country',
       sortable: true,
       right: true,
+      hide: 'sm',
     },
   ];
 
