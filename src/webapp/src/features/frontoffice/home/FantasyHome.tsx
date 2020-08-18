@@ -12,7 +12,7 @@ const FantasyHome = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="homeContainer">
       <MatchStatsData {...props} />
       <FantasyHelpContent />
     </div>
