@@ -50,7 +50,7 @@ const UserTeamPlayerDetails = ({
 
   const actionColumn: any[] = [
     {
-      name: 'Action',
+      name: '',
       width: '10%',
       center: true,
       cell: removeAction,
@@ -97,7 +97,7 @@ const UserTeamPlayerDetails = ({
   ];
 
   const newColumns: any = onRemoveRowAction
-    ? actionColumn.concat(columns)
+    ? columns.concat(actionColumn)
     : columns;
 
   const renderCustomSearch = useMemo(() => {
@@ -133,7 +133,7 @@ const UserTeamPlayerDetails = ({
           conditionalRowStyles={playerRowStyeForNew}
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
-          expandableRows
+          expandableRows={false}
           expandableRowsComponent={<ExpandPlayerRow />}
           defaultSortField="teamsNameList"
         />

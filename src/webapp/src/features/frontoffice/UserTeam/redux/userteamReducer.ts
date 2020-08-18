@@ -13,6 +13,7 @@ import {
   REMOVE_FROM_INTERNAL_USER_TEAM,
   FETCH_GAME_CRITERIA,
   FETCH_GAME_CRITERIA_ERROR,
+  RESET_INTERNAL_USER_TEAM,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -180,6 +181,13 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         isLoading: false,
       };
       return userLeaguestate;
+    case RESET_INTERNAL_USER_TEAM:
+      return {
+        ...state,
+        currentUserTeamPlayers: state.userTeamPlayers,
+        currentUserTeamValue: state.userteam.creditbalance,
+        currentTransferChanges: 0,
+      };
     case FETCH_GAME_CRITERIA_ERROR:
       userLeaguestate = {
         ...state,

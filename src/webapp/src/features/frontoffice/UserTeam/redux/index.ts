@@ -7,5 +7,6 @@ export {
   saveUserTeamAction,
   createUserTeamAction,
   fetchGameCriteriaByNameAction,
+  resetUserTeamAction,
 } from './userteamActions';
 export * from './userteam-util';

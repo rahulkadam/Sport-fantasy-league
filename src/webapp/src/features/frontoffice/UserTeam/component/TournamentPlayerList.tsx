@@ -60,7 +60,7 @@ const TournamentPlayerList = ({
 
   const actionColumn: any[] = [
     {
-      name: 'Action',
+      name: '',
       width: '10%',
       center: true,
       cell: addAction,
@@ -105,11 +105,11 @@ const TournamentPlayerList = ({
   ];
 
   function checkDisabledPlayer() {
-    return currentUserTeamPlayers.length == 11 || teamValueByPlayers > 100;
+    return currentUserTeamPlayers.length == 110 || teamValueByPlayers > 1000;
   }
   const newColumns: any = checkDisabledPlayer()
     ? columns
-    : actionColumn.concat(columns);
+    : columns.concat(actionColumn);
 
   const renderCustomSearch = useMemo(() => {
     return (
@@ -186,20 +186,19 @@ const TournamentPlayerList = ({
       {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
-          title={title}
           columns={newColumns}
           customStyles={customStyles}
           data={filteredRows}
           fixedHeader
           fixedHeaderScrollHeight="300px"
-          pagination
+          pagination={false}
           paginationPerPage={50}
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           striped
           highlightOnHover
-          expandableRows
+          expandableRows={false}
           expandableRowsComponent={<ExpandPlayerRow />}
           clearSelectedRows={toggleCleared}
           selectableRowsHighlight={false}

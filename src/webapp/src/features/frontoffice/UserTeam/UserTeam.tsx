@@ -15,6 +15,7 @@ import {
   createUserTeamAction,
   fetchGameCriteriaByNameAction,
   validateTeam,
+  resetUserTeamAction,
 } from './redux';
 import {Button, Row, Col, Badge, ProgressBar} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
@@ -28,6 +29,7 @@ const UserTeam = () => {
   const fetchPlayerList = fetchAllPlayerListAction();
   const fetchPlayerListByUser = fetchPlayerListByUserAction();
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
+  const resetUserTeam = resetUserTeamAction();
   const fetchGameCriteriaByName = fetchGameCriteriaByNameAction();
   const saveUserTeam = saveUserTeamAction();
   const createUserTeam = createUserTeamAction();
@@ -169,12 +171,17 @@ const UserTeam = () => {
         />
         {renderError()}
         <Row className="saveTeamBtn">
-          <Col>
+          <Col md={2} xs={4}>
             <Button
               variant="primary"
               onClick={() => saveTeam()}
               disabled={!teamValid}>
-              Save Team
+              Proceed
+            </Button>
+          </Col>
+          <Col md={2} xs={6}>
+            <Button variant="primary" onClick={() => resetUserTeam()}>
+              Reset
             </Button>
           </Col>
         </Row>

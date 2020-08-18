@@ -21,6 +21,7 @@ import {
   REMOVE_FROM_INTERNAL_USER_TEAM,
   FETCH_GAME_CRITERIA,
   FETCH_GAME_CRITERIA_ERROR,
+  RESET_INTERNAL_USER_TEAM,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
@@ -89,23 +90,28 @@ const fetchPlayerListByUserAction = () => {
 
 const addRemovePlayerToInternalUserTeamAction = () => {
   const dispatch = useDispatch();
-  return dispatchActionWrapper(
-    dispatch,
-    dispatchAction(dispatch, ACTION_START),
-    (rows: any, action?: string) => {
-      if (action == 'REMOVE') {
-        dispatch({
-          type: REMOVE_FROM_INTERNAL_USER_TEAM,
-          rows: rows,
-        });
-      } else {
-        dispatch({
-          type: UPDATE_INTERNAL_USER_TEAM,
-          rows: rows,
-        });
-      }
+  return dispatchActionWrapper(dispatch, (rows: any, action?: string) => {
+    if (action == 'REMOVE') {
+      dispatch({
+        type: REMOVE_FROM_INTERNAL_USER_TEAM,
+        rows: rows,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_INTERNAL_USER_TEAM,
+        rows: rows,
+      });
     }
-  );
+  });
+};
+
+const resetUserTeamAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(dispatch, () => {
+    dispatch({
+      type: RESET_INTERNAL_USER_TEAM,
+    });
+  });
 };
 
 const saveUserTeamAction = () => {
@@ -184,4 +190,5 @@ export {
   saveUserTeamAction,
   createUserTeamAction,
   fetchGameCriteriaByNameAction,
+  resetUserTeamAction,
 };
