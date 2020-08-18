@@ -92,7 +92,7 @@ const UserTeam = () => {
       ? {message: 'COMPLETE', type: 'success'}
       : {message: 'INCOMPLETE', type: 'danger'};
     return (
-      <Fragment>
+      <div className="transferOverview">
         <Row>
           <Col>Available Transfer</Col>
           <Col>Available Credit</Col>
@@ -109,7 +109,7 @@ const UserTeam = () => {
           </Col>
           <Col>{userteamDataProps.currentTransferChanges}</Col>
         </Row>
-      </Fragment>
+      </div>
     );
   }
 
@@ -168,12 +168,16 @@ const UserTeam = () => {
           onRemoveRowAction={removeRowAction}
         />
         {renderError()}
-        <Button
-          variant="primary"
-          onClick={() => saveTeam()}
-          disabled={!teamValid}>
-          Save Team
-        </Button>
+        <Row className="saveTeamBtn">
+          <Col>
+            <Button
+              variant="primary"
+              onClick={() => saveTeam()}
+              disabled={!teamValid}>
+              Save Team
+            </Button>
+          </Col>
+        </Row>
         <TournamentPlayerList
           title="Tournament Player List"
           data={userteamDataProps.playerList}

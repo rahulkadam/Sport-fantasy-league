@@ -23,30 +23,30 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
 
   function renderUserTeamOverview() {
     return (
-      <Fragment>
-        <Row>
+      <div className="teamOverview">
+        <Row className="nameColumn">
           <Col>Name</Col>
           <Col>Total Score</Col>
-          <Col>Transfer Available</Col>
-          <Col>Transfer used</Col>
+          <Col>Status</Col>
         </Row>
         <Row>
           <Col>
             {userteam.name} ({userteam.id})
           </Col>
           <Col>{userteam.total_score}</Col>
-          <Col>{userteam.remained_Transfer}</Col>
-          <Col>{userteam.used_Transfer}</Col>
+          <Col>{teamEligibleToPlay()}</Col>
         </Row>
-        <Row>
-          <Col>Status</Col>
+        <Row className="nameColumn">
+          <Col>Transfer Available</Col>
+          <Col>Transfer used</Col>
           <Col>Balance</Col>
         </Row>
         <Row>
-          <Col>{teamEligibleToPlay()}</Col>
+          <Col>{userteam.remained_Transfer}</Col>
+          <Col>{userteam.used_Transfer}</Col>
           <Col>{userteam.creditbalance}</Col>
         </Row>
-      </Fragment>
+      </div>
     );
   }
   function renderTeamDetails() {
