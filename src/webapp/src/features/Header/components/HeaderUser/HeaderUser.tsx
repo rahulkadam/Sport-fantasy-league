@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
-import {Button, Navbar} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 import {
   GetLoginStoreData,
   UserLogOutActions,
 } from '../../../Authentication/redux';
-import {Logo, UserAvatar} from 'common/components';
-import {fantasyLogo, googleLogo} from '@logos/index';
+import {UserAvatar} from 'common/components';
 import {getAccessToken, removeAccessToken} from '../../../../API';
 
 const HeaderUser = () => {

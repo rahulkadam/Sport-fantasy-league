@@ -44,16 +44,16 @@ export function validateTeamCriteria(
   const maxPlayerTeam = getTeamWithMaxPlayer(playerList);
   if (maxPlayerTeam.value > maxPerTeam) {
     error.push(
-      'User can select max ' +
+      'select max ' +
         maxPerTeam +
-        ' player from one team (' +
+        ' player from team (' +
         maxPlayerTeam.key +
         ')'
     );
   }
   if (totalCredit < teamValue) {
     error.push(
-      'You have exceeded your credit limit (' +
+      'limit exceed (' +
         teamValue +
         '), Please form team with credit ' +
         totalCredit

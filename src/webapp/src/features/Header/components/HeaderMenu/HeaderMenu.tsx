@@ -6,12 +6,12 @@ import {Logo} from 'common/components/Logo/Logo';
 import {GetLoginStoreData} from '../../../Authentication/redux';
 import {HeaderUser} from '../HeaderUser/HeaderUser';
 import {fantasyLogo} from '@logos/index';
-import {getAccessToken} from '../../../../API';
-import {string} from 'prop-types';
+import {getAccessToken} from 'API';
 import {
   adminMenuConfig,
   commonPublicMenuConfig,
   userMenuConfig,
+  userMenuConfigForMobile,
 } from './MenuConfig';
 
 const HeaderMenu = () => {
@@ -43,12 +43,20 @@ const HeaderMenu = () => {
   return (
     <div>
       <Route>
-        <Navbar collapseOnSelect={true} expand="md">
+        <Navbar
+          collapseOnSelect={true}
+          expand="md"
+          fixed={'top'}
+          bg="dark"
+          variant="dark">
           <Navbar.Toggle />
           <Navbar.Brand as={Link} to="/">
             <Logo logoSource={fantasyLogo} width="56" />
           </Navbar.Brand>
-          <Navbar.Collapse>
+          <Nav className={'d-block d-md-none'}>
+            {userMenu && renderMenu(userMenuConfigForMobile)}
+          </Nav>
+          <Navbar.Collapse className="justify-content-start">
             <Nav>
               {publicMenu && renderMenuLink('Home', '/')}
               {userMenu && renderMenu(userMenuConfig)}
