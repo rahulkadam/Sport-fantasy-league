@@ -153,7 +153,7 @@ const UserTeam = () => {
     }
     return (
       <Row>
-        <Col md={6}>{errorStatusMessage}</Col>
+        <Col>{errorStatusMessage}</Col>
       </Row>
     );
   }

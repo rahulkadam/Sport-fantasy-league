@@ -13,6 +13,11 @@ const colortransfer = require('./color-transfer.png');
 const teamrajsthan = require('./iplteams/rajastan.svg');
 const teammumbai = require('./iplteams/mumbai.svg');
 const teampunjab = require('./iplteams/punjab.svg');
+const teamSRH = require('./iplteams/srh-color.png');
+const teamDC = require('./iplteams/dc-color.png');
+const teamKKR = require('./iplteams/kkr-color.png');
+const teamCSK = require('./iplteams/csk-color.png');
+const teamRCB = require('./iplteams/rcb-color.png');
 export {
   fantasyLogo,
   googleLogo,
@@ -29,4 +34,9 @@ export {
   teammumbai,
   teampunjab,
   teamrajsthan,
+  teamCSK,
+  teamDC,
+  teamKKR,
+  teamRCB,
+  teamSRH,
 };

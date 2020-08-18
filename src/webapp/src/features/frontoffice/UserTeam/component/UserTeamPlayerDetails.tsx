@@ -5,9 +5,10 @@ import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import {Icon} from 'common/styles/Icon';
 import '../UserTeam.styles.scss';
-import {playerRowStyles} from 'common/components/DataTable/TableConfig';
 import {Logo} from 'common/components';
 import {renderLogoByPLayerType} from '../redux';
+import {isListEmpty} from '../../../../common/util';
+import {getTeamLogoByName} from '../../../../common/components/Games/Game-util';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -19,8 +20,19 @@ const UserTeamPlayerDetails = ({
   function customName(row: any) {
     return (
       <div>
-        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
         {row.name}
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
+      </div>
+    );
+  }
+
+  function customTeam(row: any) {
+    const teamName = !isListEmpty(row.teamsNameList)
+      ? row.teamsNameList[0]
+      : '';
+    return (
+      <div>
+        <Logo logoSource={getTeamLogoByName(teamName)} width="25" />
       </div>
     );
   }
@@ -47,28 +59,39 @@ const UserTeamPlayerDetails = ({
   const actionColumn: any[] = [
     {
       name: 'Action',
-      width: '5%',
-      right: true,
+      width: '10%',
+      center: true,
       cell: removeAction,
     },
   ];
 
   const columns: any[] = [
     {
+      name: 'Team',
+      width: '15%',
+      selector: 'teamsNameList',
+      sortable: true,
+      center: true,
+      cell: customTeam,
+    },
+    {
       name: 'Name',
       selector: 'name',
       sortable: true,
+      left: true,
       cell: customName,
     },
     {
       name: 'Type',
       selector: 'type',
       sortable: true,
+      hide: 'sm',
     },
     {
       name: 'Value',
       selector: 'value',
       width: '10%',
+      center: true,
       sortable: true,
     },
     {
@@ -123,9 +146,10 @@ const UserTeamPlayerDetails = ({
           highlightOnHover
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
+          striped
           expandableRows
           expandableRowsComponent={<ExpandPlayerRow />}
-          defaultSortField="type"
+          defaultSortField="teamsNameList"
         />
       )}
     </div>

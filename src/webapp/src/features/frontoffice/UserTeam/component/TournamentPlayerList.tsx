@@ -2,7 +2,7 @@ import React, {useState, useMemo, Fragment} from 'react';
 import DataTable from 'react-data-table-component';
 import {Form, Row, Col, Badge} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
-import {returnMapFromList} from 'common/util';
+import {isListEmpty, returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import {FantasyDropDown, Logo} from 'common/components';
 import {
@@ -12,6 +12,7 @@ import {
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import {Icon} from '../../../../common/styles/Icon';
+import {getTeamLogoByName} from '../../../../common/components/Games/Game-util';
 
 const TournamentPlayerList = ({
   data,
@@ -30,8 +31,19 @@ const TournamentPlayerList = ({
   function customName(row: any) {
     return (
       <div>
-        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
         {row.name}
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
+      </div>
+    );
+  }
+
+  function customTeam(row: any) {
+    const teamName = !isListEmpty(row.teamsNameList)
+      ? row.teamsNameList[0]
+      : '';
+    return (
+      <div>
+        <Logo logoSource={getTeamLogoByName(teamName)} width="25" />
       </div>
     );
   }
@@ -53,12 +65,19 @@ const TournamentPlayerList = ({
   const actionColumn: any[] = [
     {
       name: 'Action',
-      width: '5%',
+      width: '10%',
       cell: addAction,
     },
   ];
 
   const columns = [
+    {
+      name: 'Team',
+      width: '10%',
+      selector: 'teamsNameList',
+      sortable: true,
+      cell: customTeam,
+    },
     {
       name: 'Name',
       selector: 'name',
@@ -69,19 +88,13 @@ const TournamentPlayerList = ({
       name: 'Type',
       selector: 'type',
       sortable: true,
+      hide: 'sm',
     },
     {
       name: 'Value',
       selector: 'value',
-      width: '5%',
+      width: '10%',
       sortable: true,
-    },
-    {
-      name: 'Team',
-      selector: 'teamsNameList',
-      sortable: true,
-      right: true,
-      hide: 'sm',
     },
     {
       name: 'Country',
@@ -190,9 +203,10 @@ const TournamentPlayerList = ({
           customStyles={customStyles}
           data={filteredRows}
           onRowClicked={onRowClickedAction}
+          fixedHeader
+          fixedHeaderScrollHeight="300px"
           pagination
           paginationPerPage={50}
-          paginationResetDefaultPage
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
