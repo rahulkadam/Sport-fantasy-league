@@ -5,8 +5,8 @@ import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import {Icon} from 'common/styles/Icon';
 import '../UserTeam.styles.scss';
-import {playerRowStyles} from '../../../common/components/DataTable/TableConfig';
-import {Logo} from '../../../common/components';
+import {playerRowStyles} from 'common/components/DataTable/TableConfig';
+import {Logo} from 'common/components';
 import {renderLogoByPLayerType} from '../redux';
 
 const UserTeamPlayerDetails = ({
@@ -33,6 +33,7 @@ const UserTeamPlayerDetails = ({
           onClick={() => {
             onRemoveRowAction(row);
           }}
+          className="removeIcon"
         />
         {row.isNew && (
           <Badge pill variant={'success'}>
@@ -46,7 +47,7 @@ const UserTeamPlayerDetails = ({
   const actionColumn: any[] = [
     {
       name: 'Action',
-      sortable: true,
+      width: '5%',
       cell: removeAction,
     },
   ];
@@ -66,6 +67,7 @@ const UserTeamPlayerDetails = ({
     {
       name: 'Value',
       selector: 'value',
+      width: '10%',
       sortable: true,
     },
     {

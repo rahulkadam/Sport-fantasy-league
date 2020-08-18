@@ -1,7 +1,7 @@
 import React, {Fragment, useMemo} from 'react';
 import {Row, Col, Form} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import {customStyles} from '../../../common/components/DataTable';
+import {customStyles} from '../../../../common/components/DataTable';
 import {ExpandLeagueRow} from './ExpandLeagueRow';
 
 const LeagueList = (props: LeagueUserListProps) => {

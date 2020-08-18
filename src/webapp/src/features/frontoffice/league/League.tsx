@@ -12,8 +12,8 @@ import {CreateLeague} from './component/CreateLeague';
 import {StatusMessage} from 'common/components';
 import {TabContainer} from 'common/components';
 import './League.styles.scss';
-import {getTournamentData} from '../admin/Tournament/redux';
-import {checkUserAccess, GetLoginStoreData} from '../Authentication/redux';
+import {getTournamentData} from '../../admin/Tournament/redux';
+import {checkUserAccess, GetLoginStoreData} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 
 const League = () => {

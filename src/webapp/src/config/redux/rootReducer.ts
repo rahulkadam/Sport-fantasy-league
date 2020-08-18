@@ -2,15 +2,15 @@ import {combineReducers} from 'redux';
 import {AuthenticationReducer} from 'features/Authentication/redux';
 import storage from 'redux-persist/lib/storage';
 import {connectRouter} from 'connected-react-router';
-import leagueReducer from 'features/league/redux/leagueReducer';
-import userteamReducer from 'features/UserTeam/redux/userteamReducer';
+import leagueReducer from 'features/frontoffice/league/redux/leagueReducer';
+import userteamReducer from 'features/frontoffice/UserTeam/redux/userteamReducer';
 import tournamentReducer from 'features/admin/Tournament/redux/tournamentReducer';
 import sportteamReducer from 'features/admin/SportTeam/redux/sportteamReducer';
 import playerReducer from 'features/admin/player/redux/playerReducer';
 import venueReducer from 'features/admin/venue/redux/venueReducer';
 import {matchReducer} from 'features/admin/Match/redux';
-import {homeReducer} from 'features/home/redux';
-import statsReducer from 'features/stats/redux/statsReducer';
+import {homeReducer} from 'features/frontoffice/home/redux';
+import statsReducer from 'features/frontoffice/stats/redux/statsReducer';
 
 const persistenceConfigs = {
   key: 'fantasysport',

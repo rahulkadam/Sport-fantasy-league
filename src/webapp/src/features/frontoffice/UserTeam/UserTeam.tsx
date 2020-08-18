@@ -17,10 +17,10 @@ import {
   validateTeam,
 } from './redux';
 import {Button, Row, Col, Badge, ProgressBar} from 'react-bootstrap';
-import {GetLoginStoreData, checkUserAccess} from '../Authentication/redux';
+import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {useParams} from 'react-router-dom';
-import {isListEmpty} from '../../common/util';
+import {isListEmpty} from '../../../common/util';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();

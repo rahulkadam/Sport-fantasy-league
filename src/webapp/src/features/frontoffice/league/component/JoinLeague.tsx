@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
-import {StatusMessage} from '../../../common/components';
+import {StatusMessage} from '../../../../common/components';
 
 const JoinLeague = ({data, userid}: JoinLeagueProps) => {
   const [leagueCode, setLeagueCode] = useState('');

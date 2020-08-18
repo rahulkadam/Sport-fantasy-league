@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {MatchDetails} from '../admin/Match/component';
-import {fetchMatchListAction, getMatchData} from '../admin/Match/redux';
+import {MatchDetails} from '../../admin/Match/component';
+import {fetchMatchListAction, getMatchData} from '../../admin/Match/redux';
 import {StatusMessage} from 'common/components';
 import LoadingOverlay from 'react-loading-overlay';
 import './fixtures.styles.scss';

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
-import {getIdFromSelectList} from '../../../common/util';
-import {fetchTournamentListAction} from '../../admin/Tournament/redux';
-import {FantasyDropDown, StatusMessage} from '../../../common/components';
+import {getIdFromSelectList} from '../../../../common/util';
+import {fetchTournamentListAction} from '../../../admin/Tournament/redux';
+import {FantasyDropDown, StatusMessage} from '../../../../common/components';
 
 const CreateLeague = ({
   createLeague,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {MatchDetails} from '../../admin/Match/component';
+import {MatchDetails} from '../../../admin/Match/component';
 const MatchStats = (props: MatchStatsProps) => {
   const matchList = props.data;
   const fetchMatchStats = props.action;

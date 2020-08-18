@@ -3,7 +3,7 @@ import './FantasyStats.styles.scss';
 import MatchStats from './components/MatchStats';
 import PlayerStats from './components/PlayerStats';
 import UserStats from './components/UserStats';
-import {TabContainer} from '../../common/components/TabContainer';
+import {TabContainer} from 'common/components/TabContainer';
 import LoadingOverlay from 'react-loading-overlay';
 import {
   fetchMatchStatsListAction,
@@ -11,7 +11,7 @@ import {
   fetchUserStatsListAction,
   getStatsProps,
 } from './redux';
-import {fetchMatchListAction, getMatchData} from '../admin/Match/redux';
+import {fetchMatchListAction, getMatchData} from '../../admin/Match/redux';
 import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
 
 const FantasyStats = () => {
