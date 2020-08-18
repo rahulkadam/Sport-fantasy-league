@@ -30,7 +30,7 @@ const TournamentPlayerList = ({
 
   function customName(row: any) {
     return (
-      <div>
+      <div className="nameColumn">
         {row.name}
         <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
       </div>
@@ -75,6 +75,7 @@ const TournamentPlayerList = ({
       name: 'Team',
       width: '15%',
       selector: 'teamsNameList',
+      center: true,
       sortable: true,
       cell: customTeam,
     },
@@ -95,6 +96,7 @@ const TournamentPlayerList = ({
       selector: 'value',
       width: '10%',
       sortable: true,
+      style: {'font-weight': 'bold'},
     },
     {
       name: 'Country',

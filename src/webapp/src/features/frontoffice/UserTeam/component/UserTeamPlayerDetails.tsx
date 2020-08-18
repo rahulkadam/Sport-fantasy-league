@@ -19,7 +19,7 @@ const UserTeamPlayerDetails = ({
 
   function customName(row: any) {
     return (
-      <div>
+      <div className="nameColumn">
         {row.name}
         <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
       </div>
@@ -93,13 +93,7 @@ const UserTeamPlayerDetails = ({
       width: '10%',
       center: true,
       sortable: true,
-    },
-    {
-      name: 'Team',
-      selector: 'teamsNameList',
-      sortable: true,
-      right: true,
-      hide: 'sm',
+      style: {'font-weight': 'bold'},
     },
     {
       name: 'Country',
@@ -141,6 +135,7 @@ const UserTeamPlayerDetails = ({
           title={title}
           columns={newColumns}
           customStyles={customStyles}
+          fixedHeader
           data={filteredRows}
           subHeader
           highlightOnHover

@@ -1,7 +1,8 @@
 export const customStyles = {
   rows: {
     style: {
-      minHeight: '32px', // override the row height
+      minHeight: '42px', // override the row height
+      fontFamily: 'Source Sans Pro,sans-serif',
     },
   },
   headCells: {

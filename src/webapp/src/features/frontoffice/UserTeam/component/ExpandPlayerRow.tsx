@@ -3,8 +3,8 @@ import {Col, Row} from 'react-bootstrap';
 
 const ExpandPlayerRow = ({data}: any) => {
   return (
-    <Fragment>
-      <Row>
+    <div className="expandPlayerContainer">
+      <Row className="nameColumn">
         <Col>Team</Col>
         <Col>Country</Col>
       </Row>
@@ -12,7 +12,7 @@ const ExpandPlayerRow = ({data}: any) => {
         <Col>{data.teamsNameList}</Col>
         <Col>{data.country}</Col>
       </Row>
-    </Fragment>
+    </div>
   );
 };
 
