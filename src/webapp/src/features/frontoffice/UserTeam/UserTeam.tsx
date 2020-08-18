@@ -222,7 +222,7 @@ const UserTeam = () => {
   ];
 
   return (
-    <div className="container">
+    <div className="userTeamContainer">
       <LoadingOverlay
         active={userteamDataProps.isLoading}
         spinner
