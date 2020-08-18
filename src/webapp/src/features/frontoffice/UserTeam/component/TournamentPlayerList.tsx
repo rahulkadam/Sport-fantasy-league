@@ -190,7 +190,6 @@ const TournamentPlayerList = ({
           customStyles={customStyles}
           data={filteredRows}
           onRowClicked={onRowClickedAction}
-          onSelectedRowsChange={onRowSelectedAction}
           pagination
           paginationPerPage={50}
           paginationResetDefaultPage
@@ -198,7 +197,7 @@ const TournamentPlayerList = ({
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           striped
-          selectableRowDisabled={checkDisabledPlayer}
+          highlightOnHover
           expandableRows
           expandableRowsComponent={<ExpandPlayerRow />}
           clearSelectedRows={toggleCleared}

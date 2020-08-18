@@ -119,9 +119,8 @@ const UserTeamPlayerDetails = ({
           columns={newColumns}
           customStyles={customStyles}
           data={filteredRows}
-          pagination
-          paginationPerPage={11}
           subHeader
+          highlightOnHover
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           expandableRows
