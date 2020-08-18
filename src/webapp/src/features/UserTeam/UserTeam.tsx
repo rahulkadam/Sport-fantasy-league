@@ -19,6 +19,8 @@ import {
 import {Button, Row, Col, Badge, ProgressBar} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
+import {useParams} from 'react-router-dom';
+import {isListEmpty} from '../../common/util';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -34,7 +36,8 @@ const UserTeam = () => {
   const userTeamId =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
   const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
-  const defaultTabKey = 'teamDetails';
+  const {tab} = useParams();
+  const defaultTabKey = tab || 'teamDetails';
   const [tabName, setTabName] = useState(defaultTabKey);
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
@@ -42,9 +45,13 @@ const UserTeam = () => {
   }
 
   useEffect(() => {
-    fetchPlayerList();
-    fetchPlayerListByUser(userProps.id);
-    fetchGameCriteriaByName('CRICKET');
+    if (isListEmpty(userteamDataProps.playerList)) {
+      fetchPlayerList();
+    }
+    if (!isUserTeamAvailable) {
+      fetchPlayerListByUser(userProps.id);
+      fetchGameCriteriaByName('CRICKET');
+    }
   }, []);
 
   useEffect(() => {
@@ -198,7 +205,7 @@ const UserTeam = () => {
   ];
 
   return (
-    <div>
+    <div className="container">
       <LoadingOverlay
         active={userteamDataProps.isLoading}
         spinner

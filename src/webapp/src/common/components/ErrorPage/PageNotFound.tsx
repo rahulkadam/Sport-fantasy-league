@@ -5,7 +5,7 @@ const PageNotFound = () => {
   const url: any = useParams();
   return (
     <div className="page-container">
-      <h1 className="title">404 page Not Found for {url[0]}</h1>
+      <h1 className="title">Work in Progress, Please try after 1st Sept</h1>
     </div>
   );
 };

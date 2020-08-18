@@ -55,3 +55,7 @@ export function getErrorMessage(error: any) {
   }
   return 'Error occured while performing action, please check again';
 }
+
+export function isListEmpty(list: any) {
+  return !list || list.length == 0;
+}

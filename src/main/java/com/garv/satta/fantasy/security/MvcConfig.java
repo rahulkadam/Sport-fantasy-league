@@ -73,7 +73,8 @@ public class MvcConfig implements WebMvcConfigurer {
                 "/back/venue" , "/back/team",
                 "/back/player", "/back/tournament",
                 "/back/match",
-                "/termsAndconditions", "/helppage"
+                "/termsAndconditions", "/helppage",
+                "myteam/transfer", "fixtures", "statistics"
         );
         return urlList;
     }

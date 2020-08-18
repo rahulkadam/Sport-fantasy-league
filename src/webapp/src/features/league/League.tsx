@@ -98,7 +98,7 @@ const League = () => {
   }
 
   return (
-    <div>
+    <div className="leagueContainer">
       <LoadingOverlay
         active={leagueProps.isLoading}
         spinner
