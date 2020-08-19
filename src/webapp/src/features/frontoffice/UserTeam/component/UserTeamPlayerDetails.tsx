@@ -74,7 +74,7 @@ const UserTeamPlayerDetails = ({
 
   const columns: any[] = [
     {
-      name: 'Team',
+      name: 'TEAM',
       width: '15%',
       selector: 'teamsNameList',
       sortable: true,
@@ -82,20 +82,20 @@ const UserTeamPlayerDetails = ({
       cell: customTeam,
     },
     {
-      name: 'Player',
+      name: 'PLAYERS',
       selector: 'type',
       sortable: true,
       left: true,
       cell: customName,
     },
     {
-      name: 'Type',
+      name: 'TYPE',
       selector: 'type',
       sortable: true,
       hide: 'sm',
     },
     {
-      name: 'Value',
+      name: 'CREDITS',
       selector: 'value',
       width: '10%',
       center: true,

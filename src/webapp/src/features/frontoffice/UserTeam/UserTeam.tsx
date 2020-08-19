@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {StatusMessage, TabContainer} from 'common/components';
+import {StatusMessage} from 'common/components';
 import {
   UserTeamPlayerDetails,
   TeamDetails,
@@ -104,10 +104,10 @@ const UserTeam = () => {
     return (
       <div className="transferOverview">
         <Row className="nameColumn">
-          <Col>Transfer</Col>
-          <Col>Credit</Col>
-          <Col>Status</Col>
-          <Col>Changes</Col>
+          <Col>TRANSFER</Col>
+          <Col>CREDITS</Col>
+          <Col>STATUS</Col>
+          <Col>CHANGES</Col>
         </Row>
         <Row>
           <Col>{userteamDataProps.userteam.remained_Transfer}</Col>
@@ -147,13 +147,6 @@ const UserTeam = () => {
   function renderError() {
     const errorStatusMessage: any = [];
     if (currentUserTeamPlayers && currentUserTeamPlayers.length > 0) {
-      /**
-      const teamCompletionProgess = (currentUserTeamPlayers.length / 11) * 100;
-      if (teamCompletionProgess < 100) {
-        errorStatusMessage.push(
-          renderTeamCompletionProgressBar(teamCompletionProgess)
-        );
-      } **/
       validateTeamTransfer.forEach((message: string) =>
         errorStatusMessage.push(
           <Row>
@@ -192,6 +185,14 @@ const UserTeam = () => {
               onClick={() => resetUserTeam()}>
               Reset
             </Button>
+            {!isListEmpty(userteamDataProps.userTeamPlayers) && (
+              <Button
+                variant="primary"
+                className="mr-2"
+                onClick={() => setTabName('teamDetails')}>
+                Current Team
+              </Button>
+            )}
           </Form>
         </Nav>
       </Navbar>
@@ -243,7 +244,27 @@ const UserTeam = () => {
       if (isListEmpty(userteamDataProps.userTeamPlayers)) {
         return <Fragment>{renderManageTransfer()}</Fragment>;
       } else {
-        return <TeamDetails data={userteamDataProps} />;
+        return (
+          <Fragment>
+            <TeamDetails data={userteamDataProps} />
+            <Navbar
+              fixed="bottom"
+              bg="light"
+              variant="light"
+              className="justify-content-center saveTeamBtn">
+              <Nav>
+                <Form inline>
+                  <Button
+                    variant="primary"
+                    className="mr-4"
+                    onClick={() => setTabName('transfer')}>
+                    Change Team
+                  </Button>
+                </Form>
+              </Nav>
+            </Navbar>
+          </Fragment>
+        );
       }
     } else {
       return (
@@ -256,19 +277,6 @@ const UserTeam = () => {
     }
   }
 
-  const tabConfig: TabConfig[] = [
-    {
-      key: 'teamDetails',
-      title: 'View Team',
-      renderfunction: renderTeamDetails(),
-    },
-    {
-      key: 'transfer',
-      title: 'Manage Transfer',
-      renderfunction: renderManageTransfer(),
-    },
-  ];
-
   return (
     <div className="userTeamContainer">
       <LoadingOverlay
@@ -280,12 +288,8 @@ const UserTeam = () => {
           userteamDataProps.statusMessage
         )}
         {checkUserAccess(userteamDataProps.statusMessage)}
-        <TabContainer
-          defaultKey={tabName}
-          tabConfig={tabConfig}
-          activeKey={tabName}
-          onSelect={(key: string) => setTabName(key)}
-        />
+        {tabName == 'teamDetails' && renderTeamDetails()}
+        {tabName == 'transfer' && renderManageTransfer()}
       </LoadingOverlay>
     </div>
   );

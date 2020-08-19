@@ -26,10 +26,10 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
     return (
       <div className="teamOverview">
         <Row className="nameColumn">
-          <Col>Name</Col>
-          <Col>Points</Col>
-          <Col>Transfer</Col>
-          <Col>Credit</Col>
+          <Col>NAME</Col>
+          <Col>POINTS</Col>
+          <Col>TRANSFER</Col>
+          <Col>CREDITS</Col>
         </Row>
         <Row>
           <Col>{userteam.name}</Col>
