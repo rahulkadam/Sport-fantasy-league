@@ -1,7 +1,7 @@
 import React, {Fragment, useMemo} from 'react';
 import {Row, Col, Form} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
-import {customStyles} from '../../../../common/components/DataTable';
+import {customStyles} from 'common/components/DataTable';
 import {ExpandLeagueRow} from './ExpandLeagueRow';
 
 const LeagueList = (props: LeagueUserListProps) => {
@@ -13,21 +13,24 @@ const LeagueList = (props: LeagueUserListProps) => {
       name: 'Name',
       selector: 'name',
       sortable: true,
-    },
-    {
-      name: 'Code',
-      selector: 'leagueCode',
-      sortable: true,
+      center: true,
     },
     {
       name: 'Total User',
       selector: 'totalUserCount',
       sortable: true,
+      center: true,
     },
     {
       name: 'Rank',
       selector: 'totalUserCount',
       sortable: true,
+      center: true,
+    },
+    {
+      name: 'Code',
+      selector: 'leagueCode',
+      center: true,
     },
   ];
 
@@ -54,22 +57,20 @@ const LeagueList = (props: LeagueUserListProps) => {
   function renderLeagueList() {
     return (
       <Fragment>
-        {userLeagueList.length == 0 && (
-          <div>LIst is empty, please fetch again</div>
-        )}
+        <div>My Leagues</div>
         {userLeagueList && userLeagueList.length > 0 && (
           <DataTable
-            title="League List"
+            noHeader
             columns={columns}
             customStyles={customStyles}
+            fixedHeader
+            fixedHeaderScrollHeight="400px"
             data={filteredRows}
-            pagination
-            paginationPerPage={10}
-            paginationResetDefaultPage
             subHeader
             subHeaderComponent={renderCustomSearch}
             subHeaderAlign="left"
             striped
+            highlightOnHover
             expandableRows
             expandableRowsComponent={
               <ExpandLeagueRow
@@ -78,9 +79,6 @@ const LeagueList = (props: LeagueUserListProps) => {
               />
             }
             expandOnRowClicked
-            onRowClicked={(row: any, action) => {
-              console.log('clicked');
-            }}
           />
         )}
       </Fragment>

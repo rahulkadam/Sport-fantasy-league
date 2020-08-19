@@ -4,17 +4,27 @@ export const customStyles = {
       minHeight: '42px', // override the row height
       fontFamily: 'Source Sans Pro,sans-serif',
     },
+    highlightOnHoverStyle: {
+      backgroundColor: 'rgb(230, 244, 244)',
+      borderBottomColor: '#FFFFFF',
+      borderRadius: '25px',
+      outline: '1px solid #FFFFFF',
+      cursor: 'pointer',
+    },
   },
   headCells: {
     style: {
       paddingLeft: '4px', // override the cell padding for head cells
       paddingRight: '4px',
+      fontFamily: 'Source Sans Pro,sans-serif',
+      fontWeight: 'bold',
     },
   },
   cells: {
     style: {
       paddingLeft: '4px', // override the cell padding for data cells
       paddingRight: '4px',
+      fontFamily: 'Source Sans Pro,sans-serif',
     },
   },
 };

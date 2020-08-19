@@ -67,6 +67,7 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
             columns={columns}
             customStyles={customStyles}
             data={userList}
+            highlightOnHover
             striped
             noHeader={true}
             defaultSortField="userrank"

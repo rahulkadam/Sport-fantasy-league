@@ -1,4 +1,4 @@
-import React, {useState, useMemo, Fragment} from 'react';
+import React, {useState, useMemo} from 'react';
 import DataTable from 'react-data-table-component';
 import {Form, Row, Col, Badge} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
@@ -196,8 +196,6 @@ const TournamentPlayerList = ({
           data={filteredRows}
           fixedHeader
           fixedHeaderScrollHeight="300px"
-          pagination={false}
-          paginationPerPage={50}
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
@@ -208,6 +206,7 @@ const TournamentPlayerList = ({
           clearSelectedRows={toggleCleared}
           selectableRowsHighlight={false}
           selectableRowsNoSelectAll={true}
+          expandOnRowClicked
         />
       )}
     </div>
