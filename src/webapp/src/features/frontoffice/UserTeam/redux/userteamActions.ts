@@ -22,6 +22,7 @@ import {
   FETCH_GAME_CRITERIA,
   FETCH_GAME_CRITERIA_ERROR,
   RESET_INTERNAL_USER_TEAM,
+  UPDATE_CAPTION_FOR_TEAM,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
@@ -114,13 +115,23 @@ const resetUserTeamAction = () => {
   });
 };
 
+const updateTeamCaptionAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(dispatch, (captainId: any) => {
+    dispatch({
+      type: UPDATE_CAPTION_FOR_TEAM,
+      captainId: captainId,
+    });
+  });
+};
+
 const saveUserTeamAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (userteamId: number, playerList: any) => {
-      saveTeamForUser(userteamId, playerList)
+    (userteamId: number, playerList: any, captainId: any) => {
+      saveTeamForUser(userteamId, playerList, captainId)
         .then((data: any) => {
           dispatch({
             type: SAVE_USER_TEAM,
@@ -191,4 +202,5 @@ export {
   createUserTeamAction,
   fetchGameCriteriaByNameAction,
   resetUserTeamAction,
+  updateTeamCaptionAction,
 };

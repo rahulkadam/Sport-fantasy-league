@@ -62,7 +62,7 @@ public class UserTeamService {
     public List<UserTeamDTO> getUserTeamByUser(Long id) {
         List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
         Assert.notEmpty(userTeamlist, "User does not have any team");
-        return converter.convertToDTOList(userTeamlist);
+        return converter.convertToFullDTOList(userTeamlist);
     }
 
     public UserTeamDTO getUserTeamById(Long id) {
@@ -115,6 +115,7 @@ public class UserTeamService {
 
         List<Long> playerIdList = dto.getAddList();
         Long userId = userService.getCurrentUserId();
+        Long captainId = dto.getCaptainId();
         List<UserTeam> userTeamList = repository.findUserTeamByUserId(userId);
         Assert.notEmpty(userTeamList, "User Team is not valid, Please check again");
 
@@ -143,6 +144,7 @@ public class UserTeamService {
             userTeam.setRemained_Transfer(userTeam.getTotal_Transfer() - usedTransafer);
         }
 
+        userTeam.setCaptain_player(new Player(captainId));
         userTeam.resetPlayerList(playerList);
         repository.save(userTeam);
     }

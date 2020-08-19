@@ -14,6 +14,7 @@ import {
   FETCH_GAME_CRITERIA,
   FETCH_GAME_CRITERIA_ERROR,
   RESET_INTERNAL_USER_TEAM,
+  UPDATE_CAPTION_FOR_TEAM,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -34,7 +35,8 @@ const initialState: UserTeam = {
   currentTransferChanges: 0,
   teamcriteria: {},
   shouldRefresh: false,
-  captionPlayerId: 26,
+  captionPlayerId: 0,
+  captainName: '',
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
@@ -147,6 +149,8 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         userteam: userteam,
         currentUserTeamValue: userteam.creditbalance,
+        captionPlayerId: userteam.team_captain_player_Id,
+        captainName: userteam.captainName,
         isLoading: false,
       };
       return userLeaguestate;
@@ -180,6 +184,12 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         teamcriteria: action.gameCriteria,
         isLoading: false,
+      };
+      return userLeaguestate;
+    case UPDATE_CAPTION_FOR_TEAM:
+      userLeaguestate = {
+        ...state,
+        captionPlayerId: action.captainId,
       };
       return userLeaguestate;
     case RESET_INTERNAL_USER_TEAM:

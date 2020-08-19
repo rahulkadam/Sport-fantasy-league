@@ -12,4 +12,5 @@ declare type UserTeam = {
   teamcriteria?: any;
   shouldRefresh?: boolean;
   captionPlayerId?: any;
+  captainName?: any;
 };

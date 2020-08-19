@@ -19,4 +19,6 @@ declare type UserTeamPlayerDetails = {
   rowDisabledCriteria?: any;
   currentUserTeamPlayers?: any;
   captionId?: any;
+  updateCaptionAction?: any;
+  editable?: boolean;
 };

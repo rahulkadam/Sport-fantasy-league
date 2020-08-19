@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserTeamConverter extends Converter<UserTeam, UserTeamDTO> {
@@ -47,8 +48,10 @@ public class UserTeamConverter extends Converter<UserTeam, UserTeamDTO> {
     @Override
     public UserTeamDTO convertToFullDTO(UserTeam entity) {
         UserTeamDTO userTeamDTO = convertToDTO(entity);
-        if (entity.getCaptain_player() != null) {
-            userTeamDTO.setTeam_captain_player_Id(entity.getCaptain_player().getId());
+        Player captain = entity.getCaptain_player();
+        if (captain != null) {
+            userTeamDTO.setTeam_captain_player_Id(captain.getId());
+            userTeamDTO.setCaptainName(captain.getName());
         }
         userTeamDTO.setUserId(entity.getUser().getId());
         return userTeamDTO;
@@ -61,5 +64,11 @@ public class UserTeamConverter extends Converter<UserTeam, UserTeamDTO> {
 
     public List<UserTeamDTO> convertToDTOList(List<UserTeam> entityList) {
         return mapToDTOList(entityList, UserTeamDTO.class);
+    }
+
+    public List<UserTeamDTO> convertToFullDTOList(List<UserTeam> entityList) {
+        return entityList.stream()
+                .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
     }
 }

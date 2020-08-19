@@ -8,5 +8,6 @@ export {
   createUserTeamAction,
   fetchGameCriteriaByNameAction,
   resetUserTeamAction,
+  updateTeamCaptionAction,
 } from './userteamActions';
 export * from './userteam-util';

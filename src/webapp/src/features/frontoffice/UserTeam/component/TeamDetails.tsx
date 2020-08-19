@@ -5,6 +5,7 @@ import {Col, Row, Badge} from 'react-bootstrap';
 const TeamDetails = ({data}: TeamDetailsProps) => {
   const userteam = data.userteam;
   const userPlayerList = data.userTeamPlayers;
+  const captainId = userteam.team_captain_player_Id;
 
   function teamEligibleToPlay() {
     if (userPlayerList && userPlayerList.length == 11) {
@@ -43,7 +44,11 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
     return (
       <Fragment>
         {userPlayerList.length > 0 && (
-          <UserTeamPlayerDetails data={userPlayerList} key="sda" />
+          <UserTeamPlayerDetails
+            data={userPlayerList}
+            key="sda"
+            captionId={captainId}
+          />
         )}
         {userPlayerList.length == 0 && (
           <div>Please click on Manager Transfer, to Add player first Time</div>

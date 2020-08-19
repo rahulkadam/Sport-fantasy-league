@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {Form} from 'react-bootstrap';
 
-const FantasyDropDown = ({onSelect, list}: FantasyDropDown) => {
+const FantasyDropDown = ({onSelect, list, disabled}: FantasyDropDown) => {
   function renderList() {
     const optionList: any = [];
     list &&
@@ -25,6 +25,7 @@ const FantasyDropDown = ({onSelect, list}: FantasyDropDown) => {
         <Form.Control
           size="sm"
           as="select"
+          disabled={disabled}
           onChange={event => onSelect(event.target.value)}>
           {renderList()}
         </Form.Control>

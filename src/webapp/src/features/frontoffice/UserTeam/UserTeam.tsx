@@ -16,6 +16,7 @@ import {
   fetchGameCriteriaByNameAction,
   validateTeam,
   resetUserTeamAction,
+  updateTeamCaptionAction,
 } from './redux';
 import {
   Button,
@@ -48,12 +49,13 @@ const UserTeam = () => {
     userteamDataProps.userteam && userteamDataProps.userteam.id;
   const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
   const {tab} = useParams();
-  const defaultTabKey = tab || 'transfer';
+  const defaultTabKey = tab || 'teamDetails';
   const [tabName, setTabName] = useState(defaultTabKey);
   const captainPlayerId = userteamDataProps.captionPlayerId;
+  const updateTeamCaption = updateTeamCaptionAction();
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
-    setTabName(defaultTabKey);
+    setTabName('teamDetails');
   }
 
   useEffect(() => {
@@ -91,7 +93,7 @@ const UserTeam = () => {
 
   function saveTeam() {
     const userteamId = userTeamId;
-    saveUserTeam(userteamId, currentUserTeamPlayers);
+    saveUserTeam(userteamId, currentUserTeamPlayers, captainPlayerId);
   }
 
   const validateTeamTransfer: string[] = validateTeam(userteamDataProps);
@@ -220,6 +222,8 @@ const UserTeam = () => {
           captionId={captainPlayerId}
           data={userteamDataProps.currentUserTeamPlayers}
           onRemoveRowAction={removeRowAction}
+          updateCaptionAction={updateTeamCaption}
+          editable={true}
         />
         {renderSaveButton()}
         <h4>

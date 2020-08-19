@@ -15,19 +15,23 @@ const UserTeamPlayerDetails = ({
   data,
   captionId,
   onRemoveRowAction,
+  updateCaptionAction,
+  editable,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
-  function getSelectedCaptain() {
-    const list = data.map((item: any) => {
-      return {
-        id: item.id,
-        name: item.name,
-        selected: item.id == captionId,
-      };
-    });
-    return list;
+  function getDropDownPlayerList() {
+    const list =
+      data &&
+      data.map((item: any) => {
+        return {
+          id: item.id,
+          name: item.name,
+          selected: item.id == captionId,
+        };
+      });
+    return list || [];
   }
-  const playerList = getSelectedCaptain();
+  const playerList = getDropDownPlayerList();
 
   function customName(row: any) {
     return (
@@ -127,9 +131,10 @@ const UserTeamPlayerDetails = ({
           <Col>
             <FantasyDropDown
               onSelect={(value: string) => {
-                console.log(value);
+                updateCaptionAction(value);
               }}
               list={playerList}
+              disabled={!editable}
             />
           </Col>
         </Row>
