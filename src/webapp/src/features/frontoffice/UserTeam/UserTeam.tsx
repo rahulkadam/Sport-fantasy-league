@@ -77,20 +77,6 @@ const UserTeam = () => {
     updateCurrentUserTeam(selectedRows);
   }
 
-  function renderTeamDetails() {
-    if (isUserTeamAvailable) {
-      return <TeamDetails data={userteamDataProps} />;
-    } else {
-      return (
-        <CreateTeam
-          createTeamAction={createUserTeam}
-          userProps={userProps}
-          key="createteam1"
-        />
-      );
-    }
-  }
-
   function saveTeam() {
     const userteamId = userTeamId;
     saveUserTeam(userteamId, currentUserTeamPlayers, captainPlayerId);
@@ -178,8 +164,7 @@ const UserTeam = () => {
         )
       );
     } else {
-      const teamCreateMsg =
-        'Please select player from below list and save Team';
+      const teamCreateMsg = 'Create team by using below player list.';
       errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
     }
     return <div className="errorPanel">{errorStatusMessage}</div>;
@@ -251,6 +236,24 @@ const UserTeam = () => {
         )}
       </div>
     );
+  }
+
+  function renderTeamDetails() {
+    if (isUserTeamAvailable) {
+      if (isListEmpty(userteamDataProps.userTeamPlayers)) {
+        return <Fragment>{renderManageTransfer()}</Fragment>;
+      } else {
+        return <TeamDetails data={userteamDataProps} />;
+      }
+    } else {
+      return (
+        <CreateTeam
+          createTeamAction={createUserTeam}
+          userProps={userProps}
+          key="createteam1"
+        />
+      );
+    }
   }
 
   const tabConfig: TabConfig[] = [
