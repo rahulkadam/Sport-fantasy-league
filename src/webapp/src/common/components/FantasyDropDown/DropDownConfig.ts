@@ -1,3 +1,14 @@
+import {
+  teamCSK,
+  teamDC,
+  teamKKR,
+  teammumbai,
+  teampunjab,
+  teamrajsthan,
+  teamRCB,
+  teamSRH,
+} from '@logos/index';
+
 export const countryList = [
   {id: 'INDIA', name: 'INDIA'},
   {id: 'NEW ZEALAND', name: 'NEW ZEALAND'},
@@ -31,14 +42,26 @@ export const sportList = [
 ];
 
 export const teamList = [
-  {id: 'MUMBAI INDIANS', name: 'MUMBAI INDIANS'},
-  {id: 'CHENNAI SUPER KINGS', name: 'CHENNAI SUPER KINGS'},
-  {id: 'Royal Challengers Bangalore', name: 'Royal Challengers Bangalore'},
-  {id: 'Delhi Capitals', name: 'Delhi Capitals'},
-  {id: 'Kings XI Punjab', name: 'Kings XI Punjab'},
-  {id: 'Kolkata Knight Riders', name: 'Kolkata Knight Riders'},
-  {id: 'Rajasthan Royals', name: 'Rajasthan Royals'},
-  {id: 'Sunrisers Hyderabad', name: 'Sunrisers Hyderabad'},
+  {id: 'Mumbai Indians', name: 'Mumbai Indians', logo: teammumbai},
+  {id: 'Chennai Super Kings', name: 'Chennai Super Kings', logo: teamCSK},
+  {
+    id: 'Royal Challengers Bangalore',
+    name: 'Royal Challengers Bangalore',
+    logo: teamRCB,
+  },
+  {id: 'Delhi Capitals', name: 'Delhi Capitals', logo: teamDC},
+  {id: 'Kings XI Punjab', name: 'Kings XI Punjab', logo: teampunjab},
+  {id: 'Kolkata Knight Riders', name: 'Kolkata Knight Riders', logo: teamKKR},
+  {id: 'Rajasthan Royals', name: 'Rajasthan Royals', logo: teamrajsthan},
+  {id: 'Sunrisers Hyderabad', name: 'Sunrisers Hyderabad', logo: teamSRH},
 ];
+
+export function getLogoNameByTeam(team: string) {
+  const map = new Map();
+  teamList.forEach(team => {
+    map.set(team.name, team.logo);
+  });
+  return map.get(team);
+}
 
 export const teamListWithALl = [{id: 'ALL', name: 'ALL'}].concat(teamList);

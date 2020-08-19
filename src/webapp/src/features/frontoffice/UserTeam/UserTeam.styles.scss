@@ -1,0 +1,55 @@
+.userTeamContainer {
+ margin: 0.5rem;
+}
+
+.playerRowStyle {
+ .allrounder {
+  backgroundColor: 'rgba(63, 195, 128, 0.9)';
+ }
+}
+
+.removeIcon {
+ background-color: whitesmoke;
+}
+
+.removeIcon:hover {
+ opacity: 80%;
+ color: indianred;
+ cursor: pointer;
+}
+
+.errorRow {
+ margin: 1rem;
+}
+
+.nameColumn {
+ font-family: Source Sans Pro,sans-serif;
+ font-weight: bold;
+}
+
+.expandPlayerContainer {
+ margin: 1rem;
+}
+
+.saveTeamBtn {
+ padding: 4rem;
+ margin-bottom: 3rem;
+ height: 10%;
+}
+
+.transferOverview {
+ margin: 0.2rem;
+ padding: 1rem;
+ font-family: Source Sans Pro,sans-serif;
+ background-color: bisque;
+}
+
+.teamOverview {
+ margin: 1rem;
+ font-family: Source Sans Pro,sans-serif;
+}
+
+.errorPanel {
+ padding: 1rem;
+ margin-top: 0.5rem;
+}

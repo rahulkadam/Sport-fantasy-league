@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Col, Container, Row} from 'react-bootstrap';
 import {FooterLinkConfig, FooterLinkConfigObject} from './FooterLinkConfig';
-import 'bootstrap/dist/css/bootstrap.css';
 import './Footer.css';
 
 const Footer = () => {

@@ -1,3 +1,13 @@
+export const userMenuConfigForMobile = [
+  {
+    link: '/league',
+    name: 'League',
+  },
+  {
+    link: '/team',
+    name: 'My Team',
+  },
+];
 export const userMenuConfig = [
   {
     link: '/league',

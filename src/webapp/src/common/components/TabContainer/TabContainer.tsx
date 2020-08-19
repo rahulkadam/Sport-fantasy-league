@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
-import {Col, Nav, Row, Tab} from 'react-bootstrap';
+import {Col, Nav, Navbar, Row, Tab} from 'react-bootstrap';
+import {Route} from 'react-router-dom';
 
 const TabContainer = ({
   tabConfig,
@@ -32,7 +33,7 @@ const TabContainer = ({
     });
     return (
       <Fragment>
-        <Nav variant="pills" className="flex-column">
+        <Nav className="flex-column" fill>
           {element}
         </Nav>
       </Fragment>
