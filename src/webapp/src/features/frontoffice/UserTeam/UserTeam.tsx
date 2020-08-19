@@ -106,17 +106,11 @@ const UserTeam = () => {
         <Row className="nameColumn">
           <Col>TRANSFER</Col>
           <Col>CREDITS</Col>
-          <Col>STATUS</Col>
           <Col>CHANGES</Col>
         </Row>
         <Row>
           <Col>{userteamDataProps.userteam.remained_Transfer}</Col>
           <Col>{availableBalance}</Col>
-          <Col>
-            <Badge pill variant={statusValue.type}>
-              {statusValue.message}
-            </Badge>
-          </Col>
           <Col>{userteamDataProps.currentTransferChanges}</Col>
         </Row>
       </div>
