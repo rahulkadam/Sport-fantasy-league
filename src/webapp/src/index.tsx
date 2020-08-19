@@ -5,6 +5,7 @@ import {BaseRoute} from './config/route';
 import * as serviceWorker from './config/pwa/serviceWorker';
 import {init_GA} from './common/config';
 import './index.scss';
+import 'bootstrap/dist/css/bootstrap.css';
 
 /**
  *

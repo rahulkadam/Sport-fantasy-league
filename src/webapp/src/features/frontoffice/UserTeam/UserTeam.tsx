@@ -179,16 +179,16 @@ const UserTeam = () => {
         'Please select player from below list and save Team';
       errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
     }
-    return <div>{errorStatusMessage}</div>;
+    return <div className="errorPanel">{errorStatusMessage}</div>;
   }
 
   function renderSaveButton() {
     return (
       <Navbar
         fixed="bottom"
-        bg="dark"
-        variant="dark"
-        className="justify-content-center">
+        bg="light"
+        variant="light"
+        className="justify-content-center saveTeamBtn">
         <Nav>
           <Form inline>
             <Button
