@@ -5,7 +5,6 @@ import {BaseRoute} from './config/route';
 import * as serviceWorker from './config/pwa/serviceWorker';
 import {init_GA} from './common/config';
 import './index.scss';
-import {Header} from './features/Header';
 
 /**
  *
@@ -19,7 +18,6 @@ const Root = () => {
 
   return (
     <div className="fixedHeaderContainer">
-      <Header />
       <BaseRoute />
     </div>
   );

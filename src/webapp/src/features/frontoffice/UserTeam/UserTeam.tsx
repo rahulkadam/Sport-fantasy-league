@@ -70,7 +70,11 @@ const UserTeam = () => {
       return <TeamDetails data={userteamDataProps} />;
     } else {
       return (
-        <CreateTeam createTeamAction={createUserTeam} userProps={userProps} />
+        <CreateTeam
+          createTeamAction={createUserTeam}
+          userProps={userProps}
+          key="createteam1"
+        />
       );
     }
   }
@@ -85,7 +89,13 @@ const UserTeam = () => {
 
   function renderStatusMessage(isError: boolean, statusMessage: string) {
     const statusClassName = isError ? 'error' : 'success';
-    return <StatusMessage text={statusMessage} type={statusClassName} />;
+    return (
+      <StatusMessage
+        text={statusMessage}
+        type={statusClassName}
+        key={statusMessage}
+      />
+    );
   }
 
   function renderShowTransferOverview() {
@@ -199,10 +209,14 @@ const UserTeam = () => {
 
   function renderManageTransfer() {
     return (
-      <div>
+      <div key="renderms">
         {isUserTeamAvailable && renderUserTeamTransferTabDetails()}
         {!isUserTeamAvailable && (
-          <CreateTeam createTeamAction={createUserTeam} userProps={userProps} />
+          <CreateTeam
+            createTeamAction={createUserTeam}
+            userProps={userProps}
+            key="createteam2"
+          />
         )}
       </div>
     );

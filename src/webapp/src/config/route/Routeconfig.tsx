@@ -63,14 +63,14 @@ export const RouteConfig = {
     },
     {
       path: '/team',
-      component: <UserTeam />,
+      component: <UserTeam key="team1" />,
       key: 'team',
       isPrivate: true,
       role: UserRole,
     },
     {
       path: '/myteam/:tab',
-      component: <UserTeam />,
+      component: <UserTeam key="teamtransfer" />,
       key: 'teamtransfer',
       isPrivate: true,
       role: UserRole,
@@ -83,7 +83,7 @@ export const RouteConfig = {
     {
       path: '/statistics',
       component: FantasyStats,
-      key: 'fixtures',
+      key: 'statistics',
     },
     {
       path: '/back/match',
@@ -132,7 +132,7 @@ export const RouteConfig = {
     },
     {path: '/login', component: Login, key: 'login'},
     {path: '/home', redirect: '/', isRedirect: true, key: 'home'},
-    {path: '/helppage', component: HelpPage, key: 'random'},
+    {path: '/helppage', component: HelpPage, key: 'helppage'},
     {path: '/termsAndconditions', component: TermsAndConditions, key: 'random'},
     {path: '/', component: FantasyHome, isExact: true, key: 'homeslash'},
     {path: '*', component: PageNotFound, key: 'pageNotFound'},

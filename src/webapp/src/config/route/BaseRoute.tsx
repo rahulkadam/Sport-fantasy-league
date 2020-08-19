@@ -64,6 +64,7 @@ const BaseRoute = () => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
+        <Header />
         <Switch>{renderRoute()}</Switch>
         <Footer />
       </Suspense>
