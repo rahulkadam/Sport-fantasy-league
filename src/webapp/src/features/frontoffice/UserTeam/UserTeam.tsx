@@ -115,10 +115,10 @@ const UserTeam = () => {
     return (
       <div className="transferOverview">
         <Row className="nameColumn">
-          <Col>Available Transfer</Col>
-          <Col>Available Credit</Col>
+          <Col>Transfer</Col>
+          <Col>Credit</Col>
           <Col>Status</Col>
-          <Col>Transfer Used Now</Col>
+          <Col>Changes</Col>
         </Row>
         <Row>
           <Col>{userteamDataProps.userteam.remained_Transfer}</Col>
@@ -248,7 +248,7 @@ const UserTeam = () => {
   const tabConfig: TabConfig[] = [
     {
       key: 'teamDetails',
-      title: 'Team Details',
+      title: 'View Team',
       renderfunction: renderTeamDetails(),
     },
     {

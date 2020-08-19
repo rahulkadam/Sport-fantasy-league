@@ -123,7 +123,7 @@ const UserTeamPlayerDetails = ({
     <div>
       {data && data.length > 0 && (
         <DataTable
-          title={title}
+          noHeader
           columns={newColumns}
           customStyles={customStyles}
           fixedHeader

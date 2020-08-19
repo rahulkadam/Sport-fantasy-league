@@ -26,24 +26,14 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
       <div className="teamOverview">
         <Row className="nameColumn">
           <Col>Name</Col>
-          <Col>Total Score</Col>
-          <Col>Status</Col>
+          <Col>Points</Col>
+          <Col>Transfer</Col>
+          <Col>Credit</Col>
         </Row>
         <Row>
-          <Col>
-            {userteam.name} ({userteam.id})
-          </Col>
+          <Col>{userteam.name}</Col>
           <Col>{userteam.total_score}</Col>
-          <Col>{teamEligibleToPlay()}</Col>
-        </Row>
-        <Row className="nameColumn">
-          <Col>Transfer Available</Col>
-          <Col>Transfer used</Col>
-          <Col>Balance</Col>
-        </Row>
-        <Row>
           <Col>{userteam.remained_Transfer}</Col>
-          <Col>{userteam.used_Transfer}</Col>
           <Col>{userteam.creditbalance}</Col>
         </Row>
       </div>
@@ -53,10 +43,7 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
     return (
       <Fragment>
         {userPlayerList.length > 0 && (
-          <UserTeamPlayerDetails
-            title="Your Fantasy Team"
-            data={userPlayerList}
-          />
+          <UserTeamPlayerDetails title="Your Team" data={userPlayerList} />
         )}
         {userPlayerList.length == 0 && (
           <div>Please click on Manager Transfer, to Add player first Time</div>

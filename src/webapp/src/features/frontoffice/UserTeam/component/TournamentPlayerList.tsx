@@ -183,9 +183,10 @@ const TournamentPlayerList = ({
 
   return (
     <div>
-      {data && data.length == 0 && <div>LIst is empty, please fetch again</div>}
+      {data && data.length == 0 && <div>List is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
+          noHeader
           columns={newColumns}
           customStyles={customStyles}
           data={filteredRows}
