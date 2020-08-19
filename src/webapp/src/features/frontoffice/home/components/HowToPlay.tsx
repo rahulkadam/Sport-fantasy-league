@@ -83,7 +83,7 @@ const HowToPlay = () => {
     <div>
       <Row className="headerRow justify-content-center">
         <Col xs lg="6">
-          <h1>How to play Tournament Fantasy Cricket?</h1>
+          <h3>How to play Tournament Fantasy Cricket?</h3>
         </Col>
       </Row>
       {renderFantasyPlaySteps()}

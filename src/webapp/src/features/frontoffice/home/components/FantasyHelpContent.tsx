@@ -10,9 +10,7 @@ const FantasyHelpContent = () => {
         <Row className="headerRow">
           <Col>
             <h3>
-              <Badge variant="light">
-                What Is Tournament Fantasy Cricket?{' '}
-              </Badge>
+              <Badge variant="light">What is Fantasy Cricket? </Badge>
             </h3>
           </Col>
         </Row>
@@ -97,7 +95,7 @@ const FantasyHelpContent = () => {
         <Row className="headerRow">
           <Col>
             <h3>
-              <Badge variant="light">How To Play? </Badge>
+              <Badge variant="light">How to play? </Badge>
             </h3>
           </Col>
         </Row>
