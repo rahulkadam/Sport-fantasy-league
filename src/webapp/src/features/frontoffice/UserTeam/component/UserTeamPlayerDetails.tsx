@@ -120,15 +120,17 @@ const UserTeamPlayerDetails = ({
       <div>
         <Row>
           <Col>
+            <Form.Label>Search Player</Form.Label>
             <Form.Control
               type="text"
               size="sm"
-              placeholder="Player Name"
+              placeholder="Name"
               onChange={(e: any) => setFilterText(e.target.value)}
               value={filterText}
             />
           </Col>
           <Col>
+            <Form.Label>Captain Name</Form.Label>
             <FantasyDropDown
               onSelect={(value: string) => {
                 updateCaptionAction(value);
