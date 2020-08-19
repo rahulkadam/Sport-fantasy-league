@@ -18,4 +18,5 @@ declare type UserTeamPlayerDetails = {
   onRemoveRowAction?: any;
   rowDisabledCriteria?: any;
   currentUserTeamPlayers?: any;
+  captionId?: any;
 };

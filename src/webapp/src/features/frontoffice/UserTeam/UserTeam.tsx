@@ -50,6 +50,7 @@ const UserTeam = () => {
   const {tab} = useParams();
   const defaultTabKey = tab || 'transfer';
   const [tabName, setTabName] = useState(defaultTabKey);
+  const captainPlayerId = userteamDataProps.captionPlayerId;
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
     setTabName(defaultTabKey);
@@ -216,7 +217,7 @@ const UserTeam = () => {
         {renderShowTransferOverview()}
         {renderError()}
         <UserTeamPlayerDetails
-          title="Your Team"
+          captionId={captainPlayerId}
           data={userteamDataProps.currentUserTeamPlayers}
           onRemoveRowAction={removeRowAction}
         />

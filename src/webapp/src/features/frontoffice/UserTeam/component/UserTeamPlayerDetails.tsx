@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button, Badge} from 'react-bootstrap';
+import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import '../UserTeam.styles.scss';
-import {Logo} from 'common/components';
+import {FantasyDropDown, Logo} from 'common/components';
 import {renderLogoByPLayerType} from '../redux';
 import {isListEmpty} from 'common/util';
 import {getLogoNameByTeam} from 'common/components/FantasyDropDown';
@@ -13,10 +13,21 @@ import {playerRowStyeForNew} from 'common/components/DataTable/TableConfig';
 
 const UserTeamPlayerDetails = ({
   data,
-  title,
+  captionId,
   onRemoveRowAction,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
+  function getSelectedCaptain() {
+    const list = data.map((item: any) => {
+      return {
+        id: item.id,
+        name: item.name,
+        selected: item.id == captionId,
+      };
+    });
+    return list;
+  }
+  const playerList = getSelectedCaptain();
 
   function customName(row: any) {
     return (
@@ -103,15 +114,28 @@ const UserTeamPlayerDetails = ({
   const renderCustomSearch = useMemo(() => {
     return (
       <div>
-        <Form.Control
-          type="text"
-          placeholder="Player Name"
-          onChange={(e: any) => setFilterText(e.target.value)}
-          value={filterText}
-        />
+        <Row>
+          <Col>
+            <Form.Control
+              type="text"
+              size="sm"
+              placeholder="Player Name"
+              onChange={(e: any) => setFilterText(e.target.value)}
+              value={filterText}
+            />
+          </Col>
+          <Col>
+            <FantasyDropDown
+              onSelect={(value: string) => {
+                console.log(value);
+              }}
+              list={playerList}
+            />
+          </Col>
+        </Row>
       </div>
     );
-  }, [filterText]);
+  }, [filterText, playerList]);
 
   const filteredRows =
     data &&

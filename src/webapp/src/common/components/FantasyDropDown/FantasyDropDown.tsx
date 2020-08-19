@@ -6,12 +6,15 @@ const FantasyDropDown = ({onSelect, list}: FantasyDropDown) => {
     const optionList: any = [];
     list &&
       list.forEach((dropDownItem: any) => {
-        dropDownItem &&
-          optionList.push(
-            <option key={dropDownItem.id} value={dropDownItem.id}>
-              {dropDownItem.name || dropDownItem.description}
-            </option>
-          );
+        const isSelected = dropDownItem.selected;
+        optionList.push(
+          <option
+            key={dropDownItem.id}
+            value={dropDownItem.id}
+            selected={isSelected}>
+            {dropDownItem.name || dropDownItem.description}
+          </option>
+        );
       });
     return optionList;
   }

@@ -34,6 +34,7 @@ const initialState: UserTeam = {
   currentTransferChanges: 0,
   teamcriteria: {},
   shouldRefresh: false,
+  captionPlayerId: 26,
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {

@@ -43,7 +43,7 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
     return (
       <Fragment>
         {userPlayerList.length > 0 && (
-          <UserTeamPlayerDetails title="Your Team" data={userPlayerList} />
+          <UserTeamPlayerDetails data={userPlayerList} key="sda" />
         )}
         {userPlayerList.length == 0 && (
           <div>Please click on Manager Transfer, to Add player first Time</div>
