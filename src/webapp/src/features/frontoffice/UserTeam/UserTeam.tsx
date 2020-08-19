@@ -17,11 +17,20 @@ import {
   validateTeam,
   resetUserTeamAction,
 } from './redux';
-import {Button, Row, Col, Badge, ProgressBar} from 'react-bootstrap';
+import {
+  Button,
+  Row,
+  Col,
+  Badge,
+  ProgressBar,
+  Navbar,
+  Nav,
+  Form,
+} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {useParams} from 'react-router-dom';
-import {isListEmpty} from '../../../common/util';
+import {isListEmpty} from 'common/util';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -39,7 +48,7 @@ const UserTeam = () => {
     userteamDataProps.userteam && userteamDataProps.userteam.id;
   const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
   const {tab} = useParams();
-  const defaultTabKey = tab || 'teamDetails';
+  const defaultTabKey = tab || 'transfer';
   const [tabName, setTabName] = useState(defaultTabKey);
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
@@ -172,33 +181,47 @@ const UserTeam = () => {
     return <div>{errorStatusMessage}</div>;
   }
 
+  function renderSaveButton() {
+    return (
+      <Navbar
+        fixed="bottom"
+        bg="dark"
+        variant="dark"
+        className="justify-content-center">
+        <Nav>
+          <Form inline>
+            <Button
+              variant="primary"
+              className="mr-4"
+              onClick={() => saveTeam()}
+              disabled={!teamValid}>
+              Save Team
+            </Button>
+            <Button
+              variant="primary"
+              className="mr-2"
+              onClick={() => resetUserTeam()}>
+              Reset
+            </Button>
+          </Form>
+        </Nav>
+      </Navbar>
+    );
+  }
+
   function renderUserTeamTransferTabDetails() {
     return (
       <Fragment>
         {renderShowTransferOverview()}
         <UserTeamPlayerDetails
-          title="Your Selected Fantasy Team"
+          title="Your Team"
           data={userteamDataProps.currentUserTeamPlayers}
           onRemoveRowAction={removeRowAction}
         />
         {renderError()}
-        <Row className="saveTeamBtn">
-          <Col md={2} xs={4}>
-            <Button
-              variant="primary"
-              onClick={() => saveTeam()}
-              disabled={!teamValid}>
-              Proceed
-            </Button>
-          </Col>
-          <Col md={2} xs={6}>
-            <Button variant="primary" onClick={() => resetUserTeam()}>
-              Reset
-            </Button>
-          </Col>
-        </Row>
+        {renderSaveButton()}
         <TournamentPlayerList
-          title="Tournament Player List"
+          title="Player List"
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
           currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
