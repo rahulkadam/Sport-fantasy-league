@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import {Form} from 'react-bootstrap';
 
 const FantasyDropDown = ({onSelect, list}: FantasyDropDown) => {
   function renderList() {
@@ -18,11 +19,12 @@ const FantasyDropDown = ({onSelect, list}: FantasyDropDown) => {
   function renderDropDown() {
     return (
       <Fragment>
-        <select
-          className="form-control"
+        <Form.Control
+          size="sm"
+          as="select"
           onChange={event => onSelect(event.target.value)}>
           {renderList()}
-        </select>
+        </Form.Control>
       </Fragment>
     );
   }

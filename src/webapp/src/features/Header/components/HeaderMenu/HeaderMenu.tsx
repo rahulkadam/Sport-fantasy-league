@@ -49,14 +49,14 @@ const HeaderMenu = () => {
           fixed={'top'}
           bg="dark"
           variant="dark">
-          <Navbar.Toggle />
           <Navbar.Brand as={Link} to="/">
             <Logo logoSource={fantasyLogo} width="56" />
           </Navbar.Brand>
           <Nav className={'d-block d-md-none'}>
             {userMenu && renderMenu(userMenuConfigForMobile)}
           </Nav>
-          <Navbar.Collapse className="justify-content-start">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav>
               {publicMenu && renderMenuLink('Home', '/')}
               {userMenu && renderMenu(userMenuConfig)}

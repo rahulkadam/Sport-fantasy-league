@@ -67,8 +67,8 @@ const UserTeamPlayerDetails = ({
       cell: customTeam,
     },
     {
-      name: 'Name',
-      selector: 'name',
+      name: 'Player',
+      selector: 'type',
       sortable: true,
       left: true,
       cell: customName,

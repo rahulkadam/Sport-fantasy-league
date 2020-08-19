@@ -13,7 +13,7 @@ declare type CreateTeamProps = {
 
 declare type UserTeamPlayerDetails = {
   data: any;
-  title: string;
+  title?: string;
   onRowSelected?: any;
   onRemoveRowAction?: any;
   rowDisabledCriteria?: any;

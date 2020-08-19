@@ -77,8 +77,8 @@ const TournamentPlayerList = ({
       cell: customTeam,
     },
     {
-      name: 'Name',
-      selector: 'name',
+      name: 'Player',
+      selector: 'type',
       sortable: true,
       cell: customName,
     },
@@ -116,14 +116,17 @@ const TournamentPlayerList = ({
       <div>
         <Row>
           <Col>
+            <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
+              size="sm"
               placeholder="Player Name"
               onChange={(e: any) => setFilterText(e.target.value)}
               value={filterText}
             />
           </Col>
           <Col>
+            <Form.Label>Type</Form.Label>
             <FantasyDropDown
               onSelect={(value: string) => {
                 setFilterPlayerType(value);
@@ -132,6 +135,7 @@ const TournamentPlayerList = ({
             />
           </Col>
           <Col>
+            <Form.Label>Team</Form.Label>
             <FantasyDropDown
               onSelect={(value: string) => {
                 setFilterByTeam(value);
@@ -140,6 +144,7 @@ const TournamentPlayerList = ({
             />
           </Col>
           <Col>
+            <Form.Label>Country</Form.Label>
             <FantasyDropDown
               onSelect={(value: string) => {
                 setFilterByCountry(value);

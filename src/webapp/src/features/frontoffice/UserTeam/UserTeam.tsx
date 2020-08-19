@@ -158,12 +158,13 @@ const UserTeam = () => {
   function renderError() {
     const errorStatusMessage: any = [];
     if (currentUserTeamPlayers && currentUserTeamPlayers.length > 0) {
+      /**
       const teamCompletionProgess = (currentUserTeamPlayers.length / 11) * 100;
       if (teamCompletionProgess < 100) {
         errorStatusMessage.push(
           renderTeamCompletionProgressBar(teamCompletionProgess)
         );
-      }
+      } **/
       validateTeamTransfer.forEach((message: string) =>
         errorStatusMessage.push(
           <Row>
@@ -213,15 +214,17 @@ const UserTeam = () => {
     return (
       <Fragment>
         {renderShowTransferOverview()}
+        {renderError()}
         <UserTeamPlayerDetails
           title="Your Team"
           data={userteamDataProps.currentUserTeamPlayers}
           onRemoveRowAction={removeRowAction}
         />
-        {renderError()}
         {renderSaveButton()}
+        <h4>
+          <Badge variant="light">Add player from below list</Badge>
+        </h4>
         <TournamentPlayerList
-          title="Player List"
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
           currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
