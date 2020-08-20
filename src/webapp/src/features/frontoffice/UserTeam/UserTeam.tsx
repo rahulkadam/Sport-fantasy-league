@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {StatusMessage, TabContainer} from 'common/components';
+import {StatusMessage} from 'common/components';
 import {
   UserTeamPlayerDetails,
   TeamDetails,
@@ -16,6 +16,8 @@ import {
   fetchGameCriteriaByNameAction,
   validateTeam,
   resetUserTeamAction,
+  updateTeamCaptionAction,
+  autoPickUserTeamAction,
 } from './redux';
 import {
   Button,
@@ -41,6 +43,7 @@ const UserTeam = () => {
   const resetUserTeam = resetUserTeamAction();
   const fetchGameCriteriaByName = fetchGameCriteriaByNameAction();
   const saveUserTeam = saveUserTeamAction();
+  const autoPickUserTeam = autoPickUserTeamAction();
   const createUserTeam = createUserTeamAction();
   const isUserTeamAvailable =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
@@ -48,11 +51,13 @@ const UserTeam = () => {
     userteamDataProps.userteam && userteamDataProps.userteam.id;
   const currentUserTeamPlayers = userteamDataProps.currentUserTeamPlayers;
   const {tab} = useParams();
-  const defaultTabKey = tab || 'transfer';
+  const defaultTabKey = tab || 'teamDetails';
   const [tabName, setTabName] = useState(defaultTabKey);
+  const captainPlayerId = userteamDataProps.captionPlayerId;
+  const updateTeamCaption = updateTeamCaptionAction();
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
-    setTabName(defaultTabKey);
+    setTabName('teamDetails');
   }
 
   useEffect(() => {
@@ -74,23 +79,9 @@ const UserTeam = () => {
     updateCurrentUserTeam(selectedRows);
   }
 
-  function renderTeamDetails() {
-    if (isUserTeamAvailable) {
-      return <TeamDetails data={userteamDataProps} />;
-    } else {
-      return (
-        <CreateTeam
-          createTeamAction={createUserTeam}
-          userProps={userProps}
-          key="createteam1"
-        />
-      );
-    }
-  }
-
   function saveTeam() {
     const userteamId = userTeamId;
-    saveUserTeam(userteamId, currentUserTeamPlayers);
+    saveUserTeam(userteamId, currentUserTeamPlayers, captainPlayerId);
   }
 
   const validateTeamTransfer: string[] = validateTeam(userteamDataProps);
@@ -115,19 +106,13 @@ const UserTeam = () => {
     return (
       <div className="transferOverview">
         <Row className="nameColumn">
-          <Col>Transfer</Col>
-          <Col>Credit</Col>
-          <Col>Status</Col>
-          <Col>Changes</Col>
+          <Col>TRANSFER</Col>
+          <Col>CREDITS</Col>
+          <Col>CHANGES</Col>
         </Row>
         <Row>
           <Col>{userteamDataProps.userteam.remained_Transfer}</Col>
           <Col>{availableBalance}</Col>
-          <Col>
-            <Badge pill variant={statusValue.type}>
-              {statusValue.message}
-            </Badge>
-          </Col>
           <Col>{userteamDataProps.currentTransferChanges}</Col>
         </Row>
       </div>
@@ -155,16 +140,24 @@ const UserTeam = () => {
     );
   }
 
+  function renderAutoPickTeam() {
+    return (
+      <Row>
+        <Col>
+          <Button
+            variant="info"
+            className="mr-2"
+            onClick={() => autoPickUserTeam()}>
+            Auto Pick Team
+          </Button>
+        </Col>
+      </Row>
+    );
+  }
+
   function renderError() {
     const errorStatusMessage: any = [];
     if (currentUserTeamPlayers && currentUserTeamPlayers.length > 0) {
-      /**
-      const teamCompletionProgess = (currentUserTeamPlayers.length / 11) * 100;
-      if (teamCompletionProgess < 100) {
-        errorStatusMessage.push(
-          renderTeamCompletionProgressBar(teamCompletionProgess)
-        );
-      } **/
       validateTeamTransfer.forEach((message: string) =>
         errorStatusMessage.push(
           <Row>
@@ -175,9 +168,9 @@ const UserTeam = () => {
         )
       );
     } else {
-      const teamCreateMsg =
-        'Please select player from below list and save Team';
+      const teamCreateMsg = 'Create team by using below player list.';
       errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
+      errorStatusMessage.push(renderAutoPickTeam());
     }
     return <div className="errorPanel">{errorStatusMessage}</div>;
   }
@@ -193,7 +186,7 @@ const UserTeam = () => {
           <Form inline>
             <Button
               variant="primary"
-              className="mr-4"
+              className="mr-2"
               onClick={() => saveTeam()}
               disabled={!teamValid}>
               Save Team
@@ -204,6 +197,14 @@ const UserTeam = () => {
               onClick={() => resetUserTeam()}>
               Reset
             </Button>
+            {!isListEmpty(userteamDataProps.userTeamPlayers) && (
+              <Button
+                variant="primary"
+                className="mr-2"
+                onClick={() => setTabName('teamDetails')}>
+                Current Team
+              </Button>
+            )}
           </Form>
         </Nav>
       </Navbar>
@@ -216,9 +217,11 @@ const UserTeam = () => {
         {renderShowTransferOverview()}
         {renderError()}
         <UserTeamPlayerDetails
-          title="Your Team"
+          captionId={captainPlayerId}
           data={userteamDataProps.currentUserTeamPlayers}
           onRemoveRowAction={removeRowAction}
+          updateCaptionAction={updateTeamCaption}
+          editable={true}
         />
         {renderSaveButton()}
         <h4>
@@ -248,18 +251,43 @@ const UserTeam = () => {
     );
   }
 
-  const tabConfig: TabConfig[] = [
-    {
-      key: 'teamDetails',
-      title: 'View Team',
-      renderfunction: renderTeamDetails(),
-    },
-    {
-      key: 'transfer',
-      title: 'Manage Transfer',
-      renderfunction: renderManageTransfer(),
-    },
-  ];
+  function renderTeamDetails() {
+    if (isUserTeamAvailable) {
+      if (isListEmpty(userteamDataProps.userTeamPlayers)) {
+        return <Fragment>{renderManageTransfer()}</Fragment>;
+      } else {
+        return (
+          <Fragment>
+            <TeamDetails data={userteamDataProps} />
+            <Navbar
+              fixed="bottom"
+              bg="light"
+              variant="light"
+              className="justify-content-center saveTeamBtn">
+              <Nav>
+                <Form inline>
+                  <Button
+                    variant="primary"
+                    className="mr-4"
+                    onClick={() => setTabName('transfer')}>
+                    Change Team
+                  </Button>
+                </Form>
+              </Nav>
+            </Navbar>
+          </Fragment>
+        );
+      }
+    } else {
+      return (
+        <CreateTeam
+          createTeamAction={createUserTeam}
+          userProps={userProps}
+          key="createteam1"
+        />
+      );
+    }
+  }
 
   return (
     <div className="userTeamContainer">
@@ -272,12 +300,8 @@ const UserTeam = () => {
           userteamDataProps.statusMessage
         )}
         {checkUserAccess(userteamDataProps.statusMessage)}
-        <TabContainer
-          defaultKey={tabName}
-          tabConfig={tabConfig}
-          activeKey={tabName}
-          onSelect={(key: string) => setTabName(key)}
-        />
+        {tabName == 'teamDetails' && renderTeamDetails()}
+        {tabName == 'transfer' && renderManageTransfer()}
       </LoadingOverlay>
     </div>
   );

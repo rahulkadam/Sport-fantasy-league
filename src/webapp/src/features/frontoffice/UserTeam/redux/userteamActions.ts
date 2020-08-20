@@ -22,6 +22,8 @@ import {
   FETCH_GAME_CRITERIA,
   FETCH_GAME_CRITERIA_ERROR,
   RESET_INTERNAL_USER_TEAM,
+  UPDATE_CAPTION_FOR_TEAM,
+  AUTO_PICK_USER_TEAM,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
@@ -108,10 +110,29 @@ const addRemovePlayerToInternalUserTeamAction = () => {
 const resetUserTeamAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(dispatch, () => {
+    dispatchAction(dispatch, ACTION_START),
+      dispatch({
+        type: RESET_INTERNAL_USER_TEAM,
+      });
+  });
+};
+
+const updateTeamCaptionAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(dispatch, (captainId: any) => {
     dispatch({
-      type: RESET_INTERNAL_USER_TEAM,
+      type: UPDATE_CAPTION_FOR_TEAM,
+      captainId: captainId,
     });
   });
+};
+
+const autoPickUserTeamAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, AUTO_PICK_USER_TEAM)
+  );
 };
 
 const saveUserTeamAction = () => {
@@ -119,8 +140,8 @@ const saveUserTeamAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (userteamId: number, playerList: any) => {
-      saveTeamForUser(userteamId, playerList)
+    (userteamId: number, playerList: any, captainId: any) => {
+      saveTeamForUser(userteamId, playerList, captainId)
         .then((data: any) => {
           dispatch({
             type: SAVE_USER_TEAM,
@@ -191,4 +212,6 @@ export {
   createUserTeamAction,
   fetchGameCriteriaByNameAction,
   resetUserTeamAction,
+  updateTeamCaptionAction,
+  autoPickUserTeamAction,
 };

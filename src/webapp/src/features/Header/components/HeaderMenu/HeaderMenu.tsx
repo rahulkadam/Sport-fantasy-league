@@ -13,6 +13,7 @@ import {
   userMenuConfig,
   userMenuConfigForMobile,
 } from './MenuConfig';
+import '../../Header.scss';
 
 const HeaderMenu = () => {
   const loggedUser = GetLoginStoreData();
@@ -48,7 +49,8 @@ const HeaderMenu = () => {
           expand="md"
           fixed={'top'}
           bg="dark"
-          variant="dark">
+          variant="dark"
+          className="headerNavbar">
           <Navbar.Brand as={Link} to="/">
             <Logo logoSource={fantasyLogo} width="56" />
           </Navbar.Brand>

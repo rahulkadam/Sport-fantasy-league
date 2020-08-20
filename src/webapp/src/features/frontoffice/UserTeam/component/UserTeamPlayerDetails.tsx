@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button, Badge} from 'react-bootstrap';
+import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import '../UserTeam.styles.scss';
-import {Logo} from 'common/components';
+import {FantasyDropDown, Logo} from 'common/components';
 import {renderLogoByPLayerType} from '../redux';
 import {isListEmpty} from 'common/util';
 import {getLogoNameByTeam} from 'common/components/FantasyDropDown';
@@ -13,10 +13,25 @@ import {playerRowStyeForNew} from 'common/components/DataTable/TableConfig';
 
 const UserTeamPlayerDetails = ({
   data,
-  title,
+  captionId,
   onRemoveRowAction,
+  updateCaptionAction,
+  editable,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
+  function getDropDownPlayerList() {
+    const list =
+      data &&
+      data.map((item: any) => {
+        return {
+          id: item.id,
+          name: item.name,
+          selected: item.id == captionId,
+        };
+      });
+    return list || [];
+  }
+  const playerList = getDropDownPlayerList();
 
   function customName(row: any) {
     return (
@@ -42,7 +57,7 @@ const UserTeamPlayerDetails = ({
     return (
       <div>
         <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
-          <Logo logoSource={minuscolor} width="30" />
+          <Logo logoSource={minuscolor} width="20" />
         </span>
       </div>
     );
@@ -59,7 +74,7 @@ const UserTeamPlayerDetails = ({
 
   const columns: any[] = [
     {
-      name: 'Team',
+      name: 'TEAM',
       width: '15%',
       selector: 'teamsNameList',
       sortable: true,
@@ -67,20 +82,20 @@ const UserTeamPlayerDetails = ({
       cell: customTeam,
     },
     {
-      name: 'Player',
+      name: 'PLAYERS',
       selector: 'type',
       sortable: true,
       left: true,
       cell: customName,
     },
     {
-      name: 'Type',
+      name: 'TYPE',
       selector: 'type',
       sortable: true,
       hide: 'sm',
     },
     {
-      name: 'Value',
+      name: 'CREDITS',
       selector: 'value',
       width: '10%',
       center: true,
@@ -103,15 +118,31 @@ const UserTeamPlayerDetails = ({
   const renderCustomSearch = useMemo(() => {
     return (
       <div>
-        <Form.Control
-          type="text"
-          placeholder="Player Name"
-          onChange={(e: any) => setFilterText(e.target.value)}
-          value={filterText}
-        />
+        <Row>
+          <Col>
+            <Form.Label>Search Player</Form.Label>
+            <Form.Control
+              type="text"
+              size="sm"
+              placeholder="Name"
+              onChange={(e: any) => setFilterText(e.target.value)}
+              value={filterText}
+            />
+          </Col>
+          <Col>
+            <Form.Label>Captain Name</Form.Label>
+            <FantasyDropDown
+              onSelect={(value: string) => {
+                updateCaptionAction(value);
+              }}
+              list={playerList}
+              disabled={!editable}
+            />
+          </Col>
+        </Row>
       </div>
     );
-  }, [filterText]);
+  }, [filterText, playerList]);
 
   const filteredRows =
     data &&

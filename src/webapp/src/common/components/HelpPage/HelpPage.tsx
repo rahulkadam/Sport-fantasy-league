@@ -6,6 +6,7 @@ import {
   HelpContentConfigObject,
   Subtopic,
 } from './HelpContentConfigData';
+import FantasyHelpContent from '../../../features/frontoffice/home/components/FantasyHelpContent';
 
 const HelpPage = () => {
   const helpContent = HelpContentConfigData.HelpContent;
@@ -85,10 +86,7 @@ const HelpPage = () => {
         <title>Help - Sport Fantasy</title>
       </Helmet>
       <Container className="mt-3">
-        <h4 className="text-center mb-4">Sport Fantasy Help</h4>
-        <Accordion defaultActiveKey={firstTopicId + 'Target'}>
-          {renderHelpContent()}
-        </Accordion>
+        <FantasyHelpContent />
       </Container>
     </div>
   );

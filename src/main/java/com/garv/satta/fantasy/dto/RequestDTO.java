@@ -13,6 +13,7 @@ public class RequestDTO extends BaseDTO {
     private String otherString;
     private Long addTo;
     private Long add;
+    private Long captainId;
     private Long userTeamId;
     private Long matchId;
     private List<Long> addList;

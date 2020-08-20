@@ -10,11 +10,11 @@ import {LeagueList} from './component/LeagueList';
 import {JoinLeague} from './component/JoinLeague';
 import {CreateLeague} from './component/CreateLeague';
 import {StatusMessage} from 'common/components';
-import {TabContainer} from 'common/components';
 import './League.styles.scss';
 import {getTournamentData} from '../../admin/Tournament/redux';
 import {checkUserAccess, GetLoginStoreData} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
+import {Button, Form, Nav} from 'react-bootstrap';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -27,8 +27,8 @@ const League = () => {
   const fetchUserLeagueList = fetchUserLeagueListAction();
   const joinLeague = joinLeagueAction();
   const createLeague = createLeagueAction();
+  const [tabName, setTabName] = useState('overview');
   const defaultTabKey = 'overview';
-  const [tabName, setTabName] = useState(leagueProps.tabName);
   const userId = userProps.id || 9999;
 
   if (leagueProps.shouldRefresh && tabName != defaultTabKey) {
@@ -43,6 +43,37 @@ const League = () => {
       fetchUserLeagueList(userId);
     }
   });
+
+  function renderLeagueActions() {
+    return (
+      <Form inline>
+        {tabName != 'overview' && (
+          <Button
+            variant="link"
+            className="mr-4"
+            onClick={() => setTabName('overview')}>
+            Overview
+          </Button>
+        )}
+        {tabName != 'createLeague' && (
+          <Button
+            variant="link"
+            className="mr-4"
+            onClick={() => setTabName('createLeague')}>
+            Create League
+          </Button>
+        )}
+        {tabName != 'joinLeague' && (
+          <Button
+            variant="link"
+            className="mr-2"
+            onClick={() => setTabName('joinLeague')}>
+            Join League
+          </Button>
+        )}
+      </Form>
+    );
+  }
 
   function renderLeagueOverview() {
     return (
@@ -75,23 +106,19 @@ const League = () => {
     );
   }
 
-  const tabConfig: TabConfig[] = [
-    {
-      key: 'overview',
-      title: 'League Overview',
-      renderfunction: renderLeagueOverview(),
-    },
-    {
-      key: 'joinLeague',
-      title: 'Join League',
-      renderfunction: renderJoinLeague(),
-    },
-    {
-      key: 'createLeague',
-      title: 'Create League',
-      renderfunction: renderCreateLeague(),
-    },
-  ];
+  function renderLeagueComponents(tab: string | undefined) {
+    switch (tab) {
+      case 'overview':
+        return renderLeagueOverview();
+      case 'joinLeague':
+        return renderJoinLeague();
+      case 'createLeague':
+        return renderCreateLeague();
+      default:
+        return renderLeagueOverview();
+    }
+  }
+
   function renderStatusMessage(isError: boolean, statusMessage: string) {
     const statusClassName = leagueProps.hasError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
@@ -105,12 +132,8 @@ const League = () => {
         text="Loading League Details ...">
         {renderStatusMessage(leagueProps.hasError, leagueProps.statusMessage)}
         {checkUserAccess(leagueProps.statusMessage)}
-        <TabContainer
-          defaultKey="overview"
-          tabConfig={tabConfig}
-          activeKey={tabName}
-          onSelect={(key: string) => setTabName(key)}
-        />
+        {renderLeagueActions()}
+        {renderLeagueComponents(tabName)}
       </LoadingOverlay>
     </div>
   );

@@ -33,7 +33,7 @@ const TabContainer = ({
     });
     return (
       <Fragment>
-        <Nav className="flex-column" fill>
+        <Nav className="flex-column col-sm-2 d-sm-block" fill>
           {element}
         </Nav>
       </Fragment>

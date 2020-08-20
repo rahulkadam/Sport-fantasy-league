@@ -11,7 +11,7 @@ const UserInfo = () => {
   }, []);
 
   function goToHome() {
-    history.push('/home');
+    history.push('/league');
   }
 
   return (

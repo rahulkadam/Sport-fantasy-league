@@ -52,7 +52,7 @@ const TournamentPlayerList = ({
     return (
       <div>
         <span onClick={() => onRowSelected([row])} className="removeIcon">
-          <Logo logoSource={pluscolor} width="30" />
+          <Logo logoSource={pluscolor} width="20" />
         </span>
       </div>
     );
@@ -69,7 +69,7 @@ const TournamentPlayerList = ({
 
   const columns = [
     {
-      name: 'Team',
+      name: 'TEAM',
       width: '15%',
       selector: 'teamsNameList',
       center: true,
@@ -77,26 +77,26 @@ const TournamentPlayerList = ({
       cell: customTeam,
     },
     {
-      name: 'Player',
+      name: 'PLAYERS',
       selector: 'type',
       sortable: true,
       cell: customName,
     },
     {
-      name: 'Type',
+      name: 'TYPE',
       selector: 'type',
       sortable: true,
       hide: 'sm',
     },
     {
-      name: 'Value',
+      name: 'CREDITS',
       selector: 'value',
       width: '10%',
       sortable: true,
       style: {'font-weight': 'bold'},
     },
     {
-      name: 'Country',
+      name: 'COUNTRY',
       selector: 'country',
       sortable: true,
       right: true,
@@ -105,7 +105,7 @@ const TournamentPlayerList = ({
   ];
 
   function checkDisabledPlayer() {
-    return currentUserTeamPlayers.length == 110 || teamValueByPlayers > 1000;
+    return currentUserTeamPlayers.length == 15 || teamValueByPlayers > 150;
   }
   const newColumns: any = checkDisabledPlayer()
     ? columns

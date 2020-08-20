@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import {fantasyLogo} from '@logos/index';
 import {Row, Col} from 'react-bootstrap';
 import {GameCorousel} from 'common/components';
 import {arrayRotate, getGameCardPropsData} from '../redux';

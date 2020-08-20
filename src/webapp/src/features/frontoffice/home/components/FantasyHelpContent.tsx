@@ -15,14 +15,14 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={8}>
+          <Col>
             Tournament Fantasy cricket is an online fantasy game, in which a
             user makes a virtual cricket team of eleven players from tournament
             Playing Playing teams.
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={8}>
+          <Col>
             Points are then scored depending on how the selected cricketers
             perform in the games happening. To win the League leagues, the users
             must strive to earn maximum points and get the highest points in the
@@ -30,7 +30,7 @@ const FantasyHelpContent = () => {
           </Col>{' '}
         </Row>
         <Row className="contentRow">
-          <Col md={8}>
+          <Col>
             The main aim is to ultimately Play friendly Fantasy Cricket With
             your friend, thoughout the tournament with single team by managing
             transfer properly!
@@ -53,7 +53,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Budget</Badge>
           </Col>
           <Col md={8}>
@@ -62,7 +62,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Transfer</Badge>
           </Col>
           <Col md={8}>
@@ -72,7 +72,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Player Selection Rules</Badge>
           </Col>
           <Col md={8}>
@@ -100,7 +100,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Create Team</Badge>
           </Col>
           <Col md={8}>
@@ -109,7 +109,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Create/Join League</Badge>
           </Col>
           <Col md={8}>
@@ -118,7 +118,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Make Transfer</Badge>
           </Col>
           <Col md={8}>
@@ -127,7 +127,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Check League Ranking</Badge>
           </Col>
           <Col md={8}>
@@ -150,7 +150,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Tournament Fantasy</Badge>
           </Col>
           <Col md={8}>
@@ -159,7 +159,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Manage Transfer Budget</Badge>
           </Col>
           <Col md={8}>
@@ -169,7 +169,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">No Daily New Team</Badge>
           </Col>
           <Col md={8}>
@@ -178,7 +178,7 @@ const FantasyHelpContent = () => {
           </Col>
         </Row>
         <Row className="contentRow">
-          <Col md={1}>
+          <Col md={4}>
             <Badge variant="light">Friendly Fantasy with Friends</Badge>
           </Col>
           <Col md={8}>

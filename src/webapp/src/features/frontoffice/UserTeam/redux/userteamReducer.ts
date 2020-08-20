@@ -14,9 +14,12 @@ import {
   FETCH_GAME_CRITERIA,
   FETCH_GAME_CRITERIA_ERROR,
   RESET_INTERNAL_USER_TEAM,
+  UPDATE_CAPTION_FOR_TEAM,
+  AUTO_PICK_USER_TEAM,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
+  getAutoPickTeam,
   returnMapFromList,
   returnUniqueArrayElement,
 } from 'common/util';
@@ -34,6 +37,8 @@ const initialState: UserTeam = {
   currentTransferChanges: 0,
   teamcriteria: {},
   shouldRefresh: false,
+  captionPlayerId: 0,
+  captainName: '',
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
@@ -42,6 +47,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
   let currentUserTeamPlayers = state.currentUserTeamPlayers;
   let transferCount = state.currentTransferChanges;
   let userteam = state.userteam;
+  let captionPlayerId = state.captionPlayerId;
   switch (action.type) {
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
@@ -111,12 +117,23 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         state.userTeamPlayers,
         currentUserTeamPlayers
       );
+      captionPlayerId = state.captionPlayerId || currentUserTeamPlayers[0].id;
       userLeaguestate = {
         ...state,
         currentUserTeamPlayers: currentUserTeamPlayers,
         currentUserTeamValue: currentTeamValue,
         currentTransferChanges: transferCount,
+        captionPlayerId: captionPlayerId,
         isLoading: false,
+      };
+      return userLeaguestate;
+
+    case AUTO_PICK_USER_TEAM:
+      currentUserTeamPlayers = getAutoPickTeam(state.playerList);
+      captionPlayerId = state.captionPlayerId || currentUserTeamPlayers[0].id;
+      userLeaguestate = {
+        ...state,
+        currentUserTeamPlayers: currentUserTeamPlayers,
       };
       return userLeaguestate;
     case REMOVE_FROM_INTERNAL_USER_TEAM:
@@ -146,6 +163,8 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         userteam: userteam,
         currentUserTeamValue: userteam.creditbalance,
+        captionPlayerId: userteam.team_captain_player_Id,
+        captainName: userteam.captainName,
         isLoading: false,
       };
       return userLeaguestate;
@@ -179,6 +198,12 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         teamcriteria: action.gameCriteria,
         isLoading: false,
+      };
+      return userLeaguestate;
+    case UPDATE_CAPTION_FOR_TEAM:
+      userLeaguestate = {
+        ...state,
+        captionPlayerId: action.captainId,
       };
       return userLeaguestate;
     case RESET_INTERNAL_USER_TEAM:

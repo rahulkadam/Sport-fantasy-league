@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
@@ -7,12 +7,14 @@ import {
   UserLogOutActions,
 } from '../../../Authentication/redux';
 import {UserAvatar} from 'common/components';
-import {getAccessToken, removeAccessToken} from '../../../../API';
+import {getAccessToken, removeAccessToken} from 'API';
+import LoginModal from '../../../Authentication/components/LoginModal';
 
 const HeaderUser = () => {
   const loggedUser = GetLoginStoreData();
   const history = useHistory();
   const userLogOutAction = UserLogOutActions();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
     if (!getAccessToken()) {
@@ -20,8 +22,19 @@ const HeaderUser = () => {
     }
   });
 
+  function renderLoginModal() {
+    if (!showLoginModal) return;
+    return (
+      <LoginModal
+        show={true}
+        handleClose={(value: any) => setShowLoginModal(value)}
+        handleShow={(value: any) => setShowLoginModal(value)}
+      />
+    );
+  }
+
   function loginUser() {
-    history.replace(`/login`);
+    setShowLoginModal(true);
   }
 
   function logoutUser() {
@@ -38,6 +51,7 @@ const HeaderUser = () => {
         </Button>
       )}
       {loggedUser.id && <UserAvatar user={loggedUser} logout={logoutUser} />}
+      {renderLoginModal()}
     </div>
   );
 };

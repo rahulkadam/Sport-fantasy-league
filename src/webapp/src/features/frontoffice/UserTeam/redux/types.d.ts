@@ -11,4 +11,6 @@ declare type UserTeam = {
   currentTransferChanges?: number;
   teamcriteria?: any;
   shouldRefresh?: boolean;
+  captionPlayerId?: any;
+  captainName?: any;
 };

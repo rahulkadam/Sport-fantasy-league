@@ -1,12 +1,16 @@
 import {Get, Post} from 'API';
 
-export function saveTeamForUser(userteamId: number, playerList: any) {
+export function saveTeamForUser(
+  userteamId: number,
+  playerList: any,
+  captainId: any
+) {
   const playerIds: any = [];
   playerList.forEach((player: any) => {
     playerIds.push(player.id);
   });
   return Post('/fantasy/userteam/add/player', {
-    data: {addTo: userteamId, addList: playerIds},
+    data: {addTo: userteamId, addList: playerIds, captainId: captainId},
   });
 }
 

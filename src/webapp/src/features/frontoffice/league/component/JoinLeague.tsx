@@ -19,7 +19,6 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
 
   return (
     <div>
-      Welcome to Fantasy League
       <div className="mb-3">
         <StatusMessage type={'primary'} text={joinleageMsg} />
         <Form.Control

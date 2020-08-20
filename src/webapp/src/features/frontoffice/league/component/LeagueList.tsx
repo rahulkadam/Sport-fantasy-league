@@ -10,25 +10,25 @@ const LeagueList = (props: LeagueUserListProps) => {
 
   const columns = [
     {
-      name: 'Name',
+      name: 'NAME',
       selector: 'name',
       sortable: true,
       center: true,
     },
     {
-      name: 'Total User',
+      name: 'USERS',
       selector: 'totalUserCount',
       sortable: true,
       center: true,
     },
     {
-      name: 'Rank',
+      name: 'RANK',
       selector: 'totalUserCount',
       sortable: true,
       center: true,
     },
     {
-      name: 'Code',
+      name: 'CODE',
       selector: 'leagueCode',
       center: true,
     },
