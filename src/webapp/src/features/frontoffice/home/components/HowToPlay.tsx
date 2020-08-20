@@ -60,11 +60,9 @@ const HowToPlay = () => {
 
   function renderFantasyStep(step: any) {
     return (
-      <Row className="justify-content-center">
-        <Col xs lg="1" className="stepHeaderLogoCol">
-          {renderLeftSide(step.logo)}
-        </Col>
-        <Col xs lg="5" className="stepHeaderContentCol">
+      <Row>
+        <Col className="stepHeaderLogoCol">{renderLeftSide(step.logo)}</Col>
+        <Col className="stepHeaderContentCol">
           {renderRightSideSide(step.title, step.textMsg)}
         </Col>
       </Row>
@@ -82,7 +80,7 @@ const HowToPlay = () => {
   return (
     <div>
       <Row className="headerRow justify-content-center">
-        <Col xs lg="6">
+        <Col>
           <h3>How to play Tournament Fantasy Cricket?</h3>
         </Col>
       </Row>
