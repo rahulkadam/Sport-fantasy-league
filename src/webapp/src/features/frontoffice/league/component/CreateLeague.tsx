@@ -50,7 +50,6 @@ const CreateLeague = ({
 
   return (
     <div>
-      Welcome to Fantasy League
       <div className="mb-3">
         <StatusMessage type={'primary'} text={createleagueMsg} />
         <Row>
