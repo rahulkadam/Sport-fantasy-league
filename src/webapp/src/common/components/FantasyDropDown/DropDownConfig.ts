@@ -26,10 +26,10 @@ export const countryListWithAll = [{id: 'ALL', name: 'ALL'}].concat(
 );
 
 export const PlayerTypeList = [
-  {id: 'BATSMAN', name: 'BATSMAN'},
-  {id: 'BOWLER', name: 'BOWLER'},
-  {id: 'WICKETKEEPER', name: 'WICKETKEEPER'},
-  {id: 'ALLROUNDER', name: 'ALLROUNDER'},
+  {id: 'BATSMAN', name: 'BATSMAN', shortName: 'BAT', badge: 'danger'},
+  {id: 'BOWLER', name: 'BOWLER', shortName: 'BOWL', badge: 'success'},
+  {id: 'WICKETKEEPER', name: 'WICKETKEEPER', shortName: 'WK', badge: 'primary'},
+  {id: 'ALLROUNDER', name: 'ALLROUNDER', shortName: 'AR', badge: 'warning'},
 ];
 
 export const PlayerTypeListWithALl = [{id: 'ALL', name: 'ALL'}].concat(

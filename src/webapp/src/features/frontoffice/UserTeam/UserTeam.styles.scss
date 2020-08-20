@@ -35,21 +35,44 @@
  padding: 2rem;
  margin-bottom: 1rem;
  max-width: 750px;
+ color: #7b7a7a;
 }
 
 .transferOverview {
  margin: 0.2rem;
  padding: 1rem;
  font-family: Source Sans Pro,sans-serif;
- background-color: bisque;
+ background-color: #4F91CD;
+ border-radius: 1rem;
 }
 
 .teamOverview {
- margin: 1rem;
+ margin: 0.2rem;
+ padding: 1rem;
  font-family: Source Sans Pro,sans-serif;
+ background-color: #4F91CD;
+ border-radius: 1rem;
 }
 
 .errorPanel {
  padding: 1rem;
  margin-top: 0.5rem;
+}
+
+.createTeamContainer {
+ padding: 1rem;
+ margin-top: 0.5rem;
+}
+
+.createTeamBtn {
+ padding: 1rem;
+ margin-top: 0.5rem;
+}
+
+.iplPlayerListTitle {
+ border-radius: 1rem;
+ font-weight: 600;
+ background-color: #28a745;
+ padding: 1rem;
+ margin: 1rem;
 }

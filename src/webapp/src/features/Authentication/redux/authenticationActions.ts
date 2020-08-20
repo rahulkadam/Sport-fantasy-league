@@ -25,7 +25,7 @@ export const LogActions = () => {
 
 export const UserLogOutActions = () => {
   const dispatch = useDispatch();
-  return dispatchActionWrapper(dispatch, (authUser: any) => {
+  return dispatchActionWrapper(dispatch, () => {
     dispatch({
       type: LOGGED_OUT_USER,
     });

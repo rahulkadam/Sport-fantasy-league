@@ -33,6 +33,7 @@ import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {useParams} from 'react-router-dom';
 import {isListEmpty} from 'common/util';
+import PlayerTypeCountSummary from './component/common/PlayerTypeCountSummary';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -115,6 +116,11 @@ const UserTeam = () => {
           <Col>{availableBalance}</Col>
           <Col>{userteamDataProps.currentTransferChanges}</Col>
         </Row>
+        <Row className="nameColumn">
+          <Col>
+            <PlayerTypeCountSummary playerList={currentUserTeamPlayers} />
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -123,35 +129,30 @@ const UserTeam = () => {
     updateCurrentUserTeam(row, 'REMOVE');
   }
 
-  function renderTeamCompletionProgressBar(progress: number) {
-    return (
-      <Row className="errorRow">
-        <Col sm={6} md={6}>
-          <ProgressBar>
-            <ProgressBar variant="success" now={progress} label={'Complete'} />
-            <ProgressBar
-              variant="danger"
-              now={100 - progress}
-              label={'InComplete'}
-            />
-          </ProgressBar>
-        </Col>
-      </Row>
-    );
-  }
-
   function renderAutoPickTeam() {
+    const teamCreateMsg = 'Create team Or Auto Pick if you are short of time.';
     return (
-      <Row>
-        <Col>
-          <Button
-            variant="info"
-            className="mr-2"
-            onClick={() => autoPickUserTeam()}>
-            Auto Pick Team
-          </Button>
-        </Col>
-      </Row>
+      <Fragment>
+        <Row>
+          <Col>
+            <StatusMessage
+              text={teamCreateMsg}
+              type="info"
+              key={teamCreateMsg}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              variant="outline-success"
+              className="mr-2"
+              onClick={() => autoPickUserTeam()}>
+              Auto Pick Team
+            </Button>
+          </Col>
+        </Row>
+      </Fragment>
     );
   }
 
@@ -168,8 +169,6 @@ const UserTeam = () => {
         )
       );
     } else {
-      const teamCreateMsg = 'Create team by using below player list.';
-      errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
       errorStatusMessage.push(renderAutoPickTeam());
     }
     return <div className="errorPanel">{errorStatusMessage}</div>;
@@ -185,21 +184,21 @@ const UserTeam = () => {
         <Nav>
           <Form inline>
             <Button
-              variant="primary"
+              variant={!teamValid ? 'outline-secondary' : 'outline-primary'}
               className="mr-2"
               onClick={() => saveTeam()}
               disabled={!teamValid}>
               Save Team
             </Button>
             <Button
-              variant="primary"
+              variant="outline-primary"
               className="mr-2"
               onClick={() => resetUserTeam()}>
               Reset
             </Button>
             {!isListEmpty(userteamDataProps.userTeamPlayers) && (
               <Button
-                variant="primary"
+                variant="outline-primary"
                 className="mr-2"
                 onClick={() => setTabName('teamDetails')}>
                 Current Team
@@ -224,9 +223,9 @@ const UserTeam = () => {
           editable={true}
         />
         {renderSaveButton()}
-        <h4>
-          <Badge variant="light">Add player from below list</Badge>
-        </h4>
+        <Row className="iplPlayerListTitle">
+          <Col>IPL player list</Col>
+        </Row>
         <TournamentPlayerList
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
@@ -267,10 +266,10 @@ const UserTeam = () => {
               <Nav>
                 <Form inline>
                   <Button
-                    variant="primary"
+                    variant="outline-primary"
                     className="mr-4"
                     onClick={() => setTabName('transfer')}>
-                    Change Team
+                    Make Transfer
                   </Button>
                 </Form>
               </Nav>
@@ -299,7 +298,7 @@ const UserTeam = () => {
           userteamDataProps.hasError,
           userteamDataProps.statusMessage
         )}
-        {checkUserAccess(userteamDataProps.statusMessage)}
+        {checkUserAccess()}
         {tabName == 'teamDetails' && renderTeamDetails()}
         {tabName == 'transfer' && renderManageTransfer()}
       </LoadingOverlay>

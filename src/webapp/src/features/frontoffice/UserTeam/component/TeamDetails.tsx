@@ -1,26 +1,14 @@
 import React, {Fragment} from 'react';
 import {UserTeamPlayerDetails} from './UserTeamPlayerDetails';
 import {Col, Row, Badge} from 'react-bootstrap';
+import {getPlayerMapByType} from '../redux';
+import {PlayerTypeList} from '../../../../common/components/FantasyDropDown';
+import PlayerTypeCountSummary from './common/PlayerTypeCountSummary';
 
 const TeamDetails = ({data}: TeamDetailsProps) => {
   const userteam = data.userteam;
   const userPlayerList = data.userTeamPlayers;
   const captainId = userteam.team_captain_player_Id;
-
-  function teamEligibleToPlay() {
-    if (userPlayerList && userPlayerList.length == 11) {
-      return (
-        <Badge pill variant="success">
-          COMPLETE
-        </Badge>
-      );
-    }
-    return (
-      <Badge pill variant="danger">
-        INCOMPLETE
-      </Badge>
-    );
-  }
 
   function renderUserTeamOverview() {
     return (
@@ -37,22 +25,23 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
           <Col>{userteam.remained_Transfer}</Col>
           <Col>{userteam.creditbalance}</Col>
         </Row>
+        <Row className="nameColumn">
+          <Col>
+            <PlayerTypeCountSummary playerList={userPlayerList} />
+          </Col>
+        </Row>
       </div>
     );
   }
   function renderTeamDetails() {
+    if (userPlayerList.length == 0) return;
     return (
       <Fragment>
-        {userPlayerList.length > 0 && (
-          <UserTeamPlayerDetails
-            data={userPlayerList}
-            key="sda"
-            captionId={captainId}
-          />
-        )}
-        {userPlayerList.length == 0 && (
-          <div>Please click on Manager Transfer, to Add player first Time</div>
-        )}
+        <UserTeamPlayerDetails
+          data={userPlayerList}
+          key="sda"
+          captionId={captainId}
+        />
       </Fragment>
     );
   }

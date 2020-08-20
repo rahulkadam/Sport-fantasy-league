@@ -17,8 +17,10 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
   const joinleageMsg =
     'Ask friends to share league code with you to directly enter into private league';
 
+  const isInvalid = leagueCode.length == 0;
+
   return (
-    <div>
+    <div className="createLeagueContainer">
       <div className="mb-3">
         <StatusMessage type={'primary'} text={joinleageMsg} />
         <Form.Control
@@ -29,12 +31,14 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
           onChange={event => changeLeagueCode(event.target.value)}
         />
       </div>
-      <Button
-        variant="primary"
-        onClick={() => joinLeague()}
-        disabled={leagueCode.length == 0}>
-        Join League
-      </Button>
+      <div className="createLeagueBtn">
+        <Button
+          variant={isInvalid ? 'secondary' : 'primary'}
+          onClick={() => joinLeague()}
+          disabled={isInvalid}>
+          Join League
+        </Button>
+      </div>
     </div>
   );
 };

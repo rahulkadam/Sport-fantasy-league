@@ -48,8 +48,10 @@ const CreateLeague = ({
 
   const createleagueMsg = 'Create Private league and share code with friends';
 
+  const isInvalid = leagueName.length == 0;
+
   return (
-    <div>
+    <div className="createLeagueContainer">
       <div className="mb-3">
         <StatusMessage type={'primary'} text={createleagueMsg} />
         <Row>
@@ -75,9 +77,9 @@ const CreateLeague = ({
         </Row>
       </div>
       <Button
-        variant="primary"
+        variant={isInvalid ? 'secondary' : 'primary'}
         onClick={() => createLeagueAction()}
-        disabled={leagueName.length == 0}>
+        disabled={isInvalid}>
         Create League
       </Button>
     </div>

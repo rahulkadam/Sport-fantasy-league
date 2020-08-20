@@ -33,7 +33,7 @@ export const playerRowStyeForNew = [
   {
     when: (row: any) => row.isNew,
     style: {
-      backgroundColor: '#fb653f',
+      backgroundColor: '#4F91CD',
     },
   },
 ];
