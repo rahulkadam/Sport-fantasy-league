@@ -223,9 +223,9 @@ const UserTeam = () => {
           editable={true}
         />
         {renderSaveButton()}
-        <h4>
-          <Badge variant="light">Add player from below list</Badge>
-        </h4>
+        <Row className="iplPlayerListTitle">
+          <Col>IPL player list</Col>
+        </Row>
         <TournamentPlayerList
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
