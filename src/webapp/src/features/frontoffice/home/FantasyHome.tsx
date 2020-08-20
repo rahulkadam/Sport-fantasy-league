@@ -18,8 +18,7 @@ const FantasyHome = () => {
   return (
     <div className="homeContainer">
       <UserHomePageBoard />
-      <MatchStatsData {...props} />
-      {!accessToken && <HowToPlay />}
+      <HowToPlay />
     </div>
   );
 };

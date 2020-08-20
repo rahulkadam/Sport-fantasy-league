@@ -17,6 +17,7 @@ import {
   validateTeam,
   resetUserTeamAction,
   updateTeamCaptionAction,
+  autoPickUserTeamAction,
 } from './redux';
 import {
   Button,
@@ -42,6 +43,7 @@ const UserTeam = () => {
   const resetUserTeam = resetUserTeamAction();
   const fetchGameCriteriaByName = fetchGameCriteriaByNameAction();
   const saveUserTeam = saveUserTeamAction();
+  const autoPickUserTeam = autoPickUserTeamAction();
   const createUserTeam = createUserTeamAction();
   const isUserTeamAvailable =
     userteamDataProps.userteam && userteamDataProps.userteam.id;
@@ -138,6 +140,21 @@ const UserTeam = () => {
     );
   }
 
+  function renderAutoPickTeam() {
+    return (
+      <Row>
+        <Col>
+          <Button
+            variant="info"
+            className="mr-2"
+            onClick={() => autoPickUserTeam()}>
+            Auto Pick Team
+          </Button>
+        </Col>
+      </Row>
+    );
+  }
+
   function renderError() {
     const errorStatusMessage: any = [];
     if (currentUserTeamPlayers && currentUserTeamPlayers.length > 0) {
@@ -153,6 +170,7 @@ const UserTeam = () => {
     } else {
       const teamCreateMsg = 'Create team by using below player list.';
       errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
+      errorStatusMessage.push(renderAutoPickTeam());
     }
     return <div className="errorPanel">{errorStatusMessage}</div>;
   }

@@ -57,7 +57,7 @@ const UserTeamPlayerDetails = ({
     return (
       <div>
         <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
-          <Logo logoSource={minuscolor} width="30" />
+          <Logo logoSource={minuscolor} width="20" />
         </span>
       </div>
     );

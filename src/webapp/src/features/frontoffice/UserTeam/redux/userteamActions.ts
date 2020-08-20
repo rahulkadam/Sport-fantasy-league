@@ -23,6 +23,7 @@ import {
   FETCH_GAME_CRITERIA_ERROR,
   RESET_INTERNAL_USER_TEAM,
   UPDATE_CAPTION_FOR_TEAM,
+  AUTO_PICK_USER_TEAM,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
@@ -109,9 +110,10 @@ const addRemovePlayerToInternalUserTeamAction = () => {
 const resetUserTeamAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(dispatch, () => {
-    dispatch({
-      type: RESET_INTERNAL_USER_TEAM,
-    });
+    dispatchAction(dispatch, ACTION_START),
+      dispatch({
+        type: RESET_INTERNAL_USER_TEAM,
+      });
   });
 };
 
@@ -123,6 +125,14 @@ const updateTeamCaptionAction = () => {
       captainId: captainId,
     });
   });
+};
+
+const autoPickUserTeamAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, AUTO_PICK_USER_TEAM)
+  );
 };
 
 const saveUserTeamAction = () => {
@@ -203,4 +213,5 @@ export {
   fetchGameCriteriaByNameAction,
   resetUserTeamAction,
   updateTeamCaptionAction,
+  autoPickUserTeamAction,
 };

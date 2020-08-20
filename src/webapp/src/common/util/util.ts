@@ -59,3 +59,43 @@ export function getErrorMessage(error: any) {
 export function isListEmpty(list: any) {
   return !list || list.length == 0;
 }
+
+export function getAutoPickTeam(list: any) {
+  let autoUserTeam: any = [];
+  let wkArr = 0;
+  let alArr = 0;
+  let batArr = 0;
+  let bowlArr = 0;
+  let total = 0;
+  list.forEach((player: any) => {
+    if (total == 11) {
+      return;
+    }
+    if (!player.teamsNameList || player.teamsNameList.length == 0) {
+    } else {
+      if (player.type == 'WICKETKEEPER' && wkArr == 0) {
+        autoUserTeam = autoUserTeam.concat(player);
+        wkArr = 1;
+        total = total + 1;
+      }
+      if (player.type == 'ALLROUNDER' && alArr < 2) {
+        autoUserTeam = autoUserTeam.concat(player);
+        alArr = alArr + 1;
+        total = total + 1;
+      }
+
+      if (player.type == 'BATSMAN' && batArr < 4) {
+        autoUserTeam = autoUserTeam.concat(player);
+        batArr = batArr + 1;
+        total = total + 1;
+      }
+      if (player.type == 'BOWLER' && bowlArr < 4) {
+        autoUserTeam = autoUserTeam.concat(player);
+        bowlArr = bowlArr + 1;
+        total = total + 1;
+      }
+    }
+  });
+
+  return autoUserTeam;
+}

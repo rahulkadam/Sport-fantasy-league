@@ -52,7 +52,7 @@ const TournamentPlayerList = ({
     return (
       <div>
         <span onClick={() => onRowSelected([row])} className="removeIcon">
-          <Logo logoSource={pluscolor} width="30" />
+          <Logo logoSource={pluscolor} width="20" />
         </span>
       </div>
     );
