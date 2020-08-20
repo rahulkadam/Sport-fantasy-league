@@ -18,8 +18,11 @@ const Root = () => {
   }, []);
 
   return (
-    <div className="fixedHeaderContainer">
-      <BaseRoute />
+    <div className="mainContainer">
+      <div className="backgroundImageRight">test1</div>
+      <div className="fixedHeaderContainer">
+        <BaseRoute />
+      </div>
     </div>
   );
 };

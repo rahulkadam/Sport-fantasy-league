@@ -67,4 +67,20 @@
 
 .fixedHeaderContainer {
   margin-top: 6rem;
+  background-color: whitesmoke;
+}
+
+.backgroundImageRight {
+  background-image: url(./common/images/logos/fantasybgImage.png);
+  position: fixed;
+  left: 750px;
+  right: 0;
+  background-size: cover;
+  top: 0;
+  bottom: 0;
+}
+
+.mainContainer {
+  max-width: 750px;
+  height: 100%;
 }

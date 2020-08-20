@@ -168,7 +168,7 @@ const UserTeam = () => {
           <Form inline>
             <Button
               variant="primary"
-              className="mr-4"
+              className="mr-2"
               onClick={() => saveTeam()}
               disabled={!teamValid}>
               Save Team
