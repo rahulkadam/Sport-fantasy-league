@@ -40,6 +40,10 @@ export const adminMenuConfig = [
     name: 'Venue',
   },
   {
+    link: '/back/process',
+    name: 'Process',
+  },
+  {
     link: '/back/match',
     name: 'Match',
   },
