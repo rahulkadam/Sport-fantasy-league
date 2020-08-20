@@ -66,8 +66,10 @@
 }
 
 .fixedHeaderContainer {
-  margin-top: 6rem;
+  margin-top: 5rem;
   background-color: whitesmoke;
+  height: 750px;
+  overflow-y: scroll;
 }
 
 .backgroundImageRight {

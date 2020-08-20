@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import reduxStore from './config/redux/reduxStore';
 import {BaseRoute} from './config/route';
@@ -6,6 +6,8 @@ import * as serviceWorker from './config/pwa/serviceWorker';
 import {init_GA} from './common/config';
 import './index.scss';
 import 'bootstrap/dist/css/bootstrap.css';
+import {Footer} from './common/components/Footer';
+import {Header} from './features/Header';
 
 /**
  *
@@ -19,10 +21,12 @@ const Root = () => {
 
   return (
     <div className="mainContainer">
-      <div className="backgroundImageRight">test1</div>
+      <div className="backgroundImageRight"></div>
+      <Header />
       <div className="fixedHeaderContainer">
         <BaseRoute />
       </div>
+      <Footer />
     </div>
   );
 };

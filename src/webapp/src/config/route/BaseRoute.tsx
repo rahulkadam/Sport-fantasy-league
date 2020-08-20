@@ -1,14 +1,7 @@
 import React, {Suspense} from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
+import {Route, Redirect, Switch} from 'react-router-dom';
 import {PrivateRoute} from './PrivateRoute';
-import {Header} from '../../features/Header';
 import {RouteConfig, RouteConfigObject} from './Routeconfig';
-import {Footer} from '../../common/components/Footer';
 
 function renderPrivateRoute(data: RouteConfigObject): JSX.Element {
   return (
@@ -64,9 +57,7 @@ const BaseRoute = () => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
-        <Header />
         <Switch>{renderRoute()}</Switch>
-        <Footer />
       </Suspense>
     </div>
   );
