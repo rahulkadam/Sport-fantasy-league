@@ -55,10 +55,10 @@ const League = () => {
 
   function renderLeagueActions() {
     return (
-      <Form inline>
+      <Form inline className="leagueAction">
         {tabName != 'overview' && (
           <Button
-            variant="link"
+            variant="outline-primary"
             className="mr-4"
             onClick={() => setTabName('overview')}>
             Overview
@@ -66,7 +66,7 @@ const League = () => {
         )}
         {tabName != 'createLeague' && (
           <Button
-            variant="link"
+            variant="outline-primary"
             className="mr-4"
             onClick={() => setTabName('createLeague')}>
             Create League
@@ -74,7 +74,7 @@ const League = () => {
         )}
         {tabName != 'joinLeague' && (
           <Button
-            variant="link"
+            variant="outline-primary"
             className="mr-2"
             onClick={() => setTabName('joinLeague')}>
             Join League

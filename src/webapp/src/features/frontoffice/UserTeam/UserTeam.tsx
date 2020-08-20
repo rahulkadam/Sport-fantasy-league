@@ -195,21 +195,21 @@ const UserTeam = () => {
         <Nav>
           <Form inline>
             <Button
-              variant={!teamValid ? 'secondary' : 'primary'}
+              variant={!teamValid ? 'outline-secondary' : 'outline-primary'}
               className="mr-2"
               onClick={() => saveTeam()}
               disabled={!teamValid}>
               Save Team
             </Button>
             <Button
-              variant="primary"
+              variant="outline-primary"
               className="mr-2"
               onClick={() => resetUserTeam()}>
               Reset
             </Button>
             {!isListEmpty(userteamDataProps.userTeamPlayers) && (
               <Button
-                variant="primary"
+                variant="outline-primary"
                 className="mr-2"
                 onClick={() => setTabName('teamDetails')}>
                 Current Team
@@ -277,7 +277,7 @@ const UserTeam = () => {
               <Nav>
                 <Form inline>
                   <Button
-                    variant="primary"
+                    variant="outline-primary"
                     className="mr-4"
                     onClick={() => setTabName('transfer')}>
                     Make Transfer

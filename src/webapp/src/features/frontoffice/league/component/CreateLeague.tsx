@@ -51,7 +51,7 @@ const CreateLeague = ({
   const isInvalid = leagueName.length == 0;
 
   return (
-    <div>
+    <div className="createLeagueContainer">
       <div className="mb-3">
         <StatusMessage type={'primary'} text={createleagueMsg} />
         <Row>
