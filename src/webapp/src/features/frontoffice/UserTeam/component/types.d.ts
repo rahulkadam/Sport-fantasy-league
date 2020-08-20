@@ -22,3 +22,7 @@ declare type UserTeamPlayerDetails = {
   updateCaptionAction?: any;
   editable?: boolean;
 };
+
+declare type PlayerTypeCountSummaryProps = {
+  playerList: any;
+};

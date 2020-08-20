@@ -1,6 +1,9 @@
 import React, {Fragment} from 'react';
 import {UserTeamPlayerDetails} from './UserTeamPlayerDetails';
 import {Col, Row, Badge} from 'react-bootstrap';
+import {getPlayerMapByType} from '../redux';
+import {PlayerTypeList} from '../../../../common/components/FantasyDropDown';
+import PlayerTypeCountSummary from './common/PlayerTypeCountSummary';
 
 const TeamDetails = ({data}: TeamDetailsProps) => {
   const userteam = data.userteam;
@@ -36,6 +39,11 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
           <Col>{userteam.total_score}</Col>
           <Col>{userteam.remained_Transfer}</Col>
           <Col>{userteam.creditbalance}</Col>
+        </Row>
+        <Row className="nameColumn">
+          <Col>
+            <PlayerTypeCountSummary playerList={userPlayerList} />
+          </Col>
         </Row>
       </div>
     );

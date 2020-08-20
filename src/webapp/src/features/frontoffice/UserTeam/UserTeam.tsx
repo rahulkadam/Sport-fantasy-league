@@ -33,6 +33,7 @@ import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {useParams} from 'react-router-dom';
 import {isListEmpty} from 'common/util';
+import PlayerTypeCountSummary from './component/common/PlayerTypeCountSummary';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -115,29 +116,17 @@ const UserTeam = () => {
           <Col>{availableBalance}</Col>
           <Col>{userteamDataProps.currentTransferChanges}</Col>
         </Row>
+        <Row className="nameColumn">
+          <Col>
+            <PlayerTypeCountSummary playerList={currentUserTeamPlayers} />
+          </Col>
+        </Row>
       </div>
     );
   }
 
   function removeRowAction(row: any) {
     updateCurrentUserTeam(row, 'REMOVE');
-  }
-
-  function renderTeamCompletionProgressBar(progress: number) {
-    return (
-      <Row className="errorRow">
-        <Col sm={6} md={6}>
-          <ProgressBar>
-            <ProgressBar variant="success" now={progress} label={'Complete'} />
-            <ProgressBar
-              variant="danger"
-              now={100 - progress}
-              label={'InComplete'}
-            />
-          </ProgressBar>
-        </Col>
-      </Row>
-    );
   }
 
   function renderAutoPickTeam() {
