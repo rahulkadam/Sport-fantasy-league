@@ -17,6 +17,8 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
   const joinleageMsg =
     'Ask friends to share league code with you to directly enter into private league';
 
+  const isInvalid = leagueCode.length == 0;
+
   return (
     <div>
       <div className="mb-3">
@@ -30,9 +32,9 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
         />
       </div>
       <Button
-        variant="primary"
+        variant={isInvalid ? 'secondary' : 'primary'}
         onClick={() => joinLeague()}
-        disabled={leagueCode.length == 0}>
+        disabled={isInvalid}>
         Join League
       </Button>
     </div>

@@ -1,5 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl} from 'react-bootstrap';
+import {StatusMessage} from '../../../../common/components';
 
 const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
   const [teamName, setTeamName] = useState('');
@@ -11,11 +12,14 @@ const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
     setTeamName(teamNameTxt);
   }
 
+  const createTeamMsg = 'Welcome to Fantasy League , Please create team';
+
   function renderCreateTeam() {
+    const teambtnDisable = teamName.length == 0;
     return (
       <Fragment>
-        Welcome to Fantasy League , you do not have any team, Please Create Team
-        <div className="mb-3">
+        <div className="mb-3 createTeamContainer">
+          <StatusMessage type={'primary'} text={createTeamMsg} />
           <FormControl
             value={teamName}
             placeholder="Team Name"
@@ -23,13 +27,15 @@ const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
             aria-describedby="basic-addon1"
             onChange={event => updateTeamName(event.target.value)}
           />
+          <div className="createTeamBtn">
+            <Button
+              variant={teambtnDisable ? 'secondary' : 'primary'}
+              onClick={() => createTeam()}
+              disabled={teambtnDisable}>
+              Create Team
+            </Button>
+          </div>
         </div>
-        <Button
-          variant="primary"
-          onClick={() => createTeam()}
-          disabled={teamName.length == 0}>
-          Create Team
-        </Button>
       </Fragment>
     );
   }

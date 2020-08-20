@@ -141,17 +141,29 @@ const UserTeam = () => {
   }
 
   function renderAutoPickTeam() {
+    const teamCreateMsg = 'Create team Or Auto Pick if you are short of time.';
     return (
-      <Row>
-        <Col>
-          <Button
-            variant="info"
-            className="mr-2"
-            onClick={() => autoPickUserTeam()}>
-            Auto Pick Team
-          </Button>
-        </Col>
-      </Row>
+      <Fragment>
+        <Row>
+          <Col>
+            <StatusMessage
+              text={teamCreateMsg}
+              type="info"
+              key={teamCreateMsg}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              variant="outline-success"
+              className="mr-2"
+              onClick={() => autoPickUserTeam()}>
+              Auto Pick Team
+            </Button>
+          </Col>
+        </Row>
+      </Fragment>
     );
   }
 
@@ -168,8 +180,6 @@ const UserTeam = () => {
         )
       );
     } else {
-      const teamCreateMsg = 'Create team by using below player list.';
-      errorStatusMessage.push(renderStatusMessage(true, teamCreateMsg));
       errorStatusMessage.push(renderAutoPickTeam());
     }
     return <div className="errorPanel">{errorStatusMessage}</div>;
@@ -185,7 +195,7 @@ const UserTeam = () => {
         <Nav>
           <Form inline>
             <Button
-              variant="primary"
+              variant={!teamValid ? 'secondary' : 'primary'}
               className="mr-2"
               onClick={() => saveTeam()}
               disabled={!teamValid}>
@@ -270,7 +280,7 @@ const UserTeam = () => {
                     variant="primary"
                     className="mr-4"
                     onClick={() => setTabName('transfer')}>
-                    Change Team
+                    Make Transfer
                   </Button>
                 </Form>
               </Nav>
