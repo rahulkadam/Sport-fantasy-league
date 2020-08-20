@@ -33,7 +33,7 @@ const League = lazy(() => {
 });
 
 const UserTeam = lazy(() => {
-  return import('features/frontoffice/UserTeam/UserTeam');
+  return import('../../features/frontoffice/UserTeam/UserTeam');
 });
 
 const FantasyHome = lazy(() => {

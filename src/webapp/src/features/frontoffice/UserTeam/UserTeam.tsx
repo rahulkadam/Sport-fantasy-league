@@ -33,7 +33,7 @@ import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {useParams} from 'react-router-dom';
 import {isListEmpty} from 'common/util';
-import PlayerTypeCountSummary from './component/common/PlayerTypeCountSummary';
+import PlayerTypeCountSummary from '../UserTeam/component/common/PlayerTypeCountSummary';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
