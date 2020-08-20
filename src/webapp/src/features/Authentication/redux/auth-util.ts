@@ -1,9 +1,9 @@
 import {UserLogOutActions} from './authenticationActions';
-import {domainName} from '../../../API';
+import {domainName, getAccessToken} from '../../../API';
 
-export function checkUserAccess(message: string) {
+export function checkUserAccess() {
   const UserLogOut = UserLogOutActions();
-  if (message == 'Unauthorized') {
+  if (!getAccessToken()) {
     UserLogOut();
   }
 }

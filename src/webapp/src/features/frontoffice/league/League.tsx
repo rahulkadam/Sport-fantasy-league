@@ -14,12 +14,18 @@ import './League.styles.scss';
 import {getTournamentData} from '../../admin/Tournament/redux';
 import {checkUserAccess, GetLoginStoreData} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
-import {Button, Form, Nav} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
+import {fetchPlayerListByUserAction, getUserTeamData} from '../UserTeam/redux';
+import history from 'common/config/history';
 
 const League = () => {
   const leagueProps = getLeagueData();
   const tournamentProps = getTournamentData();
   const userProps = GetLoginStoreData();
+  const fetchPlayerListByUser = fetchPlayerListByUserAction();
+  const userteamDataProps = getUserTeamData();
+  const isUserTeamAvailable =
+    userteamDataProps.userteam && userteamDataProps.userteam.id;
   const leagueObjdata = leagueProps.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const leagueMemberTeamDetails = leagueProps.leagueMemberTeam;
@@ -29,7 +35,7 @@ const League = () => {
   const createLeague = createLeagueAction();
   const [tabName, setTabName] = useState('overview');
   const defaultTabKey = 'overview';
-  const userId = userProps.id || 9999;
+  const userId = userProps.id || 99999;
 
   if (leagueProps.shouldRefresh && tabName != defaultTabKey) {
     setTabName(defaultTabKey);
@@ -37,6 +43,9 @@ const League = () => {
 
   useEffect(() => {
     fetchUserLeagueList(userId);
+    if (!isUserTeamAvailable) {
+      fetchPlayerListByUser(userProps.id);
+    }
   }, []);
   useEffect(() => {
     if (leagueProps.shouldRefresh) {
@@ -106,8 +115,13 @@ const League = () => {
     );
   }
 
-  function renderLeagueComponents(tab: string | undefined) {
-    switch (tab) {
+  function goToTeamTab() {
+    history.push('/team');
+    return <div />;
+  }
+
+  function renderLeagueComponents() {
+    switch (tabName) {
       case 'overview':
         return renderLeagueOverview();
       case 'joinLeague':
@@ -130,10 +144,11 @@ const League = () => {
         active={leagueProps.isLoading}
         spinner
         text="Loading League Details ...">
+        {!isUserTeamAvailable && goToTeamTab()}
         {renderStatusMessage(leagueProps.hasError, leagueProps.statusMessage)}
-        {checkUserAccess(leagueProps.statusMessage)}
+        {checkUserAccess()}
         {renderLeagueActions()}
-        {renderLeagueComponents(tabName)}
+        {renderLeagueComponents()}
       </LoadingOverlay>
     </div>
   );

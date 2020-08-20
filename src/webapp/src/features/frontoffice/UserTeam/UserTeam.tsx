@@ -299,7 +299,7 @@ const UserTeam = () => {
           userteamDataProps.hasError,
           userteamDataProps.statusMessage
         )}
-        {checkUserAccess(userteamDataProps.statusMessage)}
+        {checkUserAccess()}
         {tabName == 'teamDetails' && renderTeamDetails()}
         {tabName == 'transfer' && renderManageTransfer()}
       </LoadingOverlay>

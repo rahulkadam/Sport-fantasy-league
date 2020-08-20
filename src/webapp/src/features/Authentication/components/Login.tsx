@@ -3,7 +3,6 @@ import {getLoginRedirectionUrl, GetLoginStoreData} from '../redux';
 import {Logo} from 'common/components';
 import {googleLogo} from '@logos/index';
 import './Login.styles.scss';
-import history from 'common/config/history';
 
 const Login = () => {
   const loginUserData = GetLoginStoreData();
