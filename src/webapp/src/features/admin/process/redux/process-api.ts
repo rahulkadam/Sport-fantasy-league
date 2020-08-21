@@ -13,11 +13,11 @@ export function unLockTournament(id: number) {
 }
 
 export function processPointByMatchId(matchId: number) {
-  return Get('/fantasy/process/point/bymatch/' + matchId);
+  return Get('/process/point/bymatch/' + matchId);
 }
 
 export function processRanking(tournamentId: number) {
-  return Get('/fantasy/process/league/ranking/tournament/' + tournamentId);
+  return Get('/process/point/league/ranking/tournament/' + tournamentId);
 }
 
 export function addNotice(notice: string) {

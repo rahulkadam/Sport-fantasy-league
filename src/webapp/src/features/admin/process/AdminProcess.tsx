@@ -1,4 +1,4 @@
-import React, {useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import {Row, Col, Button, Form, Badge} from 'react-bootstrap';
 import {
   lockTournamentAction,
@@ -13,8 +13,9 @@ import {
   getTournamentData,
 } from '../Tournament/redux';
 import {isListEmpty} from '../../../common/util';
-import {FantasyDropDown} from '../../../common/components';
+import {FantasyDropDown, StatusMessage} from '../../../common/components';
 import './AdminProcess.styles.scss';
+import LoadingOverlay from 'react-loading-overlay';
 
 const AdminProcess = () => {
   const processProps = getAdminProcessData();
@@ -26,6 +27,9 @@ const AdminProcess = () => {
   const tournamentProps = getTournamentData();
   const fetchMatchList = fetchMatchListAction();
   const fetchTournaments = fetchTournamentListAction();
+  const [tournamentId, setTournamentId] = useState();
+  const [matchId, setMatchId] = useState();
+  const [lockStatus, setLockStatus] = useState('Lock');
 
   useEffect(() => {
     if (isListEmpty(matchProps.matchList)) {
@@ -37,7 +41,14 @@ const AdminProcess = () => {
   }, []);
 
   function LockUnlockTournament() {
-    console.log('Lock Unlock TOurnament');
+    if (!tournamentId) {
+      setTournamentId(tournamentProps.tournamentList[0].id);
+    }
+    if (lockStatus == 'Lock') {
+      lockTournament(tournamentId);
+    } else {
+      unLockTournament(tournamentId);
+    }
   }
 
   function renderLockUnLockTournamentAction() {
@@ -53,8 +64,8 @@ const AdminProcess = () => {
           <Col>
             <FantasyDropDown
               list={tournamentProps.tournamentList}
-              onSelect={() => {
-                console.log('addmin');
+              onSelect={(value: any) => {
+                setTournamentId(value);
               }}
             />
           </Col>
@@ -64,8 +75,8 @@ const AdminProcess = () => {
                 {name: 'Lock', id: 'Lock'},
                 {name: 'UnLock', id: 'UnLock'},
               ]}
-              onSelect={() => {
-                console.log('Lock Unlock');
+              onSelect={(value: any) => {
+                setLockStatus(value);
               }}
             />
           </Col>
@@ -94,8 +105,8 @@ const AdminProcess = () => {
           <Col>
             <FantasyDropDown
               list={matchProps.matchList}
-              onSelect={() => {
-                console.log('addmin');
+              onSelect={(value: any) => {
+                setMatchId(value);
               }}
             />
           </Col>
@@ -104,7 +115,13 @@ const AdminProcess = () => {
             <Button
               variant="outline-primary"
               className="mr-2"
-              onClick={() => processScoreByMatch()}>
+              onClick={() => {
+                if (!matchId) {
+                  processScoreByMatch(matchProps.matchList[0].id);
+                } else {
+                  processScoreByMatch(matchId);
+                }
+              }}>
               Submit
             </Button>
           </Col>
@@ -121,10 +138,24 @@ const AdminProcess = () => {
             <Badge variant="info"> Calculate League Ranking </Badge>
           </Col>
           <Col>
+            <FantasyDropDown
+              list={tournamentProps.tournamentList}
+              onSelect={(value: any) => {
+                setTournamentId(value);
+              }}
+            />
+          </Col>
+          <Col>
             <Button
               variant="outline-primary"
               className="mr-2"
-              onClick={() => processScoreByMatch()}>
+              onClick={() => {
+                if (!tournamentId) {
+                  processRanking(tournamentProps.tournamentList[0].id);
+                } else {
+                  processRanking(tournamentId);
+                }
+              }}>
               Submit
             </Button>
           </Col>
@@ -133,14 +164,25 @@ const AdminProcess = () => {
     );
   }
 
+  function renderStatusMessage(isError: boolean, statusMessage: string) {
+    const statusClassName = processProps.hasError ? 'error' : 'success';
+    return <StatusMessage text={statusMessage} type={statusClassName} />;
+  }
+
   return (
     <div className="processContainer">
-      {renderLockUnLockTournamentAction()}
-      {renderProcessScoreCalculationByMatch()}
-      {renderCalculateRanking()}
-      <Row>
-        <Col>Add Notice About Match</Col>
-      </Row>
+      <LoadingOverlay
+        active={processProps.isLoading}
+        spinner
+        text="Loading Process Details ...">
+        {renderStatusMessage(processProps.hasError, processProps.statusMessage)}
+        {renderLockUnLockTournamentAction()}
+        {renderProcessScoreCalculationByMatch()}
+        {renderCalculateRanking()}
+        <Row>
+          <Col>Add Notice About Match</Col>
+        </Row>
+      </LoadingOverlay>
     </div>
   );
 };
