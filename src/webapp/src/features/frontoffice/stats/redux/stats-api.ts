@@ -7,7 +7,7 @@ export function getMatchStats(matchId: any) {
 }
 
 export function getPlayerStats(playerId: any) {
-  return Post('/public/stats/list/userScoreHistoryByMatch', {
+  return Post('/public/stats/list/playerScoringHistory', {
     data: {id: playerId},
   });
 }

@@ -13,6 +13,8 @@ import {
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import {pluscolor} from '@logos/index';
+import {fetchPlayerStatsListAction, getStatsProps} from '../../stats/redux';
+import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 
 const TournamentPlayerList = ({
   data,
@@ -27,6 +29,36 @@ const TournamentPlayerList = ({
   const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
   const [toggleCleared, setToggleCleared] = useState(false);
   const teamValueByPlayers = teamValueByPlayerList(currentUserTeamPlayers);
+  const statsProps = getStatsProps();
+  const fetchPlayerHistory = fetchPlayerStatsListAction();
+  const [showPlayerHistory, setShowPlayerHistory] = useState(false);
+  const handlePlayerHistoryShow = () => setShowPlayerHistory(true);
+  const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
+
+  function fetchPlayerHistoryList(playerId: string) {
+    fetchPlayerHistory(playerId);
+    if (showPlayerHistory) {
+      handlePlayerHistoryClose();
+    } else {
+      handlePlayerHistoryShow();
+    }
+  }
+
+  function renderPlayerHistoryDetails() {
+    if (!showPlayerHistory) return;
+    return (
+      <PlayerMatchScoreModal
+        handleClose={handlePlayerHistoryClose}
+        show={showPlayerHistory}
+        data={statsProps}
+      />
+    );
+  }
+
+  function onRowClickedAction(row: any, e: any) {
+    console.log(row.name);
+    fetchPlayerHistoryList(row.id);
+  }
 
   function customName(row: any) {
     return (
@@ -188,6 +220,7 @@ const TournamentPlayerList = ({
 
   return (
     <div>
+      {renderPlayerHistoryDetails()}
       {data && data.length > 0 && (
         <DataTable
           noHeader
@@ -207,6 +240,7 @@ const TournamentPlayerList = ({
           selectableRowsHighlight={false}
           selectableRowsNoSelectAll={true}
           expandOnRowClicked
+          onRowClicked={onRowClickedAction}
         />
       )}
     </div>
