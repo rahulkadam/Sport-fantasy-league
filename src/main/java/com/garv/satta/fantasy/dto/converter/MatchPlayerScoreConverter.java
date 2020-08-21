@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
 import com.garv.satta.fantasy.model.backoffice.Player;
+import com.garv.satta.fantasy.model.backoffice.Tournament;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,6 +19,26 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
 
     public MatchPlayerScoreDTO convertToDTO(MatchPlayerScore entity) {
         return mapper.map(entity, MatchPlayerScoreDTO.class);
+    }
+
+    public MatchPlayerScore initEntity(Long matchId, Long tournamentId, Long playerId) {
+        MatchPlayerScore matchPlayerScore = new MatchPlayerScore();
+        matchPlayerScore.setMatch(new Match(matchId));
+        matchPlayerScore.setTournament(new Tournament(tournamentId));
+        matchPlayerScore.setPlayer(new Player(playerId));
+        matchPlayerScore.setPointscore(0);
+        matchPlayerScore.setCatches(0);
+        matchPlayerScore.setWicket(0);
+        matchPlayerScore.setRun_scored(0);
+        return matchPlayerScore;
+    }
+
+    public MatchPlayerScore updateEntity(MatchPlayerScore matchPlayerScore, MatchPlayerScoreDTO dto) {
+        matchPlayerScore.setRun_scored(dto.getRun_scored());
+        matchPlayerScore.setWicket(dto.getWicket());
+        matchPlayerScore.setCatches(dto.getCatches());
+        matchPlayerScore.setPointscore(dto.getPointscore());
+        return matchPlayerScore;
     }
 
     @Override

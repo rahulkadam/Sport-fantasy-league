@@ -32,7 +32,7 @@ public class FantasyStatsController {
     }
 
     @PostMapping(value = "/list/userScoreHistoryByMatch")
-    public List<LeagueUserTeamScoreHistoryDTO> getUserScorePerMatch(@RequestBody RequestDTO dto) {
+    public LeagueUserTeamScoreHistoryDTO getUserScorePerMatch(@RequestBody RequestDTO dto) {
         return leagueUserTeamScorePerMatchService.getUserScorePerMatch(dto);
     }
 

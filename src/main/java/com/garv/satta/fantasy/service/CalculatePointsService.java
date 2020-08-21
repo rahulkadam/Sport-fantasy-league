@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.dao.repository.*;
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.*;
 import com.garv.satta.fantasy.model.frontoffice.League;
@@ -33,6 +34,9 @@ public class CalculatePointsService {
     private MatchPlayerScoreRepository matchPlayerScoreRepository;
 
     @Autowired
+    private MatchPlayerScoreService matchPlayerScoreService;
+
+    @Autowired
     private PlayerUserTeamRepository playerUserTeamRepository;
 
     @Autowired
@@ -44,8 +48,12 @@ public class CalculatePointsService {
     @Autowired
     private LeagueUserTeamScorePerMatchService leagueUserTeamScorePerMatchService;
 
+    @Autowired
+    private LeagueUserTeamScorePerMatchRepository leagueUserTeamScorePerMatchRepository;
+
     /**
      * Calculate Score for each team after Match By Match ID
+     *
      * @param id
      */
     public void calculateByMatchId(Long id) {
@@ -62,6 +70,7 @@ public class CalculatePointsService {
 
     /**
      * Process for list of User Team
+     *
      * @param userTeams
      * @param matchPlayerScoreMap
      */
@@ -71,20 +80,37 @@ public class CalculatePointsService {
 
     /**
      * Calculating score  for User Team and updating UserTeam score
+     *
      * @param userTeam
      * @param matchPlayerScoreMap
      */
     @Transactional
     private void processScoreUpdateforSingleUserTeam(UserTeam userTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap, Match match) {
-        List<Player> playerList = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
+        LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch = leagueUserTeamScorePerMatchRepository.
+                findTeamScoreByUserTeamIdAndMatchId(userTeam.getId(), match.getId());
+        long[] playerListIds = null;
+        if (leagueUserTeamScorePerMatch == null) {
+            playerListIds = userTeam.getPlayerIds().stream().mapToLong(l-> l).toArray();
+            leagueUserTeamScorePerMatch = new LeagueUserTeamScorePerMatch();
+            leagueUserTeamScorePerMatch.setUserTeam(userTeam);
+            leagueUserTeamScorePerMatch.setPlayerList(playerListIds);
+            Player captainPlayer = userTeam.getCaptain_player();
+            if (captainPlayer != null) {
+                leagueUserTeamScorePerMatch.setCaptain_player(captainPlayer.getId());
+            }
+            leagueUserTeamScorePerMatch.setMatch(match);
+        }
 
-        Player captainPlayer = userTeam.getCaptain_player();
+        Long captainPlayerId = leagueUserTeamScorePerMatch.getCaptain_player();
 
         Integer matchScore = 0;
-        for (Player player: playerList) {
-            MatchPlayerScore matchPlayerScore = matchPlayerScoreMap.get(player.getId());
+        if (playerListIds == null) {
+            return;
+        }
+        for (long playerId : playerListIds) {
+            MatchPlayerScore matchPlayerScore = matchPlayerScoreMap.get(playerId);
             if (matchPlayerScore != null) {
-                if (captainPlayer != null && captainPlayer.getId() == player.getId()) {
+                if (captainPlayerId != null && captainPlayerId == playerId) {
                     matchScore = matchScore + matchPlayerScore.getPointscore();
                 }
                 matchScore = matchScore + matchPlayerScore.getPointscore();
@@ -97,7 +123,9 @@ public class CalculatePointsService {
             totalScore = totalScore + score;
         }
         userTeam.setTotal_score(totalScore);
-        leagueUserTeamScorePerMatchService.saveLeagueUserTeamScorePerMatch(userTeam, match, matchScore, totalScore);
+        leagueUserTeamScorePerMatch.setTotalPoint(totalScore);
+        leagueUserTeamScorePerMatch.setCurrent_match_point(matchScore);
+        leagueUserTeamScorePerMatchRepository.save(leagueUserTeamScorePerMatch);
         userTeamRepository.save(userTeam);
     }
 
@@ -128,12 +156,28 @@ public class CalculatePointsService {
         List<LeagueUserTeam> leagueUserTeams = league.getLeagueUserTeams();
         Collections.sort(leagueUserTeams, compareByTotalScore.reversed());
         int ranking = 1;
-        for(LeagueUserTeam leagueUserTeam: leagueUserTeams) {
+        for (LeagueUserTeam leagueUserTeam : leagueUserTeams) {
             leagueUserTeam.setUserrank(ranking);
             leagueUserTeam.setScore(leagueUserTeam.getUserTeam().getTotal_score());
-            ranking ++;
+            ranking++;
         }
         leagueUserTeamRepository.saveAll(leagueUserTeams);
+    }
+
+
+    public void lockTeamForFantasyByMatchId(RequestDTO dto) {
+        Long matchId = dto.getMatchId();
+        Match match = matchRepository.findMatchById(matchId);
+        if (match == null) {
+            throw new GenericException("Match id is Not Valid" + matchId);
+        }
+        Set<Long> matchPlayingPlayers = match.getTeam_host().getPlayerIds();
+        matchPlayingPlayers.addAll(match.getTeam_away().getPlayerIds());
+        Tournament tournament = match.getTournament();
+        // Saving team players
+        matchPlayerScoreService.saveInitPlayerScoreForMatch(matchId, tournament.getId(), matchPlayingPlayers);
+        List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
+        leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
     }
 
     protected Comparator<LeagueUserTeam> compareByTotalScore = Comparator.comparing((o1) -> o1.getUserTeam().getTotal_score());

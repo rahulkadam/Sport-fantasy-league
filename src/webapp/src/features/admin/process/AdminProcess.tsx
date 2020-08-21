@@ -44,10 +44,13 @@ const AdminProcess = () => {
     if (!tournamentId) {
       setTournamentId(tournamentProps.tournamentList[0].id);
     }
+    if (!matchId) {
+      setMatchId(matchProps.matchList[0].id);
+    }
     if (lockStatus == 'Lock') {
-      lockTournament(tournamentId);
+      lockTournament(tournamentId, matchId);
     } else {
-      unLockTournament(tournamentId);
+      unLockTournament(tournamentId, matchId);
     }
   }
 
@@ -66,6 +69,14 @@ const AdminProcess = () => {
               list={tournamentProps.tournamentList}
               onSelect={(value: any) => {
                 setTournamentId(value);
+              }}
+            />
+          </Col>
+          <Col>
+            <FantasyDropDown
+              list={matchProps.matchList}
+              onSelect={(value: any) => {
+                setMatchId(value);
               }}
             />
           </Col>

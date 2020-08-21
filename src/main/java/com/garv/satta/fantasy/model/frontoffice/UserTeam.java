@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -15,7 +16,9 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -94,6 +97,14 @@ public class UserTeam extends BaseDaoObject {
         }
         Predicate<PlayerUserTeam> isplayerMatch = player1 -> player1.getPlayer().getId() == player.getId();
         playerUserTeams.removeIf(isplayerMatch);
+    }
+
+    public Set<Long> getPlayerIds() {
+        if (CollectionUtils.isNotEmpty(playerUserTeams)) {
+            Set<Long> playerIds = playerUserTeams.stream().map(player -> player.getPlayer_id()).collect(Collectors.toSet());
+            return playerIds;
+        }
+        return new TreeSet<>();
     }
 
 }

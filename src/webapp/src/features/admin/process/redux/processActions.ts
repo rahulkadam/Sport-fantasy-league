@@ -24,8 +24,8 @@ export const lockTournamentAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, PROCESS_ACTION_START),
-    (id: number) => {
-      lockTournament(id)
+    (id: number, matchId: number) => {
+      lockTournament(id, matchId)
         .then((data: any) => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
@@ -47,8 +47,8 @@ export const unLockTournamentAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, PROCESS_ACTION_START),
-    (id: number) => {
-      unLockTournament(id)
+    (id: number, matchId: number) => {
+      unLockTournament(id, matchId)
         .then((data: any) => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,

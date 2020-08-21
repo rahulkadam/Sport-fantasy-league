@@ -4,12 +4,16 @@ import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -58,6 +62,14 @@ public class Team extends BaseDaoObject {
         }
         Predicate<Tournament> isTournamentMatch = tournament1 -> tournament1.getId() == tournamentObj.getId();
         tournament.removeIf(isTournamentMatch);
+    }
+
+    public Set<Long> getPlayerIds() {
+        if (CollectionUtils.isNotEmpty(players)) {
+            Set<Long> playerIds = players.stream().map(player -> player.getId()).collect(Collectors.toSet());
+            return playerIds;
+        }
+        return new TreeSet<>();
     }
 
 }

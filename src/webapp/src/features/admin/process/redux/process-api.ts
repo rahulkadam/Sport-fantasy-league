@@ -1,14 +1,14 @@
 import {Get, Post} from 'API';
 
-export function lockTournament(id: number) {
+export function lockTournament(id: number, matchId: number) {
   return Post('/fantasy/tournament/lockTournament', {
-    data: {id: id},
+    data: {id: id, matchId: matchId},
   });
 }
 
-export function unLockTournament(id: number) {
+export function unLockTournament(id: number, matchId: number) {
   return Post('/fantasy/tournament/unlockTournament', {
-    data: {id: id},
+    data: {id: id, matchId: matchId},
   });
 }
 

@@ -47,12 +47,33 @@ public class MatchPlayerScoreService {
     private ExcelFileService excelFileService;
 
     public void uploadPlayerScoreforMatch(@RequestBody MatchPlayerScoreDTO dto) {
-        MatchPlayerScore playerScore = converter.convertToFullEntity(dto);
-        playerScore.setId(null);
+        MatchPlayerScore playerScore = repository.findPlayerScoreByMatchIdAndPlayerId(dto.getMatchId(), dto.getPlayerId());
+
+        if (playerScore == null) {
+            playerScore = converter.convertToFullEntity(dto);
+            playerScore.setId(null);
+        } else {
+            playerScore = converter.updateEntity(playerScore, dto);
+        }
         playerValidator.validatePlayerById(dto.getPlayerId());
         matchValidator.validateMatchById(dto.getMatchId());
         playerValidator.validatePlayerScore(playerScore.getPointscore());
         repository.save(playerScore);
+    }
+
+    /**
+     * Initalizing and storing player score with 0 at the start of match
+     * @param matchId
+     * @param tournamentId
+     * @param playerIds
+     */
+    public void saveInitPlayerScoreForMatch(Long matchId, Long tournamentId, Set<Long> playerIds) {
+        List<MatchPlayerScore> matchPlayerScoreList = new ArrayList<>();
+        playerIds.forEach(playerId -> {
+            MatchPlayerScore playerScore = converter.initEntity(matchId, tournamentId, playerId);
+            matchPlayerScoreList.add(playerScore);
+        });
+        repository.saveAll(matchPlayerScoreList);
     }
 
     public List<MatchPlayerScoreDTO> getMatchScoreByPlayer(Long id) {
@@ -84,14 +105,18 @@ public class MatchPlayerScoreService {
             int points = (int) row.getCell(3).getNumericCellValue();
             Long matchId = (long) row.getCell(3).getNumericCellValue();
 
-            MatchPlayerScore matchPlayerScore = new MatchPlayerScore();
+            Player player = playerRepository.findPlayerByName(name);
+            Long playerId = player.getId();
+            MatchPlayerScore matchPlayerScore = repository.findPlayerScoreByMatchIdAndPlayerId(matchId, playerId);
+            if (matchPlayerScore == null) {
+                matchPlayerScore = new MatchPlayerScore();
+                matchPlayerScore.setPlayer(player);
+                matchPlayerScore.setMatch(new Match(matchId));
+            }
             matchPlayerScore.setRun_scored(runs);
             matchPlayerScore.setWicket(wicket);
             matchPlayerScore.setCatches(catches);
             matchPlayerScore.setPointscore(points);
-            Player player = playerRepository.findPlayerByName(name);
-            matchPlayerScore.setPlayer(player);
-            matchPlayerScore.setMatch(new Match(matchId));
             matchPlayerScores.add(matchPlayerScore);
 
         }
