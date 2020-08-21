@@ -22,6 +22,9 @@ const Venue = lazy(() => {
   return import('features/admin/venue/Venue');
 });
 
+const Process = lazy(() => {
+  return import('features/admin/process/AdminProcess');
+});
 const Player = lazy(() => {
   return import('features/admin/player/Player');
 });
@@ -30,7 +33,7 @@ const League = lazy(() => {
 });
 
 const UserTeam = lazy(() => {
-  return import('features/frontoffice/UserTeam/UserTeam');
+  return import('../../features/frontoffice/UserTeam/UserTeam');
 });
 
 const FantasyHome = lazy(() => {
@@ -118,6 +121,13 @@ export const RouteConfig = {
       component: <Venue />,
       isPrivate: true,
       key: 'backvenue',
+      role: AdminRole,
+    },
+    {
+      path: '/back/process',
+      component: <Process />,
+      isPrivate: true,
+      key: 'backprocess',
       role: AdminRole,
     },
     {

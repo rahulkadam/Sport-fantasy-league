@@ -1,9 +1,7 @@
 import React, {Fragment} from 'react';
 import {UserTeamPlayerDetails} from './UserTeamPlayerDetails';
 import {Col, Row, Badge} from 'react-bootstrap';
-import {getPlayerMapByType} from '../redux';
-import {PlayerTypeList} from '../../../../common/components/FantasyDropDown';
-import PlayerTypeCountSummary from './common/PlayerTypeCountSummary';
+import PlayerTypeCountSummary from '../component/common/PlayerTypeCountSummary';
 
 const TeamDetails = ({data}: TeamDetailsProps) => {
   const userteam = data.userteam;

@@ -45,7 +45,7 @@ public class TournamentController {
     @ResponseBody
     public String unlockTournament(@RequestBody RequestDTO dto) {
         tournamentService.unlockTournament(dto);
-        return "Tournament Locked successfully";
+        return "Tournament UnLocked successfully";
     }
 
 }
