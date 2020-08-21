@@ -55,6 +55,21 @@ public class MatchPlayerScoreService {
         repository.save(playerScore);
     }
 
+    /**
+     * Initalizing and storing player score with 0 at the start of match
+     * @param matchId
+     * @param tournamentId
+     * @param playerIds
+     */
+    public void saveInitPlayerScoreForMatch(Long matchId, Long tournamentId, Set<Long> playerIds) {
+        List<MatchPlayerScore> matchPlayerScoreList = new ArrayList<>();
+        playerIds.forEach(playerId -> {
+            MatchPlayerScore playerScore = converter.initEntity(matchId, tournamentId, playerId);
+            matchPlayerScoreList.add(playerScore);
+        });
+        repository.saveAll(matchPlayerScoreList);
+    }
+
     public List<MatchPlayerScoreDTO> getMatchScoreByPlayer(Long id) {
         List<MatchPlayerScore> matchPlayerScores = repository.findMatchPlayerScoreByPlayerId(id);
         return converter.convertToFullDTOList(matchPlayerScores);

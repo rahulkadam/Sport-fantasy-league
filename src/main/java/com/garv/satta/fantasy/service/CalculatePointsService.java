@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.dao.repository.*;
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.*;
 import com.garv.satta.fantasy.model.frontoffice.League;
@@ -33,6 +34,9 @@ public class CalculatePointsService {
     private MatchPlayerScoreRepository matchPlayerScoreRepository;
 
     @Autowired
+    private MatchPlayerScoreService matchPlayerScoreService;
+
+    @Autowired
     private PlayerUserTeamRepository playerUserTeamRepository;
 
     @Autowired
@@ -43,6 +47,7 @@ public class CalculatePointsService {
 
     @Autowired
     private LeagueUserTeamScorePerMatchService leagueUserTeamScorePerMatchService;
+
 
     /**
      * Calculate Score for each team after Match By Match ID
@@ -134,6 +139,22 @@ public class CalculatePointsService {
             ranking ++;
         }
         leagueUserTeamRepository.saveAll(leagueUserTeams);
+    }
+
+
+    public void lockTeamForFantasyByMatchId(RequestDTO dto) {
+        Long matchId = dto.getMatchId();
+        Match match = matchRepository.findMatchById(matchId);
+        if (match == null) {
+            throw new GenericException("Match id is Not Valid" + matchId);
+        }
+        Set<Long> matchPlayingPlayers = match.getTeam_host().getPlayerIds();
+        matchPlayingPlayers.addAll(match.getTeam_away().getPlayerIds());
+        Tournament tournament = match.getTournament();
+        // Saving team players
+        matchPlayerScoreService.saveInitPlayerScoreForMatch(matchId, tournament.getId(), matchPlayingPlayers);
+        List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
+        leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
     }
 
     protected Comparator<LeagueUserTeam> compareByTotalScore = Comparator.comparing((o1) -> o1.getUserTeam().getTotal_score());

@@ -5,6 +5,7 @@ import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.TournamentDTO;
 import com.garv.satta.fantasy.dto.converter.TournamentConverter;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
+import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,9 @@ public class TournamentService {
 
     @Autowired
     private TournamentConverter tournamentConverter;
+
+    @Autowired
+    private CalculatePointsService calculatePointsService;
 
     public List<TournamentDTO> getTournamentList() {
         List<Tournament> tournamentList = tournamentRepository.findAll();
@@ -49,6 +53,7 @@ public class TournamentService {
 
     public void lockTournament(RequestDTO dto) {
         Tournament tournament = tournamentRepository.findTournamentById(dto.getId());
+        calculatePointsService.lockTeamForFantasyByMatchId(dto);
         tournament.setStatus(false);
         tournamentRepository.save(tournament);
     }

@@ -13,6 +13,7 @@ public class LeagueUserTeamScoreHistoryDTO extends BaseDTO {
     private Long matchId;
     private String matchDesciription;
     private String userName;
+    private long[] playerList;
     private UserTeamDTO userTeamDTO;
     private MatchResultDTO matchResultDTO;
 }
