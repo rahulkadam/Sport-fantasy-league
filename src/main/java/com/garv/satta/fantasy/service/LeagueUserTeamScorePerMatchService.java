@@ -7,7 +7,6 @@ import com.garv.satta.fantasy.dto.converter.LeagueUserTeamScoreHistoryConverter;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
-import com.google.common.primitives.Longs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,12 +52,18 @@ public class LeagueUserTeamScorePerMatchService {
         leagueUserTeamScorePerMatchRepository.save(leagueUserTeamScorePerMatch);
     }
 
-    public List<LeagueUserTeamScoreHistoryDTO> getUserScorePerMatch(RequestDTO requestDTO) {
+    public LeagueUserTeamScoreHistoryDTO getUserScorePerMatch(RequestDTO requestDTO) {
         Long userTeamId = requestDTO.getUserTeamId();
         Long matchId = requestDTO.getMatchId();
-        List<LeagueUserTeamScorePerMatch> leagueUserTeamScorePerMatches =
-                leagueUserTeamScorePerMatchRepository.findAllByUserTeamIdAndMatchId(userTeamId, matchId);
-        return converter.convertToDTOList(leagueUserTeamScorePerMatches);
+        LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
+                leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchId);
+        return converter.convertToFullDTO(leagueUserTeamScorePerMatch);
+    }
+
+    public LeagueUserTeamScorePerMatch findTeamScoreByUserTeamIdAndMatchId(Long userTeamId, Long matchId) {
+        LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
+                leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchId);
+        return leagueUserTeamScorePerMatch;
     }
 
 }

@@ -33,7 +33,15 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
         return matchPlayerScore;
     }
 
-        @Override
+    public MatchPlayerScore updateEntity(MatchPlayerScore matchPlayerScore, MatchPlayerScoreDTO dto) {
+        matchPlayerScore.setRun_scored(dto.getRun_scored());
+        matchPlayerScore.setWicket(dto.getWicket());
+        matchPlayerScore.setCatches(dto.getCatches());
+        matchPlayerScore.setPointscore(dto.getPointscore());
+        return matchPlayerScore;
+    }
+
+    @Override
     public MatchPlayerScore convertToFullEntity(MatchPlayerScoreDTO dto) {
         MatchPlayerScore matchPlayerScore = convertToEntity(dto);
 

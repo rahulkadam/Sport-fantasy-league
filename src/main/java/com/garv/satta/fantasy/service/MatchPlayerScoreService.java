@@ -47,8 +47,14 @@ public class MatchPlayerScoreService {
     private ExcelFileService excelFileService;
 
     public void uploadPlayerScoreforMatch(@RequestBody MatchPlayerScoreDTO dto) {
-        MatchPlayerScore playerScore = converter.convertToFullEntity(dto);
-        playerScore.setId(null);
+        MatchPlayerScore playerScore = repository.findPlayerScoreByMatchIdAndPlayerId(dto.getMatchId(), dto.getPlayerId());
+
+        if (playerScore == null) {
+            playerScore = converter.convertToFullEntity(dto);
+            playerScore.setId(null);
+        } else {
+            playerScore = converter.updateEntity(playerScore, dto);
+        }
         playerValidator.validatePlayerById(dto.getPlayerId());
         matchValidator.validateMatchById(dto.getMatchId());
         playerValidator.validatePlayerScore(playerScore.getPointscore());
@@ -99,14 +105,18 @@ public class MatchPlayerScoreService {
             int points = (int) row.getCell(3).getNumericCellValue();
             Long matchId = (long) row.getCell(3).getNumericCellValue();
 
-            MatchPlayerScore matchPlayerScore = new MatchPlayerScore();
+            Player player = playerRepository.findPlayerByName(name);
+            Long playerId = player.getId();
+            MatchPlayerScore matchPlayerScore = repository.findPlayerScoreByMatchIdAndPlayerId(matchId, playerId);
+            if (matchPlayerScore == null) {
+                matchPlayerScore = new MatchPlayerScore();
+                matchPlayerScore.setPlayer(player);
+                matchPlayerScore.setMatch(new Match(matchId));
+            }
             matchPlayerScore.setRun_scored(runs);
             matchPlayerScore.setWicket(wicket);
             matchPlayerScore.setCatches(catches);
             matchPlayerScore.setPointscore(points);
-            Player player = playerRepository.findPlayerByName(name);
-            matchPlayerScore.setPlayer(player);
-            matchPlayerScore.setMatch(new Match(matchId));
             matchPlayerScores.add(matchPlayerScore);
 
         }
