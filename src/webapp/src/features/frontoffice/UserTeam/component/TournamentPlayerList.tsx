@@ -13,12 +13,14 @@ import {
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import {pluscolor} from '@logos/index';
+import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 
 const TournamentPlayerList = ({
   data,
-  title,
   onRowSelected,
   currentUserTeamPlayers,
+  playerStats,
+  fetchPlayerHistory,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
   const [filterPlayerType, setFilterPlayerType] = React.useState('ALL');
@@ -27,6 +29,34 @@ const TournamentPlayerList = ({
   const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
   const [toggleCleared, setToggleCleared] = useState(false);
   const teamValueByPlayers = teamValueByPlayerList(currentUserTeamPlayers);
+  const [showPlayerHistory, setShowPlayerHistory] = useState(false);
+  const handlePlayerHistoryShow = () => setShowPlayerHistory(true);
+  const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
+
+  function fetchPlayerHistoryList(playerId: string) {
+    fetchPlayerHistory(playerId);
+    if (showPlayerHistory) {
+      handlePlayerHistoryClose();
+    } else {
+      handlePlayerHistoryShow();
+    }
+  }
+
+  function renderPlayerHistoryDetails() {
+    if (!showPlayerHistory) return;
+    return (
+      <PlayerMatchScoreModal
+        handleClose={handlePlayerHistoryClose}
+        show={showPlayerHistory}
+        data={playerStats}
+      />
+    );
+  }
+
+  function onRowClickedAction(row: any, e: any) {
+    console.log(row.name);
+    fetchPlayerHistoryList(row.id);
+  }
 
   function customName(row: any) {
     return (
@@ -188,6 +218,7 @@ const TournamentPlayerList = ({
 
   return (
     <div>
+      {renderPlayerHistoryDetails()}
       {data && data.length > 0 && (
         <DataTable
           noHeader
@@ -195,7 +226,7 @@ const TournamentPlayerList = ({
           customStyles={customStyles}
           data={filteredRows}
           fixedHeader
-          fixedHeaderScrollHeight="300px"
+          fixedHeaderScrollHeight="400px"
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
@@ -207,6 +238,7 @@ const TournamentPlayerList = ({
           selectableRowsHighlight={false}
           selectableRowsNoSelectAll={true}
           expandOnRowClicked
+          onRowClicked={onRowClickedAction}
         />
       )}
     </div>

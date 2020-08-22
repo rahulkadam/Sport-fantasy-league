@@ -5,11 +5,15 @@ import {StatusMessage} from 'common/components';
 import LoadingOverlay from 'react-loading-overlay';
 import './fixtures.styles.scss';
 import {isListEmpty} from 'common/util';
+import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 
 const Fixtures = () => {
   const matchProps = getMatchData();
   const matchList = matchProps.matchList;
   const fetchMatchList = fetchMatchListAction();
+  const fetchPlayerStats = fetchMatchStatsListAction();
+  const statsProps = getStatsProps();
+
   useEffect(() => {
     if (isListEmpty(matchList)) {
       fetchMatchList();
@@ -19,7 +23,12 @@ const Fixtures = () => {
   function renderMatchListView() {
     return (
       <div className="container">
-        <MatchDetails title="Fixtures" data={matchList} />
+        <MatchDetails
+          title="Fixtures"
+          data={matchList}
+          fetchMatchHistory={fetchPlayerStats}
+          playerStats={statsProps.playerStats}
+        />
       </div>
     );
   }

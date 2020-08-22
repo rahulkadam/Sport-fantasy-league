@@ -31,9 +31,14 @@ public class FantasyStatsController {
         return matchPlayerScoreService.getMatchScoreByPlayer(dto.getId());
     }
 
-    @PostMapping(value = "/list/userScoreHistoryByMatch")
+    @PostMapping(value = "/list/userScoreHistoryByMatch1")
     public LeagueUserTeamScoreHistoryDTO getUserScorePerMatch(@RequestBody RequestDTO dto) {
         return leagueUserTeamScorePerMatchService.getUserScorePerMatch(dto);
+    }
+
+    @PostMapping(value = "/list/userScoreHistoryByMatch")
+    public List<MatchPlayerScoreDTO> getUserScorePerMatchStats(@RequestBody RequestDTO dto) {
+        return leagueUserTeamScorePerMatchService.getUserScorePerMatchStats(dto);
     }
 
 }

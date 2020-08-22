@@ -8,4 +8,5 @@ declare type FantasyStats = {
   playerStats?: any;
   matchStats?: any;
   userStats?: any;
+  playerMatchScoreList?: any;
 };

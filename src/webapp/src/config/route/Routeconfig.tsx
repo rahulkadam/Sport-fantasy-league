@@ -3,8 +3,8 @@ import Login, {
   RedirectSuccessHandler,
   UserInfo,
 } from 'features/Authentication/components';
-import Fixtures from '../../features/frontoffice/fixtures/Fixtures';
-import FantasyStats from '../../features/frontoffice/stats/FantasyStats';
+import Fixtures from 'features/frontoffice/fixtures/Fixtures';
+import FantasyStats from 'features/frontoffice/stats/FantasyStats';
 
 const Tournament = lazy(() => {
   return import('features/admin/Tournament/Tournament');
@@ -33,7 +33,7 @@ const League = lazy(() => {
 });
 
 const UserTeam = lazy(() => {
-  return import('../../features/frontoffice/UserTeam/UserTeam');
+  return import('features/frontoffice/UserTeam/UserTeam');
 });
 
 const FantasyHome = lazy(() => {

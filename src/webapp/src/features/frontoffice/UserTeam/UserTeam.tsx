@@ -19,21 +19,13 @@ import {
   updateTeamCaptionAction,
   autoPickUserTeamAction,
 } from './redux';
-import {
-  Button,
-  Row,
-  Col,
-  Badge,
-  ProgressBar,
-  Navbar,
-  Nav,
-  Form,
-} from 'react-bootstrap';
+import {Button, Row, Col, Badge, Navbar, Nav, Form} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {useParams} from 'react-router-dom';
 import {isListEmpty} from 'common/util';
 import PlayerTypeCountSummary from '../UserTeam/component/common/PlayerTypeCountSummary';
+import {fetchPlayerStatsListAction, getStatsProps} from '../stats/redux';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -56,6 +48,8 @@ const UserTeam = () => {
   const [tabName, setTabName] = useState(defaultTabKey);
   const captainPlayerId = userteamDataProps.captionPlayerId;
   const updateTeamCaption = updateTeamCaptionAction();
+  const statsProps = getStatsProps();
+  const fetchPlayerHistory = fetchPlayerStatsListAction();
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
     setTabName('teamDetails');
@@ -85,6 +79,9 @@ const UserTeam = () => {
     saveUserTeam(userteamId, currentUserTeamPlayers, captainPlayerId);
   }
 
+  function fetchPlayerHistoryList(playerId: any) {
+    fetchPlayerHistory(playerId);
+  }
   const validateTeamTransfer: string[] = validateTeam(userteamDataProps);
   const teamValid = validateTeamTransfer.length == 0;
 
@@ -230,6 +227,8 @@ const UserTeam = () => {
           data={userteamDataProps.playerList}
           onRowSelected={onPlayerSelectedFromPlayerList}
           currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
+          playerStats={statsProps.playerStats}
+          fetchPlayerHistory={fetchPlayerHistoryList}
         />
       </Fragment>
     );

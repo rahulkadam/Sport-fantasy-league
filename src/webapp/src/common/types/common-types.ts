@@ -9,5 +9,5 @@ export interface RootState {
   venueadmin: Venue;
   matchadmin: Match;
   processadmin: AdminProcess;
-  stats: FantasyStats;
+  fantasystats: FantasyStats;
 }

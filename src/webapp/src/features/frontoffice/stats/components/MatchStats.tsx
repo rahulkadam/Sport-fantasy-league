@@ -8,7 +8,12 @@ const MatchStats = (props: MatchStatsProps) => {
     if (!matchList || matchList.length == 0) return;
     return (
       <div className="container">
-        <MatchDetails title="Matches" data={matchList} />
+        <MatchDetails
+          title="Matches"
+          data={matchList}
+          playerStats={props.playerStats}
+          fetchMatchHistory={fetchMatchStats}
+        />
       </div>
     );
   }

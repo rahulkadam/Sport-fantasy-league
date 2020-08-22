@@ -1,14 +1,42 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form} from 'react-bootstrap';
+import {Col, Form, Row} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
+import PlayerMatchScoreModal from '../../../frontoffice/stats/components/PlayerMatchScoreModal';
 
-const MatchDetails = ({data, title}: MatchDetailsProps) => {
+const MatchDetails = ({
+  data,
+  title,
+  fetchMatchHistory,
+  playerStats,
+}: MatchDetailsProps) => {
   const [filterText, setFilterText] = React.useState('');
+  const [showPlayerHistory, setShowPlayerHistory] = useState(false);
+  const handlePlayerHistoryShow = () => setShowPlayerHistory(true);
+  const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
 
+  function fetchPlayerHistoryList(matchId: string) {
+    fetchMatchHistory(matchId);
+    if (showPlayerHistory) {
+      handlePlayerHistoryClose();
+    } else {
+      handlePlayerHistoryShow();
+    }
+  }
+
+  function renderPlayerHistoryDetails() {
+    if (!showPlayerHistory) return;
+    return (
+      <PlayerMatchScoreModal
+        handleClose={handlePlayerHistoryClose}
+        show={showPlayerHistory}
+        data={playerStats}
+      />
+    );
+  }
   function customName(row: any) {
     return (
-      <div>
+      <div onClick={() => fetchPlayerHistoryList(row.id)}>
         {row.description} ({row.id})
       </div>
     );
@@ -37,44 +65,49 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
       selector: 'team_host_name',
       sortable: true,
       right: true,
+      omit: true,
     },
     {
       name: 'Away Team',
       selector: 'team_away_name',
       sortable: true,
       right: true,
+      omit: true,
     },
     {
       name: 'Tournament',
       selector: 'tournament_name',
       sortable: true,
       right: true,
+      omit: true,
     },
     {
       name: 'Venue',
       selector: 'venue_name',
       sortable: true,
       right: true,
+      omit: true,
     },
   ];
 
-  function onRowSelectedAction(state: any) {
-    console.log('Selected Rows: ', state.selectedRows);
-  }
-
   function onRowClickedAction(row: any, e: any) {
-    console.log(row.name);
+    fetchPlayerHistoryList(row.id);
   }
 
   const renderCustomSearch = useMemo(() => {
     return (
       <div>
-        <Form.Control
-          type="text"
-          placeholder="Match Name"
-          onChange={(e: any) => setFilterText(e.target.value)}
-          value={filterText}
-        />
+        <Row>
+          <Col>
+            <Form.Control
+              type="text"
+              size="sm"
+              placeholder="Match"
+              onChange={(e: any) => setFilterText(e.target.value)}
+              value={filterText}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }, [filterText]);
@@ -89,20 +122,20 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
 
   return (
     <div>
-      {data && data.length == 0 && <div>List is empty, please fetch again</div>}
+      {renderPlayerHistoryDetails()}
       {data && data.length > 0 && (
         <DataTable
-          title={title}
+          noHeader={true}
           columns={columns}
           customStyles={customStyles}
           data={filteredRows}
-          pagination
-          paginationPerPage={10}
-          paginationResetDefaultPage
+          fixedHeader
+          fixedHeaderScrollHeight="400px"
           subHeader
+          highlightOnHover
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
-          striped
+          onRowClicked={onRowClickedAction}
         />
       )}
     </div>

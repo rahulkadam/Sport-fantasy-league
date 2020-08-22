@@ -10,6 +10,7 @@ const LoginModal = (props1: LoginModalProps) => {
         size="xl"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        className="mainContainer"
         onHide={() => {
           props1.handleClose(false);
         }}>
