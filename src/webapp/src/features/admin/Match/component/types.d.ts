@@ -10,6 +10,8 @@ declare type MatchDetailsProps = {
   data: any;
   title: string;
   onRowSelected?: any;
+  playerStats?: any;
+  fetchMatchHistory?: any;
 };
 
 declare type UploadMatchResultProps = {

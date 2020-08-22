@@ -38,7 +38,13 @@ const FantasyStats = () => {
   const [tabName, setTabName] = useState(defaultTabKey);
 
   function renderMatchStats() {
-    return <MatchStats data={matchList} action={fetchMatchStats} />;
+    return (
+      <MatchStats
+        data={matchList}
+        action={fetchMatchStats}
+        playerStats={statsProps.playerStats}
+      />
+    );
   }
 
   function renderPlayerStats() {

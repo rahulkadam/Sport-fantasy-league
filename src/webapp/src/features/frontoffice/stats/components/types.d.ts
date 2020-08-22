@@ -1,6 +1,8 @@
 declare type MatchStatsProps = {
-  data: any;
-  action: any;
+  data?: any;
+  action?: any;
+  playerStats?: any;
+  matchList?: any;
 };
 declare type PlayerStatsProps = {
   data?: any;

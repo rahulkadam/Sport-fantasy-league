@@ -1,11 +1,39 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
 import {Form} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
+import PlayerMatchScoreModal from '../../../frontoffice/stats/components/PlayerMatchScoreModal';
 
-const MatchDetails = ({data, title}: MatchDetailsProps) => {
+const MatchDetails = ({
+  data,
+  title,
+  fetchMatchHistory,
+  playerStats,
+}: MatchDetailsProps) => {
   const [filterText, setFilterText] = React.useState('');
+  const [showPlayerHistory, setShowPlayerHistory] = useState(false);
+  const handlePlayerHistoryShow = () => setShowPlayerHistory(true);
+  const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
 
+  function fetchPlayerHistoryList(matchId: string) {
+    fetchMatchHistory(matchId);
+    if (showPlayerHistory) {
+      handlePlayerHistoryClose();
+    } else {
+      handlePlayerHistoryShow();
+    }
+  }
+
+  function renderPlayerHistoryDetails() {
+    if (!showPlayerHistory) return;
+    return (
+      <PlayerMatchScoreModal
+        handleClose={handlePlayerHistoryClose}
+        show={showPlayerHistory}
+        data={playerStats}
+      />
+    );
+  }
   function customName(row: any) {
     return (
       <div>
@@ -58,12 +86,9 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
     },
   ];
 
-  function onRowSelectedAction(state: any) {
-    console.log('Selected Rows: ', state.selectedRows);
-  }
-
   function onRowClickedAction(row: any, e: any) {
     console.log(row.name);
+    fetchPlayerHistoryList(row.id);
   }
 
   const renderCustomSearch = useMemo(() => {
@@ -89,6 +114,7 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
 
   return (
     <div>
+      {renderPlayerHistoryDetails()}
       {data && data.length == 0 && <div>List is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
@@ -103,6 +129,7 @@ const MatchDetails = ({data, title}: MatchDetailsProps) => {
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           striped
+          onRowClicked={onRowClickedAction}
         />
       )}
     </div>

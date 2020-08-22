@@ -68,8 +68,8 @@ const fetchMatchStatsListAction = () => {
       getMatchStats(matchId)
         .then((data: any) => {
           dispatch({
-            type: FETCH_MATCH_STATS,
-            matchStats: data,
+            type: FETCH_PLAYER_STATS,
+            playerStats: data,
           });
         })
         .catch((error: any) => {

@@ -1,7 +1,7 @@
 import {Post} from 'API';
 
 export function getMatchStats(matchId: any) {
-  return Post('/public/stats/list/userScoreHistoryByMatch', {
+  return Post('/public/stats/list/playerScoreByMatch', {
     data: {id: matchId},
   });
 }
