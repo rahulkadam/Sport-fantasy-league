@@ -3,8 +3,10 @@ declare type MatchStatsProps = {
   action: any;
 };
 declare type PlayerStatsProps = {
-  data: any;
+  data?: any;
   action: any;
+  playerStats?: any;
+  playerList?: any;
 };
 declare type UserStatsProps = {
   data: any;

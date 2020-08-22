@@ -13,14 +13,14 @@ import {
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import {pluscolor} from '@logos/index';
-import {fetchPlayerStatsListAction, getStatsProps} from '../../stats/redux';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 
 const TournamentPlayerList = ({
   data,
-  title,
   onRowSelected,
   currentUserTeamPlayers,
+  playerStats,
+  fetchPlayerHistory,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
   const [filterPlayerType, setFilterPlayerType] = React.useState('ALL');
@@ -29,8 +29,6 @@ const TournamentPlayerList = ({
   const currentUserPlayerMap = returnMapFromList(currentUserTeamPlayers);
   const [toggleCleared, setToggleCleared] = useState(false);
   const teamValueByPlayers = teamValueByPlayerList(currentUserTeamPlayers);
-  const statsProps = getStatsProps();
-  const fetchPlayerHistory = fetchPlayerStatsListAction();
   const [showPlayerHistory, setShowPlayerHistory] = useState(false);
   const handlePlayerHistoryShow = () => setShowPlayerHistory(true);
   const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
@@ -50,7 +48,7 @@ const TournamentPlayerList = ({
       <PlayerMatchScoreModal
         handleClose={handlePlayerHistoryClose}
         show={showPlayerHistory}
-        data={statsProps}
+        data={playerStats}
       />
     );
   }

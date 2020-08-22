@@ -21,6 +21,8 @@ declare type UserTeamPlayerDetails = {
   captionId?: any;
   updateCaptionAction?: any;
   editable?: boolean;
+  playerStats?: any;
+  fetchPlayerHistory?: any;
 };
 
 declare type PlayerTypeCountSummaryProps = {

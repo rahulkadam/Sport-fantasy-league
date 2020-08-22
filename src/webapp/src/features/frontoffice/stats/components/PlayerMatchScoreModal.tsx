@@ -14,7 +14,7 @@ const PlayerMatchScoreModal = (props: PlayerMatchScoreModal) => {
           <Modal.Title>Player History</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PlayerMatchScoreStats />
+          <PlayerMatchScoreStats data={props.data ? props.data : []} />
         </Modal.Body>
         <Button onClick={props.handleClose}>Close</Button>
       </Modal>

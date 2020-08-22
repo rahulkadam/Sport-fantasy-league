@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {TournamentPlayerList} from '../../UserTeam/component';
 const PlayerStats = (props: PlayerStatsProps) => {
-  const playerList = props.data;
+  const playerList = props.playerList;
   const fetchPlayerStats = props.action;
 
   function renderPlayerStats() {
@@ -13,6 +13,8 @@ const PlayerStats = (props: PlayerStatsProps) => {
           console.log('row selected');
         }}
         currentUserTeamPlayers={[]}
+        playerStats={props.playerStats}
+        fetchPlayerHistory={fetchPlayerStats}
       />
     );
   }

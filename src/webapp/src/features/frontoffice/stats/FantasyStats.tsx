@@ -15,7 +15,7 @@ import {fetchMatchListAction, getMatchData} from '../../admin/Match/redux';
 import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
 
 const FantasyStats = () => {
-  const statsProps = getStatsProps();
+  const statsProps = getStatsProps() || {};
   const fetchMatchStats = fetchMatchStatsListAction();
   const fetchPlayerStats = fetchPlayerStatsListAction();
   const fetchUserStats = fetchUserStatsListAction();
@@ -42,7 +42,13 @@ const FantasyStats = () => {
   }
 
   function renderPlayerStats() {
-    return <PlayerStats data={playerList} action={fetchPlayerStats} />;
+    return (
+      <PlayerStats
+        playerList={playerList}
+        playerStats={statsProps.playerStats}
+        action={fetchPlayerStats}
+      />
+    );
   }
 
   function renderUserStats() {

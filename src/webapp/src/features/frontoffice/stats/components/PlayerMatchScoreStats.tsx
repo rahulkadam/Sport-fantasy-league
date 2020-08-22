@@ -52,7 +52,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
           noHeader
           columns={columns}
           customStyles={customStyles}
-          data={data1}
+          data={data}
         />
       )}
     </div>
