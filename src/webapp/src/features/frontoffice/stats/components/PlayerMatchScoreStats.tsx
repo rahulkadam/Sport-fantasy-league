@@ -1,28 +1,8 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import {customStyles} from 'common/components/DataTable';
+import {StatusMessage} from 'common/components';
 const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
-  const data1 = [
-    {
-      id: 1,
-      playerName: 'Sachin',
-      matchDescription: 'MI VS CSK',
-      pointscore: 23,
-    },
-    {
-      id: 2,
-      playerName: 'Sachin',
-      matchDescription: 'MI VS CSK',
-      pointscore: 23,
-    },
-    {
-      id: 3,
-      playerName: 'Sachin',
-      matchDescription: 'MI VS CSK',
-      pointscore: 23,
-    },
-  ];
-
   const columns: any[] = [
     {
       name: 'Match',
@@ -43,16 +23,46 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       sortable: true,
       left: true,
     },
+    {
+      name: 'Runs',
+      selector: 'run_scored',
+      sortable: true,
+      left: true,
+    },
+    {
+      name: 'Wicket',
+      selector: 'wicket',
+      sortable: true,
+      left: true,
+    },
+    {
+      name: 'Catch',
+      selector: 'catches',
+      sortable: true,
+      left: true,
+    },
   ];
+
+  function renderNotExistList() {
+    return (
+      <div>
+        <StatusMessage type="error" text="Record does not exist" />
+      </div>
+    );
+  }
+
   return (
     <div>
-      Player LIst
-      {data1 && data1.length > 0 && (
+      {data && data.length == 0 && renderNotExistList()}
+      {data && data.length > 0 && (
         <DataTable
           noHeader
           columns={columns}
           customStyles={customStyles}
           data={data}
+          highlightOnHover
+          fixedHeader
+          fixedHeaderScrollHeight="400px"
         />
       )}
     </div>

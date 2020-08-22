@@ -10,6 +10,7 @@ import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Set;
@@ -69,6 +70,7 @@ public class LeagueUserTeamScorePerMatchService {
         Long matchId = requestDTO.getMatchId();
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
                 leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchId);
+        Assert.isNull(leagueUserTeamScorePerMatch, "Score not found for user");
         long[] playerIds = leagueUserTeamScorePerMatch.getPlayerList();
         return matchPlayerScoreService.getMatchScoreByPlayerIds(matchId, playerIds);
     }

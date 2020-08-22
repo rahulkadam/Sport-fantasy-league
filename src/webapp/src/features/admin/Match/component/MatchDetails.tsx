@@ -122,13 +122,12 @@ const MatchDetails = ({
           columns={columns}
           customStyles={customStyles}
           data={filteredRows}
-          pagination
-          paginationPerPage={10}
-          paginationResetDefaultPage
+          fixedHeader
+          fixedHeaderScrollHeight="400px"
           subHeader
+          highlightOnHover
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
-          striped
           onRowClicked={onRowClickedAction}
         />
       )}

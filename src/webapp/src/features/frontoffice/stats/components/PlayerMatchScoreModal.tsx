@@ -9,7 +9,8 @@ const PlayerMatchScoreModal = (props: PlayerMatchScoreModal) => {
         size="xl"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        onHide={props.handleClose}>
+        onHide={props.handleClose}
+        className="mainContainer">
         <Modal.Header closeButton>
           <Modal.Title>Player History</Modal.Title>
         </Modal.Header>

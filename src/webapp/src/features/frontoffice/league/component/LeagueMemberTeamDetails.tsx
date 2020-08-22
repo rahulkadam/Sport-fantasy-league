@@ -9,6 +9,7 @@ const LeagueMemberTeamDetails = (props: LeagueMemberTeamDetailsProps) => {
       size="xl"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="mainContainer"
       onHide={props.handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>User Team</Modal.Title>
