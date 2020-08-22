@@ -22,8 +22,8 @@ const fetchUserStatsListAction = () => {
       getUserStats(userId, matchId)
         .then((data: any) => {
           dispatch({
-            type: FETCH_USER_STATS,
-            userStats: data,
+            type: FETCH_PLAYER_STATS,
+            playerStats: data,
           });
         })
         .catch((error: any) => {

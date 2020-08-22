@@ -2,6 +2,7 @@ package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.dao.repository.LeagueUserTeamScorePerMatchRepository;
 import com.garv.satta.fantasy.dto.LeagueUserTeamScoreHistoryDTO;
+import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueUserTeamScoreHistoryConverter;
 import com.garv.satta.fantasy.model.backoffice.Match;
@@ -21,6 +22,9 @@ public class LeagueUserTeamScorePerMatchService {
 
     @Autowired
     private LeagueUserTeamScoreHistoryConverter converter;
+
+    @Autowired
+    private MatchPlayerScoreService matchPlayerScoreService;
 
     public void saveLeagueUserTeamScorePerMatch(UserTeam userTeam, Match match, Integer matchPoint, Integer totalPoint) {
 
@@ -58,6 +62,15 @@ public class LeagueUserTeamScorePerMatchService {
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
                 leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchId);
         return converter.convertToFullDTO(leagueUserTeamScorePerMatch);
+    }
+
+    public List<MatchPlayerScoreDTO> getUserScorePerMatchStats(RequestDTO requestDTO) {
+        Long userTeamId = requestDTO.getUserTeamId();
+        Long matchId = requestDTO.getMatchId();
+        LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
+                leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchId);
+        long[] playerIds = leagueUserTeamScorePerMatch.getPlayerList();
+        return matchPlayerScoreService.getMatchScoreByPlayerIds(matchId, playerIds);
     }
 
     public LeagueUserTeamScorePerMatch findTeamScoreByUserTeamIdAndMatchId(Long userTeamId, Long matchId) {
