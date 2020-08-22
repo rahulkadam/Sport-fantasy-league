@@ -103,13 +103,13 @@ const FantasyStats = () => {
       <Form inline className="statsAction">
         <Button
           variant="outline-primary"
-          className="mr-4"
+          className="mr-2"
           onClick={() => setTabName('matchstats')}>
           Match
         </Button>
         <Button
           variant="outline-primary"
-          className="mr-4"
+          className="mr-2"
           onClick={() => setTabName('playerstats')}>
           Player
         </Button>
@@ -117,7 +117,7 @@ const FantasyStats = () => {
           variant="outline-primary"
           className="mr-2"
           onClick={() => setTabName('userstats')}>
-          User
+          Your Stats
         </Button>
       </Form>
     );
