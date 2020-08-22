@@ -63,6 +63,8 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
           highlightOnHover
           fixedHeader
           fixedHeaderScrollHeight="400px"
+          defaultSortField="pointscore"
+          defaultSortAsc={false}
         />
       )}
     </div>

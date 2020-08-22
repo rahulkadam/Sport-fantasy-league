@@ -3,7 +3,6 @@ import './FantasyStats.styles.scss';
 import MatchStats from './components/MatchStats';
 import PlayerStats from './components/PlayerStats';
 import UserStats from './components/UserStats';
-import {TabContainer} from 'common/components/TabContainer';
 import LoadingOverlay from 'react-loading-overlay';
 import {
   fetchMatchStatsListAction,

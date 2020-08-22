@@ -36,7 +36,7 @@ const MatchDetails = ({
   }
   function customName(row: any) {
     return (
-      <div>
+      <div onClick={() => fetchPlayerHistoryList(row.id)}>
         {row.description} ({row.id})
       </div>
     );
@@ -91,7 +91,6 @@ const MatchDetails = ({
   ];
 
   function onRowClickedAction(row: any, e: any) {
-    console.log(row.name);
     fetchPlayerHistoryList(row.id);
   }
 
