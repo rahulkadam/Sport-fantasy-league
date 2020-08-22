@@ -12,8 +12,8 @@ export function getPlayerStats(playerId: any) {
   });
 }
 
-export function getUserStats(userId: any) {
+export function getUserStats(userId: any, matchId: any) {
   return Post('/public/stats/list/userScoreHistoryByMatch', {
-    data: {id: userId},
+    data: {userTeamId: userId, matchId: matchId},
   });
 }

@@ -18,8 +18,8 @@ const fetchUserStatsListAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
-    (userId: number) => {
-      getUserStats(userId)
+    (userId: number, matchId: number) => {
+      getUserStats(userId, matchId)
         .then((data: any) => {
           dispatch({
             type: FETCH_USER_STATS,

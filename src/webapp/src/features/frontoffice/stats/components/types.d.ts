@@ -11,8 +11,11 @@ declare type PlayerStatsProps = {
   playerList?: any;
 };
 declare type UserStatsProps = {
-  data: any;
-  action: any;
+  data?: any;
+  action?: any;
+  playerStats?: any;
+  playerList?: any;
+  matchList?: any;
 };
 
 declare type PlayerMatchScoreStatsProps = {

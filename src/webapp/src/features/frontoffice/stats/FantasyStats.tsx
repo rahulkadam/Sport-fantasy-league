@@ -57,8 +57,19 @@ const FantasyStats = () => {
     );
   }
 
+  function fetchUserStatsMatchWise(matchId: any) {
+    fetchUserStats(userTeamProps.userteam.id, matchId);
+  }
+
   function renderUserStats() {
-    return <UserStats />;
+    return (
+      <UserStats
+        playerList={playerList}
+        playerStats={statsProps.playerStats}
+        action={fetchUserStatsMatchWise}
+        matchList={matchList}
+      />
+    );
   }
 
   const tabConfig: TabConfig[] = [
