@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form} from 'react-bootstrap';
+import {Col, Form, Row} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import PlayerMatchScoreModal from '../../../frontoffice/stats/components/PlayerMatchScoreModal';
 
@@ -65,24 +65,28 @@ const MatchDetails = ({
       selector: 'team_host_name',
       sortable: true,
       right: true,
+      omit: true,
     },
     {
       name: 'Away Team',
       selector: 'team_away_name',
       sortable: true,
       right: true,
+      omit: true,
     },
     {
       name: 'Tournament',
       selector: 'tournament_name',
       sortable: true,
       right: true,
+      omit: true,
     },
     {
       name: 'Venue',
       selector: 'venue_name',
       sortable: true,
       right: true,
+      omit: true,
     },
   ];
 
@@ -94,12 +98,17 @@ const MatchDetails = ({
   const renderCustomSearch = useMemo(() => {
     return (
       <div>
-        <Form.Control
-          type="text"
-          placeholder="Match Name"
-          onChange={(e: any) => setFilterText(e.target.value)}
-          value={filterText}
-        />
+        <Row>
+          <Col>
+            <Form.Control
+              type="text"
+              size="sm"
+              placeholder="Match"
+              onChange={(e: any) => setFilterText(e.target.value)}
+              value={filterText}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }, [filterText]);
@@ -115,10 +124,9 @@ const MatchDetails = ({
   return (
     <div>
       {renderPlayerHistoryDetails()}
-      {data && data.length == 0 && <div>List is empty, please fetch again</div>}
       {data && data.length > 0 && (
         <DataTable
-          title={title}
+          noHeader={true}
           columns={columns}
           customStyles={customStyles}
           data={filteredRows}

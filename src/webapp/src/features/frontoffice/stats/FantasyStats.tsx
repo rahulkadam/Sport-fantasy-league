@@ -13,6 +13,7 @@ import {
 } from './redux';
 import {fetchMatchListAction, getMatchData} from '../../admin/Match/redux';
 import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
+import {Button, Form} from 'react-bootstrap';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -89,15 +90,45 @@ const FantasyStats = () => {
       renderfunction: renderUserStats(),
     },
   ];
+
+  function renderStatsComponent() {
+    let component: any = <div></div>;
+    component = tabConfig.find(tab => {
+      return tab.key == tabName;
+    });
+    return component.renderfunction || <div></div>;
+  }
+
+  function renderStatsActions() {
+    return (
+      <Form inline className="statsAction">
+        <Button
+          variant="outline-primary"
+          className="mr-4"
+          onClick={() => setTabName('matchstats')}>
+          Match
+        </Button>
+        <Button
+          variant="outline-primary"
+          className="mr-4"
+          onClick={() => setTabName('playerstats')}>
+          Player
+        </Button>
+        <Button
+          variant="outline-primary"
+          className="mr-2"
+          onClick={() => setTabName('userstats')}>
+          User
+        </Button>
+      </Form>
+    );
+  }
+
   return (
     <div className="statsContainer">
       <LoadingOverlay active={false} spinner text="Loading Stats Details ...">
-        <TabContainer
-          defaultKey="matchstats"
-          tabConfig={tabConfig}
-          activeKey={tabName}
-          onSelect={(key: string) => setTabName(key)}
-        />
+        {renderStatsActions()}
+        {renderStatsComponent()}
       </LoadingOverlay>
     </div>
   );
