@@ -3,6 +3,7 @@ import {Row, Col, Form} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandLeagueRow} from './ExpandLeagueRow';
+import {StatusMessage} from '../../../../common/components';
 
 const LeagueList = (props: LeagueUserListProps) => {
   const userLeagueList: any = props.userleagueList || [];
@@ -57,7 +58,9 @@ const LeagueList = (props: LeagueUserListProps) => {
   function renderLeagueList() {
     return (
       <Fragment>
-        <div className="leagueAction">My Leagues</div>
+        <div className="leagueAction">
+          <StatusMessage type="info" text="My Leagues" />
+        </div>
         {userLeagueList && userLeagueList.length > 0 && (
           <DataTable
             noHeader

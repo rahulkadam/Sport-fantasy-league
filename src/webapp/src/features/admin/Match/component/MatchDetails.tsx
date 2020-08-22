@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component';
 import {Col, Form, Row} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import PlayerMatchScoreModal from '../../../frontoffice/stats/components/PlayerMatchScoreModal';
+import {getTime} from '../../../../common/util';
 
 const MatchDetails = ({
   data,
@@ -43,8 +44,7 @@ const MatchDetails = ({
   }
 
   function convertDateTime(row: any) {
-    const dateTime = new Date(row.matchTime);
-    return <div>{dateTime.toString()}</div>;
+    return <div>{getTime(row.matchTime)}</div>;
   }
 
   const columns = [

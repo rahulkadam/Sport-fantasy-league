@@ -56,30 +56,24 @@ const League = () => {
   function renderLeagueActions() {
     return (
       <Form inline className="leagueAction">
-        {tabName != 'overview' && (
-          <Button
-            variant="outline-primary"
-            className="mr-4"
-            onClick={() => setTabName('overview')}>
-            Overview
-          </Button>
-        )}
-        {tabName != 'createLeague' && (
-          <Button
-            variant="outline-primary"
-            className="mr-4"
-            onClick={() => setTabName('createLeague')}>
-            Create League
-          </Button>
-        )}
-        {tabName != 'joinLeague' && (
-          <Button
-            variant="outline-primary"
-            className="mr-2"
-            onClick={() => setTabName('joinLeague')}>
-            Join League
-          </Button>
-        )}
+        <Button
+          variant="outline-primary"
+          className="mr-1"
+          onClick={() => setTabName('overview')}>
+          Overview
+        </Button>
+        <Button
+          variant="outline-primary"
+          className="mr-1"
+          onClick={() => setTabName('createLeague')}>
+          Create
+        </Button>
+        <Button
+          variant="outline-primary"
+          className="mr-1"
+          onClick={() => setTabName('joinLeague')}>
+          Join League
+        </Button>
       </Form>
     );
   }

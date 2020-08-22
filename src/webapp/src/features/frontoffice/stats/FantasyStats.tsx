@@ -10,9 +10,13 @@ import {
   fetchUserStatsListAction,
   getStatsProps,
 } from './redux';
-import {fetchMatchListAction, getMatchData} from '../../admin/Match/redux';
+import {
+  fetchCompletedMatchListAction,
+  getMatchData,
+} from '../../admin/Match/redux';
 import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
 import {Button, Form} from 'react-bootstrap';
+import {StatusMessage} from '../../../common/components';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -21,7 +25,7 @@ const FantasyStats = () => {
   const fetchUserStats = fetchUserStatsListAction();
   const matchProps = getMatchData();
   const matchList = matchProps.matchList;
-  const fetchMatchList = fetchMatchListAction();
+  const fetchMatchList = fetchCompletedMatchListAction();
   const userTeamProps = getUserTeamData();
   const playerList = userTeamProps.playerList;
   const fetchPlayerList = fetchAllPlayerListAction();
@@ -39,21 +43,33 @@ const FantasyStats = () => {
 
   function renderMatchStats() {
     return (
-      <MatchStats
-        data={matchList}
-        action={fetchMatchStats}
-        playerStats={statsProps.playerStats}
-      />
+      <div>
+        <StatusMessage
+          type="info"
+          text="Select below match to see Player scoring history in Match"
+        />
+        <MatchStats
+          data={matchList}
+          action={fetchMatchStats}
+          playerStats={statsProps.playerStats}
+        />
+      </div>
     );
   }
 
   function renderPlayerStats() {
     return (
-      <PlayerStats
-        playerList={playerList}
-        playerStats={statsProps.playerStats}
-        action={fetchPlayerStats}
-      />
+      <div>
+        <StatusMessage
+          type="info"
+          text="Click on  below Player to see Player scoring history in League"
+        />
+        <PlayerStats
+          playerList={playerList}
+          playerStats={statsProps.playerStats}
+          action={fetchPlayerStats}
+        />
+      </div>
     );
   }
 
@@ -63,12 +79,18 @@ const FantasyStats = () => {
 
   function renderUserStats() {
     return (
-      <UserStats
-        playerList={playerList}
-        playerStats={statsProps.playerStats}
-        action={fetchUserStatsMatchWise}
-        matchList={matchList}
-      />
+      <div>
+        <StatusMessage
+          type="info"
+          text="Select below match to see your scoring history"
+        />
+        <UserStats
+          playerList={playerList}
+          playerStats={statsProps.playerStats}
+          action={fetchUserStatsMatchWise}
+          matchList={matchList}
+        />
+      </div>
     );
   }
 

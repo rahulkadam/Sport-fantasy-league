@@ -23,6 +23,12 @@ public class MatchController {
         return service.getMatchList();
     }
 
+    @GetMapping(value = "/completed/list")
+    @ResponseBody
+    public List<MatchDTO> getCompletedMatchList() {
+        return service.getCompletedMatchList();
+    }
+
     @GetMapping(value = "/get/{id}")
     @ResponseBody
     public MatchDTO getMatchById(@PathVariable(name = "id") Long id) {

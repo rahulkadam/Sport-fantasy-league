@@ -54,9 +54,17 @@ public class MatchService {
 
     public List<MatchDTO> getUpComingMatchList() {
         DateTime currentTime = new DateTime();
-        List<Match> matches = repository.findAll();
+        List<Match> matches = repository.findUpcomingMatches(currentTime);
         return converter.convertToFullDTOList(matches);
     }
+
+    public List<MatchDTO> getCompletedMatchList() {
+        DateTime currentTime = new DateTime();
+        List<Match> matches = repository.findCompletedMatches(currentTime);
+        return converter.convertToFullDTOList(matches);
+    }
+
+
 
     public MatchDTO getMatchById(Long id) {
         Match match = repository.findMatchById(id);

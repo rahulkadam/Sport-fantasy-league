@@ -112,3 +112,18 @@ export function getAutoPickTeam(list: any) {
 
   return autoUserTeam;
 }
+
+export function getTime(time: any) {
+  const options = {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZone: 'Asia/Kolkata',
+    timeZoneName: 'short',
+    hour12: true,
+  };
+  const dateTime = new Date(time);
+  return dateTime.toLocaleDateString('en-Us', options);
+}
