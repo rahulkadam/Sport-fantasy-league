@@ -42,24 +42,58 @@ export const sportList = [
 ];
 
 export const teamList = [
-  {id: 'Mumbai Indians', name: 'Mumbai Indians', logo: teammumbai},
-  {id: 'Chennai Super Kings', name: 'Chennai Super Kings', logo: teamCSK},
+  {id: 'Mumbai Indians', name: 'Mumbai Indians', logo: teammumbai, short: 'MI'},
   {
-    id: 'Royal Challengers Bangalore',
-    name: 'Royal Challengers Bangalore',
-    logo: teamRCB,
+    id: 'Chennai Super Kings',
+    name: 'Chennai Super Kings',
+    logo: teamCSK,
+    short: 'CSK',
   },
-  {id: 'Delhi Capitals', name: 'Delhi Capitals', logo: teamDC},
-  {id: 'Kings XI Punjab', name: 'Kings XI Punjab', logo: teampunjab},
-  {id: 'Kolkata Knight Riders', name: 'Kolkata Knight Riders', logo: teamKKR},
-  {id: 'Rajasthan Royals', name: 'Rajasthan Royals', logo: teamrajsthan},
-  {id: 'Sunrisers Hyderabad', name: 'Sunrisers Hyderabad', logo: teamSRH},
+  {
+    id: 'Royal Challengers Bengaluru',
+    name: 'Royal Challengers Bengaluru',
+    logo: teamRCB,
+    short: 'RCB',
+  },
+  {id: 'Delhi Capitals', name: 'Delhi Capitals', logo: teamDC, short: 'RCB'},
+  {
+    id: 'Kings XI Punjab',
+    name: 'Kings XI Punjab',
+    logo: teampunjab,
+    short: 'KXIP',
+  },
+  {
+    id: 'Kolkata Knight Riders',
+    name: 'Kolkata Knight Riders',
+    logo: teamKKR,
+    short: 'KKR',
+  },
+  {
+    id: 'Rajasthan Royals',
+    name: 'Rajasthan Royals',
+    logo: teamrajsthan,
+    short: 'RR',
+  },
+  {
+    id: 'Sunrisers Hyderabad',
+    name: 'Sunrisers Hyderabad',
+    logo: teamSRH,
+    short: 'SRH',
+  },
 ];
 
 export function getLogoNameByTeam(team: string) {
   const map = new Map();
   teamList.forEach(team => {
     map.set(team.name, team.logo);
+  });
+  return map.get(team);
+}
+
+export function getShortNameByTeam(team: string) {
+  const map = new Map();
+  teamList.forEach(team => {
+    map.set(team.name, team.short);
   });
   return map.get(team);
 }
