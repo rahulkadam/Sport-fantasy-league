@@ -121,9 +121,8 @@ export function getTime(time: any) {
     hour: 'numeric',
     minute: 'numeric',
     timeZone: 'Asia/Kolkata',
-    timeZoneName: 'short',
     hour12: true,
   };
   const dateTime = new Date(time);
-  return dateTime.toLocaleDateString('en-Us', options);
+  return dateTime.toLocaleDateString('en-Us', options) + ' IST';
 }

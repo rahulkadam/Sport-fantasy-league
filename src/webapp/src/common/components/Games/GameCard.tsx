@@ -12,9 +12,10 @@ const GameCard = (cardProps: GameCardProps) => {
     let msg = '';
     if (days > 0) {
       msg = days + ' Days ';
+      return <span className="timeMsg">{msg} left</span>;
     }
     if (hours > 0) {
-      msg = msg + hours + ' Hrs';
+      msg = hours + ' Hrs ';
     }
     if (days <= 0 && hours <= 0) {
       msg = minutes + ' Mins';

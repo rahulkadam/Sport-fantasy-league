@@ -4,6 +4,7 @@ import {Col, Form, Row} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import PlayerMatchScoreModal from '../../../frontoffice/stats/components/PlayerMatchScoreModal';
 import {getTime} from '../../../../common/util';
+import {getShortNameByTeam} from '../../../../common/components/FantasyDropDown';
 
 const MatchDetails = ({
   data,
@@ -38,7 +39,8 @@ const MatchDetails = ({
   function customName(row: any) {
     return (
       <div onClick={() => fetchPlayerHistoryList(row.id)}>
-        {row.description} ({row.id})
+        {getShortNameByTeam(row.team_host_name)} Vs{' '}
+        {getShortNameByTeam(row.team_away_name)}({row.id})
       </div>
     );
   }
@@ -50,7 +52,7 @@ const MatchDetails = ({
   const columns = [
     {
       name: 'Name',
-      selector: 'description',
+      selector: 'team_host_name',
       sortable: true,
       cell: customName,
     },
@@ -86,7 +88,6 @@ const MatchDetails = ({
       selector: 'venue_name',
       sortable: true,
       right: true,
-      omit: true,
     },
   ];
 
