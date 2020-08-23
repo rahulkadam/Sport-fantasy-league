@@ -26,6 +26,7 @@ import {useParams} from 'react-router-dom';
 import {isListEmpty} from 'common/util';
 import PlayerTypeCountSummary from '../UserTeam/component/common/PlayerTypeCountSummary';
 import {fetchPlayerStatsListAction, getStatsProps} from '../stats/redux';
+import TeamCriteria from './component/common/TeamCriteria';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -51,6 +52,7 @@ const UserTeam = () => {
   const statsProps = getStatsProps();
   const fetchPlayerHistory = fetchPlayerStatsListAction();
   const [transferAction, setTransferAction] = useState('userteam');
+  const gameCriteria = userteamDataProps.teamcriteria;
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
     setTabName('teamDetails');
@@ -131,7 +133,7 @@ const UserTeam = () => {
     const teamCreateMsg = 'Create team Or Auto Pick if you are short of time.';
     return (
       <Fragment>
-        <Row>
+        <Row className="userTeamContainer">
           <Col>
             <StatusMessage
               text={teamCreateMsg}
@@ -140,7 +142,7 @@ const UserTeam = () => {
             />
           </Col>
         </Row>
-        <Row>
+        <Row className="userTeamContainer">
           <Col>
             <Button
               variant="outline-success"
@@ -150,6 +152,7 @@ const UserTeam = () => {
             </Button>
           </Col>
         </Row>
+        <TeamCriteria criteria={gameCriteria} />
       </Fragment>
     );
   }
@@ -166,8 +169,6 @@ const UserTeam = () => {
           </Row>
         )
       );
-    } else {
-      errorStatusMessage.push(renderAutoPickTeam());
     }
     return <div className="errorPanel">{errorStatusMessage}</div>;
   }
@@ -210,20 +211,22 @@ const UserTeam = () => {
 
   function renderTeamTransferActions() {
     return (
-      <Form inline className="leagueAction">
-        <Button
-          variant="outline-primary"
-          className="mr-1"
-          onClick={() => setTransferAction('userteam')}>
-          Team View
-        </Button>
-        <Button
-          variant="outline-primary"
-          className="mr-1"
-          onClick={() => setTransferAction('playerList')}>
-          Player Selection
-        </Button>
-      </Form>
+      <div className="leagueAction">
+        <Form inline>
+          <Button
+            variant="outline-primary"
+            className="mr-1"
+            onClick={() => setTransferAction('userteam')}>
+            Team View
+          </Button>
+          <Button
+            variant="outline-primary"
+            className="mr-1"
+            onClick={() => setTransferAction('playerList')}>
+            Player Selection
+          </Button>
+        </Form>
+      </div>
     );
   }
 
@@ -235,13 +238,16 @@ const UserTeam = () => {
         {renderSaveButton()}
         {renderTeamTransferActions()}
         {transferAction == 'userteam' && (
-          <UserTeamPlayerDetails
-            captionId={captainPlayerId}
-            data={userteamDataProps.currentUserTeamPlayers}
-            onRemoveRowAction={removeRowAction}
-            updateCaptionAction={updateTeamCaption}
-            editable={true}
-          />
+          <Fragment>
+            {isListEmpty(currentUserTeamPlayers) && renderAutoPickTeam()}
+            <UserTeamPlayerDetails
+              captionId={captainPlayerId}
+              data={userteamDataProps.currentUserTeamPlayers}
+              onRemoveRowAction={removeRowAction}
+              updateCaptionAction={updateTeamCaption}
+              editable={true}
+            />
+          </Fragment>
         )}
         {transferAction == 'playerList' && (
           <Fragment>

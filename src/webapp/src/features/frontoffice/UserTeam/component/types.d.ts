@@ -28,3 +28,7 @@ declare type UserTeamPlayerDetails = {
 declare type PlayerTypeCountSummaryProps = {
   playerList: any;
 };
+
+declare type TeamCriteriaProps = {
+  criteria?: any;
+};
