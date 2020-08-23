@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 import {
   createMatch,
   fetchAllMatchList,
+  fetchCompletedMatchList,
   uploadMatchPlayerPoints,
   uploadMatchResult,
 } from './match-api';
@@ -21,6 +22,29 @@ const fetchMatchListAction = () => {
     dispatchAction(dispatch, ACTION_START),
     () => {
       fetchAllMatchList()
+        .then((data: any) => {
+          dispatch({
+            type: GET_MATCH_LIST,
+            matchList: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: GET_MATCH_LIST_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
+const fetchCompletedMatchListAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    () => {
+      fetchCompletedMatchList()
         .then((data: any) => {
           dispatch({
             type: GET_MATCH_LIST,
@@ -111,4 +135,5 @@ export {
   createMatchAction,
   uploadMatchPlayerPointAction,
   uploadMatchResultAction,
+  fetchCompletedMatchListAction,
 };

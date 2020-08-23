@@ -29,6 +29,36 @@ export const customStyles = {
   },
 };
 
+export const customShortStyles = {
+  rows: {
+    style: {
+      fontFamily: 'Source Sans Pro,sans-serif',
+    },
+    highlightOnHoverStyle: {
+      backgroundColor: 'rgb(230, 244, 244)',
+      borderBottomColor: '#FFFFFF',
+      borderRadius: '1px',
+      outline: '1px solid #FFFFFF',
+      cursor: 'pointer',
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: '1px', // override the cell padding for head cells
+      paddingRight: '1px',
+      fontFamily: 'Source Sans Pro,sans-serif',
+      fontWeight: 'bold',
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: '1px', // override the cell padding for data cells
+      paddingRight: '1px',
+      fontFamily: 'Source Sans Pro,sans-serif',
+    },
+  },
+};
+
 export const playerRowStyeForNew = [
   {
     when: (row: any) => row.isNew,

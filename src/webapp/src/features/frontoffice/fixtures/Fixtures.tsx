@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import {MatchDetails} from '../../admin/Match/component';
-import {fetchMatchListAction, getMatchData} from '../../admin/Match/redux';
 import {StatusMessage} from 'common/components';
 import LoadingOverlay from 'react-loading-overlay';
 import './fixtures.styles.scss';
 import {isListEmpty} from 'common/util';
 import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
+import {fetchUpComingMatchesAction, getHomeData} from '../home/redux';
 
 const Fixtures = () => {
-  const matchProps = getMatchData();
-  const matchList = matchProps.matchList;
-  const fetchMatchList = fetchMatchListAction();
+  const homeProps = getHomeData();
+  const matchList = homeProps.leagueMatchesList;
+  const fetchMatchList = fetchUpComingMatchesAction();
   const fetchPlayerStats = fetchMatchStatsListAction();
   const statsProps = getStatsProps();
 
@@ -23,6 +23,7 @@ const Fixtures = () => {
   function renderMatchListView() {
     return (
       <div className="container">
+        <StatusMessage type="info" text="Upcoming Match Schedule" />
         <MatchDetails
           title="Fixtures"
           data={matchList}
@@ -34,14 +35,14 @@ const Fixtures = () => {
   }
 
   function renderStatusMessage(isError: boolean, statusMessage: string) {
-    const statusClassName = matchProps.hasError ? 'error' : 'success';
+    const statusClassName = homeProps.hasError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
   return (
     <div>
       <LoadingOverlay active={false} spinner text="Loading League Details ...">
-        {renderStatusMessage(matchProps.hasError, matchProps.statusMessage)}
+        {renderStatusMessage(homeProps.hasError, homeProps.statusMessage)}
         {renderMatchListView()}
       </LoadingOverlay>
     </div>

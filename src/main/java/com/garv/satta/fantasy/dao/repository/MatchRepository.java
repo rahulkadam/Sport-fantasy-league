@@ -12,7 +12,10 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
 
     List<Match> findAll();
     Match findMatchById(Long id);
-    //@Query("Select m from Match m where m.matchTime > current order by m.matchTime desc limit 5")
-    //List<Match> findUpcomingMatches(@Param("current") DateTime currentTime);
+    @Query("Select m from Match m where m.matchTime > :current order by m.matchTime desc")
+    List<Match> findUpcomingMatches(@Param("current") DateTime currentTime);
+
+    @Query("Select m from Match m where m.matchTime < :current order by m.matchTime desc")
+    List<Match> findCompletedMatches(@Param("current") DateTime currentTime);
 
 }

@@ -6,6 +6,8 @@ import './Home.styles.scss';
 import {getAccessToken} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
 import HowToPlay from './components/HowToPlay';
+import {Row, Col, Form, Button} from 'react-bootstrap';
+import history from 'common/config/history';
 
 const FantasyHome = () => {
   const props = getHomeData();
@@ -15,10 +17,72 @@ const FantasyHome = () => {
     fetchUpComingMatches();
   }, []);
 
+  function goto(link: string) {
+    history.push(link);
+  }
+
+  function renderAuthUserDashboard() {
+    return (
+      <div>
+        <Form inline>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/league')}>
+            League
+          </Button>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/team')}>
+            View Team
+          </Button>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/statistics')}>
+            View Stats
+          </Button>
+        </Form>
+      </div>
+    );
+  }
+
+  function renderUnAuthUserDashboard() {
+    return (
+      <div>
+        <Form inline>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/helppage')}>
+            Help
+          </Button>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/fixtures')}>
+            Fixtures
+          </Button>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/statistics')}>
+            View Stats
+          </Button>
+        </Form>
+      </div>
+    );
+  }
+
   return (
     <div className="homeContainer">
       <UserHomePageBoard />
+      <MatchStatsData {...props} />
+      {accessToken && renderAuthUserDashboard()}
+      {!accessToken && renderUnAuthUserDashboard()}
       <HowToPlay />
+      <UserHomePageBoard />
     </div>
   );
 };

@@ -70,7 +70,7 @@ public class LeagueUserTeamScorePerMatchService {
         Long matchId = requestDTO.getMatchId();
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
                 leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchId);
-        Assert.isNull(leagueUserTeamScorePerMatch, "Score not found for user");
+        Assert.notNull(leagueUserTeamScorePerMatch, "Score not found for user");
         long[] playerIds = leagueUserTeamScorePerMatch.getPlayerList();
         return matchPlayerScoreService.getMatchScoreByPlayerIds(matchId, playerIds);
     }

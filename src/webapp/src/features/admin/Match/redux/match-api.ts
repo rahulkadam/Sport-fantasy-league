@@ -14,7 +14,11 @@ export function createMatch(requestObject: CreateMatchRequestObject) {
 }
 
 export function fetchAllMatchList() {
-  return Get('/fantasy/match/list');
+  return Get('/fantasy/match/completed/list');
+}
+
+export function fetchCompletedMatchList() {
+  return Get('/fantasy/match/completed/list');
 }
 
 export function uploadMatchPlayerPoints(

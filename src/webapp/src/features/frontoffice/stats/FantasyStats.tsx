@@ -10,9 +10,14 @@ import {
   fetchUserStatsListAction,
   getStatsProps,
 } from './redux';
-import {fetchMatchListAction, getMatchData} from '../../admin/Match/redux';
+import {
+  fetchCompletedMatchListAction,
+  getMatchData,
+} from '../../admin/Match/redux';
 import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
 import {Button, Form} from 'react-bootstrap';
+import {StatusMessage} from '../../../common/components';
+import {isUserLogin} from '../../../API';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -21,10 +26,11 @@ const FantasyStats = () => {
   const fetchUserStats = fetchUserStatsListAction();
   const matchProps = getMatchData();
   const matchList = matchProps.matchList;
-  const fetchMatchList = fetchMatchListAction();
+  const fetchMatchList = fetchCompletedMatchListAction();
   const userTeamProps = getUserTeamData();
   const playerList = userTeamProps.playerList;
   const fetchPlayerList = fetchAllPlayerListAction();
+  const userLogin = isUserLogin();
   useEffect(() => {
     if (!matchList || matchList.length == 0) {
       fetchMatchList();
@@ -39,21 +45,33 @@ const FantasyStats = () => {
 
   function renderMatchStats() {
     return (
-      <MatchStats
-        data={matchList}
-        action={fetchMatchStats}
-        playerStats={statsProps.playerStats}
-      />
+      <div>
+        <StatusMessage
+          type="info"
+          text="Select below match to see Player scoring history in Match"
+        />
+        <MatchStats
+          data={matchList}
+          action={fetchMatchStats}
+          playerStats={statsProps.playerStats}
+        />
+      </div>
     );
   }
 
   function renderPlayerStats() {
     return (
-      <PlayerStats
-        playerList={playerList}
-        playerStats={statsProps.playerStats}
-        action={fetchPlayerStats}
-      />
+      <div>
+        <StatusMessage
+          type="info"
+          text="Click on  below Player to see Player scoring history in League"
+        />
+        <PlayerStats
+          playerList={playerList}
+          playerStats={statsProps.playerStats}
+          action={fetchPlayerStats}
+        />
+      </div>
     );
   }
 
@@ -63,12 +81,18 @@ const FantasyStats = () => {
 
   function renderUserStats() {
     return (
-      <UserStats
-        playerList={playerList}
-        playerStats={statsProps.playerStats}
-        action={fetchUserStatsMatchWise}
-        matchList={matchList}
-      />
+      <div>
+        <StatusMessage
+          type="info"
+          text="Select below match to see your scoring history"
+        />
+        <UserStats
+          playerList={playerList}
+          playerStats={statsProps.playerStats}
+          action={fetchUserStatsMatchWise}
+          matchList={matchList}
+        />
+      </div>
     );
   }
 
@@ -102,23 +126,25 @@ const FantasyStats = () => {
     return (
       <Form inline className="statsAction">
         <Button
-          variant="outline-primary"
-          className="mr-4"
+          variant={tabName == 'matchstats' ? 'primary' : 'outline-primary'}
+          className="mr-2"
           onClick={() => setTabName('matchstats')}>
           Match
         </Button>
         <Button
-          variant="outline-primary"
-          className="mr-4"
+          variant={tabName == 'playerstats' ? 'primary' : 'outline-primary'}
+          className="mr-2"
           onClick={() => setTabName('playerstats')}>
           Player
         </Button>
-        <Button
-          variant="outline-primary"
-          className="mr-2"
-          onClick={() => setTabName('userstats')}>
-          User
-        </Button>
+        {userLogin && (
+          <Button
+            variant={tabName == 'userstats' ? 'primary' : 'outline-primary'}
+            className="mr-2"
+            onClick={() => setTabName('userstats')}>
+            Your Stats
+          </Button>
+        )}
       </Form>
     );
   }

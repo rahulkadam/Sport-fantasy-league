@@ -5,4 +5,5 @@ export {
   createMatchAction,
   uploadMatchPlayerPointAction,
   uploadMatchResultAction,
+  fetchCompletedMatchListAction,
 } from './matchActions';

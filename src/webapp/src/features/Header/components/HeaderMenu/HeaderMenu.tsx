@@ -27,7 +27,7 @@ const HeaderMenu = () => {
 
   function renderMenuLink(name: string, link: string) {
     return (
-      <Nav.Link as={Link} to={link} href="#">
+      <Nav.Link as={Link} to={link} eventKey={name} href="#">
         {name}
       </Nav.Link>
     );
@@ -59,7 +59,7 @@ const HeaderMenu = () => {
           </Nav>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav>
+            <Nav variant="pills" defaultActiveKey="/home">
               {publicMenu && renderMenuLink('Home', '/')}
               {userMenu && renderMenu(userMenuConfig)}
               {adminMenu && renderMenu(adminMenuConfig)}

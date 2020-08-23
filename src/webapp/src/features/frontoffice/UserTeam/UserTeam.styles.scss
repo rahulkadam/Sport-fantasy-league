@@ -76,3 +76,13 @@
  padding: 1rem;
  margin: 1rem;
 }
+
+.userTeamTabMenuLink {
+ justify-content: space-around;
+ cursor: pointer;
+ align-items: center;
+ font-weight: 500;
+ padding: 0.5rem;
+ box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+ border-radius: 2px;
+}
