@@ -7,6 +7,7 @@ const UserStats = (prop: UserStatsProps) => {
         data={prop.matchList}
         action={prop.action}
         playerStats={prop.playerStats}
+        title="Your Score Stats"
       />
     );
   }

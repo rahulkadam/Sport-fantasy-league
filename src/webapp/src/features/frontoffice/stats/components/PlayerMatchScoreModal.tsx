@@ -12,7 +12,7 @@ const PlayerMatchScoreModal = (props: PlayerMatchScoreModal) => {
         onHide={props.handleClose}
         className="mainContainer">
         <Modal.Header closeButton>
-          <Modal.Title>Player History</Modal.Title>
+          <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <PlayerMatchScoreStats data={props.data ? props.data : []} />

@@ -33,6 +33,7 @@ const MatchDetails = ({
         handleClose={handlePlayerHistoryClose}
         show={showPlayerHistory}
         data={playerStats}
+        title={title}
       />
     );
   }

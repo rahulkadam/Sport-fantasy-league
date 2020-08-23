@@ -49,6 +49,7 @@ const TournamentPlayerList = ({
         handleClose={handlePlayerHistoryClose}
         show={showPlayerHistory}
         data={playerStats}
+        title="Player Stats"
       />
     );
   }

@@ -49,7 +49,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
   function renderNotExistList() {
     return (
       <div>
-        <StatusMessage type="error" text="Record does not exist" />
+        <StatusMessage type="error" text="Stats does not exist" />
       </div>
     );
   }

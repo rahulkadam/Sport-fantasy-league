@@ -165,6 +165,7 @@ const UserTeamPlayerDetails = ({
             columns={newColumns}
             customStyles={customStyles}
             fixedHeader
+            fixedHeaderScrollHeight="400px"
             data={filteredRows}
             subHeader
             highlightOnHover

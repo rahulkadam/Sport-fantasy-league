@@ -9,7 +9,7 @@ const MatchStats = (props: MatchStatsProps) => {
     return (
       <div className="container">
         <MatchDetails
-          title="Matches"
+          title={props.title}
           data={matchList}
           playerStats={props.playerStats}
           fetchMatchHistory={fetchMatchStats}

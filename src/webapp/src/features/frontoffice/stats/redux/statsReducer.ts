@@ -2,6 +2,7 @@ import {
   FETCH_USER_STATS,
   FETCH_PLAYER_STATS,
   FETCH_MATCH_STATS,
+  CLEAR_PLAYER_STATS,
 } from './statsConstants';
 
 const initialState: FantasyStats = {
@@ -30,6 +31,11 @@ export default (
       return {
         ...state,
         matchStats: action.matchStats,
+      };
+    case CLEAR_PLAYER_STATS:
+      return {
+        ...state,
+        playerStats: [],
       };
     default:
       return state;
