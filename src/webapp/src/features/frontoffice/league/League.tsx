@@ -57,19 +57,19 @@ const League = () => {
     return (
       <Form inline className="leagueAction">
         <Button
-          variant="outline-primary"
+          variant={tabName == 'overview' ? 'primary' : 'outline-primary'}
           className="mr-1"
           onClick={() => setTabName('overview')}>
           Overview
         </Button>
         <Button
-          variant="outline-primary"
+          variant={tabName == 'createLeague' ? 'primary' : 'outline-primary'}
           className="mr-1"
           onClick={() => setTabName('createLeague')}>
           Create
         </Button>
         <Button
-          variant="outline-primary"
+          variant={tabName == 'joinLeague' ? 'primary' : 'outline-primary'}
           className="mr-1"
           onClick={() => setTabName('joinLeague')}>
           Join League

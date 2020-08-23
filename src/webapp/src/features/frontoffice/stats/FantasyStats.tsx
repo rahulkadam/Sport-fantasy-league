@@ -124,19 +124,19 @@ const FantasyStats = () => {
     return (
       <Form inline className="statsAction">
         <Button
-          variant="outline-primary"
+          variant={tabName == 'matchstats' ? 'primary' : 'outline-primary'}
           className="mr-2"
           onClick={() => setTabName('matchstats')}>
           Match
         </Button>
         <Button
-          variant="outline-primary"
+          variant={tabName == 'playerstats' ? 'primary' : 'outline-primary'}
           className="mr-2"
           onClick={() => setTabName('playerstats')}>
           Player
         </Button>
         <Button
-          variant="outline-primary"
+          variant={tabName == 'userstats' ? 'primary' : 'outline-primary'}
           className="mr-2"
           onClick={() => setTabName('userstats')}>
           Your Stats

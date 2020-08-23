@@ -130,7 +130,8 @@ const UserTeam = () => {
   }
 
   function renderAutoPickTeam() {
-    const teamCreateMsg = 'Create team Or Auto Pick if you are short of time.';
+    const teamCreateMsg =
+      'Create team from player Selection Or Auto Pick if you are short of time.';
     return (
       <Fragment>
         <Row className="userTeamContainer">
@@ -214,13 +215,17 @@ const UserTeam = () => {
       <div className="leagueAction">
         <Form inline>
           <Button
-            variant="outline-primary"
+            variant={
+              transferAction == 'userteam' ? 'primary' : 'outline-primary'
+            }
             className="mr-1"
             onClick={() => setTransferAction('userteam')}>
             Team View
           </Button>
           <Button
-            variant="outline-primary"
+            variant={
+              transferAction == 'playerList' ? 'primary' : 'outline-primary'
+            }
             className="mr-1"
             onClick={() => setTransferAction('playerList')}>
             Player Selection
