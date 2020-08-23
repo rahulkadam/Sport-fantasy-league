@@ -15,8 +15,6 @@ import {getTournamentData} from '../../admin/Tournament/redux';
 import {checkUserAccess, GetLoginStoreData} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {Button, Form} from 'react-bootstrap';
-import {fetchPlayerListByUserAction, getUserTeamData} from '../UserTeam/redux';
-import history from 'common/config/history';
 import {getCommonData} from '../../common/redux';
 
 const League = () => {
@@ -24,10 +22,6 @@ const League = () => {
   const tournamentProps = getTournamentData();
   const configProps = getCommonData();
   const userProps = GetLoginStoreData();
-  const fetchPlayerListByUser = fetchPlayerListByUserAction();
-  const userteamDataProps = getUserTeamData();
-  const isUserTeamAvailable =
-    userteamDataProps.userteam && userteamDataProps.userteam.id;
   const leagueObjdata = leagueProps.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
   const leagueMemberTeamDetails = leagueProps.leagueMemberTeam;
@@ -45,9 +39,6 @@ const League = () => {
 
   useEffect(() => {
     fetchUserLeagueList(userId);
-    if (!isUserTeamAvailable) {
-      fetchPlayerListByUser(userProps.id);
-    }
   }, []);
   useEffect(() => {
     if (leagueProps.shouldRefresh) {
@@ -111,11 +102,6 @@ const League = () => {
     );
   }
 
-  function goToTeamTab() {
-    history.push('/team');
-    return <div />;
-  }
-
   function renderLeagueComponents() {
     switch (tabName) {
       case 'overview':
@@ -140,7 +126,6 @@ const League = () => {
         active={configProps.isLoading}
         spinner
         text="Loading League Details ...">
-        {!isUserTeamAvailable && goToTeamTab()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}
         {renderLeagueActions()}
