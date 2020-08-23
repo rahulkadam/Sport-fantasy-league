@@ -25,6 +25,7 @@ const TeamCriteria = ({criteria}: TeamCriteriaProps) => {
         customStyles={customShortStyles}
         data={criteria.playerCriteriaDTOList}
         highlightOnHover
+        dense
       />
     );
   }
