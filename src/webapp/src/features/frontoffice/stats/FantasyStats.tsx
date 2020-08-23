@@ -17,6 +17,7 @@ import {
 import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
 import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from '../../../common/components';
+import {isUserLogin} from '../../../API';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -29,6 +30,7 @@ const FantasyStats = () => {
   const userTeamProps = getUserTeamData();
   const playerList = userTeamProps.playerList;
   const fetchPlayerList = fetchAllPlayerListAction();
+  const userLogin = isUserLogin();
   useEffect(() => {
     if (!matchList || matchList.length == 0) {
       fetchMatchList();
@@ -135,12 +137,14 @@ const FantasyStats = () => {
           onClick={() => setTabName('playerstats')}>
           Player
         </Button>
-        <Button
-          variant={tabName == 'userstats' ? 'primary' : 'outline-primary'}
-          className="mr-2"
-          onClick={() => setTabName('userstats')}>
-          Your Stats
-        </Button>
+        {userLogin && (
+          <Button
+            variant={tabName == 'userstats' ? 'primary' : 'outline-primary'}
+            className="mr-2"
+            onClick={() => setTabName('userstats')}>
+            Your Stats
+          </Button>
+        )}
       </Form>
     );
   }

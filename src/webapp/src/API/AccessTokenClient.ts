@@ -18,3 +18,11 @@ export function getAccessToken() {
 export function removeAccessToken() {
   localStorage.removeItem(TOKEN_KEY);
 }
+
+export function isUserLogin() {
+  const accessToken = getAccessToken();
+  if (accessToken) {
+    return true;
+  }
+  return false;
+}
