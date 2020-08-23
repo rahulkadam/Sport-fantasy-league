@@ -11,25 +11,23 @@ import {
   ACTION_START,
   UPDATE_INTERNAL_USER_TEAM,
   FETCH_ALL_PLAYER_LIST,
-  FETCH_ALL_PLAYER_LIST_ERROR,
   FETCH_PLAYER_LIST_BY_USER,
-  FETCH_PLAYER_LIST_BY_USER_ERROR,
-  FETCH_USER_TEAM_ERROR,
   FETCH_USER_TEAM,
   SAVE_USER_TEAM,
-  SAVE_USER_TEAM_ERROR,
   REMOVE_FROM_INTERNAL_USER_TEAM,
   FETCH_GAME_CRITERIA,
-  FETCH_GAME_CRITERIA_ERROR,
   RESET_INTERNAL_USER_TEAM,
   UPDATE_CAPTION_FOR_TEAM,
   AUTO_PICK_USER_TEAM,
+  SHOULD_REFRESH_STOP,
+  ACTION_ERROR,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
   dispatchAction,
   getErrorMessage,
 } from 'common/util';
+import {ACTION_COMPLETED} from '../../../common/redux/commonConstants';
 
 const fetchAllPlayerListAction = () => {
   const dispatch = useDispatch();
@@ -43,10 +41,11 @@ const fetchAllPlayerListAction = () => {
             type: FETCH_ALL_PLAYER_LIST,
             playerList: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
-            type: FETCH_ALL_PLAYER_LIST_ERROR,
+            type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
           });
         });
@@ -59,6 +58,7 @@ const fetchPlayerListByUserAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
+    dispatchAction(dispatch, SHOULD_REFRESH_STOP),
     (userid: number) => {
       fetchUserTeamByUser(userid)
         .then((data: any) => {
@@ -66,23 +66,25 @@ const fetchPlayerListByUserAction = () => {
             type: FETCH_USER_TEAM,
             userteam: data,
           });
+          dispatch({type: ACTION_COMPLETED});
           fetchPlayerlistByUser(data[0].id)
             .then((data: any) => {
               dispatch({
                 type: FETCH_PLAYER_LIST_BY_USER,
                 userTeamPlayers: data,
               });
+              dispatch({type: ACTION_COMPLETED});
             })
             .catch((error: any) => {
               dispatch({
-                type: FETCH_PLAYER_LIST_BY_USER_ERROR,
+                type: ACTION_ERROR,
                 errorMessage: getErrorMessage(error),
               });
             });
         })
         .catch((error: any) => {
           dispatch({
-            type: FETCH_USER_TEAM_ERROR,
+            type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
           });
         });
@@ -114,6 +116,7 @@ const resetUserTeamAction = () => {
       dispatch({
         type: RESET_INTERNAL_USER_TEAM,
       });
+    dispatch({type: ACTION_COMPLETED});
   });
 };
 
@@ -147,10 +150,11 @@ const saveUserTeamAction = () => {
             type: SAVE_USER_TEAM,
             saveuserTeamData: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
-            type: SAVE_USER_TEAM_ERROR,
+            type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
           });
         });
@@ -170,10 +174,11 @@ const createUserTeamAction = () => {
             type: SAVE_USER_TEAM,
             saveuserTeamData: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
-            type: SAVE_USER_TEAM_ERROR,
+            type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
           });
         });
@@ -193,10 +198,11 @@ const fetchGameCriteriaByNameAction = () => {
             type: FETCH_GAME_CRITERIA,
             gameCriteria: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
-            type: FETCH_GAME_CRITERIA_ERROR,
+            type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
           });
         });

@@ -18,9 +18,11 @@ import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
 import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from '../../../common/components';
 import {isUserLogin} from '../../../API';
+import {getCommonData} from '../../common/redux';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
+  const configProps = getCommonData();
   const fetchMatchStats = fetchMatchStatsListAction();
   const fetchPlayerStats = fetchPlayerStatsListAction();
   const fetchUserStats = fetchUserStatsListAction();
@@ -151,7 +153,10 @@ const FantasyStats = () => {
 
   return (
     <div className="statsContainer">
-      <LoadingOverlay active={false} spinner text="Loading Stats Details ...">
+      <LoadingOverlay
+        active={configProps.isLoading}
+        spinner
+        text="Loading Stats Details ...">
         {renderStatsActions()}
         {renderStatsComponent()}
       </LoadingOverlay>

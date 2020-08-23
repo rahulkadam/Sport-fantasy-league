@@ -10,6 +10,8 @@ import {isListEmpty} from 'common/util';
 import {getLogoNameByTeam} from 'common/components/FantasyDropDown';
 import {minuscolor} from '@logos/index';
 import {playerRowStyeForNew} from 'common/components/DataTable/TableConfig';
+import {getCommonData} from '../../../common/redux';
+import LoadingOverlay from 'react-loading-overlay';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -19,6 +21,7 @@ const UserTeamPlayerDetails = ({
   editable,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
+  const configProps = getCommonData();
   function getDropDownPlayerList() {
     const list =
       data &&
@@ -152,23 +155,28 @@ const UserTeamPlayerDetails = ({
     );
   return (
     <div>
-      {data && data.length > 0 && (
-        <DataTable
-          noHeader
-          columns={newColumns}
-          customStyles={customStyles}
-          fixedHeader
-          data={filteredRows}
-          subHeader
-          highlightOnHover
-          conditionalRowStyles={playerRowStyeForNew}
-          subHeaderComponent={renderCustomSearch}
-          subHeaderAlign="left"
-          expandableRows={false}
-          expandableRowsComponent={<ExpandPlayerRow />}
-          defaultSortField="teamsNameList"
-        />
-      )}
+      <LoadingOverlay
+        active={configProps.isLoading}
+        spinner
+        text="Loading Details ...">
+        {data && data.length > 0 && (
+          <DataTable
+            noHeader
+            columns={newColumns}
+            customStyles={customStyles}
+            fixedHeader
+            data={filteredRows}
+            subHeader
+            highlightOnHover
+            conditionalRowStyles={playerRowStyeForNew}
+            subHeaderComponent={renderCustomSearch}
+            subHeaderAlign="left"
+            expandableRows={false}
+            expandableRowsComponent={<ExpandPlayerRow />}
+            defaultSortField="teamsNameList"
+          />
+        )}
+      </LoadingOverlay>
     </div>
   );
 };

@@ -11,7 +11,8 @@ import venueReducer from 'features/admin/venue/redux/venueReducer';
 import {matchReducer} from 'features/admin/Match/redux';
 import {homeReducer} from 'features/frontoffice/home/redux';
 import statsReducer from 'features/frontoffice/stats/redux/statsReducer';
-import {processReducer} from '../../features/admin/process/redux';
+import {processReducer} from 'features/admin/process/redux';
+import {commonReducer} from 'features/common/redux';
 
 const persistenceConfigs = {
   key: 'fantasysport',
@@ -37,6 +38,7 @@ const rootReducer = (history: any) =>
     matchadmin: matchReducer,
     homedata: homeReducer,
     fantasystats: statsReducer,
+    commonconfig: commonReducer,
   });
 
 export {rootReducer, persistenceConfigs};

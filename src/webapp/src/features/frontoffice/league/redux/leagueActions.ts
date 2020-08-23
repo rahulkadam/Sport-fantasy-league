@@ -11,11 +11,8 @@ import {
   GET_USER_LEAGUE,
   GET_PUBLIC_LEAGUE_LIST,
   JOIN_LEAGUE,
-  JOIN_LEAGUE_ERROR,
   CREATE_LEAGUE,
-  CREATE_LEAGUE_ERROR,
   FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
-  FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE_ERROR,
 } from './leagueConstants';
 import {
   dispatchActionWrapper,
@@ -23,6 +20,7 @@ import {
   getErrorMessage,
 } from 'common/util';
 import {fetchPlayerlistByUser} from '../../UserTeam/redux/userteam-api';
+import {ACTION_COMPLETED} from '../../../common/redux/commonConstants';
 
 const fetchUserLeagueListAction = () => {
   const dispatch = useDispatch();
@@ -36,6 +34,7 @@ const fetchUserLeagueListAction = () => {
             type: GET_USER_LEAGUE,
             userleagueList: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
@@ -59,6 +58,7 @@ const fetchPublicLeagueListAction = () => {
             type: GET_PUBLIC_LEAGUE_LIST,
             data: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
@@ -82,10 +82,11 @@ const joinLeagueAction = () => {
             type: JOIN_LEAGUE,
             data: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
-            type: JOIN_LEAGUE_ERROR,
+            type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
           });
         });
@@ -105,10 +106,11 @@ const createLeagueAction = () => {
             type: CREATE_LEAGUE,
             data: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
-            type: CREATE_LEAGUE_ERROR,
+            type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
           });
         });
@@ -128,6 +130,7 @@ const fetchPlayerListByUserForLeagueAction = () => {
             type: FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
             userTeamPlayers: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({

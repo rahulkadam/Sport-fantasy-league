@@ -1,21 +1,15 @@
 import {
-  ACTION_START,
-  ACTION_ERROR,
   FETCH_ALL_PLAYER_LIST,
-  FETCH_ALL_PLAYER_LIST_ERROR,
   FETCH_PLAYER_LIST_BY_USER,
-  FETCH_PLAYER_LIST_BY_USER_ERROR,
   UPDATE_INTERNAL_USER_TEAM,
   FETCH_USER_TEAM,
-  FETCH_USER_TEAM_ERROR,
   SAVE_USER_TEAM,
-  SAVE_USER_TEAM_ERROR,
   REMOVE_FROM_INTERNAL_USER_TEAM,
   FETCH_GAME_CRITERIA,
-  FETCH_GAME_CRITERIA_ERROR,
   RESET_INTERNAL_USER_TEAM,
   UPDATE_CAPTION_FOR_TEAM,
   AUTO_PICK_USER_TEAM,
+  SHOULD_REFRESH_STOP,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -26,9 +20,6 @@ import {
 
 const initialState: UserTeam = {
   data: {playerList: []},
-  isLoading: false,
-  hasError: false,
-  statusMessage: '',
   playerList: [],
   userTeamPlayers: [],
   currentUserTeamPlayers: [],
@@ -53,32 +44,6 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       userLeaguestate = {
         ...state,
         playerList: action.playerList,
-        isLoading: false,
-      };
-      return userLeaguestate;
-    case ACTION_START:
-      userLeaguestate = {
-        ...state,
-        isLoading: true,
-        hasError: false,
-        statusMessage: '',
-        shouldRefresh: false,
-      };
-      return userLeaguestate;
-    case ACTION_ERROR:
-      userLeaguestate = {
-        ...state,
-        isLoading: false,
-        hasError: true,
-        statusMessage: action.errorMessage,
-      };
-      return userLeaguestate;
-    case FETCH_ALL_PLAYER_LIST_ERROR:
-      userLeaguestate = {
-        ...state,
-        isLoading: false,
-        hasError: true,
-        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case FETCH_PLAYER_LIST_BY_USER:
@@ -87,15 +52,6 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         userTeamPlayers: action.userTeamPlayers,
         currentUserTeamPlayers: action.userTeamPlayers,
         currentTransferChanges: 0,
-        isLoading: false,
-      };
-      return userLeaguestate;
-    case FETCH_PLAYER_LIST_BY_USER_ERROR:
-      userLeaguestate = {
-        ...state,
-        isLoading: false,
-        hasError: true,
-        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case UPDATE_INTERNAL_USER_TEAM:
@@ -124,7 +80,6 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         currentUserTeamValue: currentTeamValue,
         currentTransferChanges: transferCount,
         captionPlayerId: captionPlayerId,
-        isLoading: false,
       };
       return userLeaguestate;
 
@@ -154,7 +109,6 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         currentUserTeamPlayers: currentUserTeamPlayers,
         currentUserTeamValue: currentTeamValue,
         currentTransferChanges: transferCount,
-        isLoading: false,
       };
       return userLeaguestate;
     case FETCH_USER_TEAM:
@@ -165,36 +119,23 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         currentUserTeamValue: userteam.creditbalance,
         captionPlayerId: userteam.team_captain_player_Id,
         captainName: userteam.captainName,
-        isLoading: false,
       };
       return userLeaguestate;
-    case FETCH_USER_TEAM_ERROR:
-      userLeaguestate = {
+    case SHOULD_REFRESH_STOP:
+      return {
         ...state,
-        isLoading: false,
+        shouldRefresh: false,
       };
-      return userLeaguestate;
     case SAVE_USER_TEAM:
       userLeaguestate = {
         ...state,
-        statusMessage: 'Team Created Successfully',
-        isLoading: false,
         shouldRefresh: true,
-      };
-      return userLeaguestate;
-    case SAVE_USER_TEAM_ERROR:
-      userLeaguestate = {
-        ...state,
-        isLoading: false,
-        hasError: true,
-        statusMessage: action.errorMessage,
       };
       return userLeaguestate;
     case FETCH_GAME_CRITERIA:
       userLeaguestate = {
         ...state,
         teamcriteria: action.gameCriteria,
-        isLoading: false,
       };
       return userLeaguestate;
     case UPDATE_CAPTION_FOR_TEAM:
@@ -210,12 +151,6 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         currentUserTeamValue: state.userteam.creditbalance,
         currentTransferChanges: 0,
       };
-    case FETCH_GAME_CRITERIA_ERROR:
-      userLeaguestate = {
-        ...state,
-        isLoading: false,
-      };
-      return userLeaguestate;
     default:
       return state;
   }

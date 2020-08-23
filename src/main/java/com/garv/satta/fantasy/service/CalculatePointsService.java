@@ -102,6 +102,7 @@ public class CalculatePointsService {
         }
 
         Long captainPlayerId = leagueUserTeamScorePerMatch.getCaptain_player();
+        playerListIds = leagueUserTeamScorePerMatch.getPlayerList();
 
         Integer matchScore = 0;
         if (playerListIds == null) {

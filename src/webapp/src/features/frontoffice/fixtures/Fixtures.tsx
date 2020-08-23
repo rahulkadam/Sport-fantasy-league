@@ -6,9 +6,11 @@ import './fixtures.styles.scss';
 import {isListEmpty} from 'common/util';
 import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 import {fetchUpComingMatchesAction, getHomeData} from '../home/redux';
+import {getCommonData} from '../../common/redux';
 
 const Fixtures = () => {
   const homeProps = getHomeData();
+  const configProps = getCommonData();
   const matchList = homeProps.leagueMatchesList;
   const fetchMatchList = fetchUpComingMatchesAction();
   const fetchPlayerStats = fetchMatchStatsListAction();
@@ -35,14 +37,17 @@ const Fixtures = () => {
   }
 
   function renderStatusMessage(isError: boolean, statusMessage: string) {
-    const statusClassName = homeProps.hasError ? 'error' : 'success';
+    const statusClassName = isError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
   return (
     <div>
-      <LoadingOverlay active={false} spinner text="Loading League Details ...">
-        {renderStatusMessage(homeProps.hasError, homeProps.statusMessage)}
+      <LoadingOverlay
+        active={configProps.isLoading}
+        spinner
+        text="Loading Fixture Details ...">
+        {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {renderMatchListView()}
       </LoadingOverlay>
     </div>
