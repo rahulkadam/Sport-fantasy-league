@@ -6,11 +6,14 @@ import './Home.styles.scss';
 import {getAccessToken} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
 import HowToPlay from './components/HowToPlay';
-import {Row, Col, Form, Button} from 'react-bootstrap';
+import {Form, Button} from 'react-bootstrap';
 import history from 'common/config/history';
+import LoadingOverlay from 'react-loading-overlay';
+import {getCommonData} from '../../common/redux';
 
 const FantasyHome = () => {
-  const props = getHomeData();
+  const homeProps = getHomeData();
+  const configProps = getCommonData();
   const accessToken = getAccessToken();
   const fetchUpComingMatches = fetchUpComingMatchesAction();
   useEffect(() => {
@@ -77,12 +80,17 @@ const FantasyHome = () => {
 
   return (
     <div className="homeContainer">
-      <UserHomePageBoard />
-      <MatchStatsData {...props} />
-      {accessToken && renderAuthUserDashboard()}
-      {!accessToken && renderUnAuthUserDashboard()}
-      <HowToPlay />
-      <UserHomePageBoard />
+      <LoadingOverlay
+        active={configProps.isLoading}
+        spinner
+        text="Loading Home Details ...">
+        <UserHomePageBoard />
+        <MatchStatsData {...homeProps} />
+        {accessToken && renderAuthUserDashboard()}
+        {!accessToken && renderUnAuthUserDashboard()}
+        <HowToPlay />
+        <UserHomePageBoard />
+      </LoadingOverlay>
     </div>
   );
 };

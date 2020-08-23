@@ -6,6 +6,7 @@ import {
   FETCH_MATCH_STATS,
   FETCH_PLAYER_STATS,
   FETCH_USER_STATS,
+  ACTION_COMPLETED,
 } from './statsConstants';
 import {
   dispatchActionWrapper,
@@ -25,6 +26,7 @@ const fetchUserStatsListAction = () => {
             type: FETCH_PLAYER_STATS,
             playerStats: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
@@ -48,6 +50,7 @@ const fetchPlayerStatsListAction = () => {
             type: FETCH_PLAYER_STATS,
             playerStats: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
@@ -71,6 +74,7 @@ const fetchMatchStatsListAction = () => {
             type: FETCH_PLAYER_STATS,
             playerStats: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({

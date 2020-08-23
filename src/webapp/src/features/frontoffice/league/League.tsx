@@ -17,10 +17,12 @@ import LoadingOverlay from 'react-loading-overlay';
 import {Button, Form} from 'react-bootstrap';
 import {fetchPlayerListByUserAction, getUserTeamData} from '../UserTeam/redux';
 import history from 'common/config/history';
+import {getCommonData} from '../../common/redux';
 
 const League = () => {
   const leagueProps = getLeagueData();
   const tournamentProps = getTournamentData();
+  const configProps = getCommonData();
   const userProps = GetLoginStoreData();
   const fetchPlayerListByUser = fetchPlayerListByUserAction();
   const userteamDataProps = getUserTeamData();
@@ -128,18 +130,18 @@ const League = () => {
   }
 
   function renderStatusMessage(isError: boolean, statusMessage: string) {
-    const statusClassName = leagueProps.hasError ? 'error' : 'success';
+    const statusClassName = isError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
   return (
     <div className="leagueContainer">
       <LoadingOverlay
-        active={leagueProps.isLoading}
+        active={configProps.isLoading}
         spinner
         text="Loading League Details ...">
         {!isUserTeamAvailable && goToTeamTab()}
-        {renderStatusMessage(leagueProps.hasError, leagueProps.statusMessage)}
+        {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}
         {renderLeagueActions()}
         {renderLeagueComponents()}

@@ -27,10 +27,12 @@ import {isListEmpty} from 'common/util';
 import PlayerTypeCountSummary from '../UserTeam/component/common/PlayerTypeCountSummary';
 import {fetchPlayerStatsListAction, getStatsProps} from '../stats/redux';
 import TeamCriteria from './component/common/TeamCriteria';
+import {getCommonData} from '../../common/redux';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
   const userProps = GetLoginStoreData();
+  const configProps = getCommonData();
   const fetchPlayerList = fetchAllPlayerListAction();
   const fetchPlayerListByUser = fetchPlayerListByUserAction();
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
@@ -54,7 +56,7 @@ const UserTeam = () => {
   const [transferAction, setTransferAction] = useState('userteam');
   const gameCriteria = userteamDataProps.teamcriteria;
 
-  if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
+  if (userteamDataProps.shouldRefresh && tabName != 'teamDetails') {
     setTabName('teamDetails');
   }
 
@@ -328,13 +330,10 @@ const UserTeam = () => {
   return (
     <div className="userTeamContainer">
       <LoadingOverlay
-        active={userteamDataProps.isLoading}
+        active={configProps.isLoading}
         spinner
         text="Loading User Team Details ...">
-        {renderStatusMessage(
-          userteamDataProps.hasError,
-          userteamDataProps.statusMessage
-        )}
+        {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}
         {tabName == 'teamDetails' && renderTeamDetails()}
         {tabName == 'transfer' && renderManageTransfer()}

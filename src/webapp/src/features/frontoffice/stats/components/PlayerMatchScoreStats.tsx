@@ -2,7 +2,10 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 import {customStyles} from 'common/components/DataTable';
 import {StatusMessage} from 'common/components';
+import {getCommonData} from '../../../common/redux';
+import LoadingOverlay from 'react-loading-overlay';
 const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
+  const configProps = getCommonData();
   const columns: any[] = [
     {
       name: 'Match',
@@ -53,20 +56,25 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
 
   return (
     <div>
-      {data && data.length == 0 && renderNotExistList()}
-      {data && data.length > 0 && (
-        <DataTable
-          noHeader
-          columns={columns}
-          customStyles={customStyles}
-          data={data}
-          highlightOnHover
-          fixedHeader
-          fixedHeaderScrollHeight="400px"
-          defaultSortField="pointscore"
-          defaultSortAsc={false}
-        />
-      )}
+      <LoadingOverlay
+        active={configProps.isLoading}
+        spinner
+        text="Loading Player Stats ...">
+        {data && data.length == 0 && renderNotExistList()}
+        {data && data.length > 0 && (
+          <DataTable
+            noHeader
+            columns={columns}
+            customStyles={customStyles}
+            data={data}
+            highlightOnHover
+            fixedHeader
+            fixedHeaderScrollHeight="400px"
+            defaultSortField="pointscore"
+            defaultSortAsc={false}
+          />
+        )}
+      </LoadingOverlay>
     </div>
   );
 };

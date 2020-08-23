@@ -10,4 +10,5 @@ export interface RootState {
   matchadmin: Match;
   processadmin: AdminProcess;
   fantasystats: FantasyStats;
+  commonconfig: CommonConfigData;
 }

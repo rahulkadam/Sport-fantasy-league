@@ -18,6 +18,7 @@ import {
   dispatchAction,
   getErrorMessage,
 } from 'common/util';
+import {ACTION_COMPLETED} from '../../../common/redux/commonConstants';
 
 const fetchUpComingMatchesAction = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const fetchUpComingMatchesAction = () => {
             type: GET_UPCOMING_MATCHES_LIST,
             data: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
@@ -54,6 +56,7 @@ const fetchTopPerformerPlayerAction = () => {
             type: GET_TOP_PERFORMING_PLAYER_LIST,
             data: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
@@ -77,6 +80,7 @@ const fetchMostPickedPlayersAction = () => {
             type: GET_MOST_PICKED_PLAYER_LIST,
             data: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
@@ -100,6 +104,7 @@ const fetchMostScorerUserGloballyAction = () => {
             type: GET_MOST_SCORING_USER_LIST,
             data: data,
           });
+          dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
           dispatch({
