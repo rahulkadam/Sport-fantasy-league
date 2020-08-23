@@ -27,16 +27,46 @@ const FantasyHome = () => {
         <Form inline>
           <Button
             variant="link"
-            className="mr-1"
+            className="mr-1 homepageDataLink"
             onClick={() => goto('/league')}>
             League
           </Button>
-          <Button variant="link" className="mr-1" onClick={() => goto('/team')}>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/team')}>
             View Team
           </Button>
           <Button
             variant="link"
-            className="mr-1"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/statistics')}>
+            View Stats
+          </Button>
+        </Form>
+      </div>
+    );
+  }
+
+  function renderUnAuthUserDashboard() {
+    return (
+      <div>
+        <Form inline>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/helppage')}>
+            Help
+          </Button>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
+            onClick={() => goto('/fixtures')}>
+            Fixtures
+          </Button>
+          <Button
+            variant="link"
+            className="mr-1 homepageDataLink"
             onClick={() => goto('/statistics')}>
             View Stats
           </Button>
@@ -50,7 +80,9 @@ const FantasyHome = () => {
       <UserHomePageBoard />
       <MatchStatsData {...props} />
       {accessToken && renderAuthUserDashboard()}
+      {!accessToken && renderUnAuthUserDashboard()}
       <HowToPlay />
+      <UserHomePageBoard />
     </div>
   );
 };

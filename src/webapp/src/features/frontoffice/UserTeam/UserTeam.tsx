@@ -147,7 +147,7 @@ const UserTeam = () => {
           <Col>
             <Button
               variant="outline-success"
-              className="mr-2"
+              className="mr-2 userTeamTabMenuLink"
               onClick={() => autoPickUserTeam()}>
               Auto Pick Team
             </Button>
@@ -218,7 +218,7 @@ const UserTeam = () => {
             variant={
               transferAction == 'userteam' ? 'primary' : 'outline-primary'
             }
-            className="mr-1"
+            className="mr-1 userTeamTabMenuLink"
             onClick={() => setTransferAction('userteam')}>
             Team View
           </Button>
@@ -226,7 +226,7 @@ const UserTeam = () => {
             variant={
               transferAction == 'playerList' ? 'primary' : 'outline-primary'
             }
-            className="mr-1"
+            className="mr-1 userTeamTabMenuLink"
             onClick={() => setTransferAction('playerList')}>
             Player Selection
           </Button>
