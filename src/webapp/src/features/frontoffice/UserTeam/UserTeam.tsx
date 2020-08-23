@@ -50,6 +50,7 @@ const UserTeam = () => {
   const updateTeamCaption = updateTeamCaptionAction();
   const statsProps = getStatsProps();
   const fetchPlayerHistory = fetchPlayerStatsListAction();
+  const [transferAction, setTransferAction] = useState('userteam');
 
   if (userteamDataProps.shouldRefresh && tabName != defaultTabKey) {
     setTabName('teamDetails');
@@ -207,29 +208,55 @@ const UserTeam = () => {
     );
   }
 
+  function renderTeamTransferActions() {
+    return (
+      <Form inline className="leagueAction">
+        <Button
+          variant="outline-primary"
+          className="mr-1"
+          onClick={() => setTransferAction('userteam')}>
+          Team View
+        </Button>
+        <Button
+          variant="outline-primary"
+          className="mr-1"
+          onClick={() => setTransferAction('playerList')}>
+          Player Selection
+        </Button>
+      </Form>
+    );
+  }
+
   function renderUserTeamTransferTabDetails() {
     return (
       <Fragment>
         {renderShowTransferOverview()}
         {renderError()}
-        <UserTeamPlayerDetails
-          captionId={captainPlayerId}
-          data={userteamDataProps.currentUserTeamPlayers}
-          onRemoveRowAction={removeRowAction}
-          updateCaptionAction={updateTeamCaption}
-          editable={true}
-        />
         {renderSaveButton()}
-        <Row className="iplPlayerListTitle">
-          <Col>IPL player list</Col>
-        </Row>
-        <TournamentPlayerList
-          data={userteamDataProps.playerList}
-          onRowSelected={onPlayerSelectedFromPlayerList}
-          currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
-          playerStats={statsProps.playerStats}
-          fetchPlayerHistory={fetchPlayerHistoryList}
-        />
+        {renderTeamTransferActions()}
+        {transferAction == 'userteam' && (
+          <UserTeamPlayerDetails
+            captionId={captainPlayerId}
+            data={userteamDataProps.currentUserTeamPlayers}
+            onRemoveRowAction={removeRowAction}
+            updateCaptionAction={updateTeamCaption}
+            editable={true}
+          />
+        )}
+        {transferAction == 'playerList' && (
+          <Fragment>
+            <Row className="iplPlayerListTitle">
+              <Col>IPL player list</Col>
+            </Row>
+            <TournamentPlayerList
+              data={userteamDataProps.playerList}
+              onRowSelected={onPlayerSelectedFromPlayerList}
+              currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
+              playerStats={statsProps.playerStats}
+              fetchPlayerHistory={fetchPlayerHistoryList}
+            />
+          </Fragment>
+        )}
       </Fragment>
     );
   }
