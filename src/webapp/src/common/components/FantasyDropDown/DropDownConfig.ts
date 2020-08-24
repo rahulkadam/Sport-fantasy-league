@@ -55,7 +55,7 @@ export const teamList = [
     logo: teamRCB,
     short: 'RCB',
   },
-  {id: 'Delhi Capitals', name: 'Delhi Capitals', logo: teamDC, short: 'RCB'},
+  {id: 'Delhi Capitals', name: 'Delhi Capitals', logo: teamDC, short: 'DC'},
   {
     id: 'Kings XI Punjab',
     name: 'Kings XI Punjab',
@@ -96,6 +96,16 @@ export function getShortNameByTeam(team: string) {
     map.set(team.name, team.short);
   });
   return map.get(team);
+}
+
+export function getLogoNameByLeagueName(league: string) {
+  const map = new Map();
+  teamList.forEach(team => {
+    if (league.includes(team.short)) {
+      map.set(league, team.logo);
+    }
+  });
+  return map.get(league);
 }
 
 export const teamListWithALl = [{id: 'ALL', name: 'ALL'}].concat(teamList);

@@ -68,6 +68,10 @@ public class UserTeam extends BaseDaoObject {
         addPlayerList(playerList);
     }
 
+    public UserTeam(Long id) {
+        super(id);
+    }
+
     public void addPlayerList(List<Player> players) {
         players.forEach(player -> addPlayer(player));
     }

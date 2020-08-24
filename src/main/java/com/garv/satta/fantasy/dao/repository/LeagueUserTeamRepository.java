@@ -17,4 +17,6 @@ public interface LeagueUserTeamRepository extends CrudRepository<LeagueUserTeam,
     @Query("SELECT query.userTeam FROM LeagueUserTeam query WHERE query.league = :league")
     List<UserTeam> findUserTeamByLeague(@Param("league")League league);
     List<LeagueUserTeam>  findAll();
+
+    List<LeagueUserTeam> findLeagueUserTeamByUserTeam(UserTeam userTeam);
 }

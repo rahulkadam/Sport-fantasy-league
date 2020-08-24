@@ -9,6 +9,7 @@ import com.garv.satta.fantasy.dto.converter.LeagueConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.frontoffice.League;
+import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,6 +118,21 @@ public class LeagueService {
         Assert.notNull(userTeam, "Unable to find League for User");
         List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         return converter.convertToFullDTOList(userLeagueList);
+    }
+
+    public List<LeagueDTO> getDashboardLeaguesByUserTeam(UserTeam userTeam) {
+        List<LeagueUserTeam> leagueUserTeams = leagueUserTeamRepository.findLeagueUserTeamByUserTeam(userTeam);
+        List<LeagueDTO> leagueDTOS = new ArrayList<>();
+        if (CollectionUtils.isEmpty(leagueUserTeams)) {
+            return leagueDTOS;
+        }
+        leagueUserTeams.stream().forEach(leagueUserTeam -> {
+            LeagueDTO leagueDTO = converter.convertToDTO(leagueUserTeam.getLeague());
+            leagueDTO.setIsMember(true);
+            leagueDTO.setUserRank(leagueUserTeam.getUserrank());
+            leagueDTOS.add(leagueDTO);
+        });
+        return leagueDTOS;
     }
 
     public List<LeagueDTO> getLeagueByPublic() {
