@@ -15,6 +15,7 @@ import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -112,11 +113,21 @@ public class LeagueService {
     public List<LeagueDTO> getLeagueByUserId(Long id) {
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(id);
         UserTeam userTeam = userTeamList.stream().findFirst().orElse(null);
-        if (userTeam == null) {
-            throw new GenericException("Unable to find League for User");
-        }
+        Assert.notNull(userTeam, "Unable to find League for User");
         List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         return converter.convertToFullDTOList(userLeagueList);
+    }
+
+    public List<LeagueDTO> getLeagueByPublic() {
+        List<League> userLeagueList = repository.findLeagueByPublicLeague(true);
+        return converter.convertToFullDTOList(userLeagueList);
+    }
+
+    public void joinPublicLeague() {
+        List<League> publicLeague = repository.findLeagueByPublicLeague(true);
+        if (!CollectionUtils.isEmpty(publicLeague)) {
+            publicLeague.stream().forEach((leauge) ->joinLeagueByCode(leauge.getLeagueCode(), userService.getCurrentUserId()));
+        }
     }
 
 }

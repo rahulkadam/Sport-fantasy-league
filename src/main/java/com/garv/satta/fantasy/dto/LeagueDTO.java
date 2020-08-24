@@ -11,6 +11,7 @@ public class LeagueDTO extends BaseDTO {
     private String name;
     private Boolean status;
     private String leagueCode;
+    private Boolean publicLeague;
     private Integer totalUserCount;
     private Long createByUserId;
     private Long updatedByUserId;

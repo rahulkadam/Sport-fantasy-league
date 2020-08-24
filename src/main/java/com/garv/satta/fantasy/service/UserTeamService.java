@@ -57,6 +57,9 @@ public class UserTeamService {
     private UserService userService;
 
     @Autowired
+    private LeagueService leagueService;
+
+    @Autowired
     private TournamentRepository tournamentRepository;
 
     public List<UserTeamDTO> getUserTeamByUser(Long id) {
@@ -104,6 +107,7 @@ public class UserTeamService {
         userTeam.setTotalbalance(FantasyConstant.DEFAULT_CREDIT_BALANCE);
         userTeam.setCaptain_player(null);
         userTeam = repository.save(userTeam);
+        leagueService.joinPublicLeague();
         return converter.convertToFullDTO(userTeam);
     }
 

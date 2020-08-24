@@ -27,6 +27,8 @@ public class League extends BaseDaoObject {
 
     private Integer totalUserCount;
 
+    private Boolean publicLeague;
+
     @NotNull
     @Column(unique = true)
     private String leagueCode;
