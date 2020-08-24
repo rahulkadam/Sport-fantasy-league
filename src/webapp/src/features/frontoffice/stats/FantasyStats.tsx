@@ -56,6 +56,7 @@ const FantasyStats = () => {
           data={matchList}
           action={fetchMatchStats}
           playerStats={statsProps.playerStats}
+          title="Match Player Stats"
         />
       </div>
     );

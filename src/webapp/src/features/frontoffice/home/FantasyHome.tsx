@@ -1,23 +1,38 @@
 import React, {useEffect} from 'react';
 import FantasyHelpContent from './components/FantasyHelpContent';
 import MatchStatsData from './components/MatchStatsData';
-import {getHomeData, fetchUpComingMatchesAction} from './redux';
+import {
+  getHomeData,
+  fetchUpComingMatchesAction,
+  fetchPublicLeagueAction,
+  getUserDashboardAction,
+} from './redux';
 import './Home.styles.scss';
-import {getAccessToken} from 'API';
+import {getAccessToken, isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
 import HowToPlay from './components/HowToPlay';
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Row, Col, Carousel} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
+import {GameCard, GameCorousel} from 'common/components';
+import UserTeamCard from '../../../common/components/Games/UserTeamCard';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
   const configProps = getCommonData();
-  const accessToken = getAccessToken();
   const fetchUpComingMatches = fetchUpComingMatchesAction();
+  const fetchPublicLeague = fetchPublicLeagueAction();
+  const fetchDashboard = getUserDashboardAction();
+  const loginUser = isUserLogin();
+
   useEffect(() => {
     fetchUpComingMatches();
+    if (loginUser) {
+      fetchDashboard();
+    } else {
+      fetchPublicLeague();
+    }
   }, []);
 
   function goto(link: string) {
@@ -78,6 +93,29 @@ const FantasyHome = () => {
     );
   }
 
+  function renderUserTeamCard() {
+    return (
+      <Row>
+        <Col md={8}>
+          <UserTeamCard data={homeProps.dashboard} />
+        </Col>
+      </Row>
+    );
+  }
+
+  function renderUserPublicLeagues() {
+    const leagueList = loginUser
+      ? homeProps.dashboard.publicLeagues
+      : homeProps.publicLeagueList;
+    return (
+      <Row>
+        <Col md={8}>
+          <GameCorousel type="league" leagueList={leagueList} />
+        </Col>
+      </Row>
+    );
+  }
+
   return (
     <div className="homeContainer">
       <LoadingOverlay
@@ -86,8 +124,10 @@ const FantasyHome = () => {
         text="Loading Home Details ...">
         <UserHomePageBoard />
         <MatchStatsData {...homeProps} />
-        {accessToken && renderAuthUserDashboard()}
-        {!accessToken && renderUnAuthUserDashboard()}
+        {loginUser && renderUserTeamCard()}
+        {renderUserPublicLeagues()}
+        {loginUser && renderAuthUserDashboard()}
+        {!loginUser && renderUnAuthUserDashboard()}
         <HowToPlay />
         <UserHomePageBoard />
       </LoadingOverlay>

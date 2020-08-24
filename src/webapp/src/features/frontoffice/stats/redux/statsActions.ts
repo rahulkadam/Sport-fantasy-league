@@ -7,6 +7,7 @@ import {
   FETCH_PLAYER_STATS,
   FETCH_USER_STATS,
   ACTION_COMPLETED,
+  CLEAR_PLAYER_STATS,
 } from './statsConstants';
 import {
   dispatchActionWrapper,
@@ -19,6 +20,7 @@ const fetchUserStatsListAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
+    dispatchAction(dispatch, CLEAR_PLAYER_STATS),
     (userId: number, matchId: number) => {
       getUserStats(userId, matchId)
         .then((data: any) => {
@@ -43,6 +45,7 @@ const fetchPlayerStatsListAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
+    dispatchAction(dispatch, CLEAR_PLAYER_STATS),
     (playerId: number) => {
       getPlayerStats(playerId)
         .then((data: any) => {
@@ -67,6 +70,7 @@ const fetchMatchStatsListAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
+    dispatchAction(dispatch, CLEAR_PLAYER_STATS),
     (matchId: number) => {
       getMatchStats(matchId)
         .then((data: any) => {

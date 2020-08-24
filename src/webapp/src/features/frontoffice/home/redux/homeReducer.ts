@@ -3,6 +3,8 @@ import {
   GET_MOST_PICKED_PLAYER_LIST,
   GET_TOP_PERFORMING_PLAYER_LIST,
   GET_UPCOMING_MATCHES_LIST,
+  FETCH_PUBLIC_LEAGUE,
+  FETCH_DASHBOARD_DATA,
 } from './homeConstants';
 
 const initialState: HomeData = {
@@ -11,6 +13,8 @@ const initialState: HomeData = {
   leagueMatchesList: [],
   topPickedPlayerList: [],
   topScoringPlayerList: [],
+  publicLeagueList: [],
+  dashboard: {},
 };
 
 export default (state: HomeData = initialState, action: any): HomeData => {
@@ -34,6 +38,16 @@ export default (state: HomeData = initialState, action: any): HomeData => {
       return {
         ...state,
         topScoringPlayerList: action.data,
+      };
+    case FETCH_PUBLIC_LEAGUE:
+      return {
+        ...state,
+        publicLeagueList: action.data,
+      };
+    case FETCH_DASHBOARD_DATA:
+      return {
+        ...state,
+        dashboard: action.data,
       };
     default:
       return state;

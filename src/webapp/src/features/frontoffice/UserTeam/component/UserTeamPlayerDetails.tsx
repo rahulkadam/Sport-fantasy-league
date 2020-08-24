@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
 import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
@@ -12,6 +12,7 @@ import {minuscolor} from '@logos/index';
 import {playerRowStyeForNew} from 'common/components/DataTable/TableConfig';
 import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
+import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -19,9 +20,28 @@ const UserTeamPlayerDetails = ({
   onRemoveRowAction,
   updateCaptionAction,
   editable,
+  playerStats,
+  fetchPlayerHistory,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
   const configProps = getCommonData();
+  const [showPlayerHistory, setShowPlayerHistory] = useState(false);
+  const handlePlayerHistoryShow = () => setShowPlayerHistory(true);
+  const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
+
+  function fetchPlayerHistoryList(playerId: string) {
+    fetchPlayerHistory(playerId);
+    if (showPlayerHistory) {
+      handlePlayerHistoryClose();
+    } else {
+      handlePlayerHistoryShow();
+    }
+  }
+
+  function onRowClickedAction(row: any, e: any) {
+    fetchPlayerHistory && fetchPlayerHistoryList(row.id);
+  }
+
   function getDropDownPlayerList() {
     const list =
       data &&
@@ -63,6 +83,18 @@ const UserTeamPlayerDetails = ({
           <Logo logoSource={minuscolor} width="20" />
         </span>
       </div>
+    );
+  }
+
+  function renderPlayerHistoryDetails() {
+    if (!showPlayerHistory) return;
+    return (
+      <PlayerMatchScoreModal
+        handleClose={handlePlayerHistoryClose}
+        show={showPlayerHistory}
+        data={playerStats}
+        title="Player Stats"
+      />
     );
   }
 
@@ -159,12 +191,14 @@ const UserTeamPlayerDetails = ({
         active={configProps.isLoading}
         spinner
         text="Loading Details ...">
+        {renderPlayerHistoryDetails()}
         {data && data.length > 0 && (
           <DataTable
             noHeader
             columns={newColumns}
             customStyles={customStyles}
             fixedHeader
+            fixedHeaderScrollHeight="400px"
             data={filteredRows}
             subHeader
             highlightOnHover
@@ -174,6 +208,7 @@ const UserTeamPlayerDetails = ({
             expandableRows={false}
             expandableRowsComponent={<ExpandPlayerRow />}
             defaultSortField="teamsNameList"
+            onRowClicked={onRowClickedAction}
           />
         )}
       </LoadingOverlay>

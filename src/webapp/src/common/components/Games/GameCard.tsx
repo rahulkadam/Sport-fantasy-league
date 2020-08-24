@@ -2,7 +2,6 @@ import React from 'react';
 import {Card, Row, Col, Button, Form} from 'react-bootstrap';
 import './GameCard.styles.scss';
 import {Logo} from '..';
-import {getTeamLogoByName} from './Game-util';
 import Countdown from 'react-countdown';
 import {getLogoNameByTeam, getShortNameByTeam} from '../FantasyDropDown';
 import history from 'common/config/history';

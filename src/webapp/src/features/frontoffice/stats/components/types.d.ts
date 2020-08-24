@@ -3,6 +3,7 @@ declare type MatchStatsProps = {
   action?: any;
   playerStats?: any;
   matchList?: any;
+  title: string;
 };
 declare type PlayerStatsProps = {
   data?: any;
@@ -26,5 +27,6 @@ declare type PlayerMatchScoreModal = {
   handleClose?: any;
   handleShow?: any;
   show?: boolean;
-  data?: data;
+  data?: any;
+  title?: string;
 };

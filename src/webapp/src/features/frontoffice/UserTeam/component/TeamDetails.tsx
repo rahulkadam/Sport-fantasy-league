@@ -3,7 +3,11 @@ import {UserTeamPlayerDetails} from './UserTeamPlayerDetails';
 import {Col, Row, Badge} from 'react-bootstrap';
 import PlayerTypeCountSummary from '../component/common/PlayerTypeCountSummary';
 
-const TeamDetails = ({data}: TeamDetailsProps) => {
+const TeamDetails = ({
+  data,
+  playerStats,
+  fetchPlayerHistory,
+}: TeamDetailsProps) => {
   const userteam = data.userteam;
   const userPlayerList = data.userTeamPlayers;
   const captainId = userteam.team_captain_player_Id;
@@ -39,6 +43,8 @@ const TeamDetails = ({data}: TeamDetailsProps) => {
           data={userPlayerList}
           key="sda"
           captionId={captainId}
+          fetchPlayerHistory={fetchPlayerHistory}
+          playerStats={playerStats}
         />
       </Fragment>
     );

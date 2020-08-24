@@ -38,9 +38,7 @@ const Footer = () => {
    */
   function renderCopyRight() {
     const year = new Date().getFullYear();
-    const copyrightText =
-      year +
-      ' Measat Broadcast Network Systems Sdn Bhd (240064-A). All Rights Reserved.';
+    const copyrightText = year + 'Garv Fantasy Sports, All Rights Reserved.';
     return (
       <div>
         <span>&copy; </span>
@@ -52,12 +50,9 @@ const Footer = () => {
   return (
     <Container fluid className="footer footerText bgDark">
       <hr className="mb-0 horizontal-line" />
-      <Row className="py-3">
+      <Row>
         <Col md={'6'} className="my-auto">
           <div className="footerLinks pb-2">{renderFooterLink()}</div>
-        </Col>
-        <Col md={'auto'} className="my-auto ml-auto">
-          {renderCopyRight()}
         </Col>
       </Row>
     </Container>

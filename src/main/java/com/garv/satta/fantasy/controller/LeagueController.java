@@ -63,4 +63,9 @@ public class LeagueController {
         return leagueService.getLeagueByUserId(id);
     }
 
+    @GetMapping(value = "list/public")
+    public List<LeagueDTO> getLeagueByPublic() {
+        return leagueService.getLeagueByPublic();
+    }
+
 }

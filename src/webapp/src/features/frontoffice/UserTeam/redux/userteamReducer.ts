@@ -89,6 +89,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       userLeaguestate = {
         ...state,
         currentUserTeamPlayers: currentUserTeamPlayers,
+        captionPlayerId: captionPlayerId,
       };
       return userLeaguestate;
     case REMOVE_FROM_INTERNAL_USER_TEAM:

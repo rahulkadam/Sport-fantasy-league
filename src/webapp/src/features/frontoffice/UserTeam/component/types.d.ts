@@ -4,6 +4,8 @@ declare type UserTeamListProps = {
 
 declare type TeamDetailsProps = {
   data: any;
+  playerStats?: any;
+  fetchPlayerHistory?: any;
 };
 
 declare type CreateTeamProps = {

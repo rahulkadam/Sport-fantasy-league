@@ -13,4 +13,5 @@ public interface LeagueRepository extends CrudRepository<League, Long> {
     League findLeagueByLeagueCode(String leagueCode);
 
     List<League> findLeagueByTournamentId(Long id);
+    List<League> findLeagueByPublicLeague(Boolean isPublic);
 }
