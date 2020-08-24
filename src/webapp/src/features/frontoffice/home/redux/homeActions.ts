@@ -1,9 +1,11 @@
 import {useDispatch} from 'react-redux';
 import {
   fetchMostPickedPlayer,
+  fetchPublicLeague,
   fetchTopPerformingPlayer,
   fetchTopScoreUserGlobally,
   fetchUpcomingMatches,
+  getUserDashboard,
 } from './home-api';
 import {
   ACTION_START,
@@ -12,6 +14,8 @@ import {
   GET_MOST_SCORING_USER_LIST,
   GET_TOP_PERFORMING_PLAYER_LIST,
   GET_UPCOMING_MATCHES_LIST,
+  FETCH_PUBLIC_LEAGUE,
+  FETCH_DASHBOARD_DATA,
 } from './homeConstants';
 import {
   dispatchActionWrapper,
@@ -30,6 +34,30 @@ const fetchUpComingMatchesAction = () => {
         .then((data: any) => {
           dispatch({
             type: GET_UPCOMING_MATCHES_LIST,
+            data: data,
+          });
+          dispatch({type: ACTION_COMPLETED});
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: ACTION_ERROR,
+            errorMessage: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+const fetchPublicLeagueAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    () => {
+      fetchPublicLeague()
+        .then((data: any) => {
+          dispatch({
+            type: FETCH_PUBLIC_LEAGUE,
             data: data,
           });
           dispatch({type: ACTION_COMPLETED});
@@ -116,9 +144,35 @@ const fetchMostScorerUserGloballyAction = () => {
   );
 };
 
+const getUserDashboardAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    () => {
+      getUserDashboard()
+        .then((data: any) => {
+          dispatch({
+            type: FETCH_DASHBOARD_DATA,
+            data: data,
+          });
+          dispatch({type: ACTION_COMPLETED});
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: ACTION_ERROR,
+            errorMessage: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
 export {
   fetchUpComingMatchesAction,
   fetchTopPerformerPlayerAction,
   fetchMostPickedPlayersAction,
   fetchMostScorerUserGloballyAction,
+  fetchPublicLeagueAction,
+  getUserDashboardAction,
 };

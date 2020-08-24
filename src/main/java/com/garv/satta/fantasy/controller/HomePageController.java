@@ -1,11 +1,11 @@
 package com.garv.satta.fantasy.controller;
 
+import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.dto.PlayerDTO;
-import com.garv.satta.fantasy.service.MatchPlayerScoreService;
-import com.garv.satta.fantasy.service.MatchService;
-import com.garv.satta.fantasy.service.PlayerService;
+import com.garv.satta.fantasy.dto.reponsedto.DashboardDTO;
+import com.garv.satta.fantasy.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,13 @@ public class HomePageController {
     private PlayerService playerService;
 
     @Autowired
+    private LeagueService leagueService;
+
+    @Autowired
     private MatchPlayerScoreService playerScoreService;
+
+    @Autowired
+    private DashboardService dashboardService;
 
     @GetMapping(value = "/comingmatches")
     public List<MatchDTO> getUpcomingMatches() {
@@ -39,6 +45,16 @@ public class HomePageController {
     @GetMapping(value = "/topPickedPlayer")
     public List<PlayerDTO> getTopPickedPlayer() {
         return playerService.getTopPickedPlayer();
+    }
+
+    @GetMapping(value = "list/public")
+    public List<LeagueDTO> getLeagueByPublic() {
+        return leagueService.getLeagueByPublic();
+    }
+
+    @GetMapping(value = "/user/dashboard")
+    public DashboardDTO getUserDashboard() {
+        return dashboardService.getUserDashboard();
     }
 
 }

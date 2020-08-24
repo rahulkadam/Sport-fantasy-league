@@ -21,8 +21,17 @@ declare type PlayerScoreCardProps = {
   id: any;
 };
 
+declare type LeagueCardProps = {
+  data: any;
+};
+
+declare type UserTeamCardProps = {
+  data: any;
+};
+
 declare type GameCorouselProps = {
   matchScheduleCard?: GameCardProps[];
   mostScoringPlayerList?: PlayerScoreCardProps[];
+  leagueList?: any[];
   type: string;
 };
