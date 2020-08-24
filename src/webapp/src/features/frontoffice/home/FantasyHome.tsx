@@ -17,6 +17,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
 import {GameCorousel} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
+import {isListEmpty} from '../../../common/util';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -25,11 +26,12 @@ const FantasyHome = () => {
   const fetchPublicLeague = fetchPublicLeagueAction();
   const fetchDashboard = getUserDashboardAction();
   const loginUser = isUserLogin();
+  const dashboard = homeProps.dashboard;
 
   useEffect(() => {
-    fetchUpComingMatches();
+    isListEmpty(homeProps.leagueMatchesList) && fetchUpComingMatches();
     if (loginUser) {
-      fetchDashboard();
+      !dashboard.publicLeagues && fetchDashboard();
     } else {
       fetchPublicLeague();
     }

@@ -1,7 +1,21 @@
 .gamecardcontainer {
   margin: 0.2rem;
   height: 11rem;
+  font-weight: 500;
+  font-family: Source Sans Pro,sans-serif;
 }
 .timeMsg {
+  color: indianred;
+}
+
+.publicLeague {
+  color: dodgerblue;
+}
+
+.privateLeague {
+  color: indianred;
+}
+
+.userTeamTitle {
   color: indianred;
 }

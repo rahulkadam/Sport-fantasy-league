@@ -8,11 +8,13 @@ const UserTeamCard = ({data}: UserTeamCardProps) => {
   return (
     <Card className="gamecardcontainer">
       <Card.Body>
-        <Card.Title>Team - {userteam.name}</Card.Title>
+        <Card.Title className="userTeamTitle">
+          Team - {userteam.name}
+        </Card.Title>
         <Card.Text>
           <Row>
-            <Col>Transfer: {userteam.remained_Transfer}</Col>
             <Col>Score : {userteam.total_score}</Col>
+            <Col>Transfer: {userteam.remained_Transfer}</Col>
           </Row>
           <Row>
             <Col>Leagues: {userteam.total_leagues}</Col>
