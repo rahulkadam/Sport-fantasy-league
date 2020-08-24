@@ -2,10 +2,6 @@ declare type UserTeamListProps = {
   data: any;
 };
 
-declare type TeamDetailsProps = {
-  data: any;
-};
-
 declare type CreateTournamentProps = {
   createTournamentAction: any;
 };

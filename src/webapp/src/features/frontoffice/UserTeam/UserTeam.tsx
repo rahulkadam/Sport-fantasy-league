@@ -253,6 +253,8 @@ const UserTeam = () => {
               onRemoveRowAction={removeRowAction}
               updateCaptionAction={updateTeamCaption}
               editable={true}
+              playerStats={statsProps.playerStats}
+              fetchPlayerHistory={fetchPlayerHistoryList}
             />
           </Fragment>
         )}
@@ -296,7 +298,11 @@ const UserTeam = () => {
       } else {
         return (
           <Fragment>
-            <TeamDetails data={userteamDataProps} />
+            <TeamDetails
+              data={userteamDataProps}
+              playerStats={statsProps.playerStats}
+              fetchPlayerHistory={fetchPlayerHistoryList}
+            />
             <Navbar
               fixed="bottom"
               bg="light"
