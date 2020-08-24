@@ -13,7 +13,7 @@ export function fetchUpcomingMatches() {
 }
 
 export function fetchPublicLeague() {
-  return Get('/fantasy/league/list/public');
+  return Get('/public/home/list/public');
 }
 
 export function getUserDashboard() {

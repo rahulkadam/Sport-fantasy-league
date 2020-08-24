@@ -7,7 +7,7 @@ const LeagueCard = ({data}: LeagueCardProps) => {
   return (
     <Card className="gamecardcontainer">
       <Card.Body>
-        <Card.Title>Global Leagues</Card.Title>
+        <Card.Title>Leagues</Card.Title>
         <Card.Text>
           <Row>
             <Col>League : {data.name}</Col>

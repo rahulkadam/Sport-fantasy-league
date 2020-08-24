@@ -62,6 +62,16 @@ public class UserTeamService {
     @Autowired
     private TournamentRepository tournamentRepository;
 
+    public UserTeamDTO getShortUserTeamByUser(Long id) {
+        List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
+        Assert.notEmpty(userTeamlist, "User does not have any team");
+        UserTeam userTeam = userTeamlist.get(0);
+        Integer leagueCount = userTeam.getLeagueUserTeamsCount();
+        UserTeamDTO userTeamDTO = converter.convertToDTO(userTeam);
+        userTeamDTO.setTotal_leagues(leagueCount);
+        return userTeamDTO;
+    }
+
     public List<UserTeamDTO> getUserTeamByUser(Long id) {
         List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
         Assert.notEmpty(userTeamlist, "User does not have any team");

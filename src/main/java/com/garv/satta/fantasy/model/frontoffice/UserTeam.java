@@ -107,4 +107,8 @@ public class UserTeam extends BaseDaoObject {
         return new TreeSet<>();
     }
 
+    public Integer getLeagueUserTeamsCount() {
+        return leagueUserTeams.size();
+    }
+
 }

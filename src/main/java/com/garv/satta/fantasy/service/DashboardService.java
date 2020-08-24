@@ -26,10 +26,10 @@ public class DashboardService {
      */
     public DashboardDTO getUserDashboard() {
         List<LeagueDTO> leagueDTOS = leagueService.getLeagueByPublic();
-        List<UserTeamDTO> userTeamDTO = userTeamService.getUserTeamByUser(userService.getCurrentUserId());
+        UserTeamDTO userTeamDTO = userTeamService.getShortUserTeamByUser(userService.getCurrentUserId());
         DashboardDTO dashboardDTO = new DashboardDTO();
         dashboardDTO.setPublicLeagues(leagueDTOS);
-        dashboardDTO.setUserTeamDTO(userTeamDTO.get(0));
+        dashboardDTO.setUserTeamDTO(userTeamDTO);
         return dashboardDTO;
     }
 }

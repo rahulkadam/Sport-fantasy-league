@@ -8,19 +8,21 @@ const UserTeamCard = ({data}: UserTeamCardProps) => {
   return (
     <Card className="gamecardcontainer">
       <Card.Body>
-        <Card.Title>{userteam.name}</Card.Title>
+        <Card.Title>Team - {userteam.name}</Card.Title>
         <Card.Text>
           <Row>
             <Col>Transfer: {userteam.remained_Transfer}</Col>
             <Col>Score : {userteam.total_score}</Col>
           </Row>
           <Row>
-            <Col>Leagues: {data.totalLeagueCount}</Col>
+            <Col>Leagues: {userteam.total_leagues}</Col>
             <Col>Credit : {userteam.creditbalance}</Col>
           </Row>
           <Row>
             <Col>
-              <Button variant="link" onClick={() => history.push('/transfer')}>
+              <Button
+                variant="link"
+                onClick={() => history.push('/team/transfer')}>
                 Change Team
               </Button>
             </Col>
