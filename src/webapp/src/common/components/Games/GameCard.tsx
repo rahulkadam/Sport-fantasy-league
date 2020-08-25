@@ -35,14 +35,14 @@ const GameCard = (cardProps: GameCardProps) => {
             <Col>
               <Logo
                 logoSource={getLogoNameByTeam(cardProps.team1)}
-                width="48"
+                width="60"
               />
             </Col>
             <Col>{calculateTime(cardProps.time)}</Col>
             <Col>
               <Logo
                 logoSource={getLogoNameByTeam(cardProps.team2)}
-                width="48"
+                width="60"
               />
             </Col>
           </Row>

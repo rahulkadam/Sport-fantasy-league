@@ -43,7 +43,7 @@ const GameCorousel = (props: GameCorouselProps) => {
         {leagueList.map(card => {
           return (
             <Carousel.Item key={card.id}>
-              <LeagueCard data={card} />
+              <LeagueCard data={card} userteam={props.data} />
             </Carousel.Item>
           );
         })}

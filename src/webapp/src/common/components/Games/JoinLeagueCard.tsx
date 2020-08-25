@@ -10,7 +10,7 @@ const JoinLeagueCard = () => {
           <Card.Title className="userTeamTitle">Create/Join League</Card.Title>
           <Card.Text>
             <Row>
-              <Col>Play against friends and family, colleagues</Col>
+              <Col>Play against friends and family</Col>
             </Row>
           </Card.Text>
         </Card.Body>

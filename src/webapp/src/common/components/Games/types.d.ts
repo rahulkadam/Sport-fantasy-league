@@ -35,4 +35,5 @@ declare type GameCorouselProps = {
   mostScoringPlayerList?: PlayerScoreCardProps[];
   leagueList?: any[];
   type: string;
+  data?: any;
 };

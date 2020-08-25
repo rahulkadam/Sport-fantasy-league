@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Row, Col, Button} from 'react-bootstrap';
+import {Card, Row, Col, Button, Image, Badge} from 'react-bootstrap';
 import './GameCard.styles.scss';
 import history from 'common/config/history';
 import {Logo} from '..';
@@ -26,34 +26,44 @@ const LeagueCard = (props: LeagueCardProps) => {
           <Row>
             <Col>
               <Row>
-                <Col>{data.name}</Col>
+                <Col className="CardBoldText">
+                  <Badge variant="success">{data.name}</Badge>
+                </Col>
                 {!data.publicLeague && <Col>Code : {data.leagueCode}</Col>}
               </Row>
               <Row>
-                <Col>Playing Users: {data.totalUserCount || 0}</Col>
-                <Col>
+                <Col className="CardBoldText">
+                  Playing Users:{' '}
+                  <Badge variant="primary">{data.totalUserCount || 0}</Badge>
+                </Col>
+                <Col className="CardBoldText">
                   {!data.userRank && loginUser && userteam && (
                     <Button
-                      variant="link"
+                      variant="outline-primary"
                       onClick={() => joinLeague(data.leagueCode)}>
                       Join League
                     </Button>
                   )}
-                  {data.userRank && <span>Your Rank : {data.userRank}</span>}
+                  {data.userRank && (
+                    <span>
+                      Your Rank :{' '}
+                      <Badge variant="success">{data.userRank}</Badge>
+                    </span>
+                  )}
                 </Col>
               </Row>
               <Row>
                 <Col>
                   {!userteam && loginUser && (
                     <Button
-                      variant="link"
+                      variant="outline-primary"
                       onClick={() => history.push('/team')}>
                       Create Team and Join League
                     </Button>
                   )}
                   {!userteam && !loginUser && (
                     <Button
-                      variant="link"
+                      variant="outline-primary"
                       onClick={() => history.push('/login')}>
                       Login and Join League
                     </Button>

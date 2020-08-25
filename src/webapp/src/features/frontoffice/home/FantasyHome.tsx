@@ -33,7 +33,7 @@ const FantasyHome = () => {
   useEffect(() => {
     isListEmpty(homeProps.leagueMatchesList) && fetchUpComingMatches();
     if (loginUser) {
-      !dashboard.publicLeagues && fetchDashboard();
+      !dashboard.userTeamDTO && fetchDashboard();
     } else {
       fetchPublicLeague();
     }
@@ -109,12 +109,16 @@ const FantasyHome = () => {
 
   function renderUserPublicLeagues() {
     const leagueList = loginUser
-      ? homeProps.dashboard.publicLeagues
+      ? dashboard.publicLeagues
       : homeProps.publicLeagueList;
     return (
       <Row>
         <Col>
-          <GameCorousel type="league" leagueList={leagueList} />
+          <GameCorousel
+            type="league"
+            leagueList={leagueList}
+            data={dashboard.userTeamDTO}
+          />
         </Col>
       </Row>
     );
