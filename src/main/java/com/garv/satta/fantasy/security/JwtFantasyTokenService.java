@@ -5,7 +5,6 @@ import com.google.auth.oauth2.TokenVerifier;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -14,7 +13,7 @@ import java.util.Date;
 @Service
 public class JwtFantasyTokenService {
 
-    private long EXPIRATIONTIME = 3000 * 60 * 60 * 24 * 10; // 30 days
+    private long EXPIRATIONTIME = 3 * 60 * 60 * 24 * 10; // 30 days
     private String secret = "FantasyISGreatBussiness";
 
     public String getFantasyTokenFromGoogleToken(String googleToken) {
