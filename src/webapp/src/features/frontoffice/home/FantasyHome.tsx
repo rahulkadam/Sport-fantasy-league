@@ -119,6 +119,16 @@ const FantasyHome = () => {
     );
   }
 
+  function renderFantasyInfoCard() {
+    return (
+      <Row>
+        <Col md={8}>
+          <GameCorousel type="dashboardFantasyinfo" />
+        </Col>
+      </Row>
+    );
+  }
+
   return (
     <div className="homeContainer">
       <LoadingOverlay
@@ -128,7 +138,8 @@ const FantasyHome = () => {
         {checkUserAccess()}
         <UserHomePageBoard />
         <MatchStatsData {...homeProps} />
-        {loginUser && renderUserTeamCard()}
+        {loginUser && homeProps.dashboard.userTeamDTO && renderUserTeamCard()}
+        {!homeProps.dashboard.userTeamDTO && renderFantasyInfoCard()}
         {renderUserPublicLeagues()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}

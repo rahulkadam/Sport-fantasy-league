@@ -25,7 +25,7 @@ const Fixtures = () => {
   function renderMatchListView() {
     return (
       <div className="container">
-        <StatusMessage type="info" text="Upcoming Match Schedule" />
+        <StatusMessage type="info" text="Upcoming Matches" />
         <MatchDetails
           title="Fixtures"
           data={matchList}

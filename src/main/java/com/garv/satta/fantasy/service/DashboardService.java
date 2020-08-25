@@ -35,6 +35,9 @@ public class DashboardService {
     }
 
     private List<LeagueDTO> getLeagueForDashboard(UserTeamDTO userTeamDTO) {
+        if (userTeamDTO == null) {
+          return leagueService.getLeagueByPublic();
+        }
         List<LeagueDTO> leagueDTOS = leagueService.getDashboardLeaguesByUserTeam(new UserTeam(userTeamDTO.getId()));
         List<LeagueDTO> publicLeagues =  leagueService.getLeagueByPublic();
         publicLeagues.stream().forEach(league -> {

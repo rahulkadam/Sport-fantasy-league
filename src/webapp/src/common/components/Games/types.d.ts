@@ -23,6 +23,7 @@ declare type PlayerScoreCardProps = {
 
 declare type LeagueCardProps = {
   data: any;
+  userteam?: any;
 };
 
 declare type UserTeamCardProps = {

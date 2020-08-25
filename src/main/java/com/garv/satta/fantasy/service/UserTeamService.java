@@ -64,7 +64,9 @@ public class UserTeamService {
 
     public UserTeamDTO getShortUserTeamByUser(Long id) {
         List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
-        Assert.notEmpty(userTeamlist, "User does not have any team");
+        if(CollectionUtils.isEmpty(userTeamlist)) {
+            return null;
+        }
         UserTeam userTeam = userTeamlist.get(0);
         Integer leagueCount = userTeam.getLeagueUserTeamsCount();
         UserTeamDTO userTeamDTO = converter.convertToDTO(userTeam);
@@ -117,7 +119,7 @@ public class UserTeamService {
         userTeam.setTotalbalance(FantasyConstant.DEFAULT_CREDIT_BALANCE);
         userTeam.setCaptain_player(null);
         userTeam = repository.save(userTeam);
-        leagueService.joinPublicLeague();
+        // leagueService.joinPublicLeague();
         return converter.convertToFullDTO(userTeam);
     }
 

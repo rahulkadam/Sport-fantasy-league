@@ -7,7 +7,9 @@ import {getLogoNameByLeagueName} from '../FantasyDropDown';
 import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
 import {isUserLogin} from '../../../API';
 
-const LeagueCard = ({data}: LeagueCardProps) => {
+const LeagueCard = (props: LeagueCardProps) => {
+  const data = props.data;
+  const userteam = props.userteam;
   const loginUser = isUserLogin();
   const joinLeague = joinLeagueAction();
   const title = !loginUser ? '' : data.publicLeague ? 'Public' : 'Private';
@@ -25,9 +27,9 @@ const LeagueCard = ({data}: LeagueCardProps) => {
             {!data.publicLeague && <Col>Code : {data.leagueCode}</Col>}
           </Row>
           <Row>
-            <Col>Users: {data.totalUserCount || 0}</Col>
+            <Col>Playing Users: {data.totalUserCount || 0}</Col>
             <Col>
-              {!data.userRank && loginUser && (
+              {!data.userRank && loginUser && userteam && (
                 <Button
                   variant="link"
                   onClick={() => joinLeague(data.leagueCode)}>
@@ -35,6 +37,20 @@ const LeagueCard = ({data}: LeagueCardProps) => {
                 </Button>
               )}
               {data.userRank && <span>Your Rank : {data.userRank}</span>}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {!userteam && loginUser && (
+                <Button variant="link" onClick={() => history.push('/team')}>
+                  Create Team and Join League
+                </Button>
+              )}
+              {!userteam && !loginUser && (
+                <Button variant="link" onClick={() => history.push('/login')}>
+                  Login and Join League
+                </Button>
+              )}
             </Col>
           </Row>
         </Card.Text>

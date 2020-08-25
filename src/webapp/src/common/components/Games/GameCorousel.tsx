@@ -1,6 +1,6 @@
 import React from 'react';
 import {Carousel} from 'react-bootstrap';
-import {GameCard, LeagueCard} from '../index';
+import {CreateSquadCard, GameCard, JoinLeagueCard, LeagueCard} from '../index';
 import PlayerScoreCard from './PlayerScoreCard';
 
 const GameCorousel = (props: GameCorouselProps) => {
@@ -51,6 +51,19 @@ const GameCorousel = (props: GameCorouselProps) => {
     );
   }
 
+  function renderDashboardFantasyInfoCard() {
+    return (
+      <Carousel>
+        <Carousel.Item>
+          <CreateSquadCard />
+        </Carousel.Item>
+        <Carousel.Item>
+          <JoinLeagueCard />
+        </Carousel.Item>
+      </Carousel>
+    );
+  }
+
   return (
     <div>
       {type == 'schedule' && renderGamesCard()}
@@ -58,6 +71,7 @@ const GameCorousel = (props: GameCorouselProps) => {
       {type == 'topUserscore' && renderGamesCard()}
       {type == 'toppickedplayer' && renderGamesCard()}
       {type == 'league' && renderLeagueRankingCard()}
+      {type == 'dashboardFantasyinfo' && renderDashboardFantasyInfoCard()}
     </div>
   );
 };
