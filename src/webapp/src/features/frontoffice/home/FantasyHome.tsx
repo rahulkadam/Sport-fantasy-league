@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import FantasyHelpContent from './components/FantasyHelpContent';
 import MatchStatsData from './components/MatchStatsData';
 import {
@@ -29,6 +29,7 @@ const FantasyHome = () => {
   const fetchDashboard = getUserDashboardAction();
   const loginUser = isUserLogin();
   const dashboard = homeProps.dashboard;
+  const [isfetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     isListEmpty(homeProps.leagueMatchesList) && fetchUpComingMatches();
@@ -38,6 +39,16 @@ const FantasyHome = () => {
       fetchPublicLeague();
     }
   }, []);
+
+  useEffect(() => {
+    if (configProps.shouldRefresh && !isfetching) {
+      fetchDashboard();
+      setIsFetching(true);
+    }
+    if (!configProps.shouldRefresh) {
+      setIsFetching(false);
+    }
+  });
 
   function goto(link: string) {
     history.push(link);

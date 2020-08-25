@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -76,7 +77,9 @@ public class UserTeamService {
 
     public List<UserTeamDTO> getUserTeamByUser(Long id) {
         List<UserTeam> userTeamlist = repository.findUserTeamByUserId(id);
-        Assert.notEmpty(userTeamlist, "User does not have any team");
+        if (CollectionUtils.isEmpty(userTeamlist)) {
+            return new ArrayList<>();
+        }
         return converter.convertToFullDTOList(userTeamlist);
     }
 

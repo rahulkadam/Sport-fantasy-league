@@ -3,4 +3,5 @@ declare type CommonConfigData = {
   isLoading: boolean;
   hasError: boolean;
   statusMessage: string;
+  shouldRefresh?: boolean;
 };

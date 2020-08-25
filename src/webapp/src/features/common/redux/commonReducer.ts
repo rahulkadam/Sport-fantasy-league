@@ -1,10 +1,16 @@
-import {ACTION_START, ACTION_ERROR, ACTION_COMPLETED} from './commonConstants';
+import {
+  ACTION_START,
+  ACTION_ERROR,
+  ACTION_COMPLETED,
+  ACTION_REFRESH,
+} from './commonConstants';
 
 const initialState: CommonConfigData = {
   data: {},
   isLoading: false,
   hasError: false,
   statusMessage: '',
+  shouldRefresh: false,
 };
 
 export default (
@@ -17,6 +23,7 @@ export default (
         ...state,
         isLoading: true,
         hasError: false,
+        shouldRefresh: false,
       };
     case ACTION_ERROR:
       return {
@@ -29,8 +36,11 @@ export default (
       return {
         ...state,
         isLoading: false,
-        hasError: true,
-        statusMessage: action.errorMessage,
+      };
+    case ACTION_REFRESH:
+      return {
+        ...state,
+        shouldRefresh: true,
       };
     default:
       return state;

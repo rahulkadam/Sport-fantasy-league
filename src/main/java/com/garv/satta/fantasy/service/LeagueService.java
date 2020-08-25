@@ -114,8 +114,10 @@ public class LeagueService {
 
     public List<LeagueDTO> getLeagueByUserId(Long id) {
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(id);
+        if (CollectionUtils.isEmpty(userTeamList)) {
+            return new ArrayList<>();
+        }
         UserTeam userTeam = userTeamList.stream().findFirst().orElse(null);
-        Assert.notNull(userTeam, "Unable to find League for User");
         List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         return converter.convertToFullDTOList(userLeagueList);
     }

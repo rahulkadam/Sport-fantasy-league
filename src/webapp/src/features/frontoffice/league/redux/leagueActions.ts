@@ -20,7 +20,10 @@ import {
   getErrorMessage,
 } from 'common/util';
 import {fetchPlayerlistByUser} from '../../UserTeam/redux/userteam-api';
-import {ACTION_COMPLETED} from '../../../common/redux/commonConstants';
+import {
+  ACTION_COMPLETED,
+  ACTION_REFRESH,
+} from '../../../common/redux/commonConstants';
 
 const fetchUserLeagueListAction = () => {
   const dispatch = useDispatch();
@@ -83,6 +86,7 @@ const joinLeagueAction = () => {
             data: data,
           });
           dispatch({type: ACTION_COMPLETED});
+          dispatch({type: ACTION_REFRESH});
         })
         .catch((error: any) => {
           dispatch({
