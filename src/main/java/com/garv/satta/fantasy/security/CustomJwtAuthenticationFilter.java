@@ -20,7 +20,10 @@ import java.io.IOException;
 public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    CustomOauthUserService customOauthUserService;
+    private CustomOauthUserService customOauthUserService;
+
+    @Autowired
+    private JwtFantasyTokenService fantasyTokenService;
 
     /**
      * Process to authorized token , either from header bearer token or verify one time Token
@@ -48,7 +51,7 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
      * @param request
      * @param response
      */
-    public void authorizeAPGToken(HttpServletRequest request, HttpServletResponse response) {
+    public void authorizeAPGToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String bearerToken = request.getHeader("authorization");
 
@@ -67,7 +70,7 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
      * @param request
      * @param response
      */
-    public void ExchangeforFantasyToken(HttpServletRequest request, HttpServletResponse response) {
+    public void ExchangeforFantasyToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String tokenParam = request.getParameter("exchange_for_fantasy_token");
 

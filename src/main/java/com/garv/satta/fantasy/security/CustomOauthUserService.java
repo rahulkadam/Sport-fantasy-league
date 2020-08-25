@@ -30,6 +30,9 @@ public class CustomOauthUserService extends OidcUserService {
     @Autowired
     private UserConverter userConverter;
 
+    @Autowired
+    private JwtFantasyTokenService fantasyTokenService;
+
     @Override
     public OidcUser loadUser(OidcUserRequest oidcUserRequest) {
         OidcUser oidcUser = super.loadUser(oidcUserRequest);
@@ -64,7 +67,7 @@ public class CustomOauthUserService extends OidcUserService {
 
     public OAuth2User findUserByToken(String token) {
 
-        String email = verifyToken(token);
+        String email = fantasyTokenService.verifyToken(token);
         if (email == null) {
             return null;
         }
@@ -87,6 +90,7 @@ public class CustomOauthUserService extends OidcUserService {
         return oidcUser;
     }
 
+    /**
     public String verifyToken(String token) {
         TokenVerifier tokenVerifier = TokenVerifier.newBuilder().build();
         try {
@@ -96,5 +100,5 @@ public class CustomOauthUserService extends OidcUserService {
         } catch (TokenVerifier.VerificationException e) {
             return null;
         }
-    }
+    }*/
 }

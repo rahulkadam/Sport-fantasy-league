@@ -18,6 +18,9 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     @Autowired
     private FantasyProperties properties;
 
+    @Autowired
+    private JwtFantasyTokenService jwtFantasyTokenService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
@@ -34,8 +37,10 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
         DefaultOidcUser oidcUser = (DefaultOidcUser) authentication.getPrincipal();
 
+        String token = jwtFantasyTokenService.getFantasyTokenFromGoogleToken(oidcUser.getIdToken().getTokenValue());
+
         String redirectionUrl = UriComponentsBuilder.fromUriString(homeUrl)
-                .queryParam("exchange_for_fantasy_token", oidcUser.getIdToken().getTokenValue())
+                .queryParam("exchange_for_fantasy_token", token)
                 .build().toUriString();
 
         getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
