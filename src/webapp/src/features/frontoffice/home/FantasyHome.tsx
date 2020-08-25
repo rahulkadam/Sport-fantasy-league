@@ -15,10 +15,11 @@ import {Form, Button, Row, Col, Carousel} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
-import {GameCorousel} from 'common/components';
+import {GameCorousel, Logo} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
 import {isListEmpty} from '../../../common/util';
 import {checkUserAccess} from '../../Authentication/redux';
+import {teamRCB} from '@logos/index';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -99,7 +100,7 @@ const FantasyHome = () => {
   function renderUserTeamCard() {
     return (
       <Row>
-        <Col md={8}>
+        <Col>
           <UserTeamCard data={homeProps.dashboard} />
         </Col>
       </Row>
@@ -112,7 +113,7 @@ const FantasyHome = () => {
       : homeProps.publicLeagueList;
     return (
       <Row>
-        <Col md={8}>
+        <Col>
           <GameCorousel type="league" leagueList={leagueList} />
         </Col>
       </Row>
@@ -122,7 +123,7 @@ const FantasyHome = () => {
   function renderFantasyInfoCard() {
     return (
       <Row>
-        <Col md={8}>
+        <Col>
           <GameCorousel type="dashboardFantasyinfo" />
         </Col>
       </Row>
