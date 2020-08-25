@@ -23,7 +23,13 @@ import java.util.stream.Collectors;
 @Entity
 @Data
 @NamedEntityGraph(name = "UserTeam.leagueUserTeams",
-        attributeNodes = @NamedAttributeNode("leagueUserTeams")
+        attributeNodes = @NamedAttributeNode(value = "leagueUserTeams", subgraph = "loadUserTeam"),
+        subgraphs = @NamedSubgraph(name = "loadUserTeam",
+                attributeNodes = {
+                        @NamedAttributeNode("league"),
+                        @NamedAttributeNode("userTeam")
+        }
+        )
 )
 @ToString(exclude = {"leagueUserTeams", "user", "captain_player","tournament", "playerUserTeams"}, callSuper = true)
 @NoArgsConstructor
