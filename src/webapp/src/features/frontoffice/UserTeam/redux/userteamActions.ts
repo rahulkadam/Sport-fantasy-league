@@ -26,6 +26,7 @@ import {
   dispatchActionWrapper,
   dispatchAction,
   getErrorMessage,
+  isListEmpty,
 } from 'common/util';
 import {ACTION_COMPLETED} from '../../../common/redux/commonConstants';
 
@@ -67,20 +68,21 @@ const fetchPlayerListByUserAction = () => {
             userteam: data,
           });
           dispatch({type: ACTION_COMPLETED});
-          fetchPlayerlistByUser(data[0].id)
-            .then((data: any) => {
-              dispatch({
-                type: FETCH_PLAYER_LIST_BY_USER,
-                userTeamPlayers: data,
+          !isListEmpty(data) &&
+            fetchPlayerlistByUser(data[0].id)
+              .then((data: any) => {
+                dispatch({
+                  type: FETCH_PLAYER_LIST_BY_USER,
+                  userTeamPlayers: data,
+                });
+                dispatch({type: ACTION_COMPLETED});
+              })
+              .catch((error: any) => {
+                dispatch({
+                  type: ACTION_ERROR,
+                  errorMessage: getErrorMessage(error),
+                });
               });
-              dispatch({type: ACTION_COMPLETED});
-            })
-            .catch((error: any) => {
-              dispatch({
-                type: ACTION_ERROR,
-                errorMessage: getErrorMessage(error),
-              });
-            });
         })
         .catch((error: any) => {
           dispatch({

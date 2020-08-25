@@ -11,7 +11,7 @@ const MatchStatsData = (props: HomeData) => {
   return (
     <div>
       <Row>
-        <Col md={8}>
+        <Col>
           <GameCorousel type="schedule" matchScheduleCard={matchScheduleList} />
         </Col>
       </Row>

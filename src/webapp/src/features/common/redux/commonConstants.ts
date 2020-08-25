@@ -1,3 +1,4 @@
 export const ACTION_START = 'ACTION_START';
 export const ACTION_ERROR = 'ACTION_ERROR';
 export const ACTION_COMPLETED = 'ACTION_COMPLETED';
+export const ACTION_REFRESH = 'ACTION_REFRESH';

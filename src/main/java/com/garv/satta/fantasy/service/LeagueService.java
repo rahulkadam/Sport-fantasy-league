@@ -74,7 +74,7 @@ public class LeagueService {
         userId = userService.getCurrentUserId();
         League league = repository.findLeagueByLeagueCode(leagueCode);
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(userId);
-        Assert.isTrue(userTeamList.size() == 1, "User does not have proper team, please create teams");
+        Assert.isTrue(userTeamList.size() == 1, "Please create team first and join League");
         UserTeam userTeam = userTeamList.get(0);
         List<League> leagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         Optional<League> leagueObject = leagueList.stream().filter(league1 -> league1.getLeagueCode().equalsIgnoreCase(leagueCode)).findFirst();
@@ -114,8 +114,10 @@ public class LeagueService {
 
     public List<LeagueDTO> getLeagueByUserId(Long id) {
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(id);
+        if (CollectionUtils.isEmpty(userTeamList)) {
+            return new ArrayList<>();
+        }
         UserTeam userTeam = userTeamList.stream().findFirst().orElse(null);
-        Assert.notNull(userTeam, "Unable to find League for User");
         List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
         return converter.convertToFullDTOList(userLeagueList);
     }

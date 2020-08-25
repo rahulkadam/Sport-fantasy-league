@@ -23,6 +23,7 @@ declare type PlayerScoreCardProps = {
 
 declare type LeagueCardProps = {
   data: any;
+  userteam?: any;
 };
 
 declare type UserTeamCardProps = {
@@ -34,4 +35,5 @@ declare type GameCorouselProps = {
   mostScoringPlayerList?: PlayerScoreCardProps[];
   leagueList?: any[];
   type: string;
+  data?: any;
 };

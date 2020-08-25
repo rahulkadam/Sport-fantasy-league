@@ -55,7 +55,6 @@ const TournamentPlayerList = ({
   }
 
   function onRowClickedAction(row: any, e: any) {
-    console.log(row.name);
     fetchPlayerHistoryList(row.id);
   }
 

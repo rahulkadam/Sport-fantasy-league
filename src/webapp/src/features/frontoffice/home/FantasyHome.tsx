@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import FantasyHelpContent from './components/FantasyHelpContent';
 import MatchStatsData from './components/MatchStatsData';
 import {
@@ -11,14 +11,15 @@ import './Home.styles.scss';
 import {isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
 import HowToPlay from './components/HowToPlay';
-import {Form, Button, Row, Col, Carousel} from 'react-bootstrap';
+import {Form, Button, Row, Col, Carousel, Image} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
-import {GameCorousel} from 'common/components';
+import {GameCorousel, Logo} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
 import {isListEmpty} from '../../../common/util';
 import {checkUserAccess} from '../../Authentication/redux';
+import {bannerComingsoon} from '@logos/index';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -28,15 +29,26 @@ const FantasyHome = () => {
   const fetchDashboard = getUserDashboardAction();
   const loginUser = isUserLogin();
   const dashboard = homeProps.dashboard;
+  const [isfetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     isListEmpty(homeProps.leagueMatchesList) && fetchUpComingMatches();
     if (loginUser) {
-      !dashboard.publicLeagues && fetchDashboard();
+      !dashboard.userTeamDTO && fetchDashboard();
     } else {
       fetchPublicLeague();
     }
   }, []);
+
+  useEffect(() => {
+    if (configProps.shouldRefresh && !isfetching) {
+      fetchDashboard();
+      setIsFetching(true);
+    }
+    if (!configProps.shouldRefresh) {
+      setIsFetching(false);
+    }
+  });
 
   function goto(link: string) {
     history.push(link);
@@ -99,7 +111,7 @@ const FantasyHome = () => {
   function renderUserTeamCard() {
     return (
       <Row>
-        <Col md={8}>
+        <Col>
           <UserTeamCard data={homeProps.dashboard} />
         </Col>
       </Row>
@@ -108,14 +120,49 @@ const FantasyHome = () => {
 
   function renderUserPublicLeagues() {
     const leagueList = loginUser
-      ? homeProps.dashboard.publicLeagues
+      ? dashboard.publicLeagues
       : homeProps.publicLeagueList;
     return (
       <Row>
-        <Col md={8}>
-          <GameCorousel type="league" leagueList={leagueList} />
+        <Col>
+          <GameCorousel
+            type="league"
+            leagueList={leagueList}
+            data={dashboard.userTeamDTO}
+          />
         </Col>
       </Row>
+    );
+  }
+
+  function renderFantasyInfoCard() {
+    return (
+      <Row>
+        <Col>
+          <GameCorousel type="dashboardFantasyinfo" />
+        </Col>
+      </Row>
+    );
+  }
+
+  function renderIPLImage() {
+    return (
+      <div>
+        <Image src={bannerComingsoon} width="100%" height="100px" />
+      </div>
+    );
+  }
+
+  function renderIPLbanner() {
+    return (
+      <div className="fantasyBanner">
+        <Row>
+          <Col>IPL Fantasy</Col>
+        </Row>
+        <Row>
+          <Col>Play IPL fantasy with single Team. Old IPL Fantasy is Back</Col>
+        </Row>
+      </div>
     );
   }
 
@@ -127,8 +174,10 @@ const FantasyHome = () => {
         text="Loading Home Details ...">
         {checkUserAccess()}
         <UserHomePageBoard />
+        {renderIPLImage()}
         <MatchStatsData {...homeProps} />
-        {loginUser && renderUserTeamCard()}
+        {loginUser && homeProps.dashboard.userTeamDTO && renderUserTeamCard()}
+        {!homeProps.dashboard.userTeamDTO && renderFantasyInfoCard()}
         {renderUserPublicLeagues()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}
