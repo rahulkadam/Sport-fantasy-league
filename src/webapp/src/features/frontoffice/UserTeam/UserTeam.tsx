@@ -26,7 +26,7 @@ import {useParams} from 'react-router-dom';
 import {isListEmpty} from 'common/util';
 import PlayerTypeCountSummary from '../UserTeam/component/common/PlayerTypeCountSummary';
 import {fetchPlayerStatsListAction, getStatsProps} from '../stats/redux';
-import TeamCriteria from './component/common/TeamCriteria';
+import TeamCriteria from '../UserTeam/component/common/TeamCriteria';
 import {getCommonData} from '../../common/redux';
 
 const UserTeam = () => {

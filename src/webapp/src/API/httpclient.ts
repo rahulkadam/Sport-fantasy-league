@@ -23,7 +23,6 @@ function Get(url: string, config?: AxiosRequestConfig) {
     },
     (error: any) => {
       console.log(error.message);
-      console.log(error.config);
       checkInvalidAccess(error);
       throw error;
     }
@@ -55,7 +54,6 @@ function Post(url: string, config?: AxiosRequestConfig) {
   // config = {headers: headers(config, url), ...config};
   return axiosInstance.post(fullUrl, data, config).then(
     (response: any) => {
-      console.log(response.data);
       return response.data;
     },
     (error: any) => {

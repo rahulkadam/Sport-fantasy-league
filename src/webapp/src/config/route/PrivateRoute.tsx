@@ -8,7 +8,6 @@ const PrivateRoute = ({children, ...rest}: {[key: string]: any}) => {
   const loggedUser = GetLoginStoreData();
 
   function isValid() {
-    console.log('ROle ', rest.role);
     return getAccessToken() && loggedUser.id && loggedUser.role == rest.role;
   }
 

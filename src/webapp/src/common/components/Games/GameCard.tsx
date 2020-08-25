@@ -27,37 +27,41 @@ const GameCard = (cardProps: GameCardProps) => {
   }
 
   return (
-    <Card className="gamecardcontainer">
-      <Card.Body>
-        <Card.Title>{cardProps.venue}</Card.Title>
-        <Card.Text>
-          <Row>
-            <Col>
-              <Logo
-                logoSource={getLogoNameByTeam(cardProps.team1)}
-                width="60"
-              />
-            </Col>
-            <Col>{calculateTime(cardProps.time)}</Col>
-            <Col>
-              <Logo
-                logoSource={getLogoNameByTeam(cardProps.team2)}
-                width="60"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>{getShortNameByTeam(cardProps.team1)}</Col>
-            <Col>
-              <Button variant="link" onClick={() => history.push('/fixtures')}>
-                View All
-              </Button>
-            </Col>
-            <Col>{getShortNameByTeam(cardProps.team2)}</Col>
-          </Row>
-        </Card.Text>
-      </Card.Body>
-    </Card>
+    <div>
+      <Card className="gamecardcontainer">
+        <Card.Body>
+          <Card.Title>{cardProps.venue}</Card.Title>
+          <Card.Text>
+            <Row>
+              <Col>
+                <Logo
+                  logoSource={getLogoNameByTeam(cardProps.team1)}
+                  width="60"
+                />
+              </Col>
+              <Col>{calculateTime(cardProps.time)}</Col>
+              <Col>
+                <Logo
+                  logoSource={getLogoNameByTeam(cardProps.team2)}
+                  width="60"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>{getShortNameByTeam(cardProps.team1)}</Col>
+              <Col>
+                <Button
+                  variant="link"
+                  onClick={() => history.push('/fixtures')}>
+                  View All
+                </Button>
+              </Col>
+              <Col>{getShortNameByTeam(cardProps.team2)}</Col>
+            </Row>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 export default GameCard;
