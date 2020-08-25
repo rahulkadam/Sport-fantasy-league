@@ -34,6 +34,7 @@ public class MatchConverter extends Converter<Match, MatchDTO> {
         Team awayTeam = new Team(dto.getTeam_away_id());
         match.setTeam_away(awayTeam);
 
+
         Tournament tournament = new Tournament(dto.getTournament_id());
         match.setTournament(tournament);
 
@@ -43,14 +44,20 @@ public class MatchConverter extends Converter<Match, MatchDTO> {
     @Override
     public MatchDTO convertToFullDTO(Match entity) {
         MatchDTO matchDTO = convertToDTO(entity);
-        matchDTO.setVenueId(entity.getVenue().getId());
-        matchDTO.setTeam_away_id(entity.getTeam_away().getId());
-        matchDTO.setTeam_host_id(entity.getTeam_host().getId());
-        matchDTO.setTournament_id(entity.getTournament().getId());
-        matchDTO.setTeam_host_name(entity.getTeam_host().getName());
-        matchDTO.setTeam_away_name(entity.getTeam_away().getName());
-        matchDTO.setTournament_name(entity.getTournament().getName());
-        matchDTO.setVenue_name(entity.getVenue().getName());
+        Team homeTeam = entity.getTeam_host();
+        Team awayTeam = entity.getTeam_away();
+        Venue venue = entity.getVenue();
+        matchDTO.setTeam_away_id(awayTeam.getId());
+        matchDTO.setTeam_host_id(homeTeam.getId());
+        matchDTO.setTeam_host_name(homeTeam.getName());
+        matchDTO.setTeam_away_name(awayTeam.getName());
+        matchDTO.setVenue_name(venue.getName());
+        matchDTO.setVenueId(venue.getId());
+
+        //Tournament tournament = entity.getTournament();
+        // matchDTO.setTournament_id(tournament.getId());
+        // matchDTO.setTournament_name(tournament.getName());
+
         return matchDTO;
     }
 

@@ -39,9 +39,11 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
 
     public LeagueDTO convertToFullDTO(League entity) {
         LeagueDTO dto = convertToDTO(entity);
-        dto.setTournamentId(entity.getTournament().getId());
-        dto.setCreateByUserId(entity.getCreated_by().getId());
-        if (!entity.getLeagueUserTeams().isEmpty()) {
+        // dto.setTournamentId(entity.getTournament().getId());
+        // dto.setCreateByUserId(entity.getCreated_by().getId());
+
+        Boolean isPublicLeague  = entity.getPublicLeague() != null && entity.getPublicLeague();
+        if (!isPublicLeague && !entity.getLeagueUserTeams().isEmpty()) {
             List<LeagueUserTeamDTO> leagueUserTeamDTOS = userTeamConverter.convertToDTOList(entity.getLeagueUserTeams());
             dto.setLeagueUserTeamDTOS(leagueUserTeamDTOS);
         }

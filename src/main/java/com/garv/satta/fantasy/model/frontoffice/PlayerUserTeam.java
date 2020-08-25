@@ -13,6 +13,9 @@ import java.io.Serializable;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedEntityGraph(name = "PlayerUserTeam.player",
+        attributeNodes = @NamedAttributeNode("player")
+)
 @IdClass(PlayerUserTeamId.class)
 @EqualsAndHashCode
 @ToString

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MatchDTO extends BaseDTO {
+public class MatchDTO extends ShortBaseDTO {
     private String description;
     private DateTime matchTime;
     private Boolean status;

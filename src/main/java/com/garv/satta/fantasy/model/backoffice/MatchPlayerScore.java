@@ -8,6 +8,13 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@NamedEntityGraph(name = "MatchPlayerScore.full",
+        attributeNodes = {
+                @NamedAttributeNode("player"),
+                @NamedAttributeNode(value = "match", subgraph = "match")},
+                subgraphs = @NamedSubgraph(name = "match", attributeNodes = @NamedAttributeNode("matchResult"))
+
+)
 @ToString(exclude = {"match", "player", "tournament"}, callSuper = true)
 public class MatchPlayerScore extends BaseDaoObject {
 

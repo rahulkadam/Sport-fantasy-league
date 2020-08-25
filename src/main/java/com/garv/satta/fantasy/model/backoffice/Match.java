@@ -14,6 +14,13 @@ import java.util.List;
 @Data
 @Table(name = "MatchGame")
 @NoArgsConstructor
+@NamedEntityGraph(name = "Match.matchschedule",
+        attributeNodes = {
+                @NamedAttributeNode("team_host"),
+                @NamedAttributeNode("team_away"),
+                @NamedAttributeNode("venue"),
+                @NamedAttributeNode("matchResult")}
+)
 @ToString(exclude = {"venue", "team_host", "team_away","tournament", "matchResult", "matchPlayerScore"}, callSuper = true)
 public class Match extends BaseDaoObject {
 
@@ -40,10 +47,10 @@ public class Match extends BaseDaoObject {
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
-    @OneToOne(mappedBy = "match")
+    @OneToOne(mappedBy = "match", fetch = FetchType.LAZY)
     private MatchResult matchResult;
 
-    @OneToMany(mappedBy = "match")
+    @OneToMany(mappedBy = "match", fetch = FetchType.LAZY)
     private List<MatchPlayerScore> matchPlayerScore;
 
     public Match(Long id) {

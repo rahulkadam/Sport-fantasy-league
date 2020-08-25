@@ -22,6 +22,15 @@ import java.util.stream.Collectors;
 
 @Entity
 @Data
+@NamedEntityGraph(name = "UserTeam.leagueUserTeams",
+        attributeNodes = @NamedAttributeNode(value = "leagueUserTeams", subgraph = "loadUserTeam"),
+        subgraphs = @NamedSubgraph(name = "loadUserTeam",
+                attributeNodes = {
+                        @NamedAttributeNode("league"),
+                        @NamedAttributeNode("userTeam")
+        }
+        )
+)
 @ToString(exclude = {"leagueUserTeams", "user", "captain_player","tournament", "playerUserTeams"}, callSuper = true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, of = {"id"})
@@ -41,7 +50,7 @@ public class UserTeam extends BaseDaoObject {
     private Integer remained_Transfer;
     private Integer current_Used_Transfer;
 
-    @OneToMany(mappedBy = "userTeam")
+    @OneToMany(mappedBy = "userTeam", fetch = FetchType.LAZY)
     private Set<LeagueUserTeam> leagueUserTeams;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -56,7 +65,7 @@ public class UserTeam extends BaseDaoObject {
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
-    @OneToMany(mappedBy = "userTeam", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "userTeam", fetch = FetchType.LAZY,cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<PlayerUserTeam> playerUserTeams;
 
     public void resetPlayerUserTeam() {

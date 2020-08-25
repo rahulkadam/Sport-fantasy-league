@@ -11,7 +11,11 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
-@ToString(exclude = {"teamCriteria", "playerCriteriaList"},callSuper = true)
+@NamedEntityGraph(name = "Game.criteria",
+        attributeNodes = {
+        @NamedAttributeNode("teamCriteria"), @NamedAttributeNode("playerCriteriaList")}
+)
+@ToString(exclude = {"teamCriteria", "playerCriteriaList"}, callSuper = true)
 public class Game extends BaseDaoObject {
 
     @Column(unique = true)

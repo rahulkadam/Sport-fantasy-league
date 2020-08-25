@@ -18,6 +18,7 @@ import {getCommonData} from '../../common/redux';
 import {GameCorousel} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
 import {isListEmpty} from '../../../common/util';
+import {checkUserAccess} from '../../Authentication/redux';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -124,6 +125,7 @@ const FantasyHome = () => {
         active={configProps.isLoading}
         spinner
         text="Loading Home Details ...">
+        {checkUserAccess()}
         <UserHomePageBoard />
         <MatchStatsData {...homeProps} />
         {loginUser && renderUserTeamCard()}
