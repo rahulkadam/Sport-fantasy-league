@@ -33,6 +33,7 @@ const League = () => {
   const [tabName, setTabName] = useState('overview');
   const defaultTabKey = 'overview';
   const userId = userProps.id || 99999;
+  const [isfetching, setIsFetching] = useState(false);
 
   if (leagueProps.shouldRefresh && tabName != defaultTabKey) {
     setTabName(defaultTabKey);
@@ -42,8 +43,12 @@ const League = () => {
     isListEmpty(userleagueList) && fetchUserLeagueList(userId);
   }, []);
   useEffect(() => {
-    if (leagueProps.shouldRefresh) {
+    if (leagueProps.shouldRefresh && !isfetching) {
       fetchUserLeagueList(userId);
+      setIsFetching(true);
+    }
+    if (!leagueProps.shouldRefresh) {
+      setIsFetching(false);
     }
   });
 
