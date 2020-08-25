@@ -29,9 +29,7 @@ const GameCard = (cardProps: GameCardProps) => {
   return (
     <Card className="gamecardcontainer">
       <Card.Body>
-        <Card.Title>
-          {cardProps.tournament} , {cardProps.venue}
-        </Card.Title>
+        <Card.Title>{cardProps.venue}</Card.Title>
         <Card.Text>
           <Row>
             <Col>
