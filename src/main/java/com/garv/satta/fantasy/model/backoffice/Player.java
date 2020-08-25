@@ -18,6 +18,9 @@ import java.util.stream.Collectors;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedEntityGraph(name = "Player.teams",
+        attributeNodes = @NamedAttributeNode("teams")
+)
 @ToString(exclude = {"teams", "squads"}, callSuper = true)
 @EqualsAndHashCode
 // @Where(clause = "is_deleted = false")

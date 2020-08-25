@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.dao.repository;
 
+import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
