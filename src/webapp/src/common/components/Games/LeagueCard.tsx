@@ -2,22 +2,39 @@ import React from 'react';
 import {Card, Row, Col, Button} from 'react-bootstrap';
 import './GameCard.styles.scss';
 import history from 'common/config/history';
+import {Logo} from '..';
+import {getLogoNameByLeagueName} from '../FantasyDropDown';
+import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
+import {isUserLogin} from '../../../API';
 
 const LeagueCard = ({data}: LeagueCardProps) => {
+  const loginUser = isUserLogin();
+  const joinLeague = joinLeagueAction();
+  const title = !loginUser ? '' : data.publicLeague ? 'Public' : 'Private';
+  const logoSource = getLogoNameByLeagueName(data.name);
   return (
     <Card className="gamecardcontainer">
       <Card.Body>
-        <Card.Title>Leagues</Card.Title>
+        <Card.Title className="publicLeague">
+          {title} League{' '}
+          {logoSource && <Logo logoSource={logoSource} width="40" />}
+        </Card.Title>
         <Card.Text>
           <Row>
-            <Col>League : {data.name}</Col>
+            <Col>{data.name}</Col>
+            {!data.publicLeague && <Col>Code : {data.leagueCode}</Col>}
           </Row>
           <Row>
-            <Col>Users: {data.totalUserCount}</Col>
+            <Col>Users: {data.totalUserCount || 0}</Col>
             <Col>
-              <Button variant="link" onClick={() => history.push('/league')}>
-                Join League
-              </Button>
+              {!data.userRank && loginUser && (
+                <Button
+                  variant="link"
+                  onClick={() => joinLeague(data.leagueCode)}>
+                  Join League
+                </Button>
+              )}
+              {data.userRank && <span>Your Rank : {data.userRank}</span>}
             </Col>
           </Row>
         </Card.Text>
