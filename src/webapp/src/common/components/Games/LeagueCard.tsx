@@ -10,7 +10,7 @@ import {isUserLogin} from '../../../API';
 const LeagueCard = ({data}: LeagueCardProps) => {
   const loginUser = isUserLogin();
   const joinLeague = joinLeagueAction();
-  const title = data.publicLeague ? 'Public' : 'Private';
+  const title = !loginUser ? '' : data.publicLeague ? 'Public' : 'Private';
   const logoSource = getLogoNameByLeagueName(data.name);
   return (
     <Card className="gamecardcontainer">

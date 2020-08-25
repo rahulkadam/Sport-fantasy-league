@@ -16,6 +16,7 @@ import {checkUserAccess, GetLoginStoreData} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {Button, Form} from 'react-bootstrap';
 import {getCommonData} from '../../common/redux';
+import {isListEmpty} from '../../../common/util';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -38,7 +39,7 @@ const League = () => {
   }
 
   useEffect(() => {
-    fetchUserLeagueList(userId);
+    isListEmpty(userleagueList) && fetchUserLeagueList(userId);
   }, []);
   useEffect(() => {
     if (leagueProps.shouldRefresh) {
