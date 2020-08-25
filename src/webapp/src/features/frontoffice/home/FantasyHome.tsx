@@ -19,7 +19,7 @@ import {GameCorousel, Logo} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
 import {isListEmpty} from '../../../common/util';
 import {checkUserAccess} from '../../Authentication/redux';
-import {teamRCB} from '@logos/index';
+import {bannerPlayerBlue, blackplayer, teamRCB} from '@logos/index';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -142,6 +142,19 @@ const FantasyHome = () => {
           <GameCorousel type="dashboardFantasyinfo" />
         </Col>
       </Row>
+    );
+  }
+
+  function renderIPLbanner() {
+    return (
+      <div className="fantasyBanner">
+        <Row>
+          <Col>IPL Fantasy</Col>
+        </Row>
+        <Row>
+          <Col>Play IPL fantasy with single Team. Old IPL Fantasy is Back</Col>
+        </Row>
+      </div>
     );
   }
 

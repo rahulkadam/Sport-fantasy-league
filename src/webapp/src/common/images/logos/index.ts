@@ -19,7 +19,8 @@ const teamKKR = require('./iplteams/kkr-color.png');
 const teamCSK = require('./iplteams/csk-color.png');
 const teamRCB = require('./iplteams/rcb-color.png');
 const pluscolor = require('./action/plus-color.png');
-const minuscolor = require('./action/minus-color.png');
+const minuscolor = require('./action/minus-color.jpeg');
+const bannerPlayerBlue = require('./banner/player-bluebg.jpeg');
 export {
   fantasyLogo,
   googleLogo,
@@ -43,4 +44,5 @@ export {
   teamSRH,
   pluscolor,
   minuscolor,
+  bannerPlayerBlue,
 };
