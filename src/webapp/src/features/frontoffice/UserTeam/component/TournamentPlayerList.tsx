@@ -239,6 +239,8 @@ const TournamentPlayerList = ({
           selectableRowsNoSelectAll={true}
           expandOnRowClicked
           onRowClicked={onRowClickedAction}
+          defaultSortField="value"
+          defaultSortAsc={false}
         />
       )}
     </div>
