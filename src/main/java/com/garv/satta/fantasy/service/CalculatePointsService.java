@@ -18,7 +18,6 @@ import java.util.*;
 @Service
 public class CalculatePointsService {
 
-
     @Autowired
     private MatchRepository matchRepository;
 
