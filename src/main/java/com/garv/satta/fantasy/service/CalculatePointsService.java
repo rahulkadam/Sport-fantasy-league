@@ -10,6 +10,7 @@ import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -122,8 +123,11 @@ public class CalculatePointsService {
         Integer totalScore = matchScore;
         if (currentUserTeamscore != null) {
             totalScore = totalScore + currentUserTeamscore;
+            userTeam.setLast_score(currentUserTeamscore);
+        } else {
+            userTeam.setLast_score(0);
         }
-        userTeam.setLast_score(currentUserTeamscore);
+
         userTeam.setTotal_score(totalScore);
         leagueUserTeamScorePerMatch.setTotalPoint(totalScore);
         leagueUserTeamScorePerMatch.setCurrent_match_point(matchScore);
@@ -167,17 +171,35 @@ public class CalculatePointsService {
     }
 
 
-    public void lockTeamForFantasyByMatchId(RequestDTO dto) {
+    public void initializeMatchForTournament(RequestDTO dto) {
         Long matchId = dto.getMatchId();
         Match match = matchRepository.findMatchById(matchId);
         if (match == null) {
             throw new GenericException("Match id is Not Valid" + matchId);
         }
+        Boolean matchInitialize = matchPlayerScoreService.isMatchAlreadyInitialize(matchId);
+        Assert.isTrue(!matchInitialize, "Match is initialize already ," + matchId);
         Set<Long> matchPlayingPlayers = match.getTeam_host().getPlayerIds();
         matchPlayingPlayers.addAll(match.getTeam_away().getPlayerIds());
         Tournament tournament = match.getTournament();
         // Saving team players
         matchPlayerScoreService.saveInitPlayerScoreForMatch(matchId, tournament.getId(), matchPlayingPlayers);
+    }
+
+    public void initUserScoreForMatch(RequestDTO dto) {
+        Long matchId = dto.getMatchId();
+        Match match = matchRepository.findMatchById(matchId);
+        if (match == null) {
+            throw new GenericException("Match id is Not Valid" + matchId);
+        }
+        initUserScoreForMatch(match);
+    }
+
+    public void initUserScoreForMatch(Match match) {
+        Long matchId = match.getId();
+        Boolean isInitialized = leagueUserTeamScorePerMatchService.isLeagueUserInitializeForMatch(matchId);
+        Assert.isTrue(!isInitialized, "Match is initialize already ," + matchId);
+        Tournament tournament = match.getTournament();
         List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
         leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
     }

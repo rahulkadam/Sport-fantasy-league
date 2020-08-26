@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js")
                 .permitAll()
                 //.antMatchers("/auth/**", "/oauth2/**", "/public/**" , "/fantasy/match/**")  // security loop for testing
-                .antMatchers("/auth/**", "/oauth2/**", "/public/**", "/fantasy/match/list", "/fantasy/match/completed/list", "fantasy/player/list", "public/stats/**")
+                .antMatchers("/auth/**", "/oauth2/**", "/public/**", "/fantasy/match/list", "/fantasy/match/completed/list", "fantasy/player/list", "public/stats/**", "/admin/matchprocess/**")
                 .permitAll();
         http.
                 authorizeRequests()

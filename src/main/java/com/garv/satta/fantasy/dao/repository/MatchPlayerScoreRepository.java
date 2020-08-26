@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.dao.repository;
 
+import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.CrudRepository;
@@ -22,5 +23,7 @@ public interface MatchPlayerScoreRepository extends CrudRepository<MatchPlayerSc
 
     @EntityGraph(value = "MatchPlayerScore.full")
     List<MatchPlayerScore> findMatchPlayerScoreByMatchIdAndPlayerIdIn(Long matchId, long[] playerId);
+
+    MatchPlayerScore findFirstByMatchId(Long matchId);
 
 }

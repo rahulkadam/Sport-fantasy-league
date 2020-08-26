@@ -6,6 +6,7 @@ import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueUserTeamScoreHistoryConverter;
 import com.garv.satta.fantasy.model.backoffice.Match;
+import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,16 @@ public class LeagueUserTeamScorePerMatchService {
     // save for al user Team at the start
     public void saveListAtMatchInit(List<UserTeam> userTeamList, Match match) {
         userTeamList.forEach(userTeam -> saveLeagueUserTeamAtMatchInit(userTeam, match));
+    }
+
+    public Boolean isLeagueUserInitializeForMatch(Long matchId) {
+        LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
+                leagueUserTeamScorePerMatchRepository.findFirstByMatchId(matchId);
+
+        if (leagueUserTeamScorePerMatch == null) {
+            return  false;
+        }
+        return true;
     }
 
     public void saveLeagueUserTeamAtMatchInit(UserTeam userTeam, Match match) {
