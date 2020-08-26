@@ -86,6 +86,20 @@ public class MatchPlayerScoreService {
         return converter.convertToFullDTOList(matchPlayerScores);
     }
 
+    /**
+     * Check if Match is Already initialize or Not
+     * @param matchId
+     * @return
+     */
+    public Boolean isMatchAlreadyInitialize(Long matchId) {
+        MatchPlayerScore matchPlayerScore = repository.findFirstByMatchId(matchId);
+
+        if (matchPlayerScore == null){
+            return false;
+        }
+        return true;
+    }
+
     public List<MatchPlayerScoreDTO> findMatchPlayerScoreByMatchId(Long id) {
         List<MatchPlayerScore> matchPlayerScores = repository.findMatchPlayerScoreByMatchId(id);
         return converter.convertToFullDTOList(matchPlayerScores);

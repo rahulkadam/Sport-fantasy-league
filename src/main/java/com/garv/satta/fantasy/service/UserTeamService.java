@@ -117,6 +117,7 @@ public class UserTeamService {
         userTeam.setTotal_score(0);
         userTeam.setRemained_Transfer(FantasyConstant.DEFAULT_TOTAL_TRANSFER);
         userTeam.setCurrent_Used_Transfer(0);
+        userTeam.setLast_score(0);
         userTeam.setUsed_Transfer(0);
         userTeam.setCreditbalance(FantasyConstant.DEFAULT_CREDIT_BALANCE);
         userTeam.setTotalbalance(FantasyConstant.DEFAULT_CREDIT_BALANCE);

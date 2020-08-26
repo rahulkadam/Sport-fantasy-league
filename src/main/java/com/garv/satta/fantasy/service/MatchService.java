@@ -6,6 +6,7 @@ import com.garv.satta.fantasy.dto.TeamDTO;
 import com.garv.satta.fantasy.dto.TournamentDTO;
 import com.garv.satta.fantasy.dto.VenueDTO;
 import com.garv.satta.fantasy.dto.converter.MatchConverter;
+import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.Team;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
@@ -69,6 +70,23 @@ public class MatchService {
     public MatchDTO getMatchById(Long id) {
         Match match = repository.findMatchById(id);
         return converter.convertToFullDTO(match);
+    }
+
+    public void startMatch(Long matchId) {
+        changeMatchStatus(matchId, Boolean.TRUE);
+    }
+
+    public void completeMatch(Long matchId) {
+        changeMatchStatus(matchId, Boolean.FALSE);
+    }
+
+    public void changeMatchStatus(Long matchId, Boolean status) {
+        Match match = repository.findMatchById(matchId);
+        if (match == null) {
+            throw new GenericException("Match id is Not Valid" + matchId);
+        }
+        match.setStatus(status);
+        repository.save(match);
     }
 
     public MatchDTO createMatch(MatchDTO matchDTO) {

@@ -20,9 +20,6 @@ public class TournamentService {
     @Autowired
     private TournamentConverter tournamentConverter;
 
-    @Autowired
-    private CalculatePointsService calculatePointsService;
-
     public List<TournamentDTO> getTournamentList() {
         List<Tournament> tournamentList = tournamentRepository.findAll();
         return tournamentConverter.convertToFullDTOList(tournamentList);
@@ -53,7 +50,6 @@ public class TournamentService {
 
     public void lockTournament(RequestDTO dto) {
         Tournament tournament = tournamentRepository.findTournamentById(dto.getId());
-        calculatePointsService.lockTeamForFantasyByMatchId(dto);
         tournament.setStatus(false);
         tournamentRepository.save(tournament);
     }

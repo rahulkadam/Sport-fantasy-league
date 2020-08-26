@@ -15,6 +15,7 @@ public class UserTeamDTO extends BaseDTO {
     private Integer creditbalance;
     private Integer totalbalance;
     private Integer total_score;
+    private Integer last_score;
     private Integer total_Transfer;
     private Integer total_leagues;
     private Integer used_Transfer;
