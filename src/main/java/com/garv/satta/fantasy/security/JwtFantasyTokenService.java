@@ -13,7 +13,7 @@ import java.util.Date;
 @Service
 public class JwtFantasyTokenService {
 
-    private long EXPIRATIONTIME = 3 * 60 * 60 * 24 * 10; // 30 days
+    private long EXPIRATIONTIME = 30 * 60 * 60 * 24 * 10; // 10 days
     private String secret = "FantasyISGreatBussiness";
 
     public String getFantasyTokenFromGoogleToken(String googleToken) {
@@ -41,6 +41,10 @@ public class JwtFantasyTokenService {
     }
 
     public String verifyToken(String token) {
+        /**
+        if (true) {
+            return "kadamrahul581@gmai.com";
+        } */
         Claims claims = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token).getBody();

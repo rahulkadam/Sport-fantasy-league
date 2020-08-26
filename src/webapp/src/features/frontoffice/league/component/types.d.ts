@@ -6,7 +6,7 @@ declare type LeagueUserListProps = {
 
 declare type JoinLeagueProps = {
   data: any;
-  userid: number;
+  userid?: number;
 };
 
 declare type CreateLeagueProps = {
@@ -22,4 +22,11 @@ declare type LeagueMemberTeamDetailsProps = {
   playerList?: any;
   show?: boolean;
   data?: data;
+};
+
+declare type JoinLeagueModalProps = {
+  joinLeague?: any;
+  show: boolean;
+  handleClose?: any;
+  handleShow?: any;
 };

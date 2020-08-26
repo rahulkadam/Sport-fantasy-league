@@ -1,8 +1,8 @@
 export const userMenuConfigForMobile = [
-  {
+  /* {
     link: '/league',
     name: 'League',
-  },
+  },*/
   {
     link: '/team',
     name: 'My Team',

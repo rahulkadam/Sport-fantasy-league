@@ -119,7 +119,7 @@ public class LeagueService {
         }
         UserTeam userTeam = userTeamList.stream().findFirst().orElse(null);
         List<League> userLeagueList = leagueUserTeamRepository.findLeagueByUserTeam(userTeam);
-        return converter.convertToFullDTOList(userLeagueList);
+        return converter.convertToFullDTOListWithUserTeamId(userLeagueList, userTeam.getId());
     }
 
     public List<LeagueDTO> getDashboardLeaguesByUserTeam(UserTeam userTeam) {
@@ -139,7 +139,7 @@ public class LeagueService {
 
     public List<LeagueDTO> getLeagueByPublic() {
         List<League> userLeagueList = repository.findLeagueByPublicLeague(true);
-        return converter.convertToFullDTOList(userLeagueList);
+        return converter.convertToDTOList(userLeagueList);
     }
 
     public void joinPublicLeague() {
