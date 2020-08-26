@@ -118,11 +118,12 @@ public class CalculatePointsService {
             }
         }
 
-        Integer score = userTeam.getTotal_score();
+        Integer currentUserTeamscore = userTeam.getTotal_score();
         Integer totalScore = matchScore;
-        if (score != null) {
-            totalScore = totalScore + score;
+        if (currentUserTeamscore != null) {
+            totalScore = totalScore + currentUserTeamscore;
         }
+        userTeam.setLast_score(currentUserTeamscore);
         userTeam.setTotal_score(totalScore);
         leagueUserTeamScorePerMatch.setTotalPoint(totalScore);
         leagueUserTeamScorePerMatch.setCurrent_match_point(matchScore);

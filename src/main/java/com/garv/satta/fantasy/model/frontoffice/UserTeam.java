@@ -44,6 +44,7 @@ public class UserTeam extends BaseDaoObject {
     private Float totalbalance;
 
     private Integer total_score;
+    private Integer last_score;
 
     private Integer total_Transfer;
     private Integer used_Transfer;
