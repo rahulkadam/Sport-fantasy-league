@@ -17,7 +17,7 @@ const LeagueCard = (props: LeagueCardProps) => {
   const logoSource = getLogoNameByLeagueName(data.name);
   return (
     <div>
-      <Card className="gamecardcontainer">
+      <Card className="leaguecardcontainer">
         <Card.Body>
           <Card.Title className="publicLeague">
             {title} League{' '}
@@ -27,10 +27,19 @@ const LeagueCard = (props: LeagueCardProps) => {
             <Row>
               <Col>
                 <Row>
-                  <Col className="CardBoldText">
+                  <Col>
                     <Badge variant="success">{data.name}</Badge>
                   </Col>
                   {!data.publicLeague && <Col>Code : {data.leagueCode}</Col>}
+                  {!data.userRank && loginUser && userteam && (
+                    <Col>
+                      <Button
+                        variant="link"
+                        onClick={() => joinLeague(data.leagueCode)}>
+                        Join League
+                      </Button>
+                    </Col>
+                  )}
                 </Row>
                 <Row>
                   <Col className="CardBoldText">
@@ -38,13 +47,6 @@ const LeagueCard = (props: LeagueCardProps) => {
                     <Badge variant="primary">{data.totalUserCount || 0}</Badge>
                   </Col>
                   <Col className="CardBoldText">
-                    {!data.userRank && loginUser && userteam && (
-                      <Button
-                        variant="outline-primary"
-                        onClick={() => joinLeague(data.leagueCode)}>
-                        Join League
-                      </Button>
-                    )}
                     {data.userRank && (
                       <span>
                         Your Rank :{' '}

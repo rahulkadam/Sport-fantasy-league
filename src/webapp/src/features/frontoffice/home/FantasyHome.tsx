@@ -15,11 +15,13 @@ import {Form, Button, Row, Col, Carousel, Image} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
-import {GameCorousel, Logo} from 'common/components';
+import {GameCorousel, Logo, StatusMessage} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
 import {isListEmpty} from '../../../common/util';
 import {checkUserAccess} from '../../Authentication/redux';
 import {bannerComingsoon} from '@logos/index';
+import JoinLeagueModal from '../league/component/JoinLeagueModal';
+import {joinLeagueAction} from '../league/redux';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -30,6 +32,8 @@ const FantasyHome = () => {
   const loginUser = isUserLogin();
   const dashboard = homeProps.dashboard;
   const [isfetching, setIsFetching] = useState(false);
+  const [showJoinLeagueModal, setShowPrivateLeagueModal] = useState(false);
+  const joinPrivateLeague = joinLeagueAction();
 
   useEffect(() => {
     isListEmpty(homeProps.leagueMatchesList) && fetchUpComingMatches();
@@ -44,6 +48,7 @@ const FantasyHome = () => {
     if (configProps.shouldRefresh && !isfetching) {
       fetchDashboard();
       setIsFetching(true);
+      setShowPrivateLeagueModal(false);
     }
     if (!configProps.shouldRefresh) {
       setIsFetching(false);
@@ -52,6 +57,18 @@ const FantasyHome = () => {
 
   function goto(link: string) {
     history.push(link);
+  }
+
+  function renderJoinPrivateLeagueModal() {
+    if (!showJoinLeagueModal || configProps.shouldRefresh) return;
+    return (
+      <JoinLeagueModal
+        show={true}
+        handleClose={(value: any) => setShowPrivateLeagueModal(value)}
+        handleShow={(value: any) => setShowPrivateLeagueModal(value)}
+        joinLeague={joinPrivateLeague}
+      />
+    );
   }
 
   function renderAuthUserDashboard() {
@@ -73,8 +90,8 @@ const FantasyHome = () => {
           <Button
             variant="link"
             className="mr-1 homepageDataLink"
-            onClick={() => goto('/statistics')}>
-            View Stats
+            onClick={() => setShowPrivateLeagueModal(true)}>
+            Private League
           </Button>
         </Form>
       </div>
@@ -166,15 +183,22 @@ const FantasyHome = () => {
     );
   }
 
+  function renderStatusMessage(isError: boolean, statusMessage: string) {
+    const statusClassName = isError ? 'error' : 'success';
+    return <StatusMessage text={statusMessage} type={statusClassName} />;
+  }
+
   return (
     <div className="homeContainer">
       <LoadingOverlay
         active={configProps.isLoading}
         spinner
         text="Loading Home Details ...">
+        {renderJoinPrivateLeagueModal()}
         {checkUserAccess()}
         <UserHomePageBoard />
         {renderIPLImage()}
+        {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         <MatchStatsData {...homeProps} />
         {loginUser && homeProps.dashboard.userTeamDTO && renderUserTeamCard()}
         {!homeProps.dashboard.userTeamDTO && renderFantasyInfoCard()}

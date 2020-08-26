@@ -20,4 +20,6 @@ public interface LeagueUserTeamRepository extends CrudRepository<LeagueUserTeam,
     List<LeagueUserTeam>  findAll();
 
     List<LeagueUserTeam> findLeagueUserTeamByUserTeam(UserTeam userTeam);
+
+    LeagueUserTeam findUserRankingByUserTeamAndLeague(UserTeam userTeam, League league);
 }

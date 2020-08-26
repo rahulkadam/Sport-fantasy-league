@@ -52,7 +52,7 @@ const HeaderMenu = () => {
           variant="dark"
           className="headerNavbar">
           <Navbar.Brand as={Link} to="/">
-            <Logo logoSource={fantasyLogo} width="56" />
+            <Logo logoSource={fantasyLogo} width="48" />
           </Navbar.Brand>
           <Nav className={'d-block d-md-none'}>
             {userMenu && renderMenu(userMenuConfigForMobile)}

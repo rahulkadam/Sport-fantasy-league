@@ -1,10 +1,13 @@
 package com.garv.satta.fantasy.dto.converter;
 
+import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
 import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.LeagueUserTeamDTO;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.frontoffice.League;
+import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.User;
+import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +19,9 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
 
     @Autowired
     private LeagueUserTeamConverter userTeamConverter;
+
+    @Autowired
+    private LeagueUserTeamRepository repository;
 
     public League convertToEntity(LeagueDTO dto) {
         return mapper.map(dto, League.class);
@@ -43,11 +49,38 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
         // dto.setCreateByUserId(entity.getCreated_by().getId());
 
         Boolean isPublicLeague  = entity.getPublicLeague() != null && entity.getPublicLeague();
-        if (!isPublicLeague && !entity.getLeagueUserTeams().isEmpty()) {
-            List<LeagueUserTeamDTO> leagueUserTeamDTOS = userTeamConverter.convertToDTOList(entity.getLeagueUserTeams());
+        List<LeagueUserTeam> leagueUserTeams = entity.getLeagueUserTeams();
+        if (!isPublicLeague && !leagueUserTeams.isEmpty()) {
+            List<LeagueUserTeamDTO> leagueUserTeamDTOS = userTeamConverter.convertToDTOList(leagueUserTeams);
             dto.setLeagueUserTeamDTOS(leagueUserTeamDTOS);
         }
+        dto.setUserRank(10);
 
+        return dto;
+    }
+
+    public LeagueDTO convertToFullDTO(League entity, Long userTeamId) {
+        LeagueDTO dto = convertToDTO(entity);
+        Boolean isPublicLeague  = entity.getPublicLeague() != null && entity.getPublicLeague();
+        List<LeagueUserTeam> leagueUserTeams = entity.getLeagueUserTeams();
+        if (leagueUserTeams.isEmpty()) {
+            return dto;
+        }
+        if (!isPublicLeague) {
+            LeagueUserTeam leagueUserTeam = leagueUserTeams.stream().filter(team ->team.getUser_team_id().equals(userTeamId)).findFirst().orElse(null);
+            List<LeagueUserTeamDTO> leagueUserTeamDTOS = userTeamConverter.convertToDTOList(leagueUserTeams);
+            dto.setLeagueUserTeamDTOS(leagueUserTeamDTOS);
+            if (leagueUserTeam != null) {
+                dto.setUserRank(leagueUserTeam.getUserrank());
+            }
+            dto.setPublicLeague(false);
+        } else {
+            LeagueUserTeam leagueUserTeam = repository.findUserRankingByUserTeamAndLeague(new UserTeam(userTeamId), entity);
+            if (leagueUserTeam != null) {
+                dto.setUserRank(leagueUserTeam.getUserrank());
+            }
+            dto.setPublicLeague(true);
+        }
         return dto;
     }
 
@@ -63,6 +96,12 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
     public List<LeagueDTO> convertToFullDTOList(List<League> entityList) {
         return entityList.stream()
                 .map(entity -> convertToFullDTO(entity))
+                .collect(Collectors.toList());
+    }
+
+    public List<LeagueDTO> convertToFullDTOListWithUserTeamId(List<League> entityList, Long userTeamId) {
+        return entityList.stream()
+                .map(entity -> convertToFullDTO(entity, userTeamId))
                 .collect(Collectors.toList());
     }
 

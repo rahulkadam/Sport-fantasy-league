@@ -24,7 +24,7 @@ const LeagueList = (props: LeagueUserListProps) => {
     },
     {
       name: 'RANK',
-      selector: 'totalUserCount',
+      selector: 'userRank',
       sortable: true,
       center: true,
     },
