@@ -1,6 +1,12 @@
 import React from 'react';
 import {Carousel} from 'react-bootstrap';
-import {CreateSquadCard, GameCard, JoinLeagueCard, LeagueCard} from '../index';
+import {
+  CreateSquadCard,
+  CreateSquadCardHelp,
+  GameCard,
+  JoinLeagueCard,
+  LeagueCard,
+} from '../index';
 import PlayerScoreCard from './PlayerScoreCard';
 
 const GameCorousel = (props: GameCorouselProps) => {
@@ -59,6 +65,9 @@ const GameCorousel = (props: GameCorouselProps) => {
         </Carousel.Item>
         <Carousel.Item>
           <JoinLeagueCard />
+        </Carousel.Item>
+        <Carousel.Item>
+          <CreateSquadCardHelp />
         </Carousel.Item>
       </Carousel>
     );

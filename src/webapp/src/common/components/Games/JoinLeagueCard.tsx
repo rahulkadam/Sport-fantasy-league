@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
-import {Card, Row, Col, Button} from 'react-bootstrap';
+import {Card, Row, Col, Image} from 'react-bootstrap';
 import './GameCard.styles.scss';
+import {leagueListBanner} from '@logos/index';
 
 const JoinLeagueCard = () => {
   function renderJoinLeagueCard() {
@@ -10,7 +11,9 @@ const JoinLeagueCard = () => {
           <Card.Title className="userTeamTitle">Create/Join League</Card.Title>
           <Card.Text>
             <Row>
-              <Col>Play against friends and family</Col>
+              <Col>
+                <Image src={leagueListBanner} width="100%" height="120px" />
+              </Col>
             </Row>
           </Card.Text>
         </Card.Body>

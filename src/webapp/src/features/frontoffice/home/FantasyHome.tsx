@@ -135,6 +135,7 @@ const FantasyHome = () => {
   }
 
   function renderUpComingMatchesSchedule() {
+    if (!isListEmpty(dashboard.liveMatches)) return;
     return (
       <Row>
         <Col>

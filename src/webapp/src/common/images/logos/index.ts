@@ -22,6 +22,8 @@ const pluscolor = require('./action/plus-color.png');
 const minuscolor = require('./action/minus-color.jpeg');
 const bannerPlayerBlue = require('./banner/player-bluebg.jpeg');
 const bannerComingsoon = require('./banner/comingsoonIPL.jpeg');
+const leagueListBanner = require('./banner/leaguelistBanner.png');
+const playerListBanner = require('./banner/playerListBanner.png');
 export {
   fantasyLogo,
   googleLogo,
@@ -47,4 +49,6 @@ export {
   minuscolor,
   bannerPlayerBlue,
   bannerComingsoon,
+  leagueListBanner,
+  playerListBanner,
 };
