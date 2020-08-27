@@ -60,7 +60,11 @@ const TournamentPlayerList = ({
 
   function customName(row: any) {
     return (
-      <div className="nameColumn">
+      <div
+        className="nameColumn"
+        onClick={() => {
+          onRowClickedAction(row, '');
+        }}>
         {row.name}
         <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
       </div>

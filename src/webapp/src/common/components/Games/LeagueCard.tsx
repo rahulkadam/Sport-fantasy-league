@@ -59,14 +59,14 @@ const LeagueCard = (props: LeagueCardProps) => {
                   <Col>
                     {!userteam && loginUser && (
                       <Button
-                        variant="outline-primary"
+                        variant="link"
                         onClick={() => history.push('/team')}>
                         Create Team and Join League
                       </Button>
                     )}
                     {!userteam && !loginUser && (
                       <Button
-                        variant="outline-primary"
+                        variant="link"
                         onClick={() => history.push('/login')}>
                         Login and Join League
                       </Button>

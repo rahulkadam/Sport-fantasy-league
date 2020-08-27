@@ -42,10 +42,14 @@ const UserTeamPlayerDetails = ({
     fetchPlayerHistory && fetchPlayerHistoryList(row.id);
   }
 
+  let captainName = '';
   function getDropDownPlayerList() {
     const list =
       data &&
       data.map((item: any) => {
+        if (item.id == captionId) {
+          captainName = item.name;
+        }
         return {
           id: item.id,
           name: item.name,
@@ -58,7 +62,12 @@ const UserTeamPlayerDetails = ({
 
   function customName(row: any) {
     return (
-      <div className="nameColumn">
+      <div
+        className="nameColumn"
+        onClick={() => {
+          onRowClickedAction(row, '');
+        }}>
+        {captionId == row.id && <Badge variant={'success'}>C </Badge>}
         {row.name}
         <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
       </div>
@@ -166,13 +175,24 @@ const UserTeamPlayerDetails = ({
           </Col>
           <Col>
             <Form.Label>Captain Name</Form.Label>
-            <FantasyDropDown
-              onSelect={(value: string) => {
-                updateCaptionAction(value);
-              }}
-              list={playerList}
-              disabled={!editable}
-            />
+            {!editable && <Badge variant="success">{captainName}</Badge>}
+            {editable && (
+              <FantasyDropDown
+                onSelect={(value: string) => {
+                  updateCaptionAction(value);
+                }}
+                list={playerList}
+                disabled={!editable}
+              />
+            )}
+          </Col>
+          <Col>
+            <Badge
+              variant={playerList.length == 11 ? 'success' : 'danger'}
+              className="playerCountTxt">
+              {playerList.length}
+            </Badge>
+            /<span className="playerCountTxt">11</span>
           </Col>
         </Row>
       </div>
