@@ -60,25 +60,30 @@ const AdminProcess = () => {
     }
   }
 
+  function renderActionHeader(text: string) {
+    return (
+      <div className="headerForAction">
+        <Badge variant="info">{text}</Badge>
+      </div>
+    );
+  }
+
+  function renderMatchDropDown() {
+    return (
+      <FantasyDropDown
+        list={matchProps.matchList}
+        onSelect={(value: any) => {
+          setMatchId(value);
+        }}
+      />
+    );
+  }
   function renderInitMatchForTournament() {
     return (
-      <div>
-        <div>
-          <Badge variant="info">Init Match Player Score For Tournament</Badge>
-        </div>
+      <div className="innerProcessContainer">
+        {renderActionHeader('3. Init Match Player Score For Tournament')}
         <Row>
-          <Col md={8}>Select Match</Col>
-          <Col>Action</Col>
-        </Row>
-        <Row>
-          <Col md={8}>
-            <FantasyDropDown
-              list={matchProps.matchList}
-              onSelect={(value: any) => {
-                setMatchId(value);
-              }}
-            />
-          </Col>
+          <Col md={8}>{renderMatchDropDown()}</Col>
           <Col>
             <Button
               variant="outline-primary"
@@ -100,23 +105,10 @@ const AdminProcess = () => {
 
   function renderInitUserForMatch() {
     return (
-      <div>
-        <div>
-          <Badge variant="info">Init User Score For Match</Badge>
-        </div>
+      <div className="innerProcessContainer">
+        {renderActionHeader('4. Init User Score For Match')}
         <Row>
-          <Col md={8}>Select Match</Col>
-          <Col>Action</Col>
-        </Row>
-        <Row>
-          <Col md={8}>
-            <FantasyDropDown
-              list={matchProps.matchList}
-              onSelect={(value: any) => {
-                setMatchId(value);
-              }}
-            />
-          </Col>
+          <Col md={8}>{renderMatchDropDown()}</Col>
           <Col>
             <Button
               variant="outline-primary"
@@ -139,23 +131,9 @@ const AdminProcess = () => {
   function renderMatchStartCompletedAction() {
     return (
       <div className="innerProcessContainer">
-        <div>
-          <Badge variant="info">Start/Complete</Badge>
-        </div>
+        {renderActionHeader('2. Start/Complete')}
         <Row>
-          <Col>Match</Col>
-          <Col>Start/Complete</Col>
-          <Col>Action</Col>
-        </Row>
-        <Row>
-          <Col>
-            <FantasyDropDown
-              list={matchProps.matchList}
-              onSelect={(value: any) => {
-                setMatchId(value);
-              }}
-            />
-          </Col>
+          <Col>{renderMatchDropDown()}</Col>
           <Col>
             <FantasyDropDown
               list={[
@@ -190,23 +168,9 @@ const AdminProcess = () => {
   function renderLockUnLockTournamentAction() {
     return (
       <div className="innerProcessContainer">
-        <div>
-          <Badge variant="info">Lock Unlock Tournament</Badge>
-        </div>
+        {renderActionHeader('1. Lock Unlock Tournament')}
         <Row>
-          <Col>Tournament</Col>
-          <Col>Lock/UnLock</Col>
-          <Col>Action</Col>
-        </Row>
-        <Row>
-          <Col>
-            <FantasyDropDown
-              list={tournamentProps.tournamentList}
-              onSelect={(value: any) => {
-                setTournamentId(value);
-              }}
-            />
-          </Col>
+          <Col>{renderMatchDropDown()}</Col>
           <Col>
             <FantasyDropDown
               list={[
@@ -235,22 +199,9 @@ const AdminProcess = () => {
   function renderProcessScoreCalculationByMatch() {
     return (
       <div className="innerProcessContainer">
-        <div>
-          <Badge variant="info">Process Match Score at After Match</Badge>
-        </div>
+        {renderActionHeader('5. Process Match Score at After Match')}
         <Row>
-          <Col md={8}>Match</Col>
-          <Col>Action</Col>
-        </Row>
-        <Row>
-          <Col md={8}>
-            <FantasyDropDown
-              list={matchProps.matchList}
-              onSelect={(value: any) => {
-                setMatchId(value);
-              }}
-            />
-          </Col>
+          <Col md={8}>{renderMatchDropDown()}</Col>
           <Col>
             {' '}
             <Button
@@ -274,11 +225,7 @@ const AdminProcess = () => {
   function renderCalculateRanking() {
     return (
       <div className="innerProcessContainer">
-        <Row>
-          <Col>
-            <Badge variant="info"> Calculate League Ranking </Badge>
-          </Col>
-        </Row>
+        {renderActionHeader('6. Calculate League Ranking')}
         <Row>
           <Col md={8}>
             <FantasyDropDown
@@ -312,12 +259,17 @@ const AdminProcess = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
+  function renderHeader() {
+    return <div className="headerProcess">Match Admin Process</div>;
+  }
+
   return (
     <div className="processContainer">
       <LoadingOverlay
         active={processProps.isLoading}
         spinner
         text="Loading Process Details ...">
+        {renderHeader()}
         {renderStatusMessage(processProps.hasError, processProps.statusMessage)}
         {renderLockUnLockTournamentAction()}
         {renderMatchStartCompletedAction()}
@@ -325,9 +277,6 @@ const AdminProcess = () => {
         {renderInitUserForMatch()}
         {renderProcessScoreCalculationByMatch()}
         {renderCalculateRanking()}
-        <Row>
-          <Col>Add Notice About Match</Col>
-        </Row>
       </LoadingOverlay>
     </div>
   );
