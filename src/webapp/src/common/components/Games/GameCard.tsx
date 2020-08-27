@@ -7,7 +7,12 @@ import {getLogoNameByTeam, getShortNameByTeam} from '../FantasyDropDown';
 import history from 'common/config/history';
 
 const GameCard = (cardProps: GameCardProps) => {
+  const liveMatch = cardProps.status;
+  const goto = liveMatch ? '/matchlive' : '/fixtures';
   const renderer = ({days, hours, minutes}: {[key: string]: any}) => {
+    if (liveMatch) {
+      return <span className="timeMsg">Live Match</span>;
+    }
     let msg = '';
     if (days > 0) {
       msg = days + ' Days ';
@@ -30,33 +35,31 @@ const GameCard = (cardProps: GameCardProps) => {
     <div>
       <Card className="gamecardcontainer">
         <Card.Body>
-          <Card.Title>{cardProps.venue}</Card.Title>
+          <Card.Title>{cardProps.venue_name}</Card.Title>
           <Card.Text>
             <Row>
               <Col>
                 <Logo
-                  logoSource={getLogoNameByTeam(cardProps.team1)}
+                  logoSource={getLogoNameByTeam(cardProps.team_host_name)}
                   width="60"
                 />
               </Col>
-              <Col>{calculateTime(cardProps.time)}</Col>
+              <Col>{calculateTime(cardProps.matchTime)}</Col>
               <Col>
                 <Logo
-                  logoSource={getLogoNameByTeam(cardProps.team2)}
+                  logoSource={getLogoNameByTeam(cardProps.team_away_name)}
                   width="60"
                 />
               </Col>
             </Row>
             <Row>
-              <Col>{getShortNameByTeam(cardProps.team1)}</Col>
+              <Col>{getShortNameByTeam(cardProps.team_host_name)}</Col>
               <Col>
-                <Button
-                  variant="link"
-                  onClick={() => history.push('/fixtures')}>
+                <Button variant="link" onClick={() => history.push(goto)}>
                   View All
                 </Button>
               </Col>
-              <Col>{getShortNameByTeam(cardProps.team2)}</Col>
+              <Col>{getShortNameByTeam(cardProps.team_away_name)}</Col>
             </Row>
           </Card.Text>
         </Card.Body>

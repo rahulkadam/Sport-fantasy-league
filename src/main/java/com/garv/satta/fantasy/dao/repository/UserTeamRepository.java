@@ -16,6 +16,6 @@ public interface UserTeamRepository extends CrudRepository<UserTeam, Long> {
     UserTeam findUserTeamById(Long id);
     List<UserTeam> findUserTeamByTournamentId(Long id);
 
-    @Query("Update Match m Set m.total_score = m.last_score where m.tournamentId = :tid")
+    @Query("Update UserTeam u Set u.total_score = u.last_score where u.tournament.id = :tid")
     void resetToLastScoreByTournamentId(@Param("tid") Long id);
 }

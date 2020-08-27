@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import FantasyHelpContent from './components/FantasyHelpContent';
-import MatchStatsData from './components/MatchStatsData';
 import {
   getHomeData,
   fetchUpComingMatchesAction,
@@ -15,9 +14,9 @@ import {Form, Button, Row, Col, Carousel, Image} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
-import {GameCorousel, Logo, StatusMessage} from 'common/components';
+import {GameCorousel, StatusMessage} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
-import {isListEmpty} from '../../../common/util';
+import {isListEmpty} from 'common/util';
 import {checkUserAccess} from '../../Authentication/redux';
 import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
@@ -135,6 +134,34 @@ const FantasyHome = () => {
     );
   }
 
+  function renderUpComingMatchesSchedule() {
+    return (
+      <Row>
+        <Col>
+          <GameCorousel
+            type="schedule"
+            matchScheduleCard={homeProps.leagueMatchesList}
+            data={dashboard.userTeamDTO}
+          />
+        </Col>
+      </Row>
+    );
+  }
+
+  function renderLiveMatchesSchedule() {
+    return (
+      <Row>
+        <Col>
+          <GameCorousel
+            type="schedule"
+            matchScheduleCard={dashboard.liveMatches}
+            data={dashboard.userTeamDTO}
+          />
+        </Col>
+      </Row>
+    );
+  }
+
   function renderUserPublicLeagues() {
     const leagueList = loginUser
       ? dashboard.publicLeagues
@@ -199,7 +226,8 @@ const FantasyHome = () => {
         <UserHomePageBoard />
         {renderIPLImage()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
-        <MatchStatsData {...homeProps} />
+        {renderLiveMatchesSchedule()}
+        {renderUpComingMatchesSchedule()}
         {loginUser && homeProps.dashboard.userTeamDTO && renderUserTeamCard()}
         {!homeProps.dashboard.userTeamDTO && renderFantasyInfoCard()}
         {renderUserPublicLeagues()}
