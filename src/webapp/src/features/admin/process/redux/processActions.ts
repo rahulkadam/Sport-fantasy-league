@@ -2,10 +2,12 @@ import {useDispatch} from 'react-redux';
 import {
   addNotice,
   fetchActiveNotice,
+  initUserMatchForTournament,
   lockTournament,
   processPointByMatchId,
   processRanking,
   removeNotice,
+  statrCompleteMatch,
   unLockTournament,
 } from './process-api';
 import {
@@ -25,11 +27,57 @@ export const lockTournamentAction = () => {
     dispatch,
     dispatchAction(dispatch, PROCESS_ACTION_START),
     (id: number, matchId: number) => {
-      lockTournament(id, matchId)
+      lockTournament(id)
         .then((data: any) => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
             message: 'Tournament  Locked successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const statrCompleteMatchAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (matchId: number, action: string) => {
+      statrCompleteMatch(matchId, action)
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message: 'Match  started/completed successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const initUserMatchDataAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (matchId: number, type: string) => {
+      initUserMatchForTournament(matchId, type)
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message: 'Match  started/completed successfully',
           });
         })
         .catch((error: any) => {
@@ -48,11 +96,11 @@ export const unLockTournamentAction = () => {
     dispatch,
     dispatchAction(dispatch, PROCESS_ACTION_START),
     (id: number, matchId: number) => {
-      unLockTournament(id, matchId)
+      unLockTournament(id)
         .then((data: any) => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
-            message: 'Tournament  Locked successfully',
+            message: 'Tournament  UnLocked successfully',
           });
         })
         .catch((error: any) => {

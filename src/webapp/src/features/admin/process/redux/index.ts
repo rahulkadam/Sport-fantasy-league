@@ -5,4 +5,6 @@ export {
   processRankingAction,
   processScoreByMatchAction,
   unLockTournamentAction,
+  initUserMatchDataAction,
+  statrCompleteMatchAction,
 } from './processActions';

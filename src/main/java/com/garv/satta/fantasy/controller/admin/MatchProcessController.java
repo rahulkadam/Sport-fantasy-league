@@ -53,7 +53,6 @@ public class MatchProcessController {
         return "Match Completed successfully";
     }
 
-
     @PostMapping(value = "/lockTournament")
     @ResponseBody
     public String lockTournament(@RequestBody RequestDTO dto) {
