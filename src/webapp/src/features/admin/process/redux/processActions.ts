@@ -77,7 +77,7 @@ export const initUserMatchDataAction = () => {
         .then((data: any) => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
-            message: 'Match  started/completed successfully',
+            message: 'User/Match Details initiated successfully',
           });
         })
         .catch((error: any) => {
