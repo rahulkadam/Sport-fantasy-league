@@ -1,4 +1,4 @@
-import {blackar, blackball, blackbat, blackwk} from '@logos/index';
+import {colorarr, colorball, colorbat, colorwk} from '@logos/index';
 
 export function teamValueByPlayerList(playerList: any) {
   let teamValue = 0;
@@ -141,13 +141,13 @@ export function validateTeam(props: UserTeam): string[] {
 export function renderLogoByPLayerType(type: string) {
   switch (type) {
     case 'ALLROUNDER':
-      return blackar;
+      return colorarr;
     case 'BOWLER':
-      return blackball;
+      return colorball;
     case 'BATSMAN':
-      return blackbat;
+      return colorbat;
     case 'WICKETKEEPER':
-      return blackwk;
+      return colorwk;
   }
-  return blackbat;
+  return colorball;
 }

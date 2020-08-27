@@ -5,6 +5,7 @@ import Login, {
 } from 'features/Authentication/components';
 import Fixtures from 'features/frontoffice/fixtures/Fixtures';
 import FantasyStats from 'features/frontoffice/stats/FantasyStats';
+import MatchLive from '../../features/frontoffice/matchlive/MatchLive';
 
 const Tournament = lazy(() => {
   return import('features/admin/Tournament/Tournament');
@@ -38,6 +39,10 @@ const UserTeam = lazy(() => {
 
 const FantasyHome = lazy(() => {
   return import('features/frontoffice/home/FantasyHome');
+});
+
+const LiveMatch = lazy(() => {
+  return import('features/frontoffice/matchlive/MatchLive');
 });
 
 const TermsAndConditions = lazy(() => {
@@ -87,6 +92,11 @@ export const RouteConfig = {
       path: '/statistics',
       component: FantasyStats,
       key: 'statistics',
+    },
+    {
+      path: '/matchlive',
+      component: MatchLive,
+      key: 'matchlive',
     },
     {
       path: '/back/match',

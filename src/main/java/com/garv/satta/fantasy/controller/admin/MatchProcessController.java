@@ -67,4 +67,11 @@ public class MatchProcessController {
         return "Tournament UnLocked successfully";
     }
 
+    @PostMapping(value = "/reset/lastscore")
+    @ResponseBody
+    public String resetToLastScore(@RequestBody RequestDTO dto) {
+        calculatePointsService.resetToLastScore(dto);
+        return "Score reset successfully ";
+    }
+
 }

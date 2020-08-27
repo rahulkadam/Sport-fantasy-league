@@ -49,7 +49,7 @@ const LeagueCard = (props: LeagueCardProps) => {
                   <Col className="CardBoldText">
                     {data.userRank && (
                       <span>
-                        Your Rank :{' '}
+                        Your Rank :
                         <Badge variant="success">{data.userRank}</Badge>
                       </span>
                     )}
@@ -59,14 +59,14 @@ const LeagueCard = (props: LeagueCardProps) => {
                   <Col>
                     {!userteam && loginUser && (
                       <Button
-                        variant="outline-primary"
+                        variant="link"
                         onClick={() => history.push('/team')}>
                         Create Team and Join League
                       </Button>
                     )}
                     {!userteam && !loginUser && (
                       <Button
-                        variant="outline-primary"
+                        variant="link"
                         onClick={() => history.push('/login')}>
                         Login and Join League
                       </Button>

@@ -1,6 +1,14 @@
 import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
+import {
+  Form,
+  Button,
+  Badge,
+  Row,
+  Col,
+  OverlayTrigger,
+  Tooltip,
+} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import '../UserTeam.styles.scss';
@@ -42,10 +50,14 @@ const UserTeamPlayerDetails = ({
     fetchPlayerHistory && fetchPlayerHistoryList(row.id);
   }
 
+  let captainName = '';
   function getDropDownPlayerList() {
     const list =
       data &&
       data.map((item: any) => {
+        if (item.id == captionId) {
+          captainName = item.name;
+        }
         return {
           id: item.id,
           name: item.name,
@@ -58,7 +70,12 @@ const UserTeamPlayerDetails = ({
 
   function customName(row: any) {
     return (
-      <div className="nameColumn">
+      <div
+        className="nameColumn"
+        onClick={() => {
+          onRowClickedAction(row, '');
+        }}>
+        {captionId == row.id && <Badge variant={'success'}>C </Badge>}
         {row.name}
         <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
       </div>
@@ -77,11 +94,17 @@ const UserTeamPlayerDetails = ({
   }
 
   function removeAction(row: any) {
+    const placement = 'remove Player from team';
     return (
       <div>
-        <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
-          <Logo logoSource={minuscolor} width="20" />
-        </span>
+        <OverlayTrigger
+          key={placement}
+          placement="left"
+          overlay={<Tooltip id={`tooltip-${placement}`}>{placement}</Tooltip>}>
+          <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
+            <Logo logoSource={minuscolor} width="20" />
+          </span>
+        </OverlayTrigger>
       </div>
     );
   }
@@ -155,7 +178,7 @@ const UserTeamPlayerDetails = ({
       <div>
         <Row>
           <Col>
-            <Form.Label>Search Player</Form.Label>
+            <Form.Label>Search</Form.Label>
             <Form.Control
               type="text"
               size="sm"
@@ -165,15 +188,28 @@ const UserTeamPlayerDetails = ({
             />
           </Col>
           <Col>
-            <Form.Label>Captain Name</Form.Label>
-            <FantasyDropDown
-              onSelect={(value: string) => {
-                updateCaptionAction(value);
-              }}
-              list={playerList}
-              disabled={!editable}
-            />
+            <Form.Label>Captain</Form.Label>
+            {!editable && <Badge variant="success">{captainName}</Badge>}
+            {editable && (
+              <FantasyDropDown
+                onSelect={(value: string) => {
+                  updateCaptionAction(value);
+                }}
+                list={playerList}
+                disabled={!editable}
+              />
+            )}
           </Col>
+          {editable && (
+            <Col>
+              <Badge
+                variant={playerList.length == 11 ? 'success' : 'danger'}
+                className="playerCountTxt">
+                {playerList.length}
+              </Badge>
+              <span className="playerCountTxt">11</span>
+            </Col>
+          )}
         </Row>
       </div>
     );

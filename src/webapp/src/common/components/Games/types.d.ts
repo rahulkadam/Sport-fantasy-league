@@ -1,12 +1,13 @@
 declare type GameCardProps = {
-  team1: string;
-  team2: string;
-  team1logo: string;
-  team2logo: string;
-  time?: any;
-  venue?: string;
-  tournament?: string;
+  team_host_name: string;
+  team_away_name: string;
+  team1logo?: string;
+  team2logo?: string;
+  matchTime?: any;
+  venue_name?: string;
+  tournament_name?: string;
   id: any;
+  status?: any;
 };
 
 declare type PlayerScoreCardProps = {

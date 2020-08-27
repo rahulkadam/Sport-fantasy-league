@@ -4,15 +4,12 @@ import {GameCorousel} from 'common/components';
 import {arrayRotate, getGameCardPropsData} from '../redux';
 const MatchStatsData = (props: HomeData) => {
   const leagueMatchList = props.leagueMatchesList || [];
-  const matchScheduleList: GameCardProps[] = getGameCardPropsData(
-    leagueMatchList
-  );
 
   return (
     <div>
       <Row>
         <Col>
-          <GameCorousel type="schedule" matchScheduleCard={matchScheduleList} />
+          <GameCorousel type="schedule" matchScheduleCard={leagueMatchList} />
         </Col>
       </Row>
     </div>

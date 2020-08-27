@@ -13,6 +13,7 @@ import {homeReducer} from 'features/frontoffice/home/redux';
 import statsReducer from 'features/frontoffice/stats/redux/statsReducer';
 import {processReducer} from 'features/admin/process/redux';
 import {commonReducer} from 'features/common/redux';
+import {livematchReducer} from 'features/frontoffice/matchlive/redux';
 
 const persistenceConfigs = {
   key: 'fantasysport',
@@ -39,6 +40,7 @@ const rootReducer = (history: any) =>
     homedata: homeReducer,
     fantasystats: statsReducer,
     commonconfig: commonReducer,
+    livematchstats: livematchReducer,
   });
 
 export {rootReducer, persistenceConfigs};

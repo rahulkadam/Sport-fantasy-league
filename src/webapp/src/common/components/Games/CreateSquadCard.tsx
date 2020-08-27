@@ -23,16 +23,12 @@ const CreateSquadCard = () => {
             <Row>
               <Col>
                 {loginUser && (
-                  <Button
-                    variant="outline-primary"
-                    onClick={() => history.push('/team')}>
+                  <Button variant="link" onClick={() => history.push('/team')}>
                     Create Team
                   </Button>
                 )}
                 {!loginUser && (
-                  <Button
-                    variant="outline-primary"
-                    onClick={() => history.push('/login')}>
+                  <Button variant="link" onClick={() => history.push('/login')}>
                     Login and Create Team
                   </Button>
                 )}

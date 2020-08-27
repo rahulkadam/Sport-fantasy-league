@@ -59,6 +59,11 @@ public class MatchService {
         return converter.convertToFullDTOList(matches);
     }
 
+    public List<MatchDTO> getLiveMatches() {
+        List<Match> matches = repository.findMatchesByStatus(Boolean.TRUE);
+        return converter.convertToFullDTOList(matches);
+    }
+
     public List<MatchDTO> getCompletedMatchList() {
         DateTime currentTime = new DateTime();
         List<Match> matches = repository.findCompletedMatches(currentTime);

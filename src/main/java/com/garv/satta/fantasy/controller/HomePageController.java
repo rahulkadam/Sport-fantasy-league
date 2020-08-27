@@ -57,4 +57,9 @@ public class HomePageController {
         return dashboardService.getUserDashboard();
     }
 
+    @GetMapping(value = "/matches/live")
+    public List<MatchDTO> getLiveMatches() {
+        return matchService.getLiveMatches();
+    }
+
 }
