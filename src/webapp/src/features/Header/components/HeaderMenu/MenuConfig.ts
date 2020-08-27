@@ -59,6 +59,10 @@ export const commonPublicMenuConfig = [
     name: 'Statistics',
   },
   {
+    link: '/matchlive',
+    name: 'Live',
+  },
+  {
     link: '/helppage',
     name: 'Help',
   },

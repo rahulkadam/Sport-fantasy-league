@@ -22,4 +22,6 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
     @Query("Select m from Match m where m.matchTime < :current order by m.matchTime desc")
     List<Match> findCompletedMatches(@Param("current") DateTime currentTime);
 
+    List<Match> findMatchesByStatus(Boolean status);
+
 }

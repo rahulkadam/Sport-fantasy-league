@@ -157,6 +157,10 @@ public class CalculatePointsService {
         });
     }
 
+    public void resetToLastScore(RequestDTO dto) {
+        userTeamRepository.resetToLastScoreByTournamentId(dto.getId());
+    }
+
     private void updateRankingForLeague(League league) {
         List<LeagueUserTeam> leagueUserTeams = league.getLeagueUserTeams();
         Collections.sort(leagueUserTeams, compareByTotalScore.reversed());
