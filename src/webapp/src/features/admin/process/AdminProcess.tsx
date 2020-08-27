@@ -170,7 +170,14 @@ const AdminProcess = () => {
       <div className="innerProcessContainer">
         {renderActionHeader('1. Lock Unlock Tournament')}
         <Row>
-          <Col>{renderMatchDropDown()}</Col>
+          <Col>
+            <FantasyDropDown
+              list={tournamentProps.tournamentList}
+              onSelect={(value: any) => {
+                setTournamentId(value);
+              }}
+            />
+          </Col>
           <Col>
             <FantasyDropDown
               list={[

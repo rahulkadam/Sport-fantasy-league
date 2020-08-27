@@ -85,6 +85,7 @@ public class MatchService {
         if (match == null) {
             throw new GenericException("Match id is Not Valid" + matchId);
         }
+        match.setIsActive(status);
         match.setStatus(status);
         repository.save(match);
     }
