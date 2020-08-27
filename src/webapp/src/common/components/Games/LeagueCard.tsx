@@ -49,7 +49,7 @@ const LeagueCard = (props: LeagueCardProps) => {
                   <Col className="CardBoldText">
                     {data.userRank && (
                       <span>
-                        Your Rank :{' '}
+                        Your Rank :
                         <Badge variant="success">{data.userRank}</Badge>
                       </span>
                     )}
