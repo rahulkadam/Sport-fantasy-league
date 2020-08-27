@@ -1,6 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Row, Col, Badge} from 'react-bootstrap';
+import {Form, Row, Col, Badge, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {isListEmpty, returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
@@ -12,7 +12,7 @@ import {
   teamListWithALl,
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
-import {pluscolor} from '@logos/index';
+import {minuscolor, pluscolor} from '@logos/index';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 
 const TournamentPlayerList = ({
@@ -83,11 +83,17 @@ const TournamentPlayerList = ({
   }
 
   function addAction(row: any) {
+    const placement = 'add player to team';
     return (
       <div>
-        <span onClick={() => onRowSelected([row])} className="removeIcon">
-          <Logo logoSource={pluscolor} width="20" />
-        </span>
+        <OverlayTrigger
+          key={placement}
+          placement="left"
+          overlay={<Tooltip id={`tooltip-${placement}`}>{placement}</Tooltip>}>
+          <span onClick={() => onRowSelected([row])} className="removeIcon">
+            <Logo logoSource={pluscolor} width="20" />
+          </span>
+        </OverlayTrigger>
       </div>
     );
   }

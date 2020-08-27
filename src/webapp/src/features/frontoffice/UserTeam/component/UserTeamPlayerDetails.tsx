@@ -1,6 +1,14 @@
 import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
+import {
+  Form,
+  Button,
+  Badge,
+  Row,
+  Col,
+  OverlayTrigger,
+  Tooltip,
+} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import '../UserTeam.styles.scss';
@@ -86,11 +94,17 @@ const UserTeamPlayerDetails = ({
   }
 
   function removeAction(row: any) {
+    const placement = 'remove Player from team';
     return (
       <div>
-        <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
-          <Logo logoSource={minuscolor} width="20" />
-        </span>
+        <OverlayTrigger
+          key={placement}
+          placement="left"
+          overlay={<Tooltip id={`tooltip-${placement}`}>{placement}</Tooltip>}>
+          <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
+            <Logo logoSource={minuscolor} width="20" />
+          </span>
+        </OverlayTrigger>
       </div>
     );
   }
@@ -186,14 +200,16 @@ const UserTeamPlayerDetails = ({
               />
             )}
           </Col>
-          <Col>
-            <Badge
-              variant={playerList.length == 11 ? 'success' : 'danger'}
-              className="playerCountTxt">
-              {playerList.length}
-            </Badge>
-            <span className="playerCountTxt">11</span>
-          </Col>
+          {editable && (
+            <Col>
+              <Badge
+                variant={playerList.length == 11 ? 'success' : 'danger'}
+                className="playerCountTxt">
+                {playerList.length}
+              </Badge>
+              <span className="playerCountTxt">11</span>
+            </Col>
+          )}
         </Row>
       </div>
     );
