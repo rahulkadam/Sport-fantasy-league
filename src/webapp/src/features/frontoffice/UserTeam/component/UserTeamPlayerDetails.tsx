@@ -164,7 +164,7 @@ const UserTeamPlayerDetails = ({
       <div>
         <Row>
           <Col>
-            <Form.Label>Search Player</Form.Label>
+            <Form.Label>Search</Form.Label>
             <Form.Control
               type="text"
               size="sm"
@@ -174,7 +174,7 @@ const UserTeamPlayerDetails = ({
             />
           </Col>
           <Col>
-            <Form.Label>Captain Name</Form.Label>
+            <Form.Label>Captain</Form.Label>
             {!editable && <Badge variant="success">{captainName}</Badge>}
             {editable && (
               <FantasyDropDown
@@ -192,7 +192,7 @@ const UserTeamPlayerDetails = ({
               className="playerCountTxt">
               {playerList.length}
             </Badge>
-            /<span className="playerCountTxt">11</span>
+            <span className="playerCountTxt">11</span>
           </Col>
         </Row>
       </div>

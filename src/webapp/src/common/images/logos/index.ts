@@ -5,7 +5,10 @@ const blackbat = require('./bat-black.svg');
 const blackwk = require('./wk-black.svg');
 const blackplayer = require('./player-black.svg');
 const blackar = require('./allrounder-black.svg');
-const colorball = require('./color-ball.png');
+const colorball = require('./playertype/color-ball.png');
+const colorarr = require('./playertype/color-arr.png');
+const colorbat = require('./playertype/color-bat.png');
+const colorwk = require('./playertype/color-wk.png');
 const colorground = require('./color-ground.png');
 const colorteam = require('./transfer-team.png');
 const rankingblack = require('./ranking-black.png');
@@ -51,4 +54,7 @@ export {
   bannerComingsoon,
   leagueListBanner,
   playerListBanner,
+  colorarr,
+  colorbat,
+  colorwk,
 };
