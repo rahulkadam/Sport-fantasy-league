@@ -6,6 +6,8 @@ import {
   processScoreByMatchAction,
   processRankingAction,
   getAdminProcessData,
+  initUserMatchDataAction,
+  statrCompleteMatchAction,
 } from './redux';
 import {fetchMatchListAction, getMatchData} from '../Match/redux';
 import {
@@ -29,7 +31,10 @@ const AdminProcess = () => {
   const fetchTournaments = fetchTournamentListAction();
   const [tournamentId, setTournamentId] = useState();
   const [matchId, setMatchId] = useState();
+  const initUserMatchData = initUserMatchDataAction();
+  const statrCompleteMatch = statrCompleteMatchAction();
   const [lockStatus, setLockStatus] = useState('Lock');
+  const [matchStatus, setMatchStatus] = useState('start');
 
   useEffect(() => {
     if (isListEmpty(matchProps.matchList)) {
@@ -41,23 +46,153 @@ const AdminProcess = () => {
   }, []);
 
   function LockUnlockTournament() {
+    let toumntId = tournamentId;
     if (!tournamentId) {
-      setTournamentId(tournamentProps.tournamentList[0].id);
+      toumntId = tournamentProps.tournamentList[0].id;
     }
     if (!matchId) {
       setMatchId(matchProps.matchList[0].id);
     }
     if (lockStatus == 'Lock') {
-      lockTournament(tournamentId, matchId);
+      lockTournament(toumntId, matchId);
     } else {
-      unLockTournament(tournamentId, matchId);
+      unLockTournament(toumntId, matchId);
     }
+  }
+
+  function renderInitMatchForTournament() {
+    return (
+      <div>
+        <div>
+          <Badge variant="info">Init Match Player Score For Tournament</Badge>
+        </div>
+        <Row>
+          <Col md={8}>Select Match</Col>
+          <Col>Action</Col>
+        </Row>
+        <Row>
+          <Col md={8}>
+            <FantasyDropDown
+              list={matchProps.matchList}
+              onSelect={(value: any) => {
+                setMatchId(value);
+              }}
+            />
+          </Col>
+          <Col>
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              onClick={() => {
+                if (!matchId) {
+                  initUserMatchData(matchProps.matchList[0].id, 'match');
+                } else {
+                  initUserMatchData(matchId, 'match');
+                }
+              }}>
+              Init Match
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
+  function renderInitUserForMatch() {
+    return (
+      <div>
+        <div>
+          <Badge variant="info">Init User Score For Match</Badge>
+        </div>
+        <Row>
+          <Col md={8}>Select Match</Col>
+          <Col>Action</Col>
+        </Row>
+        <Row>
+          <Col md={8}>
+            <FantasyDropDown
+              list={matchProps.matchList}
+              onSelect={(value: any) => {
+                setMatchId(value);
+              }}
+            />
+          </Col>
+          <Col>
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              onClick={() => {
+                if (!matchId) {
+                  initUserMatchData(matchProps.matchList[0].id, 'user');
+                } else {
+                  initUserMatchData(matchId, 'user');
+                }
+              }}>
+              Init User
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
+  function renderMatchStartCompletedAction() {
+    return (
+      <div className="innerProcessContainer">
+        <div>
+          <Badge variant="info">Start/Complete</Badge>
+        </div>
+        <Row>
+          <Col>Match</Col>
+          <Col>Start/Complete</Col>
+          <Col>Action</Col>
+        </Row>
+        <Row>
+          <Col>
+            <FantasyDropDown
+              list={matchProps.matchList}
+              onSelect={(value: any) => {
+                setMatchId(value);
+              }}
+            />
+          </Col>
+          <Col>
+            <FantasyDropDown
+              list={[
+                {name: 'Start', id: 'start'},
+                {name: 'Complete', id: 'complete'},
+              ]}
+              onSelect={(value: any) => {
+                setMatchStatus(value);
+              }}
+            />
+          </Col>
+          <Col>
+            {' '}
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              onClick={() => {
+                if (!matchId) {
+                  statrCompleteMatch(matchProps.matchList[0].id, matchStatus);
+                } else {
+                  statrCompleteMatch(matchId, matchStatus);
+                }
+              }}>
+              Start/Complete Match
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
   }
 
   function renderLockUnLockTournamentAction() {
     return (
       <div className="innerProcessContainer">
-        <div>Lock/UnLock Tournament</div>
+        <div>
+          <Badge variant="info">Lock Unlock Tournament</Badge>
+        </div>
         <Row>
           <Col>Tournament</Col>
           <Col>Lock/UnLock</Col>
@@ -69,14 +204,6 @@ const AdminProcess = () => {
               list={tournamentProps.tournamentList}
               onSelect={(value: any) => {
                 setTournamentId(value);
-              }}
-            />
-          </Col>
-          <Col>
-            <FantasyDropDown
-              list={matchProps.matchList}
-              onSelect={(value: any) => {
-                setMatchId(value);
               }}
             />
           </Col>
@@ -108,12 +235,15 @@ const AdminProcess = () => {
   function renderProcessScoreCalculationByMatch() {
     return (
       <div className="innerProcessContainer">
+        <div>
+          <Badge variant="info">Process Match Score at After Match</Badge>
+        </div>
         <Row>
-          <Col>Match</Col>
+          <Col md={8}>Match</Col>
           <Col>Action</Col>
         </Row>
         <Row>
-          <Col>
+          <Col md={8}>
             <FantasyDropDown
               list={matchProps.matchList}
               onSelect={(value: any) => {
@@ -133,7 +263,7 @@ const AdminProcess = () => {
                   processScoreByMatch(matchId);
                 }
               }}>
-              Submit
+              Calculate Score
             </Button>
           </Col>
         </Row>
@@ -148,7 +278,9 @@ const AdminProcess = () => {
           <Col>
             <Badge variant="info"> Calculate League Ranking </Badge>
           </Col>
-          <Col>
+        </Row>
+        <Row>
+          <Col md={8}>
             <FantasyDropDown
               list={tournamentProps.tournamentList}
               onSelect={(value: any) => {
@@ -167,7 +299,7 @@ const AdminProcess = () => {
                   processRanking(tournamentId);
                 }
               }}>
-              Submit
+              Calculate Ranking
             </Button>
           </Col>
         </Row>
@@ -188,6 +320,9 @@ const AdminProcess = () => {
         text="Loading Process Details ...">
         {renderStatusMessage(processProps.hasError, processProps.statusMessage)}
         {renderLockUnLockTournamentAction()}
+        {renderMatchStartCompletedAction()}
+        {renderInitMatchForTournament()}
+        {renderInitUserForMatch()}
         {renderProcessScoreCalculationByMatch()}
         {renderCalculateRanking()}
         <Row>

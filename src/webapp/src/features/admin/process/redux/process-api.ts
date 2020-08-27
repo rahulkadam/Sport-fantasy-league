@@ -1,14 +1,26 @@
 import {Get, Post} from 'API';
 
-export function lockTournament(id: number, matchId: number) {
+export function lockTournament(id: number) {
   return Post('/fantasy/tournament/lockTournament', {
-    data: {id: id, matchId: matchId},
+    data: {id: id},
   });
 }
 
-export function unLockTournament(id: number, matchId: number) {
+export function unLockTournament(id: number) {
   return Post('/fantasy/tournament/unlockTournament', {
-    data: {id: id, matchId: matchId},
+    data: {id: id},
+  });
+}
+
+export function statrCompleteMatch(matchId: number, action: string) {
+  return Post('/admin/matchprocess/' + action + '/match', {
+    data: {matchId: matchId},
+  });
+}
+
+export function initUserMatchForTournament(matchId: number, type: string) {
+  return Post('/admin/matchprocess/init/' + type, {
+    data: {matchId: matchId},
   });
 }
 
