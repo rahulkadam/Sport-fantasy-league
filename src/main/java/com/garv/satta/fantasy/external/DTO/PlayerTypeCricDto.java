@@ -9,5 +9,5 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlayerTypeCricDto {
     private String title;
-    private List<PlayerStatsCricDTO> scores;
+    private List<MatchPlayerScoreCricDTO> scores;
 }

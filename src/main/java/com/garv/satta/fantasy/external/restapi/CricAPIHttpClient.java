@@ -24,20 +24,20 @@ public class CricAPIHttpClient {
         this.webClient = webClientBuilder.baseUrl("https://cricapi.com/api/").build();
     }
 
-    public MatchSquadCricDTO getMatchSquadDetails(Long matchId) {
+    public MatchSquadCricDTO getMatchSquadDetails(Integer matchId) {
         String path = getPath("/fantasySquad" , matchId);
         MatchSquadCricDTO response = webClient.get().uri(path).retrieve().bodyToMono(MatchSquadCricDTO.class).block();
         return response;
     }
 
-    public MatchSummaryCricDTO getMatchSummaryDetails(Long matchId) {
+    public MatchSummaryCricDTO getMatchSummaryDetails(Integer matchId) {
         String path = getPath("/fantasySummary" , matchId);
         MatchSummaryCricDTO response = webClient.get().uri(path).retrieve().bodyToMono(MatchSummaryCricDTO.class).block();
         return response;
     }
 
 
-    private String getPath(String urlPath, Long uniqueId) {
+    private String getPath(String urlPath, Integer uniqueId) {
         String path = urlPath;
         path = path + "?apikey=" + key;
         path = path + "&unique_id=" + uniqueId;

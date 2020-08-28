@@ -128,9 +128,8 @@ public class MatchPlayerScoreService {
             Long playerId = player.getId();
             MatchPlayerScore matchPlayerScore = repository.findPlayerScoreByMatchIdAndPlayerId(matchId, playerId);
             if (matchPlayerScore == null) {
-                matchPlayerScore = new MatchPlayerScore();
-                matchPlayerScore.setPlayer(player);
-                matchPlayerScore.setMatch(new Match(matchId));
+                Match match = new Match(matchId);
+                matchPlayerScore = new MatchPlayerScore(player, match);
             }
             matchPlayerScore.setRun_scored(runs);
             matchPlayerScore.setWicket(wicket);

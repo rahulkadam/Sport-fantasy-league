@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PlayerStatsCricDTO {
+public class MatchPlayerScoreCricDTO {
 
     private Integer pid;
     private String batsman;
@@ -22,6 +22,8 @@ public class PlayerStatsCricDTO {
     private Integer balls;
     @JsonAlias({"SR"})
     private Integer strikeRate;
+    @JsonAlias({"0s"})
+    private Integer dot_balls;
     @JsonAlias({"4s"})
     private Integer fours;
     @JsonAlias({"6s"})
@@ -29,19 +31,19 @@ public class PlayerStatsCricDTO {
     @JsonAlias({"O"})
     private Float overs;
     @JsonAlias({"M"})
-    private Integer mainden;
+    private Integer maiden;
     @JsonAlias({"W"})
-    private Integer wickets;
+    private Integer wicket;
     private Integer runs_concede;
-    @JsonAlias({"Ecom"})
+    @JsonAlias({"Econ"})
     private Float economy;
     @JsonAlias({"catch"})
     private Integer catches;
     private Integer stumped;
-    private Integer rouout;
-    private Integer points;
+    private Integer runout;
+    private Integer pointscore;
 
-    public PlayerStatsCricDTO(Integer pid, String name) {
+    public MatchPlayerScoreCricDTO(Integer pid, String name) {
         this.pid = pid;
         this.name = name;
     }

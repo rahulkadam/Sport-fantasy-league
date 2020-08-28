@@ -10,7 +10,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MatchDataCricDTO {
     @JsonAlias({"man-of-the-match"})
-    private String man_of_the_match;
+    private PlayerCricDTO man_of_the_match;
     private List<SquadCricDTO> team;
     private List<PlayerTypeCricDto> batting;
     private List<PlayerTypeCricDto> bowling;
