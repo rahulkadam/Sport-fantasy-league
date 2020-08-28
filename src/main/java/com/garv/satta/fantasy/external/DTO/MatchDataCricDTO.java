@@ -9,8 +9,10 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MatchDataCricDTO {
-    @JsonAlias({"man-of-the-match"})
+
+ /*   @JsonAlias({"man-of-the-match"})
     private PlayerCricDTO man_of_the_match;
+    */
     private List<SquadCricDTO> team;
     private List<PlayerTypeCricDto> batting;
     private List<PlayerTypeCricDto> bowling;

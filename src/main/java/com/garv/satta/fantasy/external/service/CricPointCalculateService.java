@@ -88,7 +88,13 @@ public class CricPointCalculateService {
     }
 
     public Integer calculateBowlingPoints(MatchPlayerScoreCricDTO player) {
-        if (!isExist(player.getOvers())) {
+
+        if (!(player.getOvers() instanceof Float)) {
+            return 0;
+        }
+
+        Float overs = (Float) player.getOvers();
+        if (!isExist(overs)) {
             return 0;
         }
 
@@ -126,7 +132,6 @@ public class CricPointCalculateService {
 
         // Economy , Bonus point calculation
         Float economy = player.getEconomy();
-        Float overs = player.getOvers();
         if (isExist(economy) && isExist(overs) && overs >= 2) {
             if (economy < 4) {
                 points = points + 20;

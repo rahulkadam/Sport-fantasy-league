@@ -29,7 +29,7 @@ public class MatchPlayerScoreCricDTO {
     @JsonAlias({"6s"})
     private Integer sixes;
     @JsonAlias({"O"})
-    private Float overs;
+    private Object overs;
     @JsonAlias({"M"})
     private Integer maiden;
     @JsonAlias({"W"})

@@ -45,12 +45,12 @@ public class CricMatchPlayerScoreService {
         }
 
         playerScoreDTOList.stream().forEach(playerScore -> {
-            Player player = playerRepository.findPlayerByNameOrExternalId(playerScore.getName(), playerScore.getPid());
+            Player player = playerRepository.findPlayerByNameOrExternalpid(playerScore.getName(), playerScore.getPid());
             if (player == null) {
                 return;
             }
-            if (player.getExternal_pid() == null) {
-                player.setExternal_pid(playerScore.getPid());
+            if (player.getExternalpid() == null) {
+                player.setExternalpid(playerScore.getPid());
                 playerRepository.save(player);
             }
             Long playerId = player.getId();
@@ -86,7 +86,11 @@ public class CricMatchPlayerScoreService {
         scoreEntity.setStrikeRate(dto.getStrikeRate());
         scoreEntity.setRuns_concede(dto.getRuns_concede());
         scoreEntity.setMaiden(dto.getMaiden());
-        scoreEntity.setOvers(dto.getOvers());
+
+        Object overs = dto.getOvers();
+        if (overs instanceof Float) {
+            scoreEntity.setOvers((Float)dto.getOvers());
+        }
         return scoreEntity;
     }
 

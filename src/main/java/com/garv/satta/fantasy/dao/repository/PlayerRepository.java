@@ -16,5 +16,5 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
     @EntityGraph(value = "Player.teams")
     List<Player> findAllByIdIn(List<Long> playerIds);
 
-    Player findPlayerByNameOrExternalId(String name, Integer external_pid);
+    Player findPlayerByNameOrExternalpid(String name, Integer external_pid);
 }

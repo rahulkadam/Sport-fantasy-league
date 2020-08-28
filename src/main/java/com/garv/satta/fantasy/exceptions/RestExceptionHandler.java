@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * Exception Handler for all V2 API which will provide data to new React UI
  */
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@ControllerAdvice(value = "com.garv.satta.fantasy.controller")
+@ControllerAdvice(value = {"com.garv.satta.fantasy.controller", "com.garv.satta.fantasy.external"})
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
@@ -23,7 +23,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleEntityNotFound(Exception ex) {
-        ex.printStackTrace();
+        logger.error("Exception : ", ex);
         String error = ex.getMessage();
         String error_description = ex.getLocalizedMessage();
         ErrorInfo errorInfo = new ErrorInfo(error, error_description);
