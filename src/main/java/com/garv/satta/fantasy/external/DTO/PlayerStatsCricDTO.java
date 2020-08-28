@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlayerStatsCricDTO {
 
@@ -15,7 +17,7 @@ public class PlayerStatsCricDTO {
     private String bowler;
     private String fielder;
     @JsonAlias({"R"})
-    private Integer runs;
+    private Integer runs_scored;
     @JsonAlias({"B"})
     private Integer balls;
     @JsonAlias({"SR"})
@@ -30,10 +32,17 @@ public class PlayerStatsCricDTO {
     private Integer mainden;
     @JsonAlias({"W"})
     private Integer wickets;
+    private Integer runs_concede;
     @JsonAlias({"Ecom"})
     private Float economy;
     @JsonAlias({"catch"})
     private Integer catches;
     private Integer stumped;
     private Integer rouout;
+    private Integer points;
+
+    public PlayerStatsCricDTO(Integer pid, String name) {
+        this.pid = pid;
+        this.name = name;
+    }
 }

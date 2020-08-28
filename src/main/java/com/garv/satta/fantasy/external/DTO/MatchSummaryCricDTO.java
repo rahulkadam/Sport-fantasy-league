@@ -8,7 +8,7 @@ import lombok.Data;
 public class MatchSummaryCricDTO {
 
     private String type;
-    private Integer creditLeft;
+    private Integer creditsLeft;
     private MatchDataCricDTO data;
 
 

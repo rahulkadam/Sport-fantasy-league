@@ -27,14 +27,12 @@ public class CricAPIHttpClient {
     public MatchSquadCricDTO getMatchSquadDetails(Long matchId) {
         String path = getPath("/fantasySquad" , matchId);
         MatchSquadCricDTO response = webClient.get().uri(path).retrieve().bodyToMono(MatchSquadCricDTO.class).block();
-        System.out.println(response);
         return response;
     }
 
     public MatchSummaryCricDTO getMatchSummaryDetails(Long matchId) {
         String path = getPath("/fantasySummary" , matchId);
         MatchSummaryCricDTO response = webClient.get().uri(path).retrieve().bodyToMono(MatchSummaryCricDTO.class).block();
-        System.out.println(response);
         return response;
     }
 
