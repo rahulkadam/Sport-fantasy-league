@@ -23,6 +23,13 @@ public class FantasyProperties {
         return env.getProperty("spring.security.oauth2.client.registration.google.redirect-uri");
     }
 
+    public String getCricAPIURL() {
+        return env.getProperty("fantasy.cricapi.url");
+    }
+
+    public String getCricAPIKey() {
+        return env.getProperty("fantasy.cricapi.key");
+    }
 
 
 }
