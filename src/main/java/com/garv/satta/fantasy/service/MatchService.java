@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dao.repository.MatchRepository;
 import com.garv.satta.fantasy.dto.*;
 import com.garv.satta.fantasy.dto.converter.MatchConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
+import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.Team;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
@@ -87,18 +88,19 @@ public class MatchService {
     }
 
     public void startMatch(Long matchId) {
-        changeMatchStatus(matchId, Boolean.TRUE);
+        changeMatchStatus(matchId, Boolean.TRUE, MatchStateEnum.IN_PROGRESS);
     }
 
     public void completeMatch(Long matchId) {
-        changeMatchStatus(matchId, Boolean.FALSE);
+        changeMatchStatus(matchId, Boolean.FALSE, MatchStateEnum.COMPLETED);
     }
 
-    public void changeMatchStatus(Long matchId, Boolean status) {
+    public void changeMatchStatus(Long matchId, Boolean status, MatchStateEnum matchState) {
         Match match = repository.findMatchById(matchId);
         Assert.notNull(match,"Match id is not valid" + matchId );
         match.setIsActive(status);
         match.setStatus(status);
+        match.setState(matchState);
         repository.save(match);
     }
 
