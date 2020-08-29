@@ -11,12 +11,11 @@ public class CricPointCalculateService {
 
     public Map<Integer, MatchPlayerScoreCricDTO> calculatePointForPlayers(Map<Integer, MatchPlayerScoreCricDTO> playerMap) {
         Map<Integer, MatchPlayerScoreCricDTO> playerMapWithScore = new HashMap<>();
-        playerMap.forEach((key,value) -> playerMapWithScore.put(key, calculatePointForPlayer(value)));
+        playerMap.forEach((key, value) -> playerMapWithScore.put(key, calculatePointForPlayer(value)));
         return playerMapWithScore;
     }
 
     /**
-     *
      * @param player
      * @return
      */
@@ -47,103 +46,135 @@ public class CricPointCalculateService {
 
         // 1 point per fours
         Integer fours = player.getFours();
-        if (isPositive(fours)) {
-            points = points + fours;
-        }
+        points = points + getPointWithMultiplier(fours, 1);
 
-        // 1 point per fours
+        // 2 point per sixes
         Integer sixes = player.getSixes();
-        if (isPositive(fours)) {
-            points = points + 2 * sixes;
-        }
+        points = points + getPointWithMultiplier(sixes, 2);
 
-        Integer strikeRate = player.getStrikeRate();
         // strike rate , point calculation
-        if (isExist(strikeRate) && runs >= 20) {
-            if (strikeRate < 100) {
-                points = points - 5;
-            } else if (strikeRate >= 120 && strikeRate < 140) {
-                points = points + 10;
-            } else if (strikeRate >= 120 && strikeRate < 140) {
-                points = points + 10;
-            } else if (strikeRate >= 140 && strikeRate < 170) {
-                points = points + 15;
-            } else if (strikeRate >= 170) {
-                points = points + 20;
-            }
-        }
-
+        Integer strikeRate = player.getStrikeRate();
+        points = points + getStrikeRateBattingPoint(strikeRate, runs);
         // Runs , Bonus point calculation
-        if (isExist(runs)) {
-            if (runs >= 30 && runs < 50) {
-                points = points + 5;
-            } else if (runs >= 50 && runs < 100) {
-                points = points + 15;
-            } else if (runs >= 100) {
-                points = points + 20;
-            }
+        points = points + getBonusForRuns(runs);
+        return points;
+    }
+
+    public Integer getPointWithMultiplier(Integer value, Integer multiplier) {
+        if (isPositive(value)) {
+            return value * multiplier;
+        }
+        return 0;
+    }
+
+    public Integer getBonusForRuns(Integer runs) {
+        if (!isExist(runs)) {
+            return 0;
+        }
+        if (runs >= 30 && runs < 50) {
+            return 5;
+        } else if (runs >= 50 && runs < 100) {
+            return 15;
+        } else if (runs >= 100) {
+            return 20;
+        }
+        return 0;
+    }
+
+    /**
+     * @param strikeRate
+     * @param runs
+     * @return
+     */
+    public Integer getStrikeRateBattingPoint(Integer strikeRate, Integer runs) {
+        // if not exist, or less than 20 runs then ignore
+        if (!isExist(strikeRate) || runs < 20) {
+            return 0;
         }
 
-        return points;
+        if (strikeRate < 100) {
+            return -5;
+        } else if (strikeRate >= 120 && strikeRate < 140) {
+            return 10;
+        } else if (strikeRate >= 140 && strikeRate < 170) {
+            return 15;
+        } else if (strikeRate >= 170) {
+            return 20;
+        }
+        return 0;
+    }
+
+    public Float parseFloatValue(Object value) {
+        try {
+            if (value == null) {
+                return 0F;
+            }
+            return Float.valueOf(value.toString());
+        } catch (Exception e) {
+            return 0F;
+        }
     }
 
     public Integer calculateBowlingPoints(MatchPlayerScoreCricDTO player) {
 
-        if (!(player.getOvers() instanceof Float)) {
-            return 0;
-        }
-
-        Float overs = (Float) player.getOvers();
-        if (!isExist(overs)) {
+        Float overs = parseFloatValue(player.getOvers());
+        if (overs == 0F) {
             return 0;
         }
 
         Integer points = 0;
 
-        // 10 point per wicket
+        // 1 point per dot balls
         Integer dot_balls = player.getDot_balls();
         if (isPositive(dot_balls)) {
             points = points + dot_balls;
         }
 
-        // 10 point per wicket
+        // 20 point per wicket
         Integer wickets = player.getWicket();
-        if (isPositive(wickets)) {
-            points = points + 20 * wickets;
-        }
+        points = points + getPointWithMultiplier(wickets, 20);
 
-        // 10 point per wicket
+        // 10 point per maiden
         Integer maiden = player.getMaiden();
-        if (isPositive(maiden)) {
-            points = points + 10 * maiden;
-        }
+        points = points + getPointWithMultiplier(maiden, 10);
 
-        // Runs , Bonus point calculation
-        if (isExist(wickets)) {
-            if (wickets == 3) {
-                points = points + 5;
-            } else if (wickets == 4) {
-                points = points + 15;
-            } else if (wickets > 4) {
-                points = points + 20;
-            }
-        }
-
+        // Wickets , Bonus point calculation
+        points = points + getWicketPoints(wickets);
 
         // Economy , Bonus point calculation
         Float economy = player.getEconomy();
+        points = points + calculateEconomyPoints(economy, overs);
+
+        return points;
+    }
+
+    public Integer getWicketPoints(Integer wickets) {
+        if (!isExist(wickets)) {
+            return 0;
+        }
+        if (wickets == 3) {
+            return 5;
+        } else if (wickets == 4) {
+            return 15;
+        } else if (wickets > 4) {
+            return 20;
+        }
+        return 0;
+    }
+
+    public Integer calculateEconomyPoints(Float economy, Float overs) {
         if (isExist(economy) && isExist(overs) && overs >= 2) {
             if (economy < 4) {
-                points = points + 20;
-            } else if (economy >=4 && economy<5) {
-                points = points + 15;
-            } else if (economy >= 5 && economy <=6) {
-                points = points + 10;
-            } else if (economy >=10) {
-                points = points - 10;
+                return  20;
+            } else if (economy >= 4 && economy < 5) {
+                return  15;
+            } else if (economy >= 5 && economy <= 6) {
+                return 10;
+            } else if (economy >= 10) {
+                return -10;
             }
         }
-        return points;
+        return 0;
     }
 
     public Integer calculateFieldingPoints(MatchPlayerScoreCricDTO player) {
@@ -151,31 +182,18 @@ public class CricPointCalculateService {
 
         // calculate catches point
         Integer catches = player.getCatches();
-        if (isPositive(catches)) {
-            points = points + catches*10;
-        } else {
-            catches = 0;
-        }
+        points = points + getPointWithMultiplier(catches, 10);
 
-        // calculate sumping point
+        // calculate stumping point
         Integer stumping = player.getStumped();
-        if (isPositive(stumping)) {
-            points = points + stumping*10;
-        } else {
-            stumping = 0;
-        }
+        points = points + getPointWithMultiplier(stumping, 10);
 
         // calculate run out point
         Integer runout = player.getRunout();
-        if (isPositive(runout)) {
-            points = points + runout*10;
-        } else {
-            runout = 0;
-        }
+        points = points + getPointWithMultiplier(runout, 10);
 
         // Calculate bonus pointscore
-        int total = catches + runout + stumping;
-        if (total >=3) {
+        if (points >= 30) {
             points = points + 10;
         }
 
@@ -194,6 +212,11 @@ public class CricPointCalculateService {
     public Boolean isPositive(Integer value) {
         return value != null && value > 0;
     }
+
+    public Boolean isPositive(Float value) {
+        return value != null && value > 0;
+    }
+
 
     public Boolean isNegative(Integer value) {
         return value != null && value < 0;
