@@ -69,6 +69,7 @@ const Match = () => {
           data={matchProps.matchList}
           fetchMatchHistory={fetchPlayerStats}
           playerStats={statsProps.playerStats}
+          showExtraData={true}
         />
       </div>
     );

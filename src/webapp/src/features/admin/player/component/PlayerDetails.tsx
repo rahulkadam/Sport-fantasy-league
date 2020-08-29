@@ -44,6 +44,12 @@ const PlayerDetails = ({data, title}: PlayerDetailsProps) => {
       sortable: true,
       right: true,
     },
+    {
+      name: 'External Id',
+      selector: 'externalpid',
+      sortable: true,
+      right: true,
+    },
   ];
 
   function onRowSelectedAction(state: any) {

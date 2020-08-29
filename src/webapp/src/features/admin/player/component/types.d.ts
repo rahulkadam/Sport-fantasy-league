@@ -7,6 +7,7 @@ declare type PlayerDetailsProps = {
   data: any;
   title: string;
   onRowSelected?: any;
+  showExtraData?: boolean;
 };
 declare type UpdatePlayerProps = {
   playerList?: any;
