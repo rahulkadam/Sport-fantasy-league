@@ -33,6 +33,7 @@ public class Player extends BaseDaoObject {
     private PlayerEnum type;
     private String Country;
     private Float value;
+    private Integer externalpid;
 
     @ManyToMany
     @JoinTable(

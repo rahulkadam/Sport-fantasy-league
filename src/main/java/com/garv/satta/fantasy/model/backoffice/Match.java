@@ -31,6 +31,8 @@ public class Match extends BaseDaoObject {
 
     private Boolean status;
 
+    private Integer external_mid;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "venue_id", nullable = false)
     private Venue venue;
