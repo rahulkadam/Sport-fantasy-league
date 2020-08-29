@@ -7,6 +7,7 @@ import {getLogoNameByLeagueName} from '../FantasyDropDown';
 import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
 import {isUserLogin} from '../../../API';
 import {fantasyLogo, teamRCB} from '@logos/index';
+import {wrapText, wrapTextWithLength} from '../../util';
 
 const LeagueCard = (props: LeagueCardProps) => {
   const data = props.data;
@@ -15,6 +16,10 @@ const LeagueCard = (props: LeagueCardProps) => {
   const joinLeague = joinLeagueAction();
   const title = !loginUser ? '' : data.publicLeague ? 'Public' : 'Private';
   const logoSource = getLogoNameByLeagueName(data.name);
+
+  function successBadge(value: any) {
+    return <Badge variant="success">{value}</Badge>;
+  }
   return (
     <div>
       <Card className="leaguecardcontainer">
@@ -28,9 +33,15 @@ const LeagueCard = (props: LeagueCardProps) => {
               <Col>
                 <Row>
                   <Col>
-                    <Badge variant="success">{data.name}</Badge>
+                    <Badge variant="success">
+                      {wrapTextWithLength(data.name, 18)}
+                    </Badge>
                   </Col>
-                  {!data.publicLeague && <Col>Code : {data.leagueCode}</Col>}
+                  {!data.publicLeague && (
+                    <Col className="CardBoldText">
+                      Code : {successBadge(data.leagueCode)}
+                    </Col>
+                  )}
                   {!data.userRank && loginUser && userteam && (
                     <Col>
                       <Button
@@ -44,7 +55,7 @@ const LeagueCard = (props: LeagueCardProps) => {
                 <Row>
                   <Col className="CardBoldText">
                     Playing Users:{' '}
-                    <Badge variant="primary">{data.totalUserCount || 0}</Badge>
+                    <Badge variant="success">{data.totalUserCount || 0}</Badge>
                   </Col>
                   <Col className="CardBoldText">
                     {data.userRank && (

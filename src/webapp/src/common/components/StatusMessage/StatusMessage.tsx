@@ -21,11 +21,7 @@ const StatusMessage = ({text, type}: FantasyStatusMessageProps) => {
     return (
       <Fragment>
         {show && (
-          <Alert
-            key={type}
-            onClose={() => setShow(false)}
-            dismissible
-            variant={modalType}>
+          <Alert key={type} onClose={() => setShow(false)} variant={modalType}>
             {text}
           </Alert>
         )}

@@ -101,22 +101,25 @@ const UserTeam = () => {
     );
   }
 
+  function renderDarkBadge(value: any) {
+    return <Badge variant="dark">{value}</Badge>;
+  }
+
   function renderShowTransferOverview() {
     const availableBalance = userteamDataProps.currentUserTeamValue;
-    const statusValue = teamValid
-      ? {message: 'COMPLETE', type: 'success'}
-      : {message: 'INCOMPLETE', type: 'danger'};
+    const remainedTransfer = userteamDataProps.userteam.remained_Transfer;
+    const currentTransferChanges = userteamDataProps.currentTransferChanges;
     return (
       <div className="transferOverview">
         <Row className="nameColumn">
-          <Col>TRANSFER</Col>
-          <Col>CREDITS</Col>
-          <Col>CHANGES</Col>
+          <Col>Transfer</Col>
+          <Col>Credits</Col>
+          <Col>Changes</Col>
         </Row>
         <Row>
-          <Col>{userteamDataProps.userteam.remained_Transfer}</Col>
-          <Col>{availableBalance}</Col>
-          <Col>{userteamDataProps.currentTransferChanges}</Col>
+          <Col>{renderDarkBadge(remainedTransfer)}</Col>
+          <Col>{renderDarkBadge(availableBalance)}</Col>
+          <Col>{renderDarkBadge(currentTransferChanges)}</Col>
         </Row>
         <Row className="nameColumn">
           <Col>

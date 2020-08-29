@@ -3,6 +3,7 @@ import {Card, Row, Col, Button, Badge} from 'react-bootstrap';
 import './GameCard.styles.scss';
 import history from 'common/config/history';
 import {isUserLogin} from '../../../API';
+import {wrapText, wrapTextWithLength} from '../../util';
 
 const UserTeamCard = ({data}: UserTeamCardProps) => {
   const userteam = (data && data.userTeamDTO) || {};
@@ -17,21 +18,31 @@ const UserTeamCard = ({data}: UserTeamCardProps) => {
       <Card className="gamecardcontainer">
         <Card.Body>
           <Card.Title className="userTeamTitle">
-            My Team - {userteam.name}
+            Team - {wrapTextWithLength(userteam.name, 25)}
           </Card.Title>
           <Card.Text>
             <Row className="CardBoldText">
-              <Col>Score : {renderSuccessBadge(userteam.total_score)}</Col>
-              <Col>
-                Transfer: {renderSuccessBadge(userteam.remained_Transfer)}
+              <Col xs={4} sm={4} md={2}>
+                Score :
               </Col>
+              <Col>{renderSuccessBadge(userteam.total_score)}</Col>
+              <Col xs={4} sm={4} md={2}>
+                Transfer:
+              </Col>
+              <Col>{renderSuccessBadge(userteam.remained_Transfer)}</Col>
             </Row>
             <Row className="CardBoldText">
-              <Col>Leagues: {renderSuccessBadge(userteam.total_leagues)}</Col>
-              <Col>Credit : {renderSuccessBadge(userteam.creditbalance)}</Col>
+              <Col xs={4} sm={4} md={2}>
+                Leagues:
+              </Col>
+              <Col> {renderSuccessBadge(userteam.total_leagues)}</Col>
+              <Col xs={4} sm={4} md={2}>
+                Credit :
+              </Col>
+              <Col> {renderSuccessBadge(userteam.creditbalance)}</Col>
             </Row>
             <Row>
-              <Col md={{offset: '3'}}>
+              <Col md={{offset: '3'}} xs={{offset: '3'}}>
                 <Button
                   variant="link"
                   onClick={() => history.push('/team/transfer')}>
