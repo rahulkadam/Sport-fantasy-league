@@ -16,8 +16,8 @@ import {
   fetchTournamentListAction,
   getTournamentData,
 } from '../Tournament/redux';
-import {isListEmpty} from '../../../common/util';
-import {FantasyDropDown, StatusMessage} from '../../../common/components';
+import {isListEmpty} from 'common/util';
+import {FantasyDropDown, StatusMessage} from 'common/components';
 import './AdminProcess.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
 
@@ -39,6 +39,7 @@ const AdminProcess = () => {
   const statrCompleteMatch = statrCompleteMatchAction();
   const [lockStatus, setLockStatus] = useState('Lock');
   const [matchStatus, setMatchStatus] = useState('start');
+  const [tabName, setTabName] = useState('beforematch');
 
   useEffect(() => {
     if (isListEmpty(matchProps.matchList)) {
@@ -129,7 +130,7 @@ const AdminProcess = () => {
 
   function renderUpdatePlayerScoreViaCric() {
     const title = '** Update player SCore via Crick API';
-    const actionbtn = 'Update Player Score';
+    const actionbtn = 'Update Live Score';
     return (
       <Fragment>
         {renderMatchProcessActionForTournament(
@@ -327,6 +328,66 @@ const AdminProcess = () => {
     return <div className="headerProcess">Match Admin Process</div>;
   }
 
+  function renderTabActionBtn(actionName: string, title: string) {
+    const variant = tabName == actionName ? 'primary' : 'outline-primary';
+    return (
+      <Button
+        variant={variant}
+        className="mr-1 leagueTabMenuLink"
+        onClick={() => setTabName(actionName)}>
+        {title}
+      </Button>
+    );
+  }
+
+  function renderMatchActions() {
+    return (
+      <Form inline className="processMenuAction">
+        {renderTabActionBtn('beforematch', 'Match Start')}
+        {renderTabActionBtn('duringmatch', 'Live')}
+        {renderTabActionBtn('aftermatch', 'After Match')}
+      </Form>
+    );
+  }
+
+  function renderBeforematchComponent() {
+    return (
+      <div>
+        {renderLockUnLockTournamentAction()}
+        {renderMatchStartCompletedAction()}
+        {renderInitMatchForTournament()}
+        {renderInitMatchSquadViaCric()}
+        {renderInitUserForMatch()}
+      </div>
+    );
+  }
+
+  function renderduringmatchComponent() {
+    return <div>{renderUpdatePlayerScoreViaCric()}</div>;
+  }
+
+  function renderAftergmatchComponent() {
+    return (
+      <div>
+        {renderProcessScoreCalculationByMatch()}
+        {renderCalculateRanking()}
+      </div>
+    );
+  }
+
+  function renderProcessComponents() {
+    switch (tabName) {
+      case 'beforematch':
+        return renderBeforematchComponent();
+      case 'duringmatch':
+        return renderduringmatchComponent();
+      case 'aftermatch':
+        return renderAftergmatchComponent();
+      default:
+        return renderBeforematchComponent();
+    }
+  }
+
   return (
     <div className="processContainer">
       <LoadingOverlay
@@ -335,14 +396,8 @@ const AdminProcess = () => {
         text="Loading Process Details ...">
         {renderHeader()}
         {renderStatusMessage(processProps.hasError, processProps.statusMessage)}
-        {renderLockUnLockTournamentAction()}
-        {renderMatchStartCompletedAction()}
-        {renderInitMatchForTournament()}
-        {renderInitMatchSquadViaCric()}
-        {renderInitUserForMatch()}
-        {renderUpdatePlayerScoreViaCric()}
-        {renderProcessScoreCalculationByMatch()}
-        {renderCalculateRanking()}
+        {renderMatchActions()}
+        {renderProcessComponents()}
       </LoadingOverlay>
     </div>
   );

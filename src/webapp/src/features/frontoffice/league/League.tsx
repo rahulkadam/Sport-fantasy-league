@@ -52,27 +52,24 @@ const League = () => {
     }
   });
 
+  function renderTabActionBtn(actionName: string, title: string) {
+    const variant = tabName == actionName ? 'primary' : 'outline-primary';
+    return (
+      <Button
+        variant={variant}
+        className="mr-1 leagueTabMenuLink"
+        onClick={() => setTabName(actionName)}>
+        {title}
+      </Button>
+    );
+  }
+
   function renderLeagueActions() {
     return (
       <Form inline className="leagueAction">
-        <Button
-          variant={tabName == 'overview' ? 'primary' : 'outline-primary'}
-          className="mr-1 leagueTabMenuLink"
-          onClick={() => setTabName('overview')}>
-          Overview
-        </Button>
-        <Button
-          variant={tabName == 'createLeague' ? 'primary' : 'outline-primary'}
-          className="mr-1 leagueTabMenuLink"
-          onClick={() => setTabName('createLeague')}>
-          Create
-        </Button>
-        <Button
-          variant={tabName == 'joinLeague' ? 'primary' : 'outline-primary'}
-          className="mr-1 leagueTabMenuLink"
-          onClick={() => setTabName('joinLeague')}>
-          Join League
-        </Button>
+        {renderTabActionBtn('overview', 'Overview')}
+        {renderTabActionBtn('createLeague', 'Create')}
+        {renderTabActionBtn('joinLeague', 'Join League')}
       </Form>
     );
   }
