@@ -1,5 +1,10 @@
 import {useDispatch} from 'react-redux';
-import {createPlayer, fetchAllPlayerList, addTeamToPlayer} from './player-api';
+import {
+  createPlayer,
+  fetchAllPlayerList,
+  addTeamToPlayer,
+  addExternalIdToPlayer,
+} from './player-api';
 import {
   ACTION_START,
   CREATE_PLAYER,
@@ -9,7 +14,7 @@ import {
 } from './playerConstants';
 import {dispatchActionWrapper, dispatchAction} from 'common/util';
 
-const fetchPlayerListAction = () => {
+export const fetchPlayerListAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(
     dispatch,
@@ -32,7 +37,7 @@ const fetchPlayerListAction = () => {
   );
 };
 
-const createPlayerAction = () => {
+export const createPlayerAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(
     dispatch,
@@ -55,7 +60,30 @@ const createPlayerAction = () => {
   );
 };
 
-const addTeamToPlayerAction = () => {
+export const addExternalIdToPlayerAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (playerId: number, externalId: any) => {
+      addExternalIdToPlayer(playerId, externalId)
+        .then((data: any) => {
+          dispatch({
+            type: CREATE_PLAYER,
+            message: 'Created successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: CREATE_PLAYER_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
+export const addTeamToPlayerAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(
     dispatch,
@@ -77,5 +105,3 @@ const addTeamToPlayerAction = () => {
     }
   );
 };
-
-export {fetchPlayerListAction, createPlayerAction, addTeamToPlayerAction};

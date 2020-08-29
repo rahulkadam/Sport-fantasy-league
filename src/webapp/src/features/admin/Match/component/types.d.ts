@@ -14,6 +14,11 @@ declare type MatchDetailsProps = {
   fetchMatchHistory?: any;
 };
 
+declare type UploadExternalIdProps = {
+  matchList?: any;
+  updateexternIdAction?: any;
+};
+
 declare type UploadMatchResultProps = {
   uploadMatchResultAction: any;
   data: any;

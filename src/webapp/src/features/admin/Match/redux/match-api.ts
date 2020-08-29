@@ -46,3 +46,9 @@ export function uploadMatchResult(request: MatchResultObject) {
     },
   });
 }
+
+export function addExternalIdToMatch(matchId: any, externalId: any) {
+  return Post('/fantasy/match/update/externalid', {
+    data: {matchId: matchId, externalId: externalId},
+  });
+}

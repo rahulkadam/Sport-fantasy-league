@@ -5,6 +5,7 @@ import {
   CreateMatch,
   UploadMatchResult,
   UploadMatchPoint,
+  UploadMatchExternalId,
 } from './component';
 import {
   fetchMatchListAction,
@@ -12,6 +13,7 @@ import {
   getMatchData,
   uploadMatchPlayerPointAction,
   uploadMatchResultAction,
+  addExternalIdToMatchAction,
 } from './redux';
 import {fetchTeamListAction, getTeamData} from '../SportTeam/redux';
 import {fetchPlayerListAction, getPlayerData} from '../player/redux';
@@ -19,6 +21,7 @@ import {
   fetchTournamentListAction,
   getTournamentData,
 } from '../Tournament/redux';
+import './Match.styles.scss';
 
 const Match = () => {
   const matchProps = getMatchData();
@@ -31,6 +34,7 @@ const Match = () => {
   const tournamentProps = getTournamentData();
   const createMatch = createMatchAction();
   const uploadMatchPlayerPoint = uploadMatchPlayerPointAction();
+  const updateExternalId = addExternalIdToMatchAction();
   const uploadMatchResult = uploadMatchResultAction();
   const tabName = 'matchoverview';
 
@@ -75,6 +79,15 @@ const Match = () => {
     );
   }
 
+  function renderUpdateExternalId() {
+    return (
+      <UploadMatchExternalId
+        matchList={matchProps.matchList}
+        updateexternIdAction={updateExternalId}
+      />
+    );
+  }
+
   function renderUploadMatchPoint() {
     return (
       <UploadMatchPoint
@@ -111,13 +124,18 @@ const Match = () => {
       title: 'Upload Match Point',
       renderfunction: renderUploadMatchPoint(),
     },
+    {
+      key: 'updateexternalId',
+      title: 'Update Extenal Id',
+      renderfunction: renderUpdateExternalId(),
+    },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {
     const statusClassName = matchProps.hasError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
   return (
-    <div>
+    <div className="matchBackcontainer">
       {renderStatusMessage(matchProps.hasError, matchProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>

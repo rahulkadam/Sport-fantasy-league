@@ -56,7 +56,7 @@ public class PlayerService {
     }
 
     public void updateExternalPlayerId(RequestDTO dto) {
-        Long playerId = dto.getMatchId();
+        Long playerId = dto.getPlayerId();
         Integer externalId = dto.getExternalId();
         Player player = playerRepository.findPlayerById(playerId);
         Assert.notNull(player,"Player id is Not Valid" + playerId );

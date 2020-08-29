@@ -6,4 +6,5 @@ export {
   uploadMatchPlayerPointAction,
   uploadMatchResultAction,
   fetchCompletedMatchListAction,
+  addExternalIdToMatchAction,
 } from './matchActions';

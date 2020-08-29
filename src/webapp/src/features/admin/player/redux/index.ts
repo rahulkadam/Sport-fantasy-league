@@ -4,4 +4,5 @@ export {
   fetchPlayerListAction,
   createPlayerAction,
   addTeamToPlayerAction,
+  addExternalIdToPlayerAction,
 } from './playerActions';

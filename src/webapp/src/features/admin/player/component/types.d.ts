@@ -13,4 +13,5 @@ declare type UpdatePlayerProps = {
   teamList?: any;
   addPlayerToTeamAction?: any;
   loadTeamList?: any;
+  updateExternalId?: any;
 };
