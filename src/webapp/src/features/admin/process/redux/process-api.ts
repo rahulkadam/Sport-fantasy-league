@@ -24,6 +24,14 @@ export function initUserMatchForTournament(matchId: number, type: string) {
   });
 }
 
+export function initiateMatchSquadFromCricAPI(matchId: number) {
+  return Get('/process/criciapi/match/initiate/squad/' + matchId);
+}
+
+export function updateMatchPlayerScoreFromCricAPI(matchId: number) {
+  return Get('/process/criciapi/match/update/score/' + matchId);
+}
+
 export function processPointByMatchId(matchId: number) {
   return Get('/process/point/bymatch/' + matchId);
 }

@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 import {
   addNotice,
   fetchActiveNotice,
+  initiateMatchSquadFromCricAPI,
   initUserMatchForTournament,
   lockTournament,
   processPointByMatchId,
@@ -9,6 +10,7 @@ import {
   removeNotice,
   statrCompleteMatch,
   unLockTournament,
+  updateMatchPlayerScoreFromCricAPI,
 } from './process-api';
 import {
   PROCESS_ACTION_COMPLETED,
@@ -78,6 +80,54 @@ export const initUserMatchDataAction = () => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
             message: 'User/Match Details initiated successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const initMatchSquadFromCricAPIAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (matchId: number) => {
+      initiateMatchSquadFromCricAPI(matchId)
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message:
+              'Initiated Squad from CricAPI Details initiated successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const updateMatchPlayerScoreFromCricAPIAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (matchId: number) => {
+      updateMatchPlayerScoreFromCricAPI(matchId)
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message:
+              'Update Player Score from CricAPI Details initiated successfully',
           });
         })
         .catch((error: any) => {

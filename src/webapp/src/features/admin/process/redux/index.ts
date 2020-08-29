@@ -7,4 +7,6 @@ export {
   unLockTournamentAction,
   initUserMatchDataAction,
   statrCompleteMatchAction,
+  initMatchSquadFromCricAPIAction,
+  updateMatchPlayerScoreFromCricAPIAction,
 } from './processActions';

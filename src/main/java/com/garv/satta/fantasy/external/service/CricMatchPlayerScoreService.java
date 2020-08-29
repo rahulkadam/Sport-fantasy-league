@@ -46,7 +46,7 @@ public class CricMatchPlayerScoreService {
         Match match = matchRepository.findMatchById(matchId);
         Assert.notNull(match, "Match Id is not Valid, " + matchId);
         Integer externalMatchId = match.getExternal_mid();
-        Assert.notNull(externalMatchId, "External Id is Present for , " + matchId);
+        Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricAPIService.getMatchSummaryDetails(externalMatchId);
         saveMatchPLayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
     }
@@ -56,7 +56,7 @@ public class CricMatchPlayerScoreService {
         Match match = matchRepository.findMatchById(matchId);
         Assert.notNull(match, "Match Id is not Valid, " + matchId);
         Integer externalMatchId = match.getExternal_mid();
-        Assert.notNull(externalMatchId, "External Id is Present for , " + matchId);
+        Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricAPIService.getPlayerSquadListForMatch(externalMatchId);
         saveMatchPLayerScoreFromCric(playerScoreDTOList, match, INIT_SCORE);
     }
