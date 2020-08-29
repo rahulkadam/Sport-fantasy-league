@@ -14,7 +14,7 @@ export function createMatch(requestObject: CreateMatchRequestObject) {
 }
 
 export function fetchAllMatchList() {
-  return Get('/fantasy/match/completed/list');
+  return Get('/fantasy/match/list');
 }
 
 export function fetchCompletedMatchList() {

@@ -21,6 +21,7 @@ public class MatchDTO extends ShortBaseDTO {
     private String team_away_name;
     private String tournament_name;
     private String venue_name;
+    private Integer external_mid;
     private VenueDTO venueDTO;
     private TeamDTO team_hostTeamDTO;
     private TeamDTO team_awayTeamDTO;

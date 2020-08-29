@@ -22,6 +22,10 @@ import {
   getTournamentData,
 } from '../Tournament/redux';
 import './Match.styles.scss';
+import {
+  fetchMatchStatsListAction,
+  getStatsProps,
+} from '../../frontoffice/stats/redux';
 
 const Match = () => {
   const matchProps = getMatchData();
@@ -36,6 +40,8 @@ const Match = () => {
   const uploadMatchPlayerPoint = uploadMatchPlayerPointAction();
   const updateExternalId = addExternalIdToMatchAction();
   const uploadMatchResult = uploadMatchResultAction();
+  const fetchPlayerStats = fetchMatchStatsListAction();
+  const statsProps = getStatsProps();
   const tabName = 'matchoverview';
 
   useEffect(() => {
@@ -58,7 +64,12 @@ const Match = () => {
   function renderMatchListView() {
     return (
       <div>
-        <MatchDetails title="Match List" data={matchProps.matchList} />
+        <MatchDetails
+          title="Match List"
+          data={matchProps.matchList}
+          fetchMatchHistory={fetchPlayerStats}
+          playerStats={statsProps.playerStats}
+        />
       </div>
     );
   }
