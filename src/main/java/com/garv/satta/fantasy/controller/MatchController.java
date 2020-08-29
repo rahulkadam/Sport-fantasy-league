@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.controller;
 
 import com.garv.satta.fantasy.dto.MatchDTO;
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,13 @@ public class MatchController {
     @ResponseBody
     public MatchDTO createMatch(@RequestBody MatchDTO venue) {
         return service.createMatch(venue);
+    }
+
+    @PostMapping(value = "/update/externalid")
+    @ResponseBody
+    public String updateExternalMatchIt(@RequestBody RequestDTO requestDTO) {
+        service.updateExternalMatchId(requestDTO);
+        return "External Match id updated successfully";
     }
 
     @PostMapping("/upload/xls/list")

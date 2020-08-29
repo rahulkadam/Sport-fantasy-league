@@ -47,6 +47,13 @@ public class PlayerController {
         return player;
     }
 
+    @PostMapping(value = "/update/externalid")
+    @ResponseBody
+    public String updateExternalMatchIt(@RequestBody RequestDTO requestDTO) {
+        playerService.updateExternalPlayerId(requestDTO);
+        return "External Player id updated successfully";
+    }
+
     @PostMapping(value = "/add/team")
     public String addTeamToPlayer(@RequestBody RequestDTO dto) {
         Long playerId = dto.getAddTo();

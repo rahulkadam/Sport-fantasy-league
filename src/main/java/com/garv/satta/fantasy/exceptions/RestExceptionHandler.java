@@ -1,7 +1,6 @@
 package com.garv.satta.fantasy.exceptions;
 
-import com.garv.satta.fantasy.dao.repository.FantasyErrorRepository;
-import com.garv.satta.fantasy.model.monitoring.FantasyError;
+import com.garv.satta.fantasy.service.FantasyErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -19,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
-    private FantasyErrorRepository repository;
+    private FantasyErrorService fantasyErrorService;
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleEntityNotFound(Exception ex) {
@@ -27,18 +26,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String error = ex.getMessage();
         String error_description = ex.getLocalizedMessage();
         ErrorInfo errorInfo = new ErrorInfo(error, error_description);
-        saveError(errorInfo, ex);
+        fantasyErrorService.saveError(errorInfo, ex);
         return new ResponseEntity(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    private void saveError(ErrorInfo errorInfo, Exception ex) {
-        try {
-            FantasyError fantasyError = new FantasyError();
-            fantasyError.setMessage(errorInfo.error);
-            repository.save(fantasyError);
-        } catch (Exception e) {
-            logger.error("Exception occured ", e);
-        }
     }
 
 }

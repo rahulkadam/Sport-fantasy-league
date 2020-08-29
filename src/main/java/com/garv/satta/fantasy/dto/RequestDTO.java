@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RequestDTO extends BaseDTO {
+public class RequestDTO extends ShortBaseDTO {
     private String name;
     private String description;
     private String otherString;
@@ -16,6 +16,8 @@ public class RequestDTO extends BaseDTO {
     private Long captainId;
     private Long userTeamId;
     private Long matchId;
+    private Long playerId;
+    private Integer externalId;
     private List<Long> addList;
     private Long removeFrom;
     private Long remove;

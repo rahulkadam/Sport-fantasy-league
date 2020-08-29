@@ -12,8 +12,8 @@ public class PlayerValidator {
     private PlayerRepository repository;
 
     public void validatePlayerValue(Float value) {
-        if (value == null || value > 10) {
-            throw new GenericException("Value should not be more than 10");
+        if (value == null || value > 15) {
+            throw new GenericException("Value should not be more than 15");
         }
     }
 

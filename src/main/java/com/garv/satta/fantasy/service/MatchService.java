@@ -1,10 +1,7 @@
 package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
-import com.garv.satta.fantasy.dto.MatchDTO;
-import com.garv.satta.fantasy.dto.TeamDTO;
-import com.garv.satta.fantasy.dto.TournamentDTO;
-import com.garv.satta.fantasy.dto.VenueDTO;
+import com.garv.satta.fantasy.dto.*;
 import com.garv.satta.fantasy.dto.converter.MatchConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.Match;
@@ -17,6 +14,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -87,11 +85,19 @@ public class MatchService {
 
     public void changeMatchStatus(Long matchId, Boolean status) {
         Match match = repository.findMatchById(matchId);
-        if (match == null) {
-            throw new GenericException("Match id is Not Valid" + matchId);
-        }
+        Assert.notNull(match,"Match id is not valid" + matchId );
         match.setIsActive(status);
         match.setStatus(status);
+        repository.save(match);
+    }
+
+    public void updateExternalMatchId(RequestDTO dto) {
+        Long matchId = dto.getMatchId();
+        Integer externalId = dto.getExternalId();
+        Match match = repository.findMatchById(matchId);
+        Assert.notNull(match,"Match id is Not Valid" + matchId );
+        Assert.notNull(externalId, "External Match id is not valid");
+        match.setExternal_mid(externalId);
         repository.save(match);
     }
 
