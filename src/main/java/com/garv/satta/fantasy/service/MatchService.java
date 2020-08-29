@@ -1,12 +1,10 @@
 package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
-import com.garv.satta.fantasy.dto.MatchDTO;
-import com.garv.satta.fantasy.dto.TeamDTO;
-import com.garv.satta.fantasy.dto.TournamentDTO;
-import com.garv.satta.fantasy.dto.VenueDTO;
+import com.garv.satta.fantasy.dto.*;
 import com.garv.satta.fantasy.dto.converter.MatchConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
+import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.Team;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
@@ -17,6 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -64,6 +63,17 @@ public class MatchService {
         return converter.convertToFullDTOList(matches);
     }
 
+    public List<MatchDTO> getLiveMatchesShortDto() {
+        List<Match> matches = repository.findMatchesByStatus(Boolean.TRUE);
+        return converter.convertToDTOList(matches);
+    }
+
+    public MatchDTO getMatchStartingInNext1Hour() {
+        DateTime currentTime = new DateTime();
+        Match match = repository.findFirstByMatchTimeGreaterThanEqual(currentTime);
+        return converter.convertToDTO(match);
+    }
+
     public List<MatchDTO> getCompletedMatchList() {
         DateTime currentTime = new DateTime();
         List<Match> matches = repository.findCompletedMatches(currentTime);
@@ -78,20 +88,29 @@ public class MatchService {
     }
 
     public void startMatch(Long matchId) {
-        changeMatchStatus(matchId, Boolean.TRUE);
+        changeMatchStatus(matchId, Boolean.TRUE, MatchStateEnum.IN_PROGRESS);
     }
 
     public void completeMatch(Long matchId) {
-        changeMatchStatus(matchId, Boolean.FALSE);
+        changeMatchStatus(matchId, Boolean.FALSE, MatchStateEnum.COMPLETED);
     }
 
-    public void changeMatchStatus(Long matchId, Boolean status) {
+    public void changeMatchStatus(Long matchId, Boolean status, MatchStateEnum matchState) {
         Match match = repository.findMatchById(matchId);
-        if (match == null) {
-            throw new GenericException("Match id is Not Valid" + matchId);
-        }
+        Assert.notNull(match,"Match id is not valid" + matchId );
         match.setIsActive(status);
         match.setStatus(status);
+        match.setState(matchState);
+        repository.save(match);
+    }
+
+    public void updateExternalMatchId(RequestDTO dto) {
+        Long matchId = dto.getMatchId();
+        Integer externalId = dto.getExternalId();
+        Match match = repository.findMatchById(matchId);
+        Assert.notNull(match,"Match id is Not Valid" + matchId );
+        Assert.notNull(externalId, "External Match id is not valid");
+        match.setExternal_mid(externalId);
         repository.save(match);
     }
 

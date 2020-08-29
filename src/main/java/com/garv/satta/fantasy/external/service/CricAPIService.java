@@ -23,8 +23,20 @@ public class CricAPIService {
     private CricApiServiceHelper cricApiServiceHelper;
 
     public MatchSquadCricDTO getMatchSquadDetails(Integer matchId) {
-        return cricAPIHttpClient.getMatchSquadDetails(matchId);
+        MatchSquadCricDTO matchSquadCricDTO = cricAPIHttpClient.getMatchSquadDetails(matchId);
+        return matchSquadCricDTO;
+    }
 
+    public Map<Integer, MatchPlayerScoreCricDTO> getPlayerSquadMapForMatch(Integer matchId) {
+        MatchSquadCricDTO matchSquadCricDTO = getMatchSquadDetails(matchId);
+        Map<Integer, MatchPlayerScoreCricDTO> playerListMap =
+                cricApiServiceHelper.getPlayersFromSquad(matchSquadCricDTO.getSquad());
+        return playerListMap;
+    }
+
+    public List<MatchPlayerScoreCricDTO> getPlayerSquadListForMatch(Integer matchId) {
+         Map<Integer, MatchPlayerScoreCricDTO> playerListMap = getPlayerSquadMapForMatch(matchId);
+        return playerListMap.values().stream().collect(Collectors.toList());
     }
 
     /**

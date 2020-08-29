@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import lombok.Data;
 import org.joda.time.DateTime;
 
@@ -17,10 +18,12 @@ public class MatchDTO extends ShortBaseDTO {
     private Long team_away_id;
     private Long tournament_id;
     private Long matchResultId;
+    private MatchStateEnum state;
     private String team_host_name;
     private String team_away_name;
     private String tournament_name;
     private String venue_name;
+    private Integer external_mid;
     private VenueDTO venueDTO;
     private TeamDTO team_hostTeamDTO;
     private TeamDTO team_awayTeamDTO;

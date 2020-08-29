@@ -8,14 +8,16 @@ import {
   getAdminProcessData,
   initUserMatchDataAction,
   statrCompleteMatchAction,
+  updateMatchPlayerScoreFromCricAPIAction,
+  initMatchSquadFromCricAPIAction,
 } from './redux';
 import {fetchMatchListAction, getMatchData} from '../Match/redux';
 import {
   fetchTournamentListAction,
   getTournamentData,
 } from '../Tournament/redux';
-import {isListEmpty} from '../../../common/util';
-import {FantasyDropDown, StatusMessage} from '../../../common/components';
+import {isListEmpty} from 'common/util';
+import {FantasyDropDown, StatusMessage} from 'common/components';
 import './AdminProcess.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
 
@@ -25,6 +27,8 @@ const AdminProcess = () => {
   const unLockTournament = unLockTournamentAction();
   const processScoreByMatch = processScoreByMatchAction();
   const processRanking = processRankingAction();
+  const updateplayerScoreCric = updateMatchPlayerScoreFromCricAPIAction();
+  const initmatchSquadCric = initMatchSquadFromCricAPIAction();
   const matchProps = getMatchData();
   const tournamentProps = getTournamentData();
   const fetchMatchList = fetchMatchListAction();
@@ -35,6 +39,7 @@ const AdminProcess = () => {
   const statrCompleteMatch = statrCompleteMatchAction();
   const [lockStatus, setLockStatus] = useState('Lock');
   const [matchStatus, setMatchStatus] = useState('start');
+  const [tabName, setTabName] = useState('beforematch');
 
   useEffect(() => {
     if (isListEmpty(matchProps.matchList)) {
@@ -45,18 +50,29 @@ const AdminProcess = () => {
     }
   }, []);
 
-  function LockUnlockTournament() {
+  function getTournamentId() {
     let toumntId = tournamentId;
     if (!tournamentId) {
       toumntId = tournamentProps.tournamentList[0].id;
     }
-    if (!matchId) {
-      setMatchId(matchProps.matchList[0].id);
+    return toumntId;
+  }
+
+  function getMatchId() {
+    let mid = matchId;
+    if (!mid) {
+      mid = matchProps.matchList[0].id;
     }
+    return mid;
+  }
+
+  function LockUnlockTournament() {
+    const tid = getTournamentId();
+    const mid = getMatchId();
     if (lockStatus == 'Lock') {
-      lockTournament(toumntId, matchId);
+      lockTournament(tid, mid);
     } else {
-      unLockTournament(toumntId, matchId);
+      unLockTournament(tid, mid);
     }
   }
 
@@ -78,6 +94,68 @@ const AdminProcess = () => {
       />
     );
   }
+
+  function updateMatchScoreviaCric() {
+    updateplayerScoreCric(getMatchId());
+  }
+
+  function initMatchSquadviaCric() {
+    initmatchSquadCric(getMatchId());
+  }
+
+  function renderMatchProcessActionForTournament(
+    title: string,
+    actionBtn: string,
+    action: any
+  ) {
+    return (
+      <div className="innerProcessContainer">
+        {renderActionHeader(title)}
+        <Row>
+          <Col md={8}>{renderMatchDropDown()}</Col>
+          <Col>
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              onClick={() => {
+                action();
+              }}>
+              {actionBtn}
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
+  function renderUpdatePlayerScoreViaCric() {
+    const title = '** Update player SCore via Crick API';
+    const actionbtn = 'Update Live Score';
+    return (
+      <Fragment>
+        {renderMatchProcessActionForTournament(
+          title,
+          actionbtn,
+          updateMatchScoreviaCric
+        )}
+      </Fragment>
+    );
+  }
+
+  function renderInitMatchSquadViaCric() {
+    const title = '** Init Match Squad via Crick API';
+    const actionbtn = 'Init Match Squad';
+    return (
+      <Fragment>
+        {renderMatchProcessActionForTournament(
+          title,
+          actionbtn,
+          initMatchSquadviaCric
+        )}
+      </Fragment>
+    );
+  }
+
   function renderInitMatchForTournament() {
     return (
       <div className="innerProcessContainer">
@@ -89,11 +167,7 @@ const AdminProcess = () => {
               variant="outline-primary"
               className="mr-2"
               onClick={() => {
-                if (!matchId) {
-                  initUserMatchData(matchProps.matchList[0].id, 'match');
-                } else {
-                  initUserMatchData(matchId, 'match');
-                }
+                initUserMatchData(getMatchId(), 'match');
               }}>
               Init Match
             </Button>
@@ -114,11 +188,7 @@ const AdminProcess = () => {
               variant="outline-primary"
               className="mr-2"
               onClick={() => {
-                if (!matchId) {
-                  initUserMatchData(matchProps.matchList[0].id, 'user');
-                } else {
-                  initUserMatchData(matchId, 'user');
-                }
+                initUserMatchData(getMatchId(), 'user');
               }}>
               Init User
             </Button>
@@ -151,11 +221,7 @@ const AdminProcess = () => {
               variant="outline-primary"
               className="mr-2"
               onClick={() => {
-                if (!matchId) {
-                  statrCompleteMatch(matchProps.matchList[0].id, matchStatus);
-                } else {
-                  statrCompleteMatch(matchId, matchStatus);
-                }
+                statrCompleteMatch(getMatchId(), matchStatus);
               }}>
               Start/Complete Match
             </Button>
@@ -215,11 +281,7 @@ const AdminProcess = () => {
               variant="outline-primary"
               className="mr-2"
               onClick={() => {
-                if (!matchId) {
-                  processScoreByMatch(matchProps.matchList[0].id);
-                } else {
-                  processScoreByMatch(matchId);
-                }
+                processScoreByMatch(getMatchId());
               }}>
               Calculate Score
             </Button>
@@ -247,11 +309,7 @@ const AdminProcess = () => {
               variant="outline-primary"
               className="mr-2"
               onClick={() => {
-                if (!tournamentId) {
-                  processRanking(tournamentProps.tournamentList[0].id);
-                } else {
-                  processRanking(tournamentId);
-                }
+                processRanking(getTournamentId());
               }}>
               Calculate Ranking
             </Button>
@@ -270,6 +328,66 @@ const AdminProcess = () => {
     return <div className="headerProcess">Match Admin Process</div>;
   }
 
+  function renderTabActionBtn(actionName: string, title: string) {
+    const variant = tabName == actionName ? 'primary' : 'outline-primary';
+    return (
+      <Button
+        variant={variant}
+        className="mr-1 leagueTabMenuLink"
+        onClick={() => setTabName(actionName)}>
+        {title}
+      </Button>
+    );
+  }
+
+  function renderMatchActions() {
+    return (
+      <Form inline className="processMenuAction">
+        {renderTabActionBtn('beforematch', 'Match Start')}
+        {renderTabActionBtn('duringmatch', 'Live')}
+        {renderTabActionBtn('aftermatch', 'After Match')}
+      </Form>
+    );
+  }
+
+  function renderBeforematchComponent() {
+    return (
+      <div>
+        {renderLockUnLockTournamentAction()}
+        {renderMatchStartCompletedAction()}
+        {renderInitMatchForTournament()}
+        {renderInitMatchSquadViaCric()}
+        {renderInitUserForMatch()}
+      </div>
+    );
+  }
+
+  function renderduringmatchComponent() {
+    return <div>{renderUpdatePlayerScoreViaCric()}</div>;
+  }
+
+  function renderAftergmatchComponent() {
+    return (
+      <div>
+        {renderProcessScoreCalculationByMatch()}
+        {renderCalculateRanking()}
+      </div>
+    );
+  }
+
+  function renderProcessComponents() {
+    switch (tabName) {
+      case 'beforematch':
+        return renderBeforematchComponent();
+      case 'duringmatch':
+        return renderduringmatchComponent();
+      case 'aftermatch':
+        return renderAftergmatchComponent();
+      default:
+        return renderBeforematchComponent();
+    }
+  }
+
   return (
     <div className="processContainer">
       <LoadingOverlay
@@ -278,12 +396,8 @@ const AdminProcess = () => {
         text="Loading Process Details ...">
         {renderHeader()}
         {renderStatusMessage(processProps.hasError, processProps.statusMessage)}
-        {renderLockUnLockTournamentAction()}
-        {renderMatchStartCompletedAction()}
-        {renderInitMatchForTournament()}
-        {renderInitUserForMatch()}
-        {renderProcessScoreCalculationByMatch()}
-        {renderCalculateRanking()}
+        {renderMatchActions()}
+        {renderProcessComponents()}
       </LoadingOverlay>
     </div>
   );

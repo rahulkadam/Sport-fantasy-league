@@ -1,5 +1,6 @@
 import {useDispatch} from 'react-redux';
 import {
+  addExternalIdToMatch,
   createMatch,
   fetchAllMatchList,
   fetchCompletedMatchList,
@@ -118,6 +119,29 @@ const uploadMatchResultAction = () => {
           dispatch({
             type: CREATE_MATCH,
             message: 'Created successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: CREATE_MATCH_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
+export const addExternalIdToMatchAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    (matchId: number, externalId: any) => {
+      addExternalIdToMatch(matchId, externalId)
+        .then((data: any) => {
+          dispatch({
+            type: CREATE_MATCH,
+            message: 'Uploaded External Id successfully',
           });
         })
         .catch((error: any) => {

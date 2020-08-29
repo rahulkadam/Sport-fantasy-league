@@ -14,7 +14,7 @@ export function createMatch(requestObject: CreateMatchRequestObject) {
 }
 
 export function fetchAllMatchList() {
-  return Get('/fantasy/match/completed/list');
+  return Get('/fantasy/match/list');
 }
 
 export function fetchCompletedMatchList() {
@@ -44,5 +44,11 @@ export function uploadMatchResult(request: MatchResultObject) {
       team_winner_id: request.team_winner_id,
       matchPlayerId: request.matchPlayerId,
     },
+  });
+}
+
+export function addExternalIdToMatch(matchId: any, externalId: any) {
+  return Post('/fantasy/match/update/externalid', {
+    data: {matchId: matchId, externalId: externalId},
   });
 }

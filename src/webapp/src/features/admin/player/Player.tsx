@@ -1,13 +1,20 @@
 import React, {useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {PlayerDetails, CreatePlayer, UpdatePlayer} from './component';
+import {
+  PlayerDetails,
+  CreatePlayer,
+  UpdatePlayer,
+  UpdatePlayerExternalId,
+} from './component';
 import {
   fetchPlayerListAction,
   createPlayerAction,
   getPlayerData,
   addTeamToPlayerAction,
+  addExternalIdToPlayerAction,
 } from './redux';
 import {getTeamData, fetchTeamListAction} from '../SportTeam/redux';
+import './Player.styles.scss';
 
 const Player = () => {
   const dataProps = getPlayerData();
@@ -15,6 +22,7 @@ const Player = () => {
   const fetchPlayerList = fetchPlayerListAction();
   const fetchTeamList = fetchTeamListAction();
   const addTeamToPlayer = addTeamToPlayerAction();
+  const updateExternalIDToPlayer = addExternalIdToPlayerAction();
   const createPlayer = createPlayerAction();
   const tabName = 'playeroverview';
 
@@ -33,6 +41,15 @@ const Player = () => {
         teamList={teamDataProps.teamList}
         playerList={dataProps.playerList}
         loadTeamList={fetchTeamList}
+      />
+    );
+  }
+
+  function renderPlayerExternalId() {
+    return (
+      <UpdatePlayerExternalId
+        playerList={dataProps.playerList}
+        updateExternalId={updateExternalIDToPlayer}
       />
     );
   }
@@ -61,13 +78,18 @@ const Player = () => {
       title: 'Update Player',
       renderfunction: renderUpdatePlayer(),
     },
+    {
+      key: 'updateExternalId',
+      title: 'Update ExternalId',
+      renderfunction: renderPlayerExternalId(),
+    },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {
     const statusClassName = dataProps.hasError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
   return (
-    <div>
+    <div className="playerBackcontainer">
       {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>

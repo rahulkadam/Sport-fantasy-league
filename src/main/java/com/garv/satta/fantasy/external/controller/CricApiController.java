@@ -40,4 +40,11 @@ public class CricApiController {
         return "Score updated successfully from CricAPI for ," + matchId;
     }
 
+    @GetMapping(value = "/match/initiate/squad/{id}")
+    @ResponseBody
+    public String initiateSquadFromCricAPIByMatchId(@PathVariable(name = "id") Long matchId) {
+        cricMatchPlayerScoreService.initiateMatchPlayerSquadFromCricAPI(matchId);
+        return "Match Squad Initiated successfully from CricAPI for ," + matchId;
+    }
+
 }

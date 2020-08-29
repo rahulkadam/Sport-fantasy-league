@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.model.backoffice;
 
+import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.BaseDaoObject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,9 @@ public class Match extends BaseDaoObject {
     private DateTime matchTime;
 
     private Boolean status;
+
+    @Enumerated(EnumType.STRING)
+    private MatchStateEnum state;
 
     private Integer external_mid;
 

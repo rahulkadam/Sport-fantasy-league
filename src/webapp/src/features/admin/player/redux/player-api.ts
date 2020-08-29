@@ -19,3 +19,9 @@ export function addTeamToPlayer(playerId: number, teamId: number) {
     data: {addTo: playerId, add: teamId},
   });
 }
+
+export function addExternalIdToPlayer(playerId: any, externalId: any) {
+  return Post('/fantasy/player/update/externalid', {
+    data: {playerId: playerId, externalId: externalId},
+  });
+}

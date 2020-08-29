@@ -3,14 +3,15 @@ import DataTable from 'react-data-table-component';
 import {Col, Form, Row} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import PlayerMatchScoreModal from '../../../frontoffice/stats/components/PlayerMatchScoreModal';
-import {getTime} from '../../../../common/util';
-import {getShortNameByTeam} from '../../../../common/components/FantasyDropDown';
+import {getTime} from 'common/util';
+import {getShortNameByTeam} from 'common/components/FantasyDropDown';
 
 const MatchDetails = ({
   data,
   title,
   fetchMatchHistory,
   playerStats,
+  showExtraData,
 }: MatchDetailsProps) => {
   const [filterText, setFilterText] = React.useState('');
   const [showPlayerHistory, setShowPlayerHistory] = useState(false);
@@ -41,7 +42,8 @@ const MatchDetails = ({
     return (
       <div onClick={() => fetchPlayerHistoryList(row.id)}>
         {getShortNameByTeam(row.team_host_name)} Vs{' '}
-        {getShortNameByTeam(row.team_away_name)}({row.id})
+        {getShortNameByTeam(row.team_away_name)}
+        {showExtraData && <span>({row.id})</span>}
       </div>
     );
   }
@@ -89,6 +91,13 @@ const MatchDetails = ({
       selector: 'venue_name',
       sortable: true,
       right: true,
+    },
+    {
+      name: 'ExternalId',
+      selector: 'external_mid',
+      sortable: true,
+      right: true,
+      omit: !showExtraData,
     },
   ];
 

@@ -12,6 +12,12 @@ declare type MatchDetailsProps = {
   onRowSelected?: any;
   playerStats?: any;
   fetchMatchHistory?: any;
+  showExtraData?: boolean;
+};
+
+declare type UploadExternalIdProps = {
+  matchList?: any;
+  updateexternIdAction?: any;
 };
 
 declare type UploadMatchResultProps = {

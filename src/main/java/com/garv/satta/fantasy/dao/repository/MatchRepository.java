@@ -24,4 +24,6 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
 
     List<Match> findMatchesByStatus(Boolean status);
 
+    Match findFirstByMatchTimeGreaterThanEqual(DateTime currentTime);
+
 }

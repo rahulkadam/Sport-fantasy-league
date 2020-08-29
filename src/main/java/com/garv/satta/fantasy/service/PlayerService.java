@@ -1,10 +1,9 @@
 package com.garv.satta.fantasy.service;
 
-import com.garv.satta.fantasy.Constant.FantasyConstant;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dao.repository.TeamRepository;
 import com.garv.satta.fantasy.dto.PlayerDTO;
-import com.garv.satta.fantasy.dto.TeamDTO;
+import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
@@ -15,8 +14,8 @@ import com.garv.satta.fantasy.validation.PlayerValidator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
-import sun.net.www.content.text.Generic;
 
 import java.util.*;
 
@@ -54,6 +53,16 @@ public class PlayerService {
         validator.validatePlayerValue(player.getValue());
         player = playerRepository.save(player);
         return playerConverter.convertToDTO(player);
+    }
+
+    public void updateExternalPlayerId(RequestDTO dto) {
+        Long playerId = dto.getPlayerId();
+        Integer externalId = dto.getExternalId();
+        Player player = playerRepository.findPlayerById(playerId);
+        Assert.notNull(player,"Player id is Not Valid" + playerId );
+        Assert.notNull(externalId, "External Match id is not valid");
+        player.setExternalpid(externalId);
+        playerRepository.save(player);
     }
 
     public void addTeamToPlayer(Long playerId, Long teamId) {
