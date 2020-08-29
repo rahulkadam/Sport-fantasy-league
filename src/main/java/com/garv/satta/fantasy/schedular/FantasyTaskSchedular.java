@@ -34,7 +34,7 @@ public class FantasyTaskSchedular {
 
     private final String TASK_NAME="CRIC_API_TASK";
 
-    @Scheduled(fixedRate = 2000*60)
+    @Scheduled(fixedRate = 5000*60)
     public void scheduleFixedRateTask() {
         executeMatchDayTaskScheduler();
     }
