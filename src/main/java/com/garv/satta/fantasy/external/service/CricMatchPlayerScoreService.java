@@ -68,14 +68,15 @@ public class CricMatchPlayerScoreService {
             return;
         }
 
+        List<Integer> missingPlayerId = new ArrayList<>();
+
         List<MatchPlayerScore> matchPlayerScores = new ArrayList<>();
         playerScoreDTOList.stream().forEach(playerScore -> {
             Integer pid = playerScore.getPid();
             String name = playerScore.getName();
             Player player = playerRepository.findPlayerByNameOrExternalpid(name, pid);
             if (player == null) {
-                String msg = "CRIC_API_PLAYER_SCORE_UPDATE : Player Not found";
-                errorService.logMessage( msg, name + " " + pid);
+                missingPlayerId.add(pid);
                 return;
             }
             if (player.getExternalpid() == null) {
@@ -96,6 +97,10 @@ public class CricMatchPlayerScoreService {
             matchPlayerScores.add(matchPlayerScore);
         });
         repository.saveAll(matchPlayerScores);
+
+        if(CollectionUtils.isNotEmpty(missingPlayerId)) {
+            errorService.logMessage("PLAYER_NOT_AVAIABLE", missingPlayerId.toString());
+        }
     }
 
 

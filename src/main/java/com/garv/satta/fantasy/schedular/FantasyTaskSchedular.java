@@ -1,8 +1,10 @@
 package com.garv.satta.fantasy.schedular;
 
+import com.garv.satta.fantasy.dao.repository.TaskSchedularRepository;
 import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.external.service.CricMatchPlayerScoreService;
 import com.garv.satta.fantasy.model.backoffice.Match;
+import com.garv.satta.fantasy.model.monitoring.TaskSchedular;
 import com.garv.satta.fantasy.service.FantasyErrorService;
 import com.garv.satta.fantasy.service.MatchService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -27,13 +29,28 @@ public class FantasyTaskSchedular {
     @Autowired
     private FantasyErrorService fantasyErrorService;
 
-    // @Scheduled(fixedRate = 5000*60)
+    @Autowired
+    private TaskSchedularRepository repository;
+
+    private final String TASK_NAME="CRIC_API_TASK";
+
+    @Scheduled(fixedRate = 2000*60)
     public void scheduleFixedRateTask() {
         executeMatchDayTaskScheduler();
     }
 
     public void executeMatchDayTaskScheduler() {
         try {
+            TaskSchedular taskSchedular = repository.findTaskByName(TASK_NAME);
+            if (taskSchedular == null) {
+                repository.save(new TaskSchedular(TASK_NAME));
+                return;
+            }
+
+            Boolean taskStatus = taskSchedular.getIsActive();
+            if (taskStatus == null || !taskStatus) {
+                return;
+            }
             // executeInitiateMatchSquadForNextMatch();
             executeLiveMatchScoreTaskScheduler();
         } catch (Exception e) {
