@@ -38,7 +38,7 @@ public class NoticeController {
 
     @GetMapping(value = "/list")
     public List<FantasyNotice> getNoticeList() {
-        return repository.findAll();
+        return repository.findFantasyNoticeByIsActive(Boolean.TRUE);
     }
 
 

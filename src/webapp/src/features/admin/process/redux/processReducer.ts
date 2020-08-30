@@ -2,6 +2,7 @@ import {
   PROCESS_ACTION_COMPLETED,
   PROCESS_ACTION_ERROR,
   PROCESS_ACTION_START,
+  PROCESS_FETCH_NOTICE_LIST,
 } from './processConstants';
 
 const initialState: AdminProcess = {
@@ -9,6 +10,7 @@ const initialState: AdminProcess = {
   isLoading: false,
   hasError: false,
   statusMessage: '',
+  notice: [],
 };
 
 export default (
@@ -38,6 +40,13 @@ export default (
         isLoading: false,
         hasError: false,
         statusMessage: action.message,
+      };
+    case PROCESS_FETCH_NOTICE_LIST:
+      return {
+        ...state,
+        isLoading: false,
+        hasError: false,
+        notice: action.data,
       };
     default:
       return state;

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface FantasyNoticeRepository extends CrudRepository<FantasyNotice, Long> {
 
+    List<FantasyNotice> findFantasyNoticeByIsActive(Boolean status);
     List<FantasyNotice> findAll();
     FantasyNotice findNoticeById(Long id);
     FantasyNotice findFirstByIsActive(Boolean status);

@@ -16,6 +16,7 @@ import {
   PROCESS_ACTION_COMPLETED,
   PROCESS_ACTION_ERROR,
   PROCESS_ACTION_START,
+  PROCESS_FETCH_NOTICE_LIST,
 } from './processConstants';
 import {
   dispatchActionWrapper,
@@ -197,6 +198,75 @@ export const processScoreByMatchAction = () => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
             message: 'Match Score and Point calculation processed successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const fetchNoticeListAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (id: number) => {
+      fetchActiveNotice()
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_FETCH_NOTICE_LIST,
+            data: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const addNoticeAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (msg: string) => {
+      addNotice(msg)
+        .then(() => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message: 'Notice Added',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const disableNoticeAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (id: number) => {
+      removeNotice(id)
+        .then(() => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message: 'Notice Removed Successfully',
           });
         })
         .catch((error: any) => {

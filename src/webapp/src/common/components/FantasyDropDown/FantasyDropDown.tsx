@@ -12,7 +12,9 @@ const FantasyDropDown = ({onSelect, list, disabled}: FantasyDropDown) => {
             key={dropDownItem.id}
             value={dropDownItem.id}
             selected={isSelected}>
-            {dropDownItem.name || dropDownItem.description}
+            {dropDownItem.name ||
+              dropDownItem.description ||
+              dropDownItem.message}
           </option>
         );
       });

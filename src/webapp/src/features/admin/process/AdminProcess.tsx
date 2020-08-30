@@ -20,6 +20,7 @@ import {isListEmpty} from 'common/util';
 import {FantasyDropDown, StatusMessage} from 'common/components';
 import './AdminProcess.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
+import FantasyNotice from './components/FantasyNotice';
 
 const AdminProcess = () => {
   const processProps = getAdminProcessData();
@@ -346,6 +347,7 @@ const AdminProcess = () => {
         {renderTabActionBtn('beforematch', 'Match Start')}
         {renderTabActionBtn('duringmatch', 'Live')}
         {renderTabActionBtn('aftermatch', 'After Match')}
+        {renderTabActionBtn('notice', 'Manage Notice')}
       </Form>
     );
   }
@@ -375,6 +377,10 @@ const AdminProcess = () => {
     );
   }
 
+  function renderNotice() {
+    return <FantasyNotice {...processProps} />;
+  }
+
   function renderProcessComponents() {
     switch (tabName) {
       case 'beforematch':
@@ -383,6 +389,8 @@ const AdminProcess = () => {
         return renderduringmatchComponent();
       case 'aftermatch':
         return renderAftergmatchComponent();
+      case 'notice':
+        return renderNotice();
       default:
         return renderBeforematchComponent();
     }
