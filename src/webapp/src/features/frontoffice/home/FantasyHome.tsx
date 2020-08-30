@@ -21,7 +21,6 @@ import {checkUserAccess} from '../../Authentication/redux';
 import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
-import {Icon} from '../../../common/styles/Icon';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
