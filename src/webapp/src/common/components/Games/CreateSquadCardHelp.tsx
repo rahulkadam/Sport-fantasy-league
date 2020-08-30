@@ -1,9 +1,7 @@
 import React, {Fragment} from 'react';
-import {Card, Row, Col, Button, Image} from 'react-bootstrap';
+import {Card, Row, Col, Image} from 'react-bootstrap';
 import './GameCard.styles.scss';
-import history from 'common/config/history';
-import {isUserLogin} from '../../../API';
-import {leagueListBanner, playerListBanner} from '@logos/index';
+import {playerListBanner} from '@logos/index';
 
 const CreateSquadCardHelp = () => {
   function renderCreateSquadHelpCard() {

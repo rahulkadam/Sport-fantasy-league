@@ -6,8 +6,7 @@ import {Logo} from '..';
 import {getLogoNameByLeagueName} from '../FantasyDropDown';
 import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
 import {isUserLogin} from '../../../API';
-import {fantasyLogo, teamRCB} from '@logos/index';
-import {wrapText, wrapTextWithLength} from '../../util';
+import {wrapTextWithLength} from '../../util';
 
 const LeagueCard = (props: LeagueCardProps) => {
   const data = props.data;

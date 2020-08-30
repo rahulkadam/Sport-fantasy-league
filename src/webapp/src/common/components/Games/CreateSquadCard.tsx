@@ -14,11 +14,15 @@ const CreateSquadCard = () => {
           <Card.Text>
             <Row>
               <Col>
-                Use Credit of 100 to pick a squad of 11 players from the League.
+                Use Credit of{' '}
+                <span className="CardBoldText">
+                  100 to pick a squad of 11 players
+                </span>{' '}
+                from the League.
               </Col>
             </Row>
             <Row>
-              <Col>Play IPL Fantasy within limited Transfer</Col>
+              <Col>Play IPL Fantasy with limited Transfer</Col>
             </Row>
             <Row>
               <Col>
