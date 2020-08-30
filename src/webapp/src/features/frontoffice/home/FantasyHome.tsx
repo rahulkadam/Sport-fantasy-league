@@ -5,6 +5,7 @@ import {
   fetchUpComingMatchesAction,
   fetchPublicLeagueAction,
   getUserDashboardAction,
+  fetchFantasyNoticeAction,
 } from './redux';
 import './Home.styles.scss';
 import {isUserLogin} from 'API';
@@ -33,8 +34,11 @@ const FantasyHome = () => {
   const [isfetching, setIsFetching] = useState(false);
   const [showJoinLeagueModal, setShowPrivateLeagueModal] = useState(false);
   const joinPrivateLeague = joinLeagueAction();
+  const fantasyNotice = homeProps.notice;
+  const fetchNoticeAction = fetchFantasyNoticeAction();
 
   useEffect(() => {
+    fetchNoticeAction();
     isListEmpty(homeProps.leagueMatchesList) && fetchUpComingMatches();
     if (loginUser) {
       !dashboard.userTeamDTO && fetchDashboard();
@@ -213,7 +217,7 @@ const FantasyHome = () => {
         <UserHomePageBoard />
         {renderIPLImage()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
-        {renderStatusMessage(false, 'Match cancelled due to corona')}
+        {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
         {renderLiveMatchesSchedule()}
         {renderUpComingMatchesSchedule()}
         {loginUser && dashboard.userTeamDTO && renderUserTeamCard()}

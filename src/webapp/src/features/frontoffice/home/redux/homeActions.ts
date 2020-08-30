@@ -1,5 +1,6 @@
 import {useDispatch} from 'react-redux';
 import {
+  fetchFantasyNotice,
   fetchMostPickedPlayer,
   fetchPublicLeague,
   fetchTopPerformingPlayer,
@@ -16,6 +17,7 @@ import {
   GET_UPCOMING_MATCHES_LIST,
   FETCH_PUBLIC_LEAGUE,
   FETCH_DASHBOARD_DATA,
+  GET_FANTASY_NOTICE,
 } from './homeConstants';
 import {
   dispatchActionWrapper,
@@ -82,6 +84,30 @@ const fetchTopPerformerPlayerAction = () => {
         .then((data: any) => {
           dispatch({
             type: GET_TOP_PERFORMING_PLAYER_LIST,
+            data: data,
+          });
+          dispatch({type: ACTION_COMPLETED});
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: ACTION_ERROR,
+            errorMessage: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+const fetchFantasyNoticeAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    () => {
+      fetchFantasyNotice()
+        .then((data: any) => {
+          dispatch({
+            type: GET_FANTASY_NOTICE,
             data: data,
           });
           dispatch({type: ACTION_COMPLETED});
@@ -175,4 +201,5 @@ export {
   fetchMostScorerUserGloballyAction,
   fetchPublicLeagueAction,
   getUserDashboardAction,
+  fetchFantasyNoticeAction,
 };

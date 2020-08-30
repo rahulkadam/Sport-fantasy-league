@@ -5,6 +5,7 @@ import {
   GET_UPCOMING_MATCHES_LIST,
   FETCH_PUBLIC_LEAGUE,
   FETCH_DASHBOARD_DATA,
+  GET_FANTASY_NOTICE,
 } from './homeConstants';
 
 const initialState: HomeData = {
@@ -15,6 +16,7 @@ const initialState: HomeData = {
   topScoringPlayerList: [],
   publicLeagueList: [],
   dashboard: {},
+  notice: {},
 };
 
 export default (state: HomeData = initialState, action: any): HomeData => {
@@ -28,6 +30,11 @@ export default (state: HomeData = initialState, action: any): HomeData => {
       return {
         ...state,
         topScoringUserList: action.data,
+      };
+    case GET_FANTASY_NOTICE:
+      return {
+        ...state,
+        notice: action.data,
       };
     case GET_MOST_PICKED_PLAYER_LIST:
       return {
