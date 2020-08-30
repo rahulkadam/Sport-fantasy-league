@@ -42,9 +42,4 @@ public class MatchPlayerScoreCricDTO {
     private Integer stumped;
     private Integer runout;
     private Integer pointscore;
-
-    public MatchPlayerScoreCricDTO(Integer pid, String name) {
-        this.pid = pid;
-        this.name = name;
-    }
 }

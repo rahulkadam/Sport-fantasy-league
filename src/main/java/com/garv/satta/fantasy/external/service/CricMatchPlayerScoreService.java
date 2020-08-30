@@ -74,7 +74,10 @@ public class CricMatchPlayerScoreService {
         playerScoreDTOList.stream().forEach(playerScore -> {
             Integer pid = playerScore.getPid();
             String name = playerScore.getName();
-            Player player = playerRepository.findPlayerByNameOrExternalpid(name, pid);
+            Player player = null;
+            if (pid != null && name != null) {
+                player = playerRepository.findPlayerByNameOrExternalpid(name, pid);
+            }
             if (player == null) {
                 missingPlayerId.add(pid);
                 return;
@@ -102,6 +105,5 @@ public class CricMatchPlayerScoreService {
             errorService.logMessage("PLAYER_NOT_AVAIABLE", missingPlayerId.toString());
         }
     }
-
 
 }
