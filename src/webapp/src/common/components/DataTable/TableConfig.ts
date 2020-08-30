@@ -75,6 +75,12 @@ export const playerRowStyeForNew = [
       backgroundColor: '#4F91CD',
     },
   },
+  {
+    when: (row: any) => row,
+    style: {
+      minHeight: '50px',
+    },
+  },
 ];
 export const playerRowStyles = [
   {

@@ -14,6 +14,7 @@ import {
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import {minuscolor, pluscolor} from '@logos/index';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
+import {playerRowStyeForNew} from '../../../../common/components/DataTable/TableConfig';
 
 const TournamentPlayerList = ({
   data,
@@ -131,7 +132,8 @@ const TournamentPlayerList = ({
     {
       name: 'CREDITS',
       selector: 'value',
-      width: '10%',
+      width: '20%',
+      center: true,
       sortable: true,
       style: {'font-weight': 'bold'},
     },
@@ -236,13 +238,14 @@ const TournamentPlayerList = ({
           customStyles={customStyles}
           data={filteredRows}
           fixedHeader
-          fixedHeaderScrollHeight="400px"
+          fixedHeaderScrollHeight="480px"
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           striped
           highlightOnHover
           expandableRows={false}
+          conditionalRowStyles={playerRowStyeForNew}
           expandableRowsComponent={<ExpandPlayerRow />}
           clearSelectedRows={toggleCleared}
           selectableRowsHighlight={false}
