@@ -23,3 +23,7 @@ export function getUserDashboard() {
 export function fetchTopScoreUserGlobally() {
   return Get('/users/league/ranking/');
 }
+
+export function fetchFantasyNotice() {
+  return Get('/public/home/notice/active/list');
+}

@@ -7,5 +7,6 @@ export {
   fetchMostPickedPlayersAction,
   fetchPublicLeagueAction,
   getUserDashboardAction,
+  fetchFantasyNoticeAction,
 } from './homeActions';
 export * from './home-util';

@@ -41,17 +41,17 @@ export function processRanking(tournamentId: number) {
 }
 
 export function addNotice(notice: string) {
-  return Post('/fantasy/notice/add', {
+  return Post('/admin/notice/add', {
     data: {name: notice},
   });
 }
 
 export function fetchActiveNotice() {
-  return Get('/fantasy/notice/list/active/');
+  return Get('/admin/notice/list/');
 }
 
 export function removeNotice(noticeId: number) {
-  return Post('/fantasy/notice/disable', {
+  return Post('/admin/notice/remove', {
     data: {id: noticeId},
   });
 }

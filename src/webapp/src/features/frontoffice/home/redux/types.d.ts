@@ -6,4 +6,5 @@ declare type HomeData = {
   topScoringUserList?: any;
   publicLeagueList?: any;
   dashboard?: any;
+  notice?: any;
 };

@@ -3,4 +3,5 @@ declare type AdminProcess = {
   isLoading: boolean;
   hasError: boolean;
   statusMessage: string;
+  notice?: any;
 };
