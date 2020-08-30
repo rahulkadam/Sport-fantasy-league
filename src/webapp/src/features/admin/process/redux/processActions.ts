@@ -9,6 +9,7 @@ import {
   processRanking,
   removeNotice,
   statrCompleteMatch,
+  toggleTaskSchedularForScoreAPI,
   unLockTournament,
   updateMatchPlayerScoreFromCricAPI,
 } from './process-api';
@@ -267,6 +268,29 @@ export const disableNoticeAction = () => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
             message: 'Notice Removed Successfully',
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const toggleTaskSchedularAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    () => {
+      toggleTaskSchedularForScoreAPI()
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message: data,
           });
         })
         .catch((error: any) => {

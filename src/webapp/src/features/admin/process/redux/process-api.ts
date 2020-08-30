@@ -55,3 +55,7 @@ export function removeNotice(noticeId: number) {
     data: {id: noticeId},
   });
 }
+
+export function toggleTaskSchedularForScoreAPI() {
+  return Get('/admin/notice/taskschedular/toggle');
+}

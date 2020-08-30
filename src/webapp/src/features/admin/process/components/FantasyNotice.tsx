@@ -4,6 +4,7 @@ import {
   addNoticeAction,
   disableNoticeAction,
   fetchNoticeListAction,
+  toggleTaskSchedularAction,
 } from '../redux';
 import {Badge, Button, Col, FormControl, Row} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
@@ -12,6 +13,7 @@ const FantasyNotice = (props: AdminProcess) => {
   const addNotice = addNoticeAction();
   const disableNotice = disableNoticeAction();
   const fetchNotice = fetchNoticeListAction();
+  const toggleSchedularAction = toggleTaskSchedularAction();
   const noticeList = props.notice;
   const [noticeId, setNoticeId] = useState();
   const [message, setMessage] = useState('');
@@ -44,6 +46,26 @@ const FantasyNotice = (props: AdminProcess) => {
   function removeNotice() {
     const newNoticeId = noticeId || noticeList[0].id;
     disableNotice(newNoticeId);
+  }
+
+  function renderToggleTaskSchedular() {
+    return (
+      <div className="innerProcessContainer">
+        {renderActionHeader('Task Schedular Enable Disable')}
+        <Row>
+          <Col>
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              onClick={() => {
+                toggleSchedularAction();
+              }}>
+              Toggle Task Schedular
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
   }
 
   function renderRemoveNotice() {
@@ -100,6 +122,7 @@ const FantasyNotice = (props: AdminProcess) => {
     <div>
       {renderAddFantasyNotice()}
       {renderRemoveNotice()}
+      {renderToggleTaskSchedular()}
     </div>
   );
 };
