@@ -19,29 +19,26 @@ const HowToPlay = () => {
       logo: colorteam,
       title: 'Create Your Team',
       link: '/team',
-      textMsg:
-        'To Play Fantasy Team will need Team First, Please Create Team by following rules',
+      textMsg: 'Pick Players and Create Team',
     },
     {
       logo: colorground,
       title: 'Create/Join League',
       link: '/league',
       textMsg:
-        'Create league and Share code with Friends, Ask friends to join League. OR Join league create by Friends',
+        'Select or create your own league. Invite friends to join leagues',
     },
     {
       logo: colortransfer,
       title: 'Manage Transfer',
       link: '/transfers',
-      textMsg:
-        'Follow Tournament Matches and Change Team , bases on Match Schedule, Follow coming match and make transfer',
+      textMsg: 'Make Transfer wisely, as You will have limited transfer',
     },
     {
       logo: rankingblack,
-      title: 'Ranking with Fantasy Friends',
+      title: 'Ranking',
       link: '/league',
-      textMsg:
-        'Check Ranking and league score, Check your ranking in league with Friends',
+      textMsg: 'Check ranking in league with Friends/Sport Community',
     },
   ];
 
@@ -80,8 +77,10 @@ const HowToPlay = () => {
   function renderFantasyStep(step: any) {
     return (
       <Row>
-        <Col className="stepHeaderLogoCol">{renderLeftSide(step.logo)}</Col>
-        <Col className="stepHeaderContentCol">
+        <Col md={4} xs={5} sm={5} className="stepHeaderLogoCol">
+          {renderLeftSide(step.logo)}
+        </Col>
+        <Col md={4} xs={7} sm={7} className="stepHeaderContentCol">
           {renderRightSideSide(step.title, step.textMsg, step.link)}
         </Col>
       </Row>
@@ -103,9 +102,9 @@ const HowToPlay = () => {
   return (
     <div>
       {showAlert && renderLoginAlert()}
-      <Row className="headerRow justify-content-center">
-        <Col>
-          <h3>How to play Tournament Fantasy Cricket?</h3>
+      <Row>
+        <Col className="headerRow justify-content-center">
+          <h3>HOW TO PLAY</h3>
         </Col>
       </Row>
       {renderFantasyPlaySteps()}

@@ -155,7 +155,7 @@ const UserTeamPlayerDetails = ({
     {
       name: 'CREDITS',
       selector: 'value',
-      width: '10%',
+      width: '20%',
       center: true,
       sortable: true,
       style: {'font-weight': 'bold'},
@@ -234,7 +234,7 @@ const UserTeamPlayerDetails = ({
             columns={newColumns}
             customStyles={customStyles}
             fixedHeader
-            fixedHeaderScrollHeight="400px"
+            fixedHeaderScrollHeight="480px"
             data={filteredRows}
             subHeader
             highlightOnHover

@@ -70,22 +70,23 @@ const FantasyHome = () => {
     );
   }
 
+  function renderGoToButton(title: string, gotoUrl: string) {
+    return (
+      <Button
+        variant="link"
+        className="mr-1 homepageDataLink"
+        onClick={() => goto(gotoUrl)}>
+        {title}
+      </Button>
+    );
+  }
+
   function renderAuthUserDashboard() {
     return (
       <div>
         <Form inline>
-          <Button
-            variant="link"
-            className="mr-1 homepageDataLink"
-            onClick={() => goto('/league')}>
-            League
-          </Button>
-          <Button
-            variant="link"
-            className="mr-1 homepageDataLink"
-            onClick={() => goto('/team')}>
-            View Team
-          </Button>
+          {renderGoToButton('League', '/league')}
+          {renderGoToButton('View Team', '/team')}
           <Button
             variant="link"
             className="mr-1 homepageDataLink"
@@ -101,24 +102,9 @@ const FantasyHome = () => {
     return (
       <div>
         <Form inline>
-          <Button
-            variant="link"
-            className="mr-1 homepageDataLink"
-            onClick={() => goto('/helppage')}>
-            Help
-          </Button>
-          <Button
-            variant="link"
-            className="mr-1 homepageDataLink"
-            onClick={() => goto('/fixtures')}>
-            Fixtures
-          </Button>
-          <Button
-            variant="link"
-            className="mr-1 homepageDataLink"
-            onClick={() => goto('/statistics')}>
-            View Stats
-          </Button>
+          {renderGoToButton('Help', '/helppage')}
+          {renderGoToButton('Fixtures', '/Fixtures')}
+          {renderGoToButton('View Stats', '/statistics')}
         </Form>
       </div>
     );
@@ -128,7 +114,7 @@ const FantasyHome = () => {
     return (
       <Row>
         <Col>
-          <UserTeamCard data={homeProps.dashboard} />
+          <UserTeamCard data={dashboard} />
         </Col>
       </Row>
     );
@@ -227,10 +213,11 @@ const FantasyHome = () => {
         <UserHomePageBoard />
         {renderIPLImage()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
+        {renderStatusMessage(false, 'Match cancelled due to corona')}
         {renderLiveMatchesSchedule()}
         {renderUpComingMatchesSchedule()}
-        {loginUser && homeProps.dashboard.userTeamDTO && renderUserTeamCard()}
-        {!homeProps.dashboard.userTeamDTO && renderFantasyInfoCard()}
+        {loginUser && dashboard.userTeamDTO && renderUserTeamCard()}
+        {!dashboard.userTeamDTO && renderFantasyInfoCard()}
         {renderUserPublicLeagues()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}

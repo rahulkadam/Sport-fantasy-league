@@ -59,11 +59,26 @@ export const customShortStyles = {
   },
 };
 
+export const largeRowStyles = [
+  {
+    when: (row: any) => row,
+    style: {
+      minHeight: '60px',
+    },
+  },
+];
+
 export const playerRowStyeForNew = [
   {
     when: (row: any) => row.isNew,
     style: {
       backgroundColor: '#4F91CD',
+    },
+  },
+  {
+    when: (row: any) => row,
+    style: {
+      minHeight: '50px',
     },
   },
 ];

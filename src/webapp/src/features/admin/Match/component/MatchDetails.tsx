@@ -4,7 +4,12 @@ import {Col, Form, Row} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import PlayerMatchScoreModal from '../../../frontoffice/stats/components/PlayerMatchScoreModal';
 import {getTime} from 'common/util';
-import {getShortNameByTeam} from 'common/components/FantasyDropDown';
+import {
+  getLogoNameByTeam,
+  getShortNameByTeam,
+} from 'common/components/FantasyDropDown';
+import {largeRowStyles} from 'common/components/DataTable/TableConfig';
+import {Logo} from '../../../../common/components';
 
 const MatchDetails = ({
   data,
@@ -40,16 +45,20 @@ const MatchDetails = ({
   }
   function customName(row: any) {
     return (
-      <div onClick={() => fetchPlayerHistoryList(row.id)}>
+      <div
+        className="nameColumn"
+        onClick={() => fetchPlayerHistoryList(row.id)}>
+        <Logo logoSource={getLogoNameByTeam(row.team_host_name)} width="20" />
         {getShortNameByTeam(row.team_host_name)} Vs{' '}
         {getShortNameByTeam(row.team_away_name)}
+        <Logo logoSource={getLogoNameByTeam(row.team_away_name)} width="20" />
         {showExtraData && <span>({row.id})</span>}
       </div>
     );
   }
 
   function convertDateTime(row: any) {
-    return <div>{getTime(row.matchTime)}</div>;
+    return <div className="nameColumn">{getTime(row.matchTime)}</div>;
   }
 
   const columns = [
@@ -142,11 +151,14 @@ const MatchDetails = ({
           data={filteredRows}
           fixedHeader
           fixedHeaderScrollHeight="400px"
+          conditionalRowStyles={largeRowStyles}
           subHeader
           highlightOnHover
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           onRowClicked={onRowClickedAction}
+          defaultSortField="matchTime"
+          defaultSortAsc={true}
         />
       )}
     </div>

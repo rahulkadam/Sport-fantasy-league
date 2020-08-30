@@ -101,22 +101,25 @@ const UserTeam = () => {
     );
   }
 
+  function renderDarkBadge(value: any) {
+    return <Badge variant="dark">{value}</Badge>;
+  }
+
   function renderShowTransferOverview() {
     const availableBalance = userteamDataProps.currentUserTeamValue;
-    const statusValue = teamValid
-      ? {message: 'COMPLETE', type: 'success'}
-      : {message: 'INCOMPLETE', type: 'danger'};
+    const remainedTransfer = userteamDataProps.userteam.remained_Transfer;
+    const currentTransferChanges = userteamDataProps.currentTransferChanges;
     return (
       <div className="transferOverview">
         <Row className="nameColumn">
-          <Col>TRANSFER</Col>
-          <Col>CREDITS</Col>
-          <Col>CHANGES</Col>
+          <Col>Transfer</Col>
+          <Col>Credits</Col>
+          <Col>Changes</Col>
         </Row>
         <Row>
-          <Col>{userteamDataProps.userteam.remained_Transfer}</Col>
-          <Col>{availableBalance}</Col>
-          <Col>{userteamDataProps.currentTransferChanges}</Col>
+          <Col>{renderDarkBadge(remainedTransfer)}</Col>
+          <Col>{renderDarkBadge(availableBalance)}</Col>
+          <Col>{renderDarkBadge(currentTransferChanges)}</Col>
         </Row>
         <Row className="nameColumn">
           <Col>
@@ -212,26 +215,24 @@ const UserTeam = () => {
     );
   }
 
+  function renderPrimaryBtn(value: string, action: string) {
+    const isprimary = transferAction == action ? 'primary' : 'outline-primary';
+    return (
+      <Button
+        variant={isprimary}
+        className="mr-1 userTeamTabMenuLink"
+        onClick={() => setTransferAction(action)}>
+        {value}
+      </Button>
+    );
+  }
+
   function renderTeamTransferActions() {
     return (
       <div className="leagueAction">
         <Form inline>
-          <Button
-            variant={
-              transferAction == 'userteam' ? 'primary' : 'outline-primary'
-            }
-            className="mr-1 userTeamTabMenuLink"
-            onClick={() => setTransferAction('userteam')}>
-            Team View
-          </Button>
-          <Button
-            variant={
-              transferAction == 'playerList' ? 'primary' : 'outline-primary'
-            }
-            className="mr-1 userTeamTabMenuLink"
-            onClick={() => setTransferAction('playerList')}>
-            Player Selection
-          </Button>
+          {renderPrimaryBtn('Team View', 'userteam')}
+          {renderPrimaryBtn('Player Selection', 'playerList')}
         </Form>
       </div>
     );

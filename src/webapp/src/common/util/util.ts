@@ -1,3 +1,6 @@
+import {Badge} from 'react-bootstrap';
+import React from 'react';
+
 export function getIdFromSelectList(text: string, list: any[]) {
   let defaultId = text;
   if (!defaultId || defaultId.length == 0) {
@@ -115,8 +118,8 @@ export function getAutoPickTeam(list: any) {
 
 export function getTime(time: any) {
   const options = {
-    weekday: 'long',
-    month: 'long',
+    weekday: 'short',
+    month: 'short',
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
@@ -124,5 +127,17 @@ export function getTime(time: any) {
     hour12: true,
   };
   const dateTime = new Date(time);
-  return dateTime.toLocaleDateString('en-Us', options) + ' IST';
+  return dateTime.toLocaleDateString('en-Us', options);
+}
+
+export function wrapTextWithLength(value: string, length: number) {
+  if (value.length > length) {
+    const newValue = value.slice(0, length);
+    return newValue + '..';
+  }
+  return value;
+}
+
+export function wrapText(value: string) {
+  return wrapTextWithLength(value, 15);
 }

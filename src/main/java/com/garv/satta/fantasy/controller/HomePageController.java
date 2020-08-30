@@ -52,11 +52,6 @@ public class HomePageController {
         return leagueService.getLeagueByPublic();
     }
 
-    @GetMapping(value = "/user/dashboard")
-    public DashboardDTO getUserDashboard() {
-        return dashboardService.getUserDashboard();
-    }
-
     @GetMapping(value = "/matches/live")
     public List<MatchDTO> getLiveMatches() {
         return matchService.getLiveMatches();

@@ -6,7 +6,7 @@ import {Logo} from '..';
 import {getLogoNameByLeagueName} from '../FantasyDropDown';
 import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
 import {isUserLogin} from '../../../API';
-import {fantasyLogo, teamRCB} from '@logos/index';
+import {wrapTextWithLength} from '../../util';
 
 const LeagueCard = (props: LeagueCardProps) => {
   const data = props.data;
@@ -15,9 +15,25 @@ const LeagueCard = (props: LeagueCardProps) => {
   const joinLeague = joinLeagueAction();
   const title = !loginUser ? '' : data.publicLeague ? 'Public' : 'Private';
   const logoSource = getLogoNameByLeagueName(data.name);
+  const containerName = loginUser
+    ? 'leaguecardcontainerlogin'
+    : 'leaguecardcontainerNotLogin';
+
+  function successBadge(value: any) {
+    return <Badge variant="success">{value}</Badge>;
+  }
+
+  function renderUserRank() {
+    const userRank = data.userRank;
+    const totalUser = data.totalUserCount;
+    const rankBadge =
+      totalUser > 2 || totalUser / 2 > userRank ? 'danger' : 'success';
+    return <Badge variant={rankBadge}>{data.userRank} </Badge>;
+  }
+
   return (
     <div>
-      <Card className="leaguecardcontainer">
+      <Card className={containerName}>
         <Card.Body>
           <Card.Title className="publicLeague">
             {title} League{' '}
@@ -28,9 +44,20 @@ const LeagueCard = (props: LeagueCardProps) => {
               <Col>
                 <Row>
                   <Col>
-                    <Badge variant="success">{data.name}</Badge>
+                    <Badge variant="success">
+                      {wrapTextWithLength(data.name, 18)}
+                    </Badge>
                   </Col>
-                  {!data.publicLeague && <Col>Code : {data.leagueCode}</Col>}
+                  {!loginUser && (
+                    <Col className="CardBoldText">
+                      Playing Users: {successBadge(data.totalUserCount || 0)}
+                    </Col>
+                  )}
+                  {!data.publicLeague && (
+                    <Col className="CardBoldText">
+                      Code : {successBadge(data.leagueCode)}
+                    </Col>
+                  )}
                   {!data.userRank && loginUser && userteam && (
                     <Col>
                       <Button
@@ -41,38 +68,18 @@ const LeagueCard = (props: LeagueCardProps) => {
                     </Col>
                   )}
                 </Row>
-                <Row>
-                  <Col className="CardBoldText">
-                    Playing Users:{' '}
-                    <Badge variant="primary">{data.totalUserCount || 0}</Badge>
-                  </Col>
-                  <Col className="CardBoldText">
-                    {data.userRank && (
-                      <span>
-                        Your Rank :
-                        <Badge variant="success">{data.userRank}</Badge>
-                      </span>
-                    )}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    {!userteam && loginUser && (
-                      <Button
-                        variant="link"
-                        onClick={() => history.push('/team')}>
-                        Create Team and Join League
-                      </Button>
-                    )}
-                    {!userteam && !loginUser && (
-                      <Button
-                        variant="link"
-                        onClick={() => history.push('/login')}>
-                        Login and Join League
-                      </Button>
-                    )}
-                  </Col>
-                </Row>
+                {loginUser && (
+                  <Row>
+                    <Col className="CardBoldText">
+                      Playing Users: {successBadge(data.totalUserCount || 0)}
+                    </Col>
+                    <Col className="CardBoldText">
+                      {data.userRank && (
+                        <span>Your Rank :{renderUserRank()}</span>
+                      )}
+                    </Col>
+                  </Row>
+                )}
               </Col>
               <Col className="d-none d-md-block d-lg-none">
                 Join Public League and Play with Sport Community

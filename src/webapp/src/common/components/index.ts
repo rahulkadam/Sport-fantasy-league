@@ -13,3 +13,4 @@ export {default as UserTeamCard} from './Games/UserTeamCard';
 export {default as CreateSquadCard} from './Games/CreateSquadCard';
 export {default as JoinLeagueCard} from './Games/JoinLeagueCard';
 export {default as CreateSquadCardHelp} from './Games/CreateSquadCardHelp';
+export {default as FantasyInfoCard} from './Games/FantasyInfoCard';
