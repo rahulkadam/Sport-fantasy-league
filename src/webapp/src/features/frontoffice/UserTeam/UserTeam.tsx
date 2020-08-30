@@ -215,26 +215,24 @@ const UserTeam = () => {
     );
   }
 
+  function renderPrimaryBtn(value: string, action: string) {
+    const isprimary = transferAction == action ? 'primary' : 'outline-primary';
+    return (
+      <Button
+        variant={isprimary}
+        className="mr-1 userTeamTabMenuLink"
+        onClick={() => setTransferAction(action)}>
+        {value}
+      </Button>
+    );
+  }
+
   function renderTeamTransferActions() {
     return (
       <div className="leagueAction">
         <Form inline>
-          <Button
-            variant={
-              transferAction == 'userteam' ? 'primary' : 'outline-primary'
-            }
-            className="mr-1 userTeamTabMenuLink"
-            onClick={() => setTransferAction('userteam')}>
-            Team View
-          </Button>
-          <Button
-            variant={
-              transferAction == 'playerList' ? 'primary' : 'outline-primary'
-            }
-            className="mr-1 userTeamTabMenuLink"
-            onClick={() => setTransferAction('playerList')}>
-            Player Selection
-          </Button>
+          {renderPrimaryBtn('Team View', 'userteam')}
+          {renderPrimaryBtn('Player Selection', 'playerList')}
         </Form>
       </div>
     );

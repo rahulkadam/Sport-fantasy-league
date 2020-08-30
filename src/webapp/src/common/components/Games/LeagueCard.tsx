@@ -66,24 +66,6 @@ const LeagueCard = (props: LeagueCardProps) => {
                     )}
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    {!userteam && loginUser && (
-                      <Button
-                        variant="link"
-                        onClick={() => history.push('/team')}>
-                        Create Team and Join League
-                      </Button>
-                    )}
-                    {!userteam && !loginUser && (
-                      <Button
-                        variant="link"
-                        onClick={() => history.push('/login')}>
-                        Login and Join League
-                      </Button>
-                    )}
-                  </Col>
-                </Row>
               </Col>
               <Col className="d-none d-md-block d-lg-none">
                 Join Public League and Play with Sport Community
