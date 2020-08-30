@@ -8,7 +8,6 @@ import {
   LeagueCard,
 } from '../index';
 import PlayerScoreCard from './PlayerScoreCard';
-import LeagueRankingCardHelp from './LeagueRankingCardHelp';
 
 const GameCorousel = (props: GameCorouselProps) => {
   const type = props.type;

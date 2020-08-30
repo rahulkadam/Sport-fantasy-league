@@ -15,13 +15,16 @@ const LeagueCard = (props: LeagueCardProps) => {
   const joinLeague = joinLeagueAction();
   const title = !loginUser ? '' : data.publicLeague ? 'Public' : 'Private';
   const logoSource = getLogoNameByLeagueName(data.name);
+  const containerName = loginUser
+    ? 'leaguecardcontainerlogin'
+    : 'leaguecardcontainerNotLogin';
 
   function successBadge(value: any) {
     return <Badge variant="success">{value}</Badge>;
   }
   return (
     <div>
-      <Card className="leaguecardcontainer">
+      <Card className={containerName}>
         <Card.Body>
           <Card.Title className="publicLeague">
             {title} League{' '}
@@ -36,6 +39,11 @@ const LeagueCard = (props: LeagueCardProps) => {
                       {wrapTextWithLength(data.name, 18)}
                     </Badge>
                   </Col>
+                  {!loginUser && (
+                    <Col className="CardBoldText">
+                      Playing Users: {successBadge(data.totalUserCount || 0)}
+                    </Col>
+                  )}
                   {!data.publicLeague && (
                     <Col className="CardBoldText">
                       Code : {successBadge(data.leagueCode)}
@@ -51,20 +59,18 @@ const LeagueCard = (props: LeagueCardProps) => {
                     </Col>
                   )}
                 </Row>
-                <Row>
-                  <Col className="CardBoldText">
-                    Playing Users:{' '}
-                    <Badge variant="success">{data.totalUserCount || 0}</Badge>
-                  </Col>
-                  <Col className="CardBoldText">
-                    {data.userRank && (
-                      <span>
-                        Your Rank :
-                        <Badge variant="success">{data.userRank}</Badge>
-                      </span>
-                    )}
-                  </Col>
-                </Row>
+                {loginUser && (
+                  <Row>
+                    <Col className="CardBoldText">
+                      Playing Users: {successBadge(data.totalUserCount || 0)}
+                    </Col>
+                    <Col className="CardBoldText">
+                      {data.userRank && (
+                        <span>Your Rank :{successBadge(data.userRank)}</span>
+                      )}
+                    </Col>
+                  </Row>
+                )}
               </Col>
               <Col className="d-none d-md-block d-lg-none">
                 Join Public League and Play with Sport Community
