@@ -22,6 +22,15 @@ const LeagueCard = (props: LeagueCardProps) => {
   function successBadge(value: any) {
     return <Badge variant="success">{value}</Badge>;
   }
+
+  function renderUserRank() {
+    const userRank = data.userRank;
+    const totalUser = data.totalUserCount;
+    const rankBadge =
+      totalUser > 2 || totalUser / 2 > userRank ? 'danger' : 'success';
+    return <Badge variant={rankBadge}>{data.userRank} </Badge>;
+  }
+
   return (
     <div>
       <Card className={containerName}>
@@ -66,7 +75,7 @@ const LeagueCard = (props: LeagueCardProps) => {
                     </Col>
                     <Col className="CardBoldText">
                       {data.userRank && (
-                        <span>Your Rank :{successBadge(data.userRank)}</span>
+                        <span>Your Rank :{renderUserRank()}</span>
                       )}
                     </Col>
                   </Row>

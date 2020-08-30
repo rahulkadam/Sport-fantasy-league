@@ -59,6 +59,15 @@ export const customShortStyles = {
   },
 };
 
+export const leagueRowStyles = [
+  {
+    when: (row: any) => row.name,
+    style: {
+      minHeight: '60px',
+    },
+  },
+];
+
 export const playerRowStyeForNew = [
   {
     when: (row: any) => row.isNew,

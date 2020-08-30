@@ -1,9 +1,11 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import DataTable from 'react-data-table-component';
 import {customStyles} from 'common/components/DataTable';
+import {Row, Col, Badge} from 'react-bootstrap';
 import './LeagueComponent.styles.scss';
 import {Nav} from 'react-bootstrap';
 import LeagueMemberTeamDetails from './LeagueMemberTeamDetails';
+import {StatusMessage} from '../../../../common/components';
 
 const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
   const userList = data.leagueUserTeamDTOS;
@@ -78,7 +80,34 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
     );
   }
 
-  return <div className="expandLeagueContainer">{renderUserList()}</div>;
+  function renderLeagueDetails() {
+    return (
+      <div>
+        <Row>
+          <Col>
+            League Code : <Badge variant="success"> {data.leagueCode}</Badge>
+          </Col>
+        </Row>
+        {data.publicLeague && (
+          <Row>
+            <Col>
+              <StatusMessage
+                type="info"
+                text="Public League Member details is not avaialble"
+              />
+            </Col>
+          </Row>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="expandLeagueContainer">
+      {renderLeagueDetails()}
+      {renderUserList()}
+    </div>
+  );
 };
 
 export {ExpandLeagueRow};

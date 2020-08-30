@@ -21,6 +21,7 @@ import {checkUserAccess} from '../../Authentication/redux';
 import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
+import {Icon} from '../../../common/styles/Icon';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -213,6 +214,7 @@ const FantasyHome = () => {
         <UserHomePageBoard />
         {renderIPLImage()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
+        {renderStatusMessage(false, 'Match cancelled due to corona')}
         {renderLiveMatchesSchedule()}
         {renderUpComingMatchesSchedule()}
         {loginUser && dashboard.userTeamDTO && renderUserTeamCard()}

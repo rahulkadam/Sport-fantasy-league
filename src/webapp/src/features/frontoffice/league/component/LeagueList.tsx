@@ -1,20 +1,45 @@
 import React, {Fragment, useMemo} from 'react';
-import {Row, Col, Form} from 'react-bootstrap';
+import {Form, Badge} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandLeagueRow} from './ExpandLeagueRow';
-import {StatusMessage} from '../../../../common/components';
+import {Logo, StatusMessage} from 'common/components';
+import {lockcolor} from '@logos/index';
+import {leagueRowStyles} from 'common/components/DataTable/TableConfig';
+import './LeagueComponent.styles.scss';
 
 const LeagueList = (props: LeagueUserListProps) => {
   const userLeagueList: any = props.userleagueList || [];
   const [filterText, setFilterText] = React.useState('');
+
+  function customName(row: any) {
+    return (
+      <div className="leagueNameColumn">
+        {!row.publicLeague && <Logo logoSource={lockcolor} width="15" />}
+        {row.name}
+      </div>
+    );
+  }
+
+  function customRank(row: any) {
+    const userRank = row.userRank;
+    const totalUser = row.totalUserCount;
+    const rankBadge =
+      totalUser > 2 || totalUser / 2 > userRank ? 'danger' : 'success';
+    return (
+      <div className="leagueNameColumn">
+        <Badge variant={rankBadge}>{row.userRank} </Badge>
+      </div>
+    );
+  }
 
   const columns = [
     {
       name: 'NAME',
       selector: 'name',
       sortable: true,
-      center: true,
+      left: true,
+      cell: customName,
     },
     {
       name: 'USERS',
@@ -27,6 +52,7 @@ const LeagueList = (props: LeagueUserListProps) => {
       selector: 'userRank',
       sortable: true,
       center: true,
+      cell: customRank,
     },
     {
       name: 'CODE',
@@ -67,10 +93,11 @@ const LeagueList = (props: LeagueUserListProps) => {
             columns={columns}
             customStyles={customStyles}
             fixedHeader
-            fixedHeaderScrollHeight="400px"
+            fixedHeaderScrollHeight="500px"
             data={filteredRows}
             subHeader
             subHeaderComponent={renderCustomSearch}
+            conditionalRowStyles={leagueRowStyles}
             subHeaderAlign="left"
             striped
             highlightOnHover
@@ -82,6 +109,8 @@ const LeagueList = (props: LeagueUserListProps) => {
               />
             }
             expandOnRowClicked
+            defaultSortField="publicLeague"
+            defaultSortAsc={true}
           />
         )}
       </Fragment>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
+  faBookmark,
   faEdit,
   faEye,
   faMinusSquare,
@@ -22,6 +23,8 @@ const Icon = ({name, iconType, ...rest}: {[key: string]: any}) => {
         return faMinusSquare;
       case 'add':
         return faPlusSquare;
+      case 'lock':
+        return faBookmark;
       default:
         return faEye;
     }

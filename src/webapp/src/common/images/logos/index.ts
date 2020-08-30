@@ -22,6 +22,7 @@ const teamKKR = require('./iplteams/kkr-color.png');
 const teamCSK = require('./iplteams/csk-color.png');
 const teamRCB = require('./iplteams/rcb-color.png');
 const pluscolor = require('./action/plus-color.png');
+const lockcolor = require('./action/lock-color.png');
 const minuscolor = require('./action/minus-color.jpeg');
 const bannerPlayerBlue = require('./banner/player-bluebg.jpeg');
 const bannerComingsoon = require('./banner/comingsoonIPL.jpeg');
@@ -57,4 +58,5 @@ export {
   colorarr,
   colorbat,
   colorwk,
+  lockcolor,
 };
