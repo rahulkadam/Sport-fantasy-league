@@ -5,7 +5,7 @@ import {customStyles} from 'common/components/DataTable';
 import {ExpandLeagueRow} from './ExpandLeagueRow';
 import {Logo, StatusMessage} from 'common/components';
 import {lockcolor} from '@logos/index';
-import {leagueRowStyles} from 'common/components/DataTable/TableConfig';
+import {largeRowStyles} from 'common/components/DataTable/TableConfig';
 import './LeagueComponent.styles.scss';
 
 const LeagueList = (props: LeagueUserListProps) => {
@@ -97,7 +97,7 @@ const LeagueList = (props: LeagueUserListProps) => {
             data={filteredRows}
             subHeader
             subHeaderComponent={renderCustomSearch}
-            conditionalRowStyles={leagueRowStyles}
+            conditionalRowStyles={largeRowStyles}
             subHeaderAlign="left"
             striped
             highlightOnHover

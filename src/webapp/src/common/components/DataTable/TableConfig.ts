@@ -59,9 +59,9 @@ export const customShortStyles = {
   },
 };
 
-export const leagueRowStyles = [
+export const largeRowStyles = [
   {
-    when: (row: any) => row.name,
+    when: (row: any) => row,
     style: {
       minHeight: '60px',
     },

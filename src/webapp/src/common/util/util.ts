@@ -118,8 +118,8 @@ export function getAutoPickTeam(list: any) {
 
 export function getTime(time: any) {
   const options = {
-    weekday: 'long',
-    month: 'long',
+    weekday: 'short',
+    month: 'short',
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
@@ -127,7 +127,7 @@ export function getTime(time: any) {
     hour12: true,
   };
   const dateTime = new Date(time);
-  return dateTime.toLocaleDateString('en-Us', options) + ' IST';
+  return dateTime.toLocaleDateString('en-Us', options);
 }
 
 export function wrapTextWithLength(value: string, length: number) {

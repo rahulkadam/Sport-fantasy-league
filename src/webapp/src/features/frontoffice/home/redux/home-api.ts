@@ -17,7 +17,7 @@ export function fetchPublicLeague() {
 }
 
 export function getUserDashboard() {
-  return Get('/public/home/user/dashboard');
+  return Get('/private/home/user/dashboard');
 }
 
 export function fetchTopScoreUserGlobally() {

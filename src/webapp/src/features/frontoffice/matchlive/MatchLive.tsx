@@ -7,6 +7,7 @@ import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
+import {isListEmpty} from '../../../common/util';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -23,18 +24,28 @@ const MatchLive = () => {
   const [tabName, setTabName] = useState(defaultTabKey);
 
   function renderMatchStats() {
+    const isLiveMatchEmpty = isListEmpty(liveMatchProps.livematches);
     return (
       <div>
-        <StatusMessage
-          type="info"
-          text="Select below match to see Player scoring history From Live Match"
-        />
+        {!isLiveMatchEmpty && (
+          <StatusMessage
+            type="info"
+            text="Select below match to see Player scoring history From Live Match"
+          />
+        )}
         <MatchStats
           data={liveMatchProps.livematches}
           action={fetchMatchStats}
           playerStats={statsProps.playerStats}
           title="Match Player Stats"
         />
+
+        {isLiveMatchEmpty && (
+          <StatusMessage
+            type="error"
+            text="IPL live matches not present. Please check after some time"
+          />
+        )}
       </div>
     );
   }
