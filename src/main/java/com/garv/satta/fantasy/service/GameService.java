@@ -13,6 +13,7 @@ import com.garv.satta.fantasy.model.backoffice.Game;
 import com.garv.satta.fantasy.model.backoffice.PlayerCriteria;
 import com.garv.satta.fantasy.model.backoffice.TeamCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class GameService {
         return converter.convertToDTO(game);
     }
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public GameDTO findGameByName(String name) {
         Game game = repository.findGameByName(name);
         return converter.convertToFullDTO(game);

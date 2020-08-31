@@ -14,6 +14,7 @@ import com.garv.satta.fantasy.validation.TournamentValidator;
 import org.apache.poi.ss.usermodel.Row;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,11 +48,13 @@ public class MatchService {
     @Autowired
     private ExcelFileService excelFileService;
 
+    @Cacheable(cacheNames = "MatchCache" , keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getMatchList() {
         List<Match> matches = repository.findAll();
         return converter.convertToFullDTOList(matches);
     }
 
+    @Cacheable(cacheNames = "MatchCache" , keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getUpComingMatchList() {
         DateTime currentTime = new DateTime();
         List<Match> matches = repository.findUpcomingMatches(currentTime);

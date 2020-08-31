@@ -41,7 +41,9 @@ public class CricApiServiceHelper {
             List<PlayerCricDTO> playerCricDTOList = squad.getPlayers();
             playerCricDTOList.stream().forEach(player -> {
                 Integer pid = player.getPid();
-                MatchPlayerScoreCricDTO dto = new MatchPlayerScoreCricDTO(pid, player.getName());
+                MatchPlayerScoreCricDTO dto = new MatchPlayerScoreCricDTO();
+                dto.setPid(pid);
+                dto.setName(player.getName());
                 playerMapList.put(pid, dto);
             });
         });

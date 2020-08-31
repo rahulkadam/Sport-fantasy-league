@@ -14,6 +14,7 @@ import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -137,6 +138,7 @@ public class LeagueService {
         return leagueDTOS;
     }
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public List<LeagueDTO> getLeagueByPublic() {
         List<League> userLeagueList = repository.findLeagueByPublicLeague(true);
         return converter.convertToDTOList(userLeagueList);

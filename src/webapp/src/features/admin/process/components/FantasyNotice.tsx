@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {isListEmpty} from 'common/util';
 import {
   addNoticeAction,
+  clearCacheByNameAction,
   disableNoticeAction,
   fetchNoticeListAction,
   toggleTaskSchedularAction,
@@ -14,9 +15,16 @@ const FantasyNotice = (props: AdminProcess) => {
   const disableNotice = disableNoticeAction();
   const fetchNotice = fetchNoticeListAction();
   const toggleSchedularAction = toggleTaskSchedularAction();
+  const removeCache = clearCacheByNameAction();
   const noticeList = props.notice;
   const [noticeId, setNoticeId] = useState();
   const [message, setMessage] = useState('');
+  const [cacheName, setCacheName] = useState('');
+  const cacheNameList = [
+    {id: 'PlayerCache', name: 'PlayerCache'},
+    {id: 'MatchCache', name: 'MatchCache'},
+    {id: 'FantasyCache', name: 'FantasyCache'},
+  ];
 
   useEffect(() => {
     if (isListEmpty(noticeList)) {
@@ -118,11 +126,46 @@ const FantasyNotice = (props: AdminProcess) => {
     );
   }
 
+  function removeCachebyCacheName() {
+    const cache = cacheName || cacheNameList[0].id;
+    removeCache(cache);
+  }
+
+  function renderClearCacheByNameComponent() {
+    return (
+      <div className="innerProcessContainer">
+        {renderActionHeader('Clear Cache By Name')}
+        <Row>
+          <Col md={8}>
+            {' '}
+            <FantasyDropDown
+              list={cacheNameList}
+              onSelect={(value: any) => {
+                setCacheName(value);
+              }}
+            />
+          </Col>
+          <Col>
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              onClick={() => {
+                removeCachebyCacheName();
+              }}>
+              Remove Notice
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
   return (
     <div>
       {renderAddFantasyNotice()}
       {renderRemoveNotice()}
       {renderToggleTaskSchedular()}
+      {renderClearCacheByNameComponent()}
     </div>
   );
 };

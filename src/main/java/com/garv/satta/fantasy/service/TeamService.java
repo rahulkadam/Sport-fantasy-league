@@ -10,6 +10,7 @@ import com.garv.satta.fantasy.validation.TeamValidator;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +40,7 @@ public class TeamService {
     @Autowired
     private ExcelFileService excelFileService;
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public List<TeamDTO> getTeams() {
         List<Team> teamList = (List) teamRepository.findAll();
         return converter.convertToFullDTOList(teamList);

@@ -7,6 +7,7 @@ import com.garv.satta.fantasy.dto.converter.TournamentConverter;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -20,6 +21,7 @@ public class TournamentService {
     @Autowired
     private TournamentConverter tournamentConverter;
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public List<TournamentDTO> getTournamentList() {
         List<Tournament> tournamentList = tournamentRepository.findAll();
         return tournamentConverter.convertToFullDTOList(tournamentList);
@@ -38,11 +40,13 @@ public class TournamentService {
         return tournamentConverter.convertToDTO(tournament);
     }
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public TournamentDTO getTournamentById(Long id) {
         Tournament tournament = tournamentRepository.findTournamentById(id);
         return tournamentConverter.convertToDTO(tournament);
     }
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public TournamentDTO getTournamentByName(String name) {
         Tournament tournament = tournamentRepository.findTournamentByName(name);
         return tournamentConverter.convertToDTO(tournament);
