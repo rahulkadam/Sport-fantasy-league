@@ -13,6 +13,7 @@ import com.garv.satta.fantasy.model.backoffice.Team;
 import com.garv.satta.fantasy.validation.PlayerValidator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,7 @@ public class PlayerService {
     @Autowired
     private ExcelFileService excelFileService;
 
+    @Cacheable(cacheNames = "PlayerCache" , keyGenerator = "customKeyGenerator")
     public List<PlayerDTO> getPlayerList() {
         List<Player> playerList = playerRepository.findAll();
         return playerConverter.convertToFullDTOList(playerList);

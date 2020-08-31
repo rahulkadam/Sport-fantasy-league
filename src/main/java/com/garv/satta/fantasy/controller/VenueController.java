@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.controller;
 import com.garv.satta.fantasy.dto.VenueDTO;
 import com.garv.satta.fantasy.service.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

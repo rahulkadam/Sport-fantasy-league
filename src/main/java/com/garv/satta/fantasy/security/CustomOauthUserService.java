@@ -4,8 +4,7 @@ import com.garv.satta.fantasy.dao.repository.UserRepository;
 import com.garv.satta.fantasy.dto.UserDTO;
 import com.garv.satta.fantasy.dto.converter.UserConverter;
 import com.garv.satta.fantasy.model.frontoffice.User;
-import com.google.api.client.json.webtoken.JsonWebSignature;
-import com.google.auth.oauth2.TokenVerifier;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -67,38 +66,34 @@ public class CustomOauthUserService extends OidcUserService {
 
     public OAuth2User findUserByToken(String token) {
 
-        String email = fantasyTokenService.verifyToken(token);
+        Claims claims = fantasyTokenService.verifyToken(token);
+        String email = (String) claims.get("sub");
+        Long userId = Long.valueOf((Integer)claims.get("id"));
+        String role = (String) claims.get("role");
+
         if (email == null) {
             return null;
         }
-        OAuth2User oidcUser = getUserForAuthentication(email);
+        OAuth2User oidcUser = getUserForAuthentication(email, userId, role);
         return oidcUser;
     }
 
-    private OAuth2User getUserForAuthentication(String email) {
-        User user = findUserByEmail(email);
+    private OAuth2User getUserForAuthentication(String email, Long userId, String role) {
+        User user;
+        if (userId == null && email == null) {
+            user = findUserByEmail(email);
+        } else {
+            user = new User(userId, email);
+        }
 
         Map<String, Object> userAttributes = new HashMap<>();
         Set<GrantedAuthority> authorities = new LinkedHashSet<>();
 
         userAttributes.put("email", user.getEmail());
-        userAttributes.put("name", user.getName());
         userAttributes.put("id" , user.getId());
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        authorities.add(new SimpleGrantedAuthority(role));
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         OAuth2User oidcUser = new DefaultOAuth2User(authorities, userAttributes, "email");
         return oidcUser;
     }
-
-    /**
-    public String verifyToken(String token) {
-        TokenVerifier tokenVerifier = TokenVerifier.newBuilder().build();
-        try {
-            JsonWebSignature jsonWebSignature = tokenVerifier.verify(token);
-            String email = (String) jsonWebSignature.getPayload().get("email");
-            return email;
-        } catch (TokenVerifier.VerificationException e) {
-            return null;
-        }
-    }*/
 }

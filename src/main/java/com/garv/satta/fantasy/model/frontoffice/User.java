@@ -36,4 +36,9 @@ public class User extends BaseDaoObject {
     public User(Long id) {
         super(id);
     }
+
+    public User(Long id, String email) {
+        super(id);
+        this.email = email;
+    }
 }
