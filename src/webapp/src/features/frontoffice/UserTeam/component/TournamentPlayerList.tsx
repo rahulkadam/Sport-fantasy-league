@@ -1,11 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import DataTable from 'react-data-table-component';
-import {
-  Form,
-  Row,
-  Col,
-  Button,
-} from 'react-bootstrap';
+import {Form, Row, Col, Button} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {isListEmpty, returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';

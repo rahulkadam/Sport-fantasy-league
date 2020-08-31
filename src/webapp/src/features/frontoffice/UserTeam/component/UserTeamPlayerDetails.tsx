@@ -1,12 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
-import {
-  Form,
-  Button,
-  Badge,
-  Row,
-  Col,
-} from 'react-bootstrap';
+import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import '../UserTeam.styles.scss';
