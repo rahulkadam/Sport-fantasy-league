@@ -70,7 +70,7 @@ const MatchLive = () => {
     return (
       <Form inline className="statsAction">
         <Button
-          variant={tabName == 'matchstats' ? 'primary' : 'outline-primary'}
+          variant={tabName == 'matchstats' ? 'info' : 'outline-info'}
           className="mr-2"
           onClick={() => setTabName('matchstats')}>
           Live Match

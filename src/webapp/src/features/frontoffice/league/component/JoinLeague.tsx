@@ -22,7 +22,7 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
   return (
     <div className="createLeagueContainer">
       <div className="mb-3">
-        <StatusMessage type={'primary'} text={joinleageMsg} />
+        <StatusMessage type={'info'} text={joinleageMsg} />
         <Form.Control
           value={leagueCode}
           placeholder="IPL League Code"
@@ -33,7 +33,7 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
       </div>
       <div className="createLeagueBtn">
         <Button
-          variant={isInvalid ? 'secondary' : 'primary'}
+          variant={isInvalid ? 'secondary' : 'info'}
           onClick={() => joinLeague()}
           disabled={isInvalid}>
           Join League

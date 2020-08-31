@@ -216,7 +216,7 @@ const UserTeam = () => {
   }
 
   function renderPrimaryBtn(value: string, action: string) {
-    const isprimary = transferAction == action ? 'primary' : 'outline-primary';
+    const isprimary = transferAction == action ? 'info' : 'outline-info';
     return (
       <Button
         variant={isprimary}
@@ -229,7 +229,7 @@ const UserTeam = () => {
 
   function renderTeamTransferActions() {
     return (
-      <div className="leagueAction">
+      <div className="userTeamAction">
         <Form inline>
           {renderPrimaryBtn('Team View', 'userteam')}
           {renderPrimaryBtn('Player Selection', 'playerList')}

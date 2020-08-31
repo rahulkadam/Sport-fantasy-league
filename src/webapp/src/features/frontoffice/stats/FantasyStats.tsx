@@ -125,29 +125,24 @@ const FantasyStats = () => {
     return component.renderfunction || <div></div>;
   }
 
+  function renderActionBtn(value: string, action: string) {
+    const isprimary = tabName == action ? 'info' : 'outline-info';
+    return (
+      <Button
+        variant={isprimary}
+        className="mr-2"
+        onClick={() => setTabName(action)}>
+        {value}
+      </Button>
+    );
+  }
+
   function renderStatsActions() {
     return (
       <Form inline className="statsAction">
-        <Button
-          variant={tabName == 'matchstats' ? 'primary' : 'outline-primary'}
-          className="mr-2"
-          onClick={() => setTabName('matchstats')}>
-          Match
-        </Button>
-        <Button
-          variant={tabName == 'playerstats' ? 'primary' : 'outline-primary'}
-          className="mr-2"
-          onClick={() => setTabName('playerstats')}>
-          Player
-        </Button>
-        {userLogin && (
-          <Button
-            variant={tabName == 'userstats' ? 'primary' : 'outline-primary'}
-            className="mr-2"
-            onClick={() => setTabName('userstats')}>
-            Your Stats
-          </Button>
-        )}
+        {renderActionBtn('Match', 'matchstats')}
+        {renderActionBtn('Player', 'playerstats')}
+        {userLogin && renderActionBtn('Your Stats', 'userstats')}
       </Form>
     );
   }

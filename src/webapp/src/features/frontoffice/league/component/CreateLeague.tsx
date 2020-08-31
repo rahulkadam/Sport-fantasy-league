@@ -53,7 +53,7 @@ const CreateLeague = ({
   return (
     <div className="createLeagueContainer">
       <div className="mb-3">
-        <StatusMessage type={'primary'} text={createleagueMsg} />
+        <StatusMessage type={'info'} text={createleagueMsg} />
         <Row>
           <Col>
             <FantasyDropDown
@@ -77,7 +77,7 @@ const CreateLeague = ({
         </Row>
       </div>
       <Button
-        variant={isInvalid ? 'secondary' : 'primary'}
+        variant={isInvalid ? 'secondary' : 'info'}
         onClick={() => createLeagueAction()}
         disabled={isInvalid}>
         Create League

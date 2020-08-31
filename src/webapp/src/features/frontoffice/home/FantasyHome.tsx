@@ -77,7 +77,7 @@ const FantasyHome = () => {
   function renderGoToButton(title: string, gotoUrl: string) {
     return (
       <Button
-        variant="link"
+        variant="outline-info"
         className="mr-1 homepageDataLink"
         onClick={() => goto(gotoUrl)}>
         {title}
@@ -87,15 +87,15 @@ const FantasyHome = () => {
 
   function renderAuthUserDashboard() {
     return (
-      <div>
+      <div className="secondaryMenu">
         <Form inline>
           {renderGoToButton('League', '/league')}
           {renderGoToButton('View Team', '/team')}
           <Button
-            variant="link"
+            variant="outline-info"
             className="mr-1 homepageDataLink"
             onClick={() => setShowPrivateLeagueModal(true)}>
-            Private League
+            Join League
           </Button>
         </Form>
       </div>
@@ -104,7 +104,7 @@ const FantasyHome = () => {
 
   function renderUnAuthUserDashboard() {
     return (
-      <div>
+      <div className="secondaryMenu">
         <Form inline>
           {renderGoToButton('Help', '/helppage')}
           {renderGoToButton('Fixtures', '/Fixtures')}
