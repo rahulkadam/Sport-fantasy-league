@@ -50,7 +50,7 @@ public class GameService {
         return converter.convertToDTO(game);
     }
 
-    @Cacheable(cacheNames = "GameCache" , keyGenerator = "customKeyGenerator")
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public GameDTO findGameByName(String name) {
         Game game = repository.findGameByName(name);
         return converter.convertToFullDTO(game);
