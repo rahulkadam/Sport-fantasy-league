@@ -1,6 +1,11 @@
 import React, {useState, useMemo} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Row, Col, Badge, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {
+  Form,
+  Row,
+  Col,
+  Button,
+} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {isListEmpty, returnMapFromList} from 'common/util';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
@@ -12,7 +17,6 @@ import {
   teamListWithALl,
 } from 'common/components/FantasyDropDown';
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
-import {minuscolor, pluscolor} from '@logos/index';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 import {playerRowStyeForNew} from '../../../../common/components/DataTable/TableConfig';
 
@@ -56,6 +60,11 @@ const TournamentPlayerList = ({
   }
 
   function onRowClickedAction(row: any, e: any) {
+    console.log('row clicked');
+    // fetchPlayerHistoryList(row.id);
+  }
+
+  function fetchPlayerData(row: any) {
     fetchPlayerHistoryList(row.id);
   }
 
@@ -64,7 +73,7 @@ const TournamentPlayerList = ({
       <div
         className="nameColumn"
         onClick={() => {
-          onRowClickedAction(row, '');
+          fetchPlayerData(row);
         }}>
         {row.name}
         <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
@@ -84,17 +93,14 @@ const TournamentPlayerList = ({
   }
 
   function addAction(row: any) {
-    const placement = 'add player to team';
     return (
-      <div>
-        <OverlayTrigger
-          key={placement}
-          placement="left"
-          overlay={<Tooltip id={`tooltip-${placement}`}>{placement}</Tooltip>}>
-          <span onClick={() => onRowSelected([row])} className="removeIcon">
-            <Logo logoSource={pluscolor} width="20" />
-          </span>
-        </OverlayTrigger>
+      <div onClick={() => onRowSelected([row])} className="removeIcon">
+        <Button
+          size={'sm'}
+          variant="outline-success"
+          onClick={() => onRowSelected([row])}>
+          +
+        </Button>
       </div>
     );
   }

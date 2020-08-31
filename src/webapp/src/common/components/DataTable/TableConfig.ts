@@ -73,10 +73,11 @@ export const playerRowStyeForNew = [
     when: (row: any) => row.isNew,
     style: {
       backgroundColor: '#4F91CD',
+      minHeight: '50px',
     },
   },
   {
-    when: (row: any) => row,
+    when: (row: any) => !row.isNew,
     style: {
       minHeight: '50px',
     },
