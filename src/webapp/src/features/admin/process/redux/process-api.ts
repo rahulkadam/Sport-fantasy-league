@@ -59,3 +59,9 @@ export function removeNotice(noticeId: number) {
 export function toggleTaskSchedularForScoreAPI() {
   return Get('/admin/notice/taskschedular/toggle');
 }
+
+export function clearCacheByName(cacheName: string) {
+  return Post('/admin/cache/clearbyname', {
+    data: {name: cacheName},
+  });
+}

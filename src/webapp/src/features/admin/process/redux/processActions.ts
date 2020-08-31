@@ -1,6 +1,7 @@
 import {useDispatch} from 'react-redux';
 import {
   addNotice,
+  clearCacheByName,
   fetchActiveNotice,
   initiateMatchSquadFromCricAPI,
   initUserMatchForTournament,
@@ -287,6 +288,29 @@ export const toggleTaskSchedularAction = () => {
     dispatchAction(dispatch, PROCESS_ACTION_START),
     () => {
       toggleTaskSchedularForScoreAPI()
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const clearCacheByNameAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (cacheName: string) => {
+      clearCacheByName(cacheName)
         .then((data: any) => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
