@@ -25,7 +25,7 @@ const LeagueList = (props: LeagueUserListProps) => {
     const userRank = row.userRank;
     const totalUser = row.totalUserCount;
     const rankBadge =
-      totalUser > 2 || totalUser / 2 > userRank ? 'danger' : 'success';
+      totalUser < 3 || totalUser / 2 > userRank ? 'success' : 'danger';
     return (
       <div className="leagueNameColumn">
         <Badge variant={rankBadge}>{row.userRank} </Badge>

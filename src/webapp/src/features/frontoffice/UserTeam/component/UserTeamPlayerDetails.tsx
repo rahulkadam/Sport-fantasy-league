@@ -1,14 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
-import {
-  Form,
-  Button,
-  Badge,
-  Row,
-  Col,
-  OverlayTrigger,
-  Tooltip,
-} from 'react-bootstrap';
+import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import '../UserTeam.styles.scss';
@@ -16,7 +8,6 @@ import {FantasyDropDown, Logo} from 'common/components';
 import {renderLogoByPLayerType} from '../redux';
 import {isListEmpty} from 'common/util';
 import {getLogoNameByTeam} from 'common/components/FantasyDropDown';
-import {minuscolor} from '@logos/index';
 import {playerRowStyeForNew} from 'common/components/DataTable/TableConfig';
 import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
@@ -93,18 +84,22 @@ const UserTeamPlayerDetails = ({
     );
   }
 
+  /**
+   *
+   <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
+   <Logo logoSource={minuscolor} width="20" />
+   </span>
+   * @param row
+   */
   function removeAction(row: any) {
-    const placement = 'remove Player from team';
     return (
-      <div>
-        <OverlayTrigger
-          key={placement}
-          placement="left"
-          overlay={<Tooltip id={`tooltip-${placement}`}>{placement}</Tooltip>}>
-          <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
-            <Logo logoSource={minuscolor} width="20" />
-          </span>
-        </OverlayTrigger>
+      <div onClick={() => onRemoveRowAction(row)} className="removeIcon">
+        <Button
+          size={'sm'}
+          variant="outline-danger"
+          onClick={() => onRemoveRowAction(row)}>
+          X
+        </Button>
       </div>
     );
   }
@@ -234,7 +229,7 @@ const UserTeamPlayerDetails = ({
             columns={newColumns}
             customStyles={customStyles}
             fixedHeader
-            fixedHeaderScrollHeight="480px"
+            fixedHeaderScrollHeight="680px"
             data={filteredRows}
             subHeader
             highlightOnHover
@@ -243,8 +238,8 @@ const UserTeamPlayerDetails = ({
             subHeaderAlign="left"
             expandableRows={false}
             expandableRowsComponent={<ExpandPlayerRow />}
-            defaultSortField="teamsNameList"
-            onRowClicked={onRowClickedAction}
+            defaultSortField="isNew"
+            defaultSortAsc={true}
           />
         )}
       </LoadingOverlay>

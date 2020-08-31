@@ -28,6 +28,7 @@ import PlayerTypeCountSummary from '../UserTeam/component/common/PlayerTypeCount
 import {fetchPlayerStatsListAction, getStatsProps} from '../stats/redux';
 import TeamCriteria from '../UserTeam/component/common/TeamCriteria';
 import {getCommonData} from '../../common/redux';
+import Helmet from 'react-helmet';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -216,7 +217,7 @@ const UserTeam = () => {
   }
 
   function renderPrimaryBtn(value: string, action: string) {
-    const isprimary = transferAction == action ? 'primary' : 'outline-primary';
+    const isprimary = transferAction == action ? 'info' : 'outline-info';
     return (
       <Button
         variant={isprimary}
@@ -229,7 +230,7 @@ const UserTeam = () => {
 
   function renderTeamTransferActions() {
     return (
-      <div className="leagueAction">
+      <div className="userTeamAction">
         <Form inline>
           {renderPrimaryBtn('Team View', 'userteam')}
           {renderPrimaryBtn('Player Selection', 'playerList')}
@@ -340,6 +341,9 @@ const UserTeam = () => {
         active={configProps.isLoading}
         spinner
         text="Loading User Team Details ...">
+        <Helmet>
+          <title>Your Fantasy Team IPL 20</title>
+        </Helmet>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}
         {tabName == 'teamDetails' && renderTeamDetails()}

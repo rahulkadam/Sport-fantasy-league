@@ -17,6 +17,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import {Button, Form} from 'react-bootstrap';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from '../../../common/util';
+import Helmet from 'react-helmet';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -53,7 +54,7 @@ const League = () => {
   });
 
   function renderTabActionBtn(actionName: string, title: string) {
-    const variant = tabName == actionName ? 'primary' : 'outline-primary';
+    const variant = tabName == actionName ? 'info' : 'outline-info';
     return (
       <Button
         variant={variant}
@@ -129,6 +130,9 @@ const League = () => {
         active={configProps.isLoading}
         spinner
         text="Loading League Details ...">
+        <Helmet>
+          <title>IPL Leagues : public/private</title>
+        </Helmet>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}
         {renderLeagueActions()}

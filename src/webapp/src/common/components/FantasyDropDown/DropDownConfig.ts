@@ -11,6 +11,7 @@ import {
 
 export const countryList = [
   {id: 'INDIA', name: 'INDIA'},
+  {id: 'AUSTRALIA', name: 'AUSTRALIA'},
   {id: 'NEW ZEALAND', name: 'NEW ZEALAND'},
   {id: 'ENGLAND', name: 'ENGLAND'},
   {id: 'SRILANKA', name: 'SRILANKA'},
