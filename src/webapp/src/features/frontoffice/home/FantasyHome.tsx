@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import FantasyHelpContent from './components/FantasyHelpContent';
 import {
   getHomeData,
   fetchUpComingMatchesAction,
@@ -11,7 +10,7 @@ import './Home.styles.scss';
 import {isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
 import HowToPlay from './components/HowToPlay';
-import {Form, Button, Row, Col, Carousel, Image} from 'react-bootstrap';
+import {Form, Button, Row, Col, Image} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
@@ -22,6 +21,7 @@ import {checkUserAccess} from '../../Authentication/redux';
 import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
+import Helmet from 'react-helmet';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -212,6 +212,9 @@ const FantasyHome = () => {
         active={configProps.isLoading}
         spinner
         text="Loading Home Details ...">
+        <Helmet>
+          <title>Home - IPL Fantasy</title>
+        </Helmet>
         {renderJoinPrivateLeagueModal()}
         {checkUserAccess()}
         <UserHomePageBoard />

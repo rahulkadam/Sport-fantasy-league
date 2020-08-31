@@ -1,6 +1,5 @@
 declare module 'react-loading-overlay';
 declare module 'react-helmet';
-declare module 'react-helmet';
 declare module 'redux-persist/lib/storage';
 declare module 'connected-react-router';
 declare module 'react-datetime-picker';

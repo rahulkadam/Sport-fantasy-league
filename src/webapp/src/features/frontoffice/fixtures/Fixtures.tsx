@@ -7,6 +7,7 @@ import {isListEmpty} from 'common/util';
 import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 import {fetchUpComingMatchesAction, getHomeData} from '../home/redux';
 import {getCommonData} from '../../common/redux';
+import Helmet from 'react-helmet';
 
 const Fixtures = () => {
   const homeProps = getHomeData();
@@ -47,6 +48,9 @@ const Fixtures = () => {
         active={configProps.isLoading}
         spinner
         text="Loading Fixture Details ...">
+        <Helmet>
+          <title>IPL-20 Fixture</title>
+        </Helmet>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {renderMatchListView()}
       </LoadingOverlay>
