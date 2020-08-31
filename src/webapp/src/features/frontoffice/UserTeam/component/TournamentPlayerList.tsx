@@ -239,7 +239,7 @@ const TournamentPlayerList = ({
           customStyles={customStyles}
           data={filteredRows}
           fixedHeader
-          fixedHeaderScrollHeight="480px"
+          fixedHeaderScrollHeight="680px"
           subHeader
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"

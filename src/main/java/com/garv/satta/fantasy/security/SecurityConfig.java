@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers( "/fantasy/**").hasRole("USER")
+                .antMatchers( "/private/**").hasRole("USER")
                 .antMatchers("/fantasy/**").authenticated()
                 .and()
                 .oauth2Login()

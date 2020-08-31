@@ -1,10 +1,5 @@
-const fantasyLogo = require('./fantasylogo.png');
 const googleLogo = require('./google-icon.svg');
-const blackball = require('./Bowl-black.svg');
-const blackbat = require('./bat-black.svg');
-const blackwk = require('./wk-black.svg');
 const blackplayer = require('./player-black.svg');
-const blackar = require('./allrounder-black.svg');
 const colorball = require('./playertype/color-ball.png');
 const colorarr = require('./playertype/color-arr.png');
 const colorbat = require('./playertype/color-bat.png');
@@ -21,20 +16,14 @@ const teamDC = require('./iplteams/dc-color.png');
 const teamKKR = require('./iplteams/kkr-color.png');
 const teamCSK = require('./iplteams/csk-color.png');
 const teamRCB = require('./iplteams/rcb-color.png');
-const pluscolor = require('./action/plus-color.png');
 const lockcolor = require('./action/lock-color.png');
-const minuscolor = require('./action/minus-color.jpeg');
-const bannerPlayerBlue = require('./banner/player-bluebg.jpeg');
 const bannerComingsoon = require('./banner/comingsoonIPL.jpeg');
 const leagueListBanner = require('./banner/leaguelistBanner.png');
 const playerListBanner = require('./banner/playerListBanner.png');
+const fantasyLogo = require('./banner/RK_Fantasy_logo.png');
 export {
   fantasyLogo,
   googleLogo,
-  blackar,
-  blackball,
-  blackbat,
-  blackwk,
   blackplayer,
   colorball,
   colorground,
@@ -49,9 +38,6 @@ export {
   teamKKR,
   teamRCB,
   teamSRH,
-  pluscolor,
-  minuscolor,
-  bannerPlayerBlue,
   bannerComingsoon,
   leagueListBanner,
   playerListBanner,
