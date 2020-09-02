@@ -6,7 +6,7 @@ import {
   HelpContentConfigObject,
   Subtopic,
 } from './HelpContentConfigData';
-import FantasyHelpContent from '../../../features/frontoffice/home/components/FantasyHelpContent';
+import FantasyHelpContent from './fantasy/FantasyHelpContent';
 
 const HelpPage = () => {
   const helpContent = HelpContentConfigData.HelpContent;
@@ -85,7 +85,7 @@ const HelpPage = () => {
       <Helmet>
         <title>Help - Sport Fantasy</title>
       </Helmet>
-      <Container className="mt-3">
+      <Container>
         <FantasyHelpContent />
       </Container>
     </div>

@@ -57,7 +57,7 @@ public class MatchService {
     @Cacheable(cacheNames = "MatchCache" , keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getUpComingMatchList() {
         DateTime currentTime = new DateTime();
-        List<Match> matches = repository.findUpcomingMatches(currentTime);
+        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqual(currentTime);
         return converter.convertToFullDTOList(matches);
     }
 

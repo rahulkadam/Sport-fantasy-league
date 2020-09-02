@@ -2,6 +2,13 @@ import * as React from 'react';
 import {Col, Container, Row} from 'react-bootstrap';
 import {FooterLinkConfig, FooterLinkConfigObject} from './FooterLinkConfig';
 import './Footer.css';
+import TwitterFantasyTimeline from './socialmedia/TwitterFantasyTimeline';
+import {
+  TwitterFollowButton,
+  TwitterHashtagButton,
+  TwitterDMButton,
+} from 'react-twitter-embed';
+import TwitterFooter from './socialmedia/TwitterFooter';
 
 const Footer = () => {
   const linksArray = FooterLinkConfig.FooterLinks;
@@ -29,33 +36,21 @@ const Footer = () => {
       linksRenderArray.push(renderLink(data));
       linksRenderArray.push(<span className="footerSpan">|</span>);
     });
-
     return linksRenderArray;
   }
 
-  /**
-   * Render Copy Right Details
-   */
-  function renderCopyRight() {
-    const year = new Date().getFullYear();
-    const copyrightText = year + 'Garv Fantasy Sports, All Rights Reserved.';
-    return (
-      <div>
-        <span>&copy; </span>
-        <span>{copyrightText}</span>
-      </div>
-    );
-  }
-
   return (
-    <Container fluid className="footer footerText bgDark">
-      <hr className="mb-0 horizontal-line" />
-      <Row>
-        <Col md={'6'} className="my-auto">
-          <div className="footerLinks pb-2">{renderFooterLink()}</div>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <TwitterFooter />
+      <Container fluid className="footer footerText bgDark">
+        <hr className="mb-0 horizontal-line" />
+        <Row>
+          <Col md={'6'} className="my-auto">
+            <div className="footerLinks pb-2">{renderFooterLink()}</div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

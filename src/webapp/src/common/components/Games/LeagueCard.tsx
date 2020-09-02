@@ -7,6 +7,7 @@ import {getLogoNameByLeagueName} from '../FantasyDropDown';
 import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
 import {isUserLogin} from '../../../API';
 import {wrapTextWithLength} from '../../util';
+import {TwitterHashtagButton} from 'react-twitter-embed';
 
 const LeagueCard = (props: LeagueCardProps) => {
   const data = props.data;
@@ -36,8 +37,16 @@ const LeagueCard = (props: LeagueCardProps) => {
       <Card className={containerName}>
         <Card.Body>
           <Card.Title className="publicLeague">
-            {title} League{' '}
-            {logoSource && <Logo logoSource={logoSource} width="40" />}
+            <Row>
+              <Col>
+                {' '}
+                {title} League{' '}
+                {logoSource && <Logo logoSource={logoSource} width="40" />}
+              </Col>
+              <Col>
+                <TwitterHashtagButton tag={data.name} />
+              </Col>
+            </Row>
           </Card.Title>
           <Card.Text>
             <Row>

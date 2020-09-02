@@ -3,6 +3,7 @@ declare module 'react-helmet';
 declare module 'redux-persist/lib/storage';
 declare module 'connected-react-router';
 declare module 'react-datetime-picker';
+declare module 'react-twitter-embed';
 declare module 'redux';
 declare module '*.scss';
 declare module '*.css';

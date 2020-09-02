@@ -1,7 +1,7 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import {customShortStyles} from 'common/components/DataTable/TableConfig';
-import {Row, Col} from 'react-bootstrap';
+import {Row, Col, Badge} from 'react-bootstrap';
 const TeamCriteria = ({criteria}: TeamCriteriaProps) => {
   const columns = [
     {
@@ -34,9 +34,11 @@ const TeamCriteria = ({criteria}: TeamCriteriaProps) => {
       <Row>
         <Col>Team Criteria</Col>
         <Col>
-          Total Player :{' '}
-          {criteria.teamCriteriaDTO &&
-            criteria.teamCriteriaDTO.totalPlayerCount}
+          <Badge variant="info">
+            Total Player :{' '}
+            {criteria.teamCriteriaDTO &&
+              criteria.teamCriteriaDTO.totalPlayerCount}
+          </Badge>
         </Col>
       </Row>
       {renderTeamCriteriaInTable()}

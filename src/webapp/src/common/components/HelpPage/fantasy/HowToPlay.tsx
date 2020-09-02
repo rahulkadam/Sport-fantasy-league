@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {Logo, StatusMessage} from '../../../../common/components';
+import {Logo, StatusMessage} from 'common/components/index';
 import {
   colorground,
   colorteam,
   colortransfer,
   rankingblack,
 } from '@logos/index';
-import {Badge, Col, Row, Button} from 'react-bootstrap';
+import {Col, Row, Button} from 'react-bootstrap';
 import history from 'common/config/history';
-import Login from '../../../Authentication/components';
 import {getAccessToken} from '../../../../API';
 
 const HowToPlay = () => {
@@ -19,14 +18,13 @@ const HowToPlay = () => {
       logo: colorteam,
       title: 'Create Your Team',
       link: '/team',
-      textMsg: 'Pick Players and Create Team',
+      textMsg: 'Pick 11 Players and Create Team',
     },
     {
       logo: colorground,
       title: 'Create/Join League',
       link: '/league',
-      textMsg:
-        'Select or create your own league. Invite friends to join leagues',
+      textMsg: 'join or create leagues to compete with friends',
     },
     {
       logo: colortransfer,
@@ -38,7 +36,7 @@ const HowToPlay = () => {
       logo: rankingblack,
       title: 'Ranking',
       link: '/league',
-      textMsg: 'Check ranking in league with Friends/Sport Community',
+      textMsg: 'Check ranking against League Friends/Sport Community',
     },
   ];
 

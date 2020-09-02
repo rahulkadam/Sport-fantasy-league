@@ -3,9 +3,6 @@ import Login, {
   RedirectSuccessHandler,
   UserInfo,
 } from 'features/Authentication/components';
-import Fixtures from 'features/frontoffice/fixtures/Fixtures';
-import FantasyStats from 'features/frontoffice/stats/FantasyStats';
-import MatchLive from '../../features/frontoffice/matchlive/MatchLive';
 
 const Tournament = lazy(() => {
   return import('features/admin/Tournament/Tournament');
@@ -41,12 +38,24 @@ const FantasyHome = lazy(() => {
   return import('features/frontoffice/home/FantasyHome');
 });
 
+const fantasyStats = lazy(() => {
+  return import('features/frontoffice/stats/FantasyStats');
+});
+
+const matchFixtures = lazy(() => {
+  return import('features/frontoffice/fixtures/Fixtures');
+});
+
 const LiveMatch = lazy(() => {
   return import('features/frontoffice/matchlive/MatchLive');
 });
 
 const TermsAndConditions = lazy(() => {
   return import('common/components/TermsAndConditions');
+});
+
+const pointSystem = lazy(() => {
+  return import('common/components/HelpPage/points/IPLPointSystems');
 });
 
 const HelpPage = lazy(() => {
@@ -85,17 +94,17 @@ export const RouteConfig = {
     },
     {
       path: '/fixtures',
-      component: Fixtures,
+      component: matchFixtures,
       key: 'fixtures',
     },
     {
       path: '/statistics',
-      component: FantasyStats,
+      component: fantasyStats,
       key: 'statistics',
     },
     {
       path: '/matchlive',
-      component: MatchLive,
+      component: LiveMatch,
       key: 'matchlive',
     },
     {
@@ -153,6 +162,7 @@ export const RouteConfig = {
     {path: '/login', component: Login, key: 'login'},
     {path: '/home', redirect: '/', isRedirect: true, key: 'home'},
     {path: '/helppage', component: HelpPage, key: 'helppage'},
+    {path: '/helppoints', component: pointSystem, key: 'pointsystems'},
     {path: '/termsAndconditions', component: TermsAndConditions, key: 'random'},
     {path: '/', component: FantasyHome, isExact: true, key: 'homeslash'},
     {path: '*', component: PageNotFound, key: 'pageNotFound'},

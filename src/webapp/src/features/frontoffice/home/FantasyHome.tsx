@@ -9,7 +9,7 @@ import {
 import './Home.styles.scss';
 import {isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
-import HowToPlay from './components/HowToPlay';
+import HowToPlay from '../../../common/components/HelpPage/fantasy/HowToPlay';
 import {Form, Button, Row, Col, Image} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
@@ -22,6 +22,7 @@ import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
 import Helmet from 'react-helmet';
+import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -206,6 +207,10 @@ const FantasyHome = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
+  function renderTwitterHashtag() {
+    return <TwitterFantasyTimeline type="list" id="1301204689589997568" />;
+  }
+
   return (
     <div className="homeContainer">
       <LoadingOverlay
@@ -230,6 +235,7 @@ const FantasyHome = () => {
         {!loginUser && renderUnAuthUserDashboard()}
         <HowToPlay />
         <UserHomePageBoard />
+        {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
   );
