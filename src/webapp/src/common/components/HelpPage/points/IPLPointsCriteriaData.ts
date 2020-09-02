@@ -101,3 +101,10 @@ export const fieldingPoints = [
     points: 10,
   },
 ];
+
+export const captainPoints = [
+  {
+    name: 'Points',
+    points: '2X',
+  },
+];

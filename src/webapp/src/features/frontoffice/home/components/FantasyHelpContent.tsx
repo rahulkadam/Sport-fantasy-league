@@ -3,6 +3,7 @@ import '../Home.styles.scss';
 import {Badge, Col, Row, Accordion, Card, Button} from 'react-bootstrap';
 import HowToPlay from './HowToPlay';
 import IPLPointSystems from '../../../../common/components/HelpPage/points/IPLPointSystems';
+import TransferHelp from '../../../../common/components/HelpPage/transfer/TransferHelp';
 
 const FantasyHelpContent = () => {
   function renderBoldText(text: string) {
@@ -229,11 +230,16 @@ const FantasyHelpContent = () => {
     return <IPLPointSystems />;
   }
 
+  function renderTransferHelp() {
+    return <TransferHelp />;
+  }
+
   return (
     <div>
       {renderFantasyDefinition()}
       {renderViaAccordion()}
       {renderIPLPointSystems()}
+      {renderTransferHelp()}
     </div>
   );
 };

@@ -1,36 +1,32 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import {customShortStyles} from '../../DataTable/TableConfig';
-import {
-  battingPoints,
-  bowlingPoints,
-  captainPoints,
-  fieldingPoints,
-} from './IPLPointsCriteriaData';
 import {Accordion, Button, Card, Row, Col} from 'react-bootstrap';
-import './PointSystems.styles.scss';
+import '../points/PointSystems.styles.scss';
 
-const IPLPointSystems = () => {
+const TransferHelp = () => {
   function customPoints(row: any) {
-    const pointsClass = row.points > 0 ? 'pointsPositive' : 'pointsNegative';
-    return <div className={pointsClass}>{row.points}</div>;
+    return <div className="pointsPositive">{row.transfer}</div>;
   }
+
+  const groupstages = [{matches: 56, transfer: 90}];
+  const knockoutstages = [{matches: 4, transfer: 10}];
 
   const columns = [
     {
-      name: 'Type',
-      selector: 'name',
+      name: 'Matches',
+      selector: 'matches',
       left: true,
     },
     {
-      name: 'Points',
-      selector: 'points',
+      name: 'Transfer',
+      selector: 'transfer',
       right: true,
       cell: customPoints,
     },
   ];
 
-  function renderPointsTable(list: any) {
+  function renderTransferTable(list: any) {
     return (
       <DataTable
         noHeader={true}
@@ -52,19 +48,17 @@ const IPLPointSystems = () => {
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey={index}>
-          <Card.Body> {renderPointsTable(list)}</Card.Body>
+          <Card.Body> {renderTransferTable(list)}</Card.Body>
         </Accordion.Collapse>
       </Card>
     );
   }
 
-  function renderPointSystemViaAccordion() {
+  function renderTrasnferSystemViaAccordion() {
     return (
       <Accordion>
-        {renderPointsCard('Batting Points', battingPoints, '1')}
-        {renderPointsCard('Bowling Points', bowlingPoints, '2')}
-        {renderPointsCard('Fielding Points', fieldingPoints, '3')}
-        {renderPointsCard('Captain Points', captainPoints, '4')}
+        {renderPointsCard('Group Stages', groupstages, '1')}
+        {renderPointsCard('Knockout Match', knockoutstages, '2')}
       </Accordion>
     );
   }
@@ -72,11 +66,17 @@ const IPLPointSystems = () => {
   return (
     <div>
       <Row className="iplPointsTitle">
-        <Col>Point System</Col>
+        <Col>Transfer</Col>
       </Row>
-      {renderPointSystemViaAccordion()}
+      <Row>
+        <Col>
+          Transfer will get reset, before first group match start, or knockout
+          match starts
+        </Col>
+      </Row>
+      {renderTrasnferSystemViaAccordion()}
     </div>
   );
 };
 
-export default IPLPointSystems;
+export default TransferHelp;
