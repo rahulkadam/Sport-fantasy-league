@@ -18,7 +18,7 @@ import {Button, Form} from 'react-bootstrap';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from '../../../common/util';
 import Helmet from 'react-helmet';
-import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
+import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -126,7 +126,7 @@ const League = () => {
   }
 
   function renderTwitterHashtag() {
-    return <TwitterHashtag type="list" id="1301207289567748097" />;
+    return <TwitterFantasyTimeline type="list" id="1301207289567748097" />;
   }
 
   return (

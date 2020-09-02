@@ -19,7 +19,7 @@ import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from '../../../common/components';
 import {isUserLogin} from '../../../API';
 import {getCommonData} from '../../common/redux';
-import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
+import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -148,7 +148,7 @@ const FantasyStats = () => {
     );
   }
   function renderTwitterHashtag() {
-    return <TwitterHashtag type="list" id="1301204235044794370" />;
+    return <TwitterFantasyTimeline type="list" id="1301204235044794370" />;
   }
 
   return (

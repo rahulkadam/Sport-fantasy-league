@@ -8,7 +8,7 @@ import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 import {isListEmpty} from '../../../common/util';
-import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
+import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -81,7 +81,7 @@ const MatchLive = () => {
   }
 
   function renderTwitterHashtag() {
-    return <TwitterHashtag type="list" id="1301204455279398912" />;
+    return <TwitterFantasyTimeline type="list" id="1301204455279398912" />;
   }
 
   return (

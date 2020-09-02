@@ -22,7 +22,7 @@ import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
 import Helmet from 'react-helmet';
-import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
+import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -208,7 +208,7 @@ const FantasyHome = () => {
   }
 
   function renderTwitterHashtag() {
-    return <TwitterHashtag type="list" id="1301204689589997568" />;
+    return <TwitterFantasyTimeline type="list" id="1301204689589997568" />;
   }
 
   return (

@@ -2,8 +2,13 @@ import * as React from 'react';
 import {Col, Container, Row} from 'react-bootstrap';
 import {FooterLinkConfig, FooterLinkConfigObject} from './FooterLinkConfig';
 import './Footer.css';
-import TwitterHashtag from './socialmedia/TwitterHashtag';
-import {TwitterFollowButton, TwitterHashtagButton} from 'react-twitter-embed';
+import TwitterFantasyTimeline from './socialmedia/TwitterFantasyTimeline';
+import {
+  TwitterFollowButton,
+  TwitterHashtagButton,
+  TwitterDMButton,
+} from 'react-twitter-embed';
+import TwitterFooter from './socialmedia/TwitterFooter';
 
 const Footer = () => {
   const linksArray = FooterLinkConfig.FooterLinks;
@@ -34,18 +39,9 @@ const Footer = () => {
     return linksRenderArray;
   }
 
-  function renderTwitterFooter() {
-    return (
-      <div>
-        <TwitterHashtagButton tag="IPLFantasy2020" />
-        <TwitterFollowButton screenName={'IPLFantasy20201'} />
-      </div>
-    );
-  }
-
   return (
     <div>
-      {renderTwitterFooter()}
+      <TwitterFooter />
       <Container fluid className="footer footerText bgDark">
         <hr className="mb-0 horizontal-line" />
         <Row>
