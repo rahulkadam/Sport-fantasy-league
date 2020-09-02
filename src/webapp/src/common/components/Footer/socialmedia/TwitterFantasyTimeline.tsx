@@ -12,7 +12,7 @@ const TwitterFantasyTimeline = (props: TwitterHashtagProps) => {
           sourceType={props.type || 'profile'}
           screenName={props.tag || 'IPLFantasy20201'}
           borderColor="#03a9f4"
-          options={{height: 600, width: 600}}
+          options={{height: 600, width: 400}}
           noHeader
         />
       )}
@@ -24,7 +24,7 @@ const TwitterFantasyTimeline = (props: TwitterHashtagProps) => {
           noHeader
           linkColor="#F44336"
           noFooter
-          options={{height: 600, width: 600}}
+          options={{height: 600, width: 400}}
         />
       )}
     </div>

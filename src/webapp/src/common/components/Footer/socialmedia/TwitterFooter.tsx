@@ -19,9 +19,6 @@ const TwitterFooter = () => {
             {' '}
             <TwitterFollowButton screenName={'IPLFantasy20201'} />
           </Col>
-          <Col>
-            <TwitterDMButton id={97845768} />
-          </Col>
         </Row>
       </div>
     );
