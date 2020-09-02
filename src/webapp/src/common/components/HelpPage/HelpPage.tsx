@@ -85,7 +85,7 @@ const HelpPage = () => {
       <Helmet>
         <title>Help - Sport Fantasy</title>
       </Helmet>
-      <Container className="mt-3">
+      <Container>
         <FantasyHelpContent />
       </Container>
     </div>
