@@ -2,6 +2,7 @@ import React from 'react';
 import '../Home.styles.scss';
 import {Badge, Col, Row, Accordion, Card, Button} from 'react-bootstrap';
 import HowToPlay from './HowToPlay';
+import IPLPointSystems from '../../../../common/components/HelpPage/points/IPLPointSystems';
 
 const FantasyHelpContent = () => {
   function renderFantasyDefinition() {
@@ -229,11 +230,16 @@ const FantasyHelpContent = () => {
     );
   }
 
+  function renderIPLPointSystems() {
+    return <IPLPointSystems />;
+  }
+
   return (
     <div>
       {renderFantasyDefinition()}
       {renderViaAccordion()}
       <HowToPlay />
+      {renderIPLPointSystems()}
     </div>
   );
 };
