@@ -15,7 +15,7 @@ export const userMenuConfig = [
   },
   {
     link: '/team',
-    name: 'My Team',
+    name: 'Team',
   },
   {
     link: '/myteam/transfer',
@@ -66,8 +66,10 @@ export const commonPublicMenuConfig = [
     link: '/helppage',
     name: 'Help',
   },
+  /*
   {
     link: '/helppoints',
-    name: 'Point System',
+    name: 'Points',
   },
+  */
 ];

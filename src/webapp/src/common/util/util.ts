@@ -83,30 +83,27 @@ export function getAutoPickTeam(list: any) {
       ? player.teamsNameList[0]
       : '';
     const playerPerTeam = map.get(team) || 0;
-    if (isValueEmpty(team) || playerPerTeam == 6) {
+    if (isValueEmpty(team) || playerPerTeam == 2) {
     } else {
+      let isPLayerValid = false;
       if (player.type == 'WICKETKEEPER' && wkArr == 0) {
-        autoUserTeam = autoUserTeam.concat(player);
         wkArr = 1;
-        total = total + 1;
-        map.set(team, playerPerTeam + 1);
+        isPLayerValid = true;
       }
       if (player.type == 'ALLROUNDER' && alArr < 2) {
-        autoUserTeam = autoUserTeam.concat(player);
         alArr = alArr + 1;
-        total = total + 1;
-        map.set(team, playerPerTeam + 1);
+        isPLayerValid = true;
       }
-
       if (player.type == 'BATSMAN' && batArr < 4) {
-        autoUserTeam = autoUserTeam.concat(player);
         batArr = batArr + 1;
-        total = total + 1;
-        map.set(team, playerPerTeam + 1);
+        isPLayerValid = true;
       }
       if (player.type == 'BOWLER' && bowlArr < 4) {
-        autoUserTeam = autoUserTeam.concat(player);
         bowlArr = bowlArr + 1;
+        isPLayerValid = true;
+      }
+      if (isPLayerValid) {
+        autoUserTeam = autoUserTeam.concat(player);
         total = total + 1;
         map.set(team, playerPerTeam + 1);
       }
