@@ -226,6 +226,18 @@ const FantasyHelpContent = () => {
             <Card.Body>{renderWhyFantasyUnique()}</Card.Body>
           </Accordion.Collapse>
         </Card>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="3">
+              How To Play
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey="3">
+            <Card.Body>
+              <HowToPlay />
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
       </Accordion>
     );
   }
@@ -238,7 +250,6 @@ const FantasyHelpContent = () => {
     <div>
       {renderFantasyDefinition()}
       {renderViaAccordion()}
-      <HowToPlay />
       {renderIPLPointSystems()}
     </div>
   );

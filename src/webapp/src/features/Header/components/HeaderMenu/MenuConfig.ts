@@ -66,4 +66,8 @@ export const commonPublicMenuConfig = [
     link: '/helppage',
     name: 'Help',
   },
+  {
+    link: '/helppoints',
+    name: 'Point System',
+  },
 ];
