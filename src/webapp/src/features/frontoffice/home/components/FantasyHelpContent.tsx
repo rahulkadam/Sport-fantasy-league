@@ -5,6 +5,9 @@ import HowToPlay from './HowToPlay';
 import IPLPointSystems from '../../../../common/components/HelpPage/points/IPLPointSystems';
 
 const FantasyHelpContent = () => {
+  function renderBoldText(text: string) {
+    return <span className="boldspan">{text}</span>;
+  }
   function renderFantasyDefinition() {
     return (
       <div>
@@ -17,24 +20,22 @@ const FantasyHelpContent = () => {
         </Row>
         <Row className="contentRow">
           <Col>
-            Tournament Fantasy cricket is an online fantasy game, in which a
-            user makes a virtual cricket team of eleven players from tournament
-            Playing Playing teams.
+            IPL Fantasy League is an {renderBoldText('online fantasy game')}, in
+            which a user form a{' '}
+            {renderBoldText('virtual cricket team of 11 players')} from IPL
+            teams.
           </Col>
         </Row>
         <Row className="contentRow">
           <Col>
-            Points are then scored depending on how the selected cricketers
-            perform in the games happening. To win the League leagues, the users
-            must strive to earn maximum points and get the highest points in the
-            leaderboard.
+            Points scored depending on{' '}
+            {renderBoldText('how the your team player perform')} in the match.
           </Col>{' '}
         </Row>
         <Row className="contentRow">
           <Col>
-            The main aim is to ultimately Play friendly Fantasy Cricket With
-            your friend, thoughout the tournament with single team by managing
-            transfer properly!
+            The main aim is to Play friendly Fantasy Cricket With your friend,
+            In IPL with your team by managing transfer properly!
           </Col>
         </Row>
       </div>
@@ -47,9 +48,7 @@ const FantasyHelpContent = () => {
         <Row className="headerRow">
           <Col>
             <h3>
-              <Badge variant="light">
-                Rules for Tournament Fantasy Cricket?{' '}
-              </Badge>
+              <Badge variant="light">Rules for IPL Fantasy League? </Badge>
             </h3>
           </Col>
         </Row>
@@ -58,8 +57,8 @@ const FantasyHelpContent = () => {
             <Badge variant="light">Budget</Badge>
           </Col>
           <Col md={8}>
-            Fantasy Team will have an budget cap, and the players need to be
-            selected within the total credits that have been assigned
+            Fantasy Team will have an budget cap of 100, and the players need to
+            be selected within 100.
           </Col>
         </Row>
         <Row className="contentRow">
@@ -67,9 +66,10 @@ const FantasyHelpContent = () => {
             <Badge variant="light">Transfer</Badge>
           </Col>
           <Col md={8}>
-            Fantasy Team will have an Total Transfer cap for Tournament, User
-            will get limited number of Transfer, which User should Use while
-            playing Fantasy in Tournament
+            Fantasy Team will have an Total Transfer cap for IPL, User will get
+            {renderBoldText(
+              ' 90 Transfer in Group matches and 10 in knockout.'
+            )}
           </Col>
         </Row>
         <Row className="contentRow">
@@ -77,13 +77,8 @@ const FantasyHelpContent = () => {
             <Badge variant="light">Player Selection Rules</Badge>
           </Col>
           <Col md={8}>
-            Fantasy Team will have an Certain Rules for selecting PLayers. User
-            have to follow them. like, for Cricket team, User can select a
-            minimum of 1 wicket-keeper and a maximum of four keepers, minimum
-            three batters with a maximum of six. You need to select at least one
-            all-rounder, and the number can go up to four, while you need a
-            minimum of three bowlers and a maximum of six. A maximum of six
-            players from one side can be picked.
+            Fantasy Team will have 11 Players in Team.{' '}
+            {renderBoldText('Min 1 WK, 3 Bats, 3 Bowl and  1 Allrounder')}
           </Col>
         </Row>
       </div>
@@ -155,8 +150,8 @@ const FantasyHelpContent = () => {
             <Badge variant="light">Tournament Fantasy</Badge>
           </Col>
           <Col md={8}>
-            User will be playing Fantasy thoughout the Tournament with Single
-            Team, Unlikes Other Leagues.
+            Play IPl fantasy like FPL,{' '}
+            {renderBoldText('one team , manage transfer and calculate points.')}
           </Col>
         </Row>
         <Row className="contentRow">
@@ -164,9 +159,8 @@ const FantasyHelpContent = () => {
             <Badge variant="light">Manage Transfer Budget</Badge>
           </Col>
           <Col md={8}>
-            While Playing Fantasy League, you will need to manage your transfer
-            properly, as you will be getting limited transfer for tournament.
-            Unlike other League, where you can use daily new Teams
+            Play IPL fantasy with limited transfer for IPL{' '}
+            {renderBoldText('90 for group stages and 10 for knockout')}.
           </Col>
         </Row>
         <Row className="contentRow">
@@ -174,8 +168,8 @@ const FantasyHelpContent = () => {
             <Badge variant="light">No Daily New Team</Badge>
           </Col>
           <Col md={8}>
-            User will not need to create New team daily, Based on match User
-            will only need to make some transfer in team.
+            {renderBoldText('No New team daily')}, Based on match User will only
+            need to make some transfer in team.
           </Col>
         </Row>
         <Row className="contentRow">
@@ -183,9 +177,8 @@ const FantasyHelpContent = () => {
             <Badge variant="light">Friendly Fantasy with Friends</Badge>
           </Col>
           <Col md={8}>
-            Fantasy will be friendly, as We are intended not to involve money
-            prozes here, Any user can make team and play fantasy. You can
-            created friendly League amongs your friends, You can join league
+            {renderBoldText('Fantasy will be friendly, No Money involved')}, You
+            can created friendly League among your friends, You can join league
             crated by your friends.
           </Col>
         </Row>
@@ -204,16 +197,6 @@ const FantasyHelpContent = () => {
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>{renderFantasyRules()}</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="1">
-              How To Play
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>{renderHowToPlay()}</Card.Body>
           </Accordion.Collapse>
         </Card>
         <Card>
