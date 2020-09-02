@@ -22,6 +22,7 @@ import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
 import Helmet from 'react-helmet';
+import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -206,6 +207,10 @@ const FantasyHome = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
+  function renderTwitterHashtag() {
+    return <TwitterHashtag type="list" id="1301204689589997568" />;
+  }
+
   return (
     <div className="homeContainer">
       <LoadingOverlay
@@ -230,6 +235,7 @@ const FantasyHome = () => {
         {!loginUser && renderUnAuthUserDashboard()}
         <HowToPlay />
         <UserHomePageBoard />
+        {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
   );

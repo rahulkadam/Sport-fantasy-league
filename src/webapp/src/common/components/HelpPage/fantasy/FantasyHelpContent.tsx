@@ -59,8 +59,8 @@ const FantasyHelpContent = () => {
             <Badge variant="success">Budget</Badge>
           </Col>
           <Col md={8}>
-            Fantasy Team will have an budget cap of 100, and the players need to
-            be selected within 100.
+            Fantasy Team will have an {renderBoldText('budget cap of 100')}, and
+            the players need to be selected within 100.
           </Col>
         </Row>
         <Row className="contentRow">

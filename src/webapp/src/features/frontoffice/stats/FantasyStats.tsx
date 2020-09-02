@@ -19,6 +19,7 @@ import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from '../../../common/components';
 import {isUserLogin} from '../../../API';
 import {getCommonData} from '../../common/redux';
+import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -146,6 +147,9 @@ const FantasyStats = () => {
       </Form>
     );
   }
+  function renderTwitterHashtag() {
+    return <TwitterHashtag type="list" id="1301204235044794370" />;
+  }
 
   return (
     <div className="statsContainer">
@@ -155,6 +159,7 @@ const FantasyStats = () => {
         text="Loading Stats Details ...">
         {renderStatsActions()}
         {renderStatsComponent()}
+        {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
   );

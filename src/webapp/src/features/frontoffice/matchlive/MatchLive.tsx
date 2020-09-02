@@ -8,6 +8,7 @@ import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 import {isListEmpty} from '../../../common/util';
+import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -79,6 +80,10 @@ const MatchLive = () => {
     );
   }
 
+  function renderTwitterHashtag() {
+    return <TwitterHashtag type="list" id="1301204455279398912" />;
+  }
+
   return (
     <div className="statsContainer">
       <LoadingOverlay
@@ -87,6 +92,7 @@ const MatchLive = () => {
         text="Loading Stats Details ...">
         {renderStatsActions()}
         {renderStatsComponent()}
+        {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
   );

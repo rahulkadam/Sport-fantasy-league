@@ -8,6 +8,7 @@ import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 import {fetchUpComingMatchesAction, getHomeData} from '../home/redux';
 import {getCommonData} from '../../common/redux';
 import Helmet from 'react-helmet';
+import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
 
 const Fixtures = () => {
   const homeProps = getHomeData();
@@ -42,6 +43,10 @@ const Fixtures = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
+  function renderTwitterHashtag() {
+    return <TwitterHashtag type="list" id="1301203927308726272" />;
+  }
+
   return (
     <div>
       <LoadingOverlay
@@ -53,6 +58,7 @@ const Fixtures = () => {
         </Helmet>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {renderMatchListView()}
+        {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
   );

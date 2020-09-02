@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Col, Container, Row} from 'react-bootstrap';
 import {FooterLinkConfig, FooterLinkConfigObject} from './FooterLinkConfig';
 import './Footer.css';
+import TwitterHashtag from './socialmedia/TwitterHashtag';
+import {TwitterFollowButton, TwitterHashtagButton} from 'react-twitter-embed';
 
 const Footer = () => {
   const linksArray = FooterLinkConfig.FooterLinks;
@@ -29,33 +31,30 @@ const Footer = () => {
       linksRenderArray.push(renderLink(data));
       linksRenderArray.push(<span className="footerSpan">|</span>);
     });
-
     return linksRenderArray;
   }
 
-  /**
-   * Render Copy Right Details
-   */
-  function renderCopyRight() {
-    const year = new Date().getFullYear();
-    const copyrightText = year + 'Garv Fantasy Sports, All Rights Reserved.';
+  function renderTwitterFooter() {
     return (
       <div>
-        <span>&copy; </span>
-        <span>{copyrightText}</span>
+        <TwitterHashtagButton tag="IPLFantasy2020" />
+        <TwitterFollowButton screenName={'IPLFantasy20201'} />
       </div>
     );
   }
 
   return (
-    <Container fluid className="footer footerText bgDark">
-      <hr className="mb-0 horizontal-line" />
-      <Row>
-        <Col md={'6'} className="my-auto">
-          <div className="footerLinks pb-2">{renderFooterLink()}</div>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      {renderTwitterFooter()}
+      <Container fluid className="footer footerText bgDark">
+        <hr className="mb-0 horizontal-line" />
+        <Row>
+          <Col md={'6'} className="my-auto">
+            <div className="footerLinks pb-2">{renderFooterLink()}</div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

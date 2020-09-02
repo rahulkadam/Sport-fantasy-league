@@ -18,6 +18,7 @@ import {Button, Form} from 'react-bootstrap';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from '../../../common/util';
 import Helmet from 'react-helmet';
+import TwitterHashtag from '../../../common/components/Footer/socialmedia/TwitterHashtag';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -124,6 +125,10 @@ const League = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
 
+  function renderTwitterHashtag() {
+    return <TwitterHashtag type="list" id="1301207289567748097" />;
+  }
+
   return (
     <div className="leagueContainer">
       <LoadingOverlay
@@ -137,6 +142,7 @@ const League = () => {
         {checkUserAccess()}
         {renderLeagueActions()}
         {renderLeagueComponents()}
+        {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
   );

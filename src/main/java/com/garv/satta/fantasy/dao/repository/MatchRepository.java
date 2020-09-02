@@ -22,6 +22,9 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
     @Query("Select m from Match m where m.matchTime < :current order by m.matchTime desc")
     List<Match> findCompletedMatches(@Param("current") DateTime currentTime);
 
+    @EntityGraph(value = "Match.matchschedule")
+    List<Match> findFirst5ByMatchTimeGreaterThanEqual(DateTime currentTime);
+
     List<Match> findMatchesByStatus(Boolean status);
 
     Match findFirstByMatchTimeGreaterThanEqual(DateTime currentTime);
