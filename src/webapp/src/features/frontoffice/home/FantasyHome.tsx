@@ -9,7 +9,7 @@ import {
 import './Home.styles.scss';
 import {isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
-import HowToPlay from './components/HowToPlay';
+import HowToPlay from '../../../common/components/HelpPage/fantasy/HowToPlay';
 import {Form, Button, Row, Col, Image} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';

@@ -1,9 +1,10 @@
 import React from 'react';
-import '../Home.styles.scss';
 import {Badge, Col, Row, Accordion, Card, Button} from 'react-bootstrap';
 import HowToPlay from './HowToPlay';
-import IPLPointSystems from '../../../../common/components/HelpPage/points/IPLPointSystems';
-import TransferHelp from '../../../../common/components/HelpPage/transfer/TransferHelp';
+import IPLPointSystems from '../points/IPLPointSystems';
+import TransferHelp from '../transfer/TransferHelp';
+import TeamCriteria from 'features/frontoffice/UserTeam/component/common/TeamCriteria';
+import '../help.styles.scss';
 
 const FantasyHelpContent = () => {
   function renderBoldText(text: string) {
@@ -15,7 +16,7 @@ const FantasyHelpContent = () => {
         <Row className="headerRow">
           <Col>
             <h3>
-              <Badge variant="light">What is Fantasy Cricket? </Badge>
+              <Badge variant="info">What is IPL Fantasy League? </Badge>
             </h3>
           </Col>
         </Row>
@@ -30,7 +31,7 @@ const FantasyHelpContent = () => {
         <Row className="contentRow">
           <Col>
             Points scored depending on{' '}
-            {renderBoldText('how the your team player perform')} in the match.
+            {renderBoldText('how team player perform')} in the match.
           </Col>{' '}
         </Row>
         <Row className="contentRow">
@@ -49,13 +50,13 @@ const FantasyHelpContent = () => {
         <Row className="headerRow">
           <Col>
             <h3>
-              <Badge variant="light">Rules for IPL Fantasy League? </Badge>
+              <Badge variant="info">Rules for IPL Fantasy League? </Badge>
             </h3>
           </Col>
         </Row>
         <Row className="contentRow">
           <Col md={4}>
-            <Badge variant="light">Budget</Badge>
+            <Badge variant="success">Budget</Badge>
           </Col>
           <Col md={8}>
             Fantasy Team will have an budget cap of 100, and the players need to
@@ -64,7 +65,7 @@ const FantasyHelpContent = () => {
         </Row>
         <Row className="contentRow">
           <Col md={4}>
-            <Badge variant="light">Transfer</Badge>
+            <Badge variant="success">Transfer</Badge>
           </Col>
           <Col md={8}>
             Fantasy Team will have an Total Transfer cap for IPL, User will get
@@ -75,61 +76,11 @@ const FantasyHelpContent = () => {
         </Row>
         <Row className="contentRow">
           <Col md={4}>
-            <Badge variant="light">Player Selection Rules</Badge>
+            <Badge variant="success">Player Selection Rules</Badge>
           </Col>
           <Col md={8}>
             Fantasy Team will have 11 Players in Team.{' '}
             {renderBoldText('Min 1 WK, 3 Bats, 3 Bowl and  1 Allrounder')}
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-
-  function renderHowToPlay() {
-    return (
-      <div>
-        <Row className="headerRow">
-          <Col>
-            <h3>
-              <Badge variant="light">How to play? </Badge>
-            </h3>
-          </Col>
-        </Row>
-        <Row className="contentRow">
-          <Col md={4}>
-            <Badge variant="light">Create Team</Badge>
-          </Col>
-          <Col md={8}>
-            To Play Fantasy Team will need Team First, Please Create Team by
-            following rules
-          </Col>
-        </Row>
-        <Row className="contentRow">
-          <Col md={4}>
-            <Badge variant="light">Create/Join League</Badge>
-          </Col>
-          <Col md={8}>
-            Create league and Share code with Friends, Ask friends to join
-            League. OR Join league create by Friends
-          </Col>
-        </Row>
-        <Row className="contentRow">
-          <Col md={4}>
-            <Badge variant="light">Make Transfer</Badge>
-          </Col>
-          <Col md={8}>
-            Once you create Team and joined League, Manage team as per match
-            schedule, make Transfer before match starts.
-          </Col>
-        </Row>
-        <Row className="contentRow">
-          <Col md={4}>
-            <Badge variant="light">Check League Ranking</Badge>
-          </Col>
-          <Col md={8}>
-            After Match Finish, Your score will get Updated and your ranking in
-            League also. Please check your leagues and league Ranking.
           </Col>
         </Row>
       </div>
@@ -142,13 +93,13 @@ const FantasyHelpContent = () => {
         <Row className="headerRow">
           <Col>
             <h3>
-              <Badge variant="light">Why We are Different To Play? </Badge>
+              <Badge variant="info">Why We are Different To Play? </Badge>
             </h3>
           </Col>
         </Row>
         <Row className="contentRow">
           <Col md={4}>
-            <Badge variant="light">Tournament Fantasy</Badge>
+            <Badge variant="success">Tournament Fantasy</Badge>
           </Col>
           <Col md={8}>
             Play IPl fantasy like FPL,{' '}
@@ -157,7 +108,7 @@ const FantasyHelpContent = () => {
         </Row>
         <Row className="contentRow">
           <Col md={4}>
-            <Badge variant="light">Manage Transfer Budget</Badge>
+            <Badge variant="success">Manage Transfer Budget</Badge>
           </Col>
           <Col md={8}>
             Play IPL fantasy with limited transfer for IPL{' '}
@@ -166,7 +117,7 @@ const FantasyHelpContent = () => {
         </Row>
         <Row className="contentRow">
           <Col md={4}>
-            <Badge variant="light">No Daily New Team</Badge>
+            <Badge variant="success">No Daily New Team</Badge>
           </Col>
           <Col md={8}>
             {renderBoldText('No New team daily')}, Based on match User will only
@@ -175,7 +126,7 @@ const FantasyHelpContent = () => {
         </Row>
         <Row className="contentRow">
           <Col md={4}>
-            <Badge variant="light">Friendly Fantasy with Friends</Badge>
+            <Badge variant="success">Friendly Fantasy with Friends</Badge>
           </Col>
           <Col md={8}>
             {renderBoldText('Fantasy will be friendly, No Money involved')}, You
@@ -234,12 +185,49 @@ const FantasyHelpContent = () => {
     return <TransferHelp />;
   }
 
+  function renderTeamCriteria() {
+    const criteria = [
+      {
+        shortName: 'BATS',
+        minPerTeam: 3,
+        maxPerTeam: 6,
+      },
+      {
+        shortName: 'BOWL',
+        minPerTeam: 3,
+        maxPerTeam: 6,
+      },
+      {
+        shortName: 'AR',
+        minPerTeam: 1,
+        maxPerTeam: 4,
+      },
+      {
+        shortName: 'WK',
+        minPerTeam: 1,
+        maxPerTeam: 4,
+      },
+    ];
+    const dto = {
+      playerCriteriaDTOList: criteria,
+      teamCriteriaDTO: {totalPlayerCount: 11},
+    };
+    return (
+      <div>
+        <Row className="iplContentTitle">
+          <Col>Team Criteria</Col>
+        </Row>
+        <TeamCriteria criteria={dto} />
+      </div>
+    );
+  }
   return (
     <div>
       {renderFantasyDefinition()}
       {renderViaAccordion()}
       {renderIPLPointSystems()}
       {renderTransferHelp()}
+      {renderTeamCriteria()}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Logo, StatusMessage} from 'common/components';
+import {Logo, StatusMessage} from 'common/components/index';
 import {
   colorground,
   colorteam,

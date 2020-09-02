@@ -6,7 +6,7 @@ import {
   HelpContentConfigObject,
   Subtopic,
 } from './HelpContentConfigData';
-import FantasyHelpContent from '../../../features/frontoffice/home/components/FantasyHelpContent';
+import FantasyHelpContent from './fantasy/FantasyHelpContent';
 
 const HelpPage = () => {
   const helpContent = HelpContentConfigData.HelpContent;
