@@ -23,7 +23,7 @@ public class HttpCookieOAuth2AuthorizationRequestRepository implements Authoriza
     private int cookieExpirySecs;
 
     public HttpCookieOAuth2AuthorizationRequestRepository() {
-        cookieExpirySecs = 300;
+        cookieExpirySecs = 60;
     }
 
     /**
