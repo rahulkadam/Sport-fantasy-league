@@ -8,11 +8,14 @@ const FantasyInfoCard = () => {
     return (
       <Card className="fantasyHelpcardcontainer">
         <Card.Body>
-          <Card.Title className="userTeamTitle">IPL Fantasy League</Card.Title>
+          <Card.Title className="userTeamTitle">
+            Register to Play IPL Fantasy League
+          </Card.Title>
           <Card.Text>
             <Row>
               <Col>
-                IPL Fantasy is a league played over internet between sport fans.
+                IPL Fantasy is a Fantasy Cricket Game played over internet
+                between IPL fans.
                 <span className="CardBoldText">
                   Fans act like team owner
                 </span>{' '}
@@ -21,7 +24,7 @@ const FantasyInfoCard = () => {
             </Row>
             <Row>
               <Col className="CardBoldText">
-                Fans follow matches ,make transfer with single team
+                It’s FREE to play, Please login and Create Team!
               </Col>
             </Row>
           </Card.Text>

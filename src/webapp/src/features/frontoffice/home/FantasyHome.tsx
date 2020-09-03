@@ -22,7 +22,7 @@ import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
 import Helmet from 'react-helmet';
-import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -226,10 +226,10 @@ const FantasyHome = () => {
         {renderIPLImage()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
-        {renderLiveMatchesSchedule()}
-        {renderUpComingMatchesSchedule()}
         {loginUser && dashboard.userTeamDTO && renderUserTeamCard()}
         {!dashboard.userTeamDTO && renderFantasyInfoCard()}
+        {renderLiveMatchesSchedule()}
+        {renderUpComingMatchesSchedule()}
         {renderUserPublicLeagues()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}

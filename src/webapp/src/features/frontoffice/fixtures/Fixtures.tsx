@@ -26,7 +26,7 @@ const Fixtures = () => {
 
   function renderMatchListView() {
     return (
-      <div className="container">
+      <div>
         <StatusMessage type="info" text="Upcoming Matches" />
         <MatchDetails
           title="Fixtures"
@@ -48,7 +48,7 @@ const Fixtures = () => {
   }
 
   return (
-    <div>
+    <div className="fixtureContainer">
       <LoadingOverlay
         active={configProps.isLoading}
         spinner

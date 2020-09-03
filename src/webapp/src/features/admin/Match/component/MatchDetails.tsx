@@ -9,7 +9,8 @@ import {
   getShortNameByTeam,
 } from 'common/components/FantasyDropDown';
 import {largeRowStyles} from 'common/components/DataTable/TableConfig';
-import {Logo} from '../../../../common/components';
+import {Logo} from 'common/components';
+import '../Match.styles.scss';
 
 const MatchDetails = ({
   data,
