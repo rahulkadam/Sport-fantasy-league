@@ -87,8 +87,10 @@ const LeagueCard = (props: LeagueCardProps) => {
                   </Row>
                 )}
               </Col>
-              <Col className="d-none d-md-block d-lg-none">
-                Join Public League and Play with Sport Community
+              <Col className="d-none d-md-block">
+                <Badge variant="info">
+                  Join Public League and Play with Sport Community
+                </Badge>
               </Col>
             </Row>
           </Card.Text>
