@@ -43,34 +43,32 @@ const HeaderMenu = () => {
 
   return (
     <div>
-      <Route>
-        <Navbar
-          collapseOnSelect={true}
-          expand="md"
-          fixed={'top'}
-          bg="dark"
-          variant="dark"
-          className="headerNavbar">
-          <Navbar.Brand as={Link} to="/">
-            <Logo logoSource={fantasyLogo} width="48" />
-          </Navbar.Brand>
-          <Nav className={'d-block d-md-none'}>
-            {userMenu && renderMenu(userMenuConfigForMobile)}
+      <Navbar
+        collapseOnSelect={true}
+        expand="md"
+        fixed={'top'}
+        bg="dark"
+        variant="dark"
+        className="headerNavbar">
+        <Navbar.Toggle />
+        <Nav className={'d-block d-md-none'}>
+          {userMenu && renderMenu(userMenuConfigForMobile)}
+        </Nav>
+        <Navbar.Brand as={Link} to="/" className={'d-block d-xs-none'}>
+          <Logo logoSource={fantasyLogo} width="48" />
+        </Navbar.Brand>
+        <Navbar.Collapse>
+          <Nav variant="pills" defaultActiveKey="/home">
+            {publicMenu && renderMenuLink('Home', '/')}
+            {userMenu && renderMenu(userMenuConfig)}
+            {adminMenu && renderMenu(adminMenuConfig)}
+            {renderMenu(commonPublicMenuConfig)}
           </Nav>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav variant="pills" defaultActiveKey="/home">
-              {publicMenu && renderMenuLink('Home', '/')}
-              {userMenu && renderMenu(userMenuConfig)}
-              {adminMenu && renderMenu(adminMenuConfig)}
-              {renderMenu(commonPublicMenuConfig)}
-            </Nav>
-            <Nav>
-              <HeaderUser />
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </Route>
+          <Nav>
+            <HeaderUser />
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </div>
   );
 };
