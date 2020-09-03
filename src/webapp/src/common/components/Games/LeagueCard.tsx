@@ -34,7 +34,7 @@ const LeagueCard = (props: LeagueCardProps) => {
 
   return (
     <div>
-      <Card className={containerName}>
+      <Card>
         <Card.Body>
           <Card.Title className="publicLeague">
             <Row>
@@ -42,9 +42,6 @@ const LeagueCard = (props: LeagueCardProps) => {
                 {' '}
                 {title} League{' '}
                 {logoSource && <Logo logoSource={logoSource} width="40" />}
-              </Col>
-              <Col>
-                <TwitterHashtagButton tag={data.name} />
               </Col>
             </Row>
           </Card.Title>
