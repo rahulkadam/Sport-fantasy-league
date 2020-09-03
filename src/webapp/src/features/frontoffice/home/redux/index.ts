@@ -8,5 +8,6 @@ export {
   fetchPublicLeagueAction,
   getUserDashboardAction,
   fetchFantasyNoticeAction,
+  fetchUpComingAllMatchesAction,
 } from './homeActions';
 export * from './home-util';

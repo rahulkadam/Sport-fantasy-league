@@ -5,6 +5,7 @@ import {
   fetchPublicLeague,
   fetchTopPerformingPlayer,
   fetchTopScoreUserGlobally,
+  fetchUpcomingAllMatches,
   fetchUpcomingMatches,
   getUserDashboard,
 } from './home-api';
@@ -18,6 +19,7 @@ import {
   FETCH_PUBLIC_LEAGUE,
   FETCH_DASHBOARD_DATA,
   GET_FANTASY_NOTICE,
+  GET_UPCOMING_ALL_MATCHES_LIST,
 } from './homeConstants';
 import {
   dispatchActionWrapper,
@@ -36,6 +38,30 @@ const fetchUpComingMatchesAction = () => {
         .then((data: any) => {
           dispatch({
             type: GET_UPCOMING_MATCHES_LIST,
+            data: data,
+          });
+          dispatch({type: ACTION_COMPLETED});
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: ACTION_ERROR,
+            errorMessage: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+const fetchUpComingAllMatchesAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    () => {
+      fetchUpcomingAllMatches()
+        .then((data: any) => {
+          dispatch({
+            type: GET_UPCOMING_ALL_MATCHES_LIST,
             data: data,
           });
           dispatch({type: ACTION_COMPLETED});
@@ -202,4 +228,5 @@ export {
   fetchPublicLeagueAction,
   getUserDashboardAction,
   fetchFantasyNoticeAction,
+  fetchUpComingAllMatchesAction,
 };

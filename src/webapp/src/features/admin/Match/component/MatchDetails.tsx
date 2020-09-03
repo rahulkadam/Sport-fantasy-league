@@ -89,11 +89,9 @@ const MatchDetails = ({
       omit: true,
     },
     {
-      name: 'Tournament',
-      selector: 'tournament_name',
-      sortable: true,
+      name: 'Match Result',
+      selector: 'matchResult',
       right: true,
-      omit: true,
     },
     {
       name: 'Venue',
@@ -109,10 +107,6 @@ const MatchDetails = ({
       omit: !showExtraData,
     },
   ];
-
-  function onRowClickedAction(row: any, e: any) {
-    fetchPlayerHistoryList(row.id);
-  }
 
   const renderCustomSearch = useMemo(() => {
     return (
@@ -156,7 +150,6 @@ const MatchDetails = ({
           highlightOnHover
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
-          onRowClicked={onRowClickedAction}
           defaultSortField="matchTime"
           defaultSortAsc={true}
         />

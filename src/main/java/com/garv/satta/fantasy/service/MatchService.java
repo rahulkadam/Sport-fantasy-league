@@ -60,7 +60,14 @@ public class MatchService {
     }
 
     @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
-    public List<MatchDTO> getUpComingMatchList() {
+    public List<MatchDTO> getUpComingTOP5MatchList() {
+        DateTime currentTime = new DateTime();
+        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
+        return converter.convertToFullDTOList(matches);
+    }
+
+    @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
+    public List<MatchDTO> getUpComingAllMatchList() {
         DateTime currentTime = new DateTime();
         List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
         return converter.convertToFullDTOList(matches);

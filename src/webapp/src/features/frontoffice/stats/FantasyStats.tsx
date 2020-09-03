@@ -19,7 +19,7 @@ import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from '../../../common/components';
 import {isUserLogin} from '../../../API';
 import {getCommonData} from '../../common/redux';
-import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
