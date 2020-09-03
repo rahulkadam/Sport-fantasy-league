@@ -22,7 +22,7 @@ import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
 import Helmet from 'react-helmet';
-import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -78,8 +78,8 @@ const FantasyHome = () => {
   function renderGoToButton(title: string, gotoUrl: string) {
     return (
       <Button
-        variant="outline-info"
-        className="mr-1 homepageDataLink"
+        variant="outline-primary"
+        className="mr-1"
         onClick={() => goto(gotoUrl)}>
         {title}
       </Button>
@@ -93,11 +93,14 @@ const FantasyHome = () => {
           {renderGoToButton('League', '/league')}
           {renderGoToButton('View Team', '/team')}
           <Button
-            variant="outline-info"
-            className="mr-1 homepageDataLink"
+            variant="outline-primary"
+            className="mr-1"
             onClick={() => setShowPrivateLeagueModal(true)}>
             Join League
           </Button>
+          {renderGoToButton('Help', '/helppage')}
+          {renderGoToButton('Fixtures', '/Fixtures')}
+          {renderGoToButton('View Stats', '/statistics')}
         </Form>
       </div>
     );
@@ -226,15 +229,13 @@ const FantasyHome = () => {
         {renderIPLImage()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
-        {renderLiveMatchesSchedule()}
-        {renderUpComingMatchesSchedule()}
         {loginUser && dashboard.userTeamDTO && renderUserTeamCard()}
         {!dashboard.userTeamDTO && renderFantasyInfoCard()}
         {renderUserPublicLeagues()}
+        {renderLiveMatchesSchedule()}
+        {renderUpComingMatchesSchedule()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}
-        <HowToPlay />
-        <UserHomePageBoard />
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>

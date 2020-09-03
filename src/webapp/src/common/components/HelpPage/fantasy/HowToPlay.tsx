@@ -102,7 +102,7 @@ const HowToPlay = () => {
       {showAlert && renderLoginAlert()}
       <Row>
         <Col className="headerRow justify-content-center">
-          <h3>HOW TO PLAY</h3>
+          <h4>HOW TO PLAY</h4>
         </Col>
       </Row>
       {renderFantasyPlaySteps()}

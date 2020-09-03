@@ -5,16 +5,16 @@ import LoadingOverlay from 'react-loading-overlay';
 import './fixtures.styles.scss';
 import {isListEmpty} from 'common/util';
 import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
-import {fetchUpComingMatchesAction, getHomeData} from '../home/redux';
+import {fetchUpComingAllMatchesAction, getHomeData} from '../home/redux';
 import {getCommonData} from '../../common/redux';
 import Helmet from 'react-helmet';
-import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const Fixtures = () => {
   const homeProps = getHomeData();
   const configProps = getCommonData();
-  const matchList = homeProps.leagueMatchesList;
-  const fetchMatchList = fetchUpComingMatchesAction();
+  const matchList = homeProps.leagueAllMatchesList;
+  const fetchMatchList = fetchUpComingAllMatchesAction();
   const fetchPlayerStats = fetchMatchStatsListAction();
   const statsProps = getStatsProps();
 
@@ -26,7 +26,7 @@ const Fixtures = () => {
 
   function renderMatchListView() {
     return (
-      <div className="container">
+      <div>
         <StatusMessage type="info" text="Upcoming Matches" />
         <MatchDetails
           title="Fixtures"
@@ -48,7 +48,7 @@ const Fixtures = () => {
   }
 
   return (
-    <div>
+    <div className="fixtureContainer">
       <LoadingOverlay
         active={configProps.isLoading}
         spinner

@@ -56,7 +56,7 @@ export function getErrorMessage(error: any) {
   if (errorResponse && errorResponse.data) {
     return errorResponse.data.error;
   }
-  return 'Error occured while performing action, please check again';
+  return 'opps! something went wrong, please logout/login or refresh again';
 }
 
 export function isListEmpty(list: any) {

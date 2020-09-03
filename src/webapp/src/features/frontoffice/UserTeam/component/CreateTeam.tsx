@@ -12,17 +12,17 @@ const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
     setTeamName(teamNameTxt);
   }
 
-  const createTeamMsg = 'Welcome to Fantasy League , Please create team';
+  const createTeamMsg = 'Welcome to IPL Fantasy League , Please create team';
 
   function renderCreateTeam() {
     const teambtnDisable = teamName.length == 0;
     return (
       <Fragment>
         <div className="mb-3 createTeamContainer">
-          <StatusMessage type={'primary'} text={createTeamMsg} />
+          <StatusMessage type={'info'} text={createTeamMsg} />
           <FormControl
             value={teamName}
-            placeholder="Team Name"
+            placeholder="Team Name i.e MI-Paltan, RCB_United,SuperIPLFan"
             aria-label="teamName"
             aria-describedby="basic-addon1"
             onChange={event => updateTeamName(event.target.value)}

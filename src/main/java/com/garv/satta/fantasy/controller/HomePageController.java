@@ -39,8 +39,15 @@ public class HomePageController {
 
     @GetMapping(value = "/comingmatches")
     public List<MatchDTO> getUpcomingMatches() {
-        return matchService.getUpComingMatchList();
+        return matchService.getUpComingTOP5MatchList();
     }
+
+
+    @GetMapping(value = "/comingAllmatches")
+    public List<MatchDTO> getUpcomingAllMatches() {
+        return matchService.getUpComingAllMatchList();
+    }
+
 
     @GetMapping(value = "/topPlayerScore")
     public List<MatchPlayerScoreDTO> getTopPerformer() {

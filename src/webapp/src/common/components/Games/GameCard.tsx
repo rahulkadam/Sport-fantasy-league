@@ -11,7 +11,11 @@ const GameCard = (cardProps: GameCardProps) => {
   const goto = liveMatch ? '/matchlive' : '/fixtures';
   const renderer = ({days, hours, minutes}: {[key: string]: any}) => {
     if (liveMatch) {
-      return <span className="timeMsg">Live Match</span>;
+      return (
+        <span className="timeMsg" onClick={() => history.push(goto)}>
+          Live Match
+        </span>
+      );
     }
     let msg = '';
     if (days > 0) {

@@ -12,6 +12,10 @@ export function fetchUpcomingMatches() {
   return Get('/public/home/comingmatches');
 }
 
+export function fetchUpcomingAllMatches() {
+  return Get('/public/home/comingAllmatches');
+}
+
 export function fetchPublicLeague() {
   return Get('/public/home/list/public');
 }

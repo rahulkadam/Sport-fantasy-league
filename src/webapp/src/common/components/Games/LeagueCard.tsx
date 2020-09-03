@@ -7,14 +7,17 @@ import {getLogoNameByLeagueName} from '../FantasyDropDown';
 import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
 import {isUserLogin} from '../../../API';
 import {wrapTextWithLength} from '../../util';
-import {TwitterHashtagButton} from 'react-twitter-embed';
 
 const LeagueCard = (props: LeagueCardProps) => {
   const data = props.data;
   const userteam = props.userteam;
   const loginUser = isUserLogin();
   const joinLeague = joinLeagueAction();
-  const title = !loginUser ? '' : data.publicLeague ? 'Public' : 'Private';
+  const title = !loginUser
+    ? 'Public'
+    : data.publicLeague
+    ? 'Public'
+    : 'Private';
   const logoSource = getLogoNameByLeagueName(data.name);
   const containerName = loginUser
     ? 'leaguecardcontainerlogin'
@@ -38,7 +41,7 @@ const LeagueCard = (props: LeagueCardProps) => {
         <Card.Body>
           <Card.Title className="publicLeague">
             <Row>
-              <Col>
+              <Col className="publicLeague">
                 {' '}
                 {title} League{' '}
                 {logoSource && <Logo logoSource={logoSource} width="40" />}
@@ -86,9 +89,6 @@ const LeagueCard = (props: LeagueCardProps) => {
                     </Col>
                   </Row>
                 )}
-              </Col>
-              <Col className="d-none d-md-block d-lg-none">
-                Join Public League and Play with Sport Community
               </Col>
             </Row>
           </Card.Text>

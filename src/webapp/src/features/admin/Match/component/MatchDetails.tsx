@@ -9,7 +9,8 @@ import {
   getShortNameByTeam,
 } from 'common/components/FantasyDropDown';
 import {largeRowStyles} from 'common/components/DataTable/TableConfig';
-import {Logo} from '../../../../common/components';
+import {Logo} from 'common/components';
+import '../Match.styles.scss';
 
 const MatchDetails = ({
   data,
@@ -61,6 +62,15 @@ const MatchDetails = ({
     return <div className="nameColumn">{getTime(row.matchTime)}</div>;
   }
 
+  function customMatchResult(row: any) {
+    const result = row.matchResult || 'NA';
+    return <div className="nameColumn">{result}</div>;
+  }
+
+  function customVenue(row: any) {
+    return <div className="nameColumn">{row.venue_name}</div>;
+  }
+
   const columns = [
     {
       name: 'Name',
@@ -89,17 +99,17 @@ const MatchDetails = ({
       omit: true,
     },
     {
-      name: 'Tournament',
-      selector: 'tournament_name',
-      sortable: true,
-      right: true,
-      omit: true,
+      name: 'Match Result',
+      selector: 'matchResult',
+      left: true,
+      cell: customMatchResult,
     },
     {
       name: 'Venue',
       selector: 'venue_name',
       sortable: true,
-      right: true,
+      left: true,
+      cell: customVenue,
     },
     {
       name: 'ExternalId',
@@ -109,10 +119,6 @@ const MatchDetails = ({
       omit: !showExtraData,
     },
   ];
-
-  function onRowClickedAction(row: any, e: any) {
-    fetchPlayerHistoryList(row.id);
-  }
 
   const renderCustomSearch = useMemo(() => {
     return (
@@ -156,7 +162,6 @@ const MatchDetails = ({
           highlightOnHover
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
-          onRowClicked={onRowClickedAction}
           defaultSortField="matchTime"
           defaultSortAsc={true}
         />

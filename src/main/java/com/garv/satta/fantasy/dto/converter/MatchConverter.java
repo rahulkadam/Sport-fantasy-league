@@ -1,10 +1,7 @@
 package com.garv.satta.fantasy.dto.converter;
 
 import com.garv.satta.fantasy.dto.MatchDTO;
-import com.garv.satta.fantasy.model.backoffice.Match;
-import com.garv.satta.fantasy.model.backoffice.Team;
-import com.garv.satta.fantasy.model.backoffice.Tournament;
-import com.garv.satta.fantasy.model.backoffice.Venue;
+import com.garv.satta.fantasy.model.backoffice.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -44,6 +41,10 @@ public class MatchConverter extends Converter<Match, MatchDTO> {
     @Override
     public MatchDTO convertToFullDTO(Match entity) {
         MatchDTO matchDTO = convertToDTO(entity);
+        MatchResult matchResult = entity.getMatchResult();
+        if (matchResult != null) {
+            matchDTO.setMatchResult(matchResult.getDescription());
+        }
         Team homeTeam = entity.getTeam_host();
         Team awayTeam = entity.getTeam_away();
         Venue venue = entity.getVenue();

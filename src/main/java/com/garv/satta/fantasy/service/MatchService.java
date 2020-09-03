@@ -3,12 +3,12 @@ package com.garv.satta.fantasy.service;
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
 import com.garv.satta.fantasy.dto.*;
 import com.garv.satta.fantasy.dto.converter.MatchConverter;
-import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.Team;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.backoffice.Venue;
+import com.garv.satta.fantasy.service.admin.CacheService;
 import com.garv.satta.fantasy.validation.TeamValidator;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import org.apache.poi.ss.usermodel.Row;
@@ -48,16 +48,28 @@ public class MatchService {
     @Autowired
     private ExcelFileService excelFileService;
 
-    @Cacheable(cacheNames = "MatchCache" , keyGenerator = "customKeyGenerator")
+    @Autowired
+    private CacheService cacheService;
+
+    private final String MATCH_CACHE_NAME = "MatchCache";
+
+    @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getMatchList() {
-        List<Match> matches = repository.findAll();
+        List<Match> matches = repository.findAllByIsDeleted(false);
         return converter.convertToFullDTOList(matches);
     }
 
-    @Cacheable(cacheNames = "MatchCache" , keyGenerator = "customKeyGenerator")
-    public List<MatchDTO> getUpComingMatchList() {
+    @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
+    public List<MatchDTO> getUpComingTOP5MatchList() {
         DateTime currentTime = new DateTime();
-        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqual(currentTime);
+        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
+        return converter.convertToFullDTOList(matches);
+    }
+
+    @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
+    public List<MatchDTO> getUpComingAllMatchList() {
+        DateTime currentTime = new DateTime();
+        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
         return converter.convertToFullDTOList(matches);
     }
 
@@ -73,16 +85,16 @@ public class MatchService {
 
     public MatchDTO getMatchStartingInNext1Hour() {
         DateTime currentTime = new DateTime();
-        Match match = repository.findFirstByMatchTimeGreaterThanEqual(currentTime);
+        Match match = repository.findFirstByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, false);
         return converter.convertToDTO(match);
     }
 
+    @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getCompletedMatchList() {
         DateTime currentTime = new DateTime();
-        List<Match> matches = repository.findCompletedMatches(currentTime);
+        List<Match> matches = repository.findCompletedMatchesByMatchTimeLessThanEqualAndIsDeleted(currentTime, false);
         return converter.convertToFullDTOList(matches);
     }
-
 
 
     public MatchDTO getMatchById(Long id) {
@@ -105,6 +117,7 @@ public class MatchService {
         match.setStatus(status);
         match.setState(matchState);
         repository.save(match);
+        clearMatchCache();
     }
 
     public void updateExternalMatchId(RequestDTO dto) {
@@ -115,6 +128,7 @@ public class MatchService {
         Assert.notNull(externalId, "External Match id is not valid");
         match.setExternal_mid(externalId);
         repository.save(match);
+        clearMatchCache();
     }
 
     public MatchDTO createMatch(MatchDTO matchDTO) {
@@ -132,6 +146,7 @@ public class MatchService {
         tournamentValidator.validateTeamsInTournament(matchDTO.getTournament_id(), teamIdList);
 
         match = repository.save(match);
+        clearMatchCache();
         return converter.convertToFullDTO(match);
     }
 
@@ -190,5 +205,9 @@ public class MatchService {
             matchList.add(match);
         }
         repository.saveAll(matchList);
+    }
+
+    public void clearMatchCache() {
+        cacheService.evictAllCacheValues(MATCH_CACHE_NAME);
     }
 }

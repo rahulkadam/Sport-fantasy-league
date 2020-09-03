@@ -18,9 +18,13 @@ const teamCSK = require('./iplteams/csk-color.png');
 const teamRCB = require('./iplteams/rcb-color.png');
 const lockcolor = require('./action/lock-color.png');
 const bannerComingsoon = require('./banner/comingsoonIPL.jpeg');
-const leagueListBanner = require('./banner/leaguelistBanner.png');
+const leagueListBanner = require('./banner/leaguelistBanner1.png');
 const playerListBanner = require('./banner/playerListBanner.png');
 const fantasyLogo = require('./banner/RK_Fantasy_logo.png');
+const playerABD = require('./player/player_abd.png');
+const playerVK = require('./player/player_vk.png');
+const playerBumrah = require('./player/player_bumrah.png');
+
 export {
   fantasyLogo,
   googleLogo,
@@ -45,4 +49,7 @@ export {
   colorbat,
   colorwk,
   lockcolor,
+  playerABD,
+  playerVK,
+  playerBumrah,
 };

@@ -6,6 +6,7 @@ import {
   createTournamentAction,
   getTournamentData,
 } from './redux';
+import './Tournament.styles.scss';
 
 const Tournament = () => {
   const dataProps = getTournamentData();
@@ -52,7 +53,7 @@ const Tournament = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
   return (
-    <div>
+    <div className="tournamentContainer">
       {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>

@@ -59,17 +59,11 @@ const GameCorousel = (props: GameCorouselProps) => {
 
   function renderDashboardFantasyInfoCard() {
     return (
-      <Carousel>
-        <Carousel.Item>
-          <FantasyInfoCard />
-        </Carousel.Item>
-        <Carousel.Item>
-          <CreateSquadCard />
-        </Carousel.Item>
-        <Carousel.Item>
-          <JoinLeagueCard />
-        </Carousel.Item>
-      </Carousel>
+      <div>
+        <FantasyInfoCard />
+        <CreateSquadCard />
+        <JoinLeagueCard />
+      </div>
     );
   }
 

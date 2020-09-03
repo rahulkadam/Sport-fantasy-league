@@ -12,6 +12,7 @@ import {
   getTournamentData,
 } from '../Tournament/redux';
 import {UpdateTeam} from './component/UpdateTeam';
+import './SportTeam.styles.scss';
 
 const SportTeam = () => {
   const tournamentData = getTournamentData();
@@ -85,7 +86,7 @@ const SportTeam = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
   return (
-    <div>
+    <div className="sportTeamContainer">
       {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>
