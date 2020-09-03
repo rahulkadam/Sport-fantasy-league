@@ -10,6 +10,7 @@ import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.fantasyenum.PlayerEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Team;
+import com.garv.satta.fantasy.service.admin.CacheService;
 import com.garv.satta.fantasy.validation.PlayerValidator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,14 @@ public class PlayerService {
     @Autowired
     private ExcelFileService excelFileService;
 
-    @Cacheable(cacheNames = "PlayerCache" , keyGenerator = "customKeyGenerator")
+    @Autowired
+    private CacheService cacheService;
+
+    public final String PLAYER_CACHE_NAME = "PlayerCache";
+
+    @Cacheable(cacheNames = PLAYER_CACHE_NAME , keyGenerator = "customKeyGenerator")
     public List<PlayerDTO> getPlayerList() {
-        List<Player> playerList = playerRepository.findAll();
+        List<Player> playerList = playerRepository.findAllByIsDeleted(Boolean.FALSE);
         return playerConverter.convertToFullDTOList(playerList);
     }
 
@@ -54,6 +60,7 @@ public class PlayerService {
         player.setId(null);
         validator.validatePlayerValue(player.getValue());
         player = playerRepository.save(player);
+        clearPlayerCache();
         return playerConverter.convertToDTO(player);
     }
 
@@ -65,6 +72,7 @@ public class PlayerService {
         Assert.notNull(externalId, "External Match id is not valid");
         player.setExternalpid(externalId);
         playerRepository.save(player);
+        clearPlayerCache();
     }
 
     public void addTeamToPlayer(Long playerId, Long teamId) {
@@ -89,6 +97,7 @@ public class PlayerService {
             player.removeTeam(team);
         }
         playerRepository.save(player);
+        clearPlayerCache();
     }
 
     public void uploadPlayerList(MultipartFile file) {
@@ -122,11 +131,16 @@ public class PlayerService {
             playerList.add(player);
         }
         playerRepository.saveAll(playerList);
+        clearPlayerCache();
     }
 
 
     public List<PlayerDTO> getTopPickedPlayer() {
         List<Player> playerList = playerRepository.findAll();
         return playerConverter.convertToFullDTOList(playerList);
+    }
+
+    public void clearPlayerCache() {
+        cacheService.evictAllCacheValues(PLAYER_CACHE_NAME);
     }
 }

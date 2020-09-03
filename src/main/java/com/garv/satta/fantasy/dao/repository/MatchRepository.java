@@ -12,21 +12,19 @@ import java.util.List;
 public interface MatchRepository extends CrudRepository<Match, Long> {
 
     @EntityGraph(value = "Match.matchschedule")
-    List<Match> findAll();
+    List<Match> findAllByIsDeleted(Boolean isDeleted);
     Match findMatchById(Long id);
     @EntityGraph(value = "Match.matchschedule")
-    @Query("Select m from Match m where m.matchTime > :current order by m.matchTime desc")
-    List<Match> findUpcomingMatches(@Param("current") DateTime currentTime);
+    List<Match> findUpcomingMatchesByMatchTimeGreaterThanEqualAndIsDeleted(DateTime currentTime, Boolean isDeleted);
 
     @EntityGraph(value = "Match.matchschedule")
-    @Query("Select m from Match m where m.matchTime < :current order by m.matchTime desc")
-    List<Match> findCompletedMatches(@Param("current") DateTime currentTime);
+    List<Match> findCompletedMatchesByMatchTimeLessThanEqualAndIsDeleted(DateTime currentTime, Boolean isDeleted);
 
     @EntityGraph(value = "Match.matchschedule")
-    List<Match> findFirst5ByMatchTimeGreaterThanEqual(DateTime currentTime);
+    List<Match> findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(DateTime currentTime, Boolean isDeleted);
 
     List<Match> findMatchesByStatus(Boolean status);
 
-    Match findFirstByMatchTimeGreaterThanEqual(DateTime currentTime);
+    Match findFirstByMatchTimeGreaterThanEqualAndIsDeleted(DateTime currentTime, Boolean isDeleted);
 
 }

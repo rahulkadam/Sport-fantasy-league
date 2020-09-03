@@ -11,6 +11,9 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
     @EntityGraph(value = "Player.teams")
     List<Player> findAll();
 
+    @EntityGraph(value = "Player.teams")
+    List<Player> findAllByIsDeleted(Boolean isDeleted);
+
     Player findPlayerById(Long id);
     Player findPlayerByName(String name);
     @EntityGraph(value = "Player.teams")
