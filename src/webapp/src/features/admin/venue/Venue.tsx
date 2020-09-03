@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
 import {VenueDetails, CreateVenue} from './component';
 import {fetchVenueListAction, createVenueAction, getVenueData} from './redux';
+import './venue.styles.scss';
 
 const Venue = () => {
   const dataProps = getVenueData();
@@ -45,8 +46,7 @@ const Venue = () => {
     return <StatusMessage text={statusMessage} type={statusClassName} />;
   }
   return (
-    <div>
-      Welcome to Team List with
+    <div className="venueContainer">
       {renderStatusMessage(dataProps.hasError, dataProps.statusMessage)}
       <TabContainer defaultKey={tabName} tabConfig={tabConfig} />
     </div>

@@ -61,6 +61,15 @@ const MatchDetails = ({
     return <div className="nameColumn">{getTime(row.matchTime)}</div>;
   }
 
+  function customMatchResult(row: any) {
+    const result = row.matchResult || 'NA';
+    return <div className="nameColumn">{result}</div>;
+  }
+
+  function customVenue(row: any) {
+    return <div className="nameColumn">{row.venue_name}</div>;
+  }
+
   const columns = [
     {
       name: 'Name',
@@ -91,13 +100,15 @@ const MatchDetails = ({
     {
       name: 'Match Result',
       selector: 'matchResult',
-      right: true,
+      left: true,
+      cell: customMatchResult,
     },
     {
       name: 'Venue',
       selector: 'venue_name',
       sortable: true,
-      right: true,
+      left: true,
+      cell: customVenue,
     },
     {
       name: 'ExternalId',
