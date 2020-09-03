@@ -73,12 +73,12 @@ const CreateMatch = (props: CreateMatchProps) => {
     return (
       <Fragment>
         <div className="mb-3">
-          <Row>
+          <Row className="columnheader">
             <Col>Tournament</Col>
             <Col>Home Team</Col>
             <Col>Away Team</Col>
           </Row>
-          <Row>
+          <Row className="columnheader">
             <Col>
               <FantasyDropDown
                 onSelect={(value: any) => {
@@ -104,12 +104,12 @@ const CreateMatch = (props: CreateMatchProps) => {
               />
             </Col>
           </Row>
-          <Row>
+          <Row className="columnheader">
             <Col>Match Name</Col>
             <Col>Time</Col>
             <Col>Venue</Col>
           </Row>
-          <Row>
+          <Row className="columnheader">
             <Col>
               <FormControl
                 value={description}

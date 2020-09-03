@@ -18,11 +18,11 @@ const UploadMatchExternalId = (props: UploadExternalIdProps) => {
     return (
       <Fragment>
         <div className="mb-3">
-          <Row>
+          <Row className="columnheader">
             <Col>Match</Col>
             <Col>External Id</Col>
           </Row>
-          <Row>
+          <Row className="columnheader">
             <Col>
               <FantasyDropDown
                 onSelect={(value: string) => {
