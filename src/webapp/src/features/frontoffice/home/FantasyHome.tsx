@@ -78,8 +78,8 @@ const FantasyHome = () => {
   function renderGoToButton(title: string, gotoUrl: string) {
     return (
       <Button
-        variant="outline-info"
-        className="mr-1 homepageDataLink"
+        variant="outline-primary"
+        className="mr-1"
         onClick={() => goto(gotoUrl)}>
         {title}
       </Button>
@@ -93,11 +93,14 @@ const FantasyHome = () => {
           {renderGoToButton('League', '/league')}
           {renderGoToButton('View Team', '/team')}
           <Button
-            variant="outline-info"
-            className="mr-1 homepageDataLink"
+            variant="outline-primary"
+            className="mr-1"
             onClick={() => setShowPrivateLeagueModal(true)}>
             Join League
           </Button>
+          {renderGoToButton('Help', '/helppage')}
+          {renderGoToButton('Fixtures', '/Fixtures')}
+          {renderGoToButton('View Stats', '/statistics')}
         </Form>
       </div>
     );
@@ -228,13 +231,11 @@ const FantasyHome = () => {
         {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
         {loginUser && dashboard.userTeamDTO && renderUserTeamCard()}
         {!dashboard.userTeamDTO && renderFantasyInfoCard()}
+        {renderUserPublicLeagues()}
         {renderLiveMatchesSchedule()}
         {renderUpComingMatchesSchedule()}
-        {renderUserPublicLeagues()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}
-        <HowToPlay />
-        <UserHomePageBoard />
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>

@@ -41,7 +41,7 @@ const LeagueCard = (props: LeagueCardProps) => {
         <Card.Body>
           <Card.Title className="publicLeague">
             <Row>
-              <Col>
+              <Col className="publicLeague">
                 {' '}
                 {title} League{' '}
                 {logoSource && <Logo logoSource={logoSource} width="40" />}
@@ -89,11 +89,6 @@ const LeagueCard = (props: LeagueCardProps) => {
                     </Col>
                   </Row>
                 )}
-              </Col>
-              <Col className="d-none d-md-block">
-                <Badge variant="info">
-                  Join Public League and Play with Sport Community
-                </Badge>
               </Col>
             </Row>
           </Card.Text>
