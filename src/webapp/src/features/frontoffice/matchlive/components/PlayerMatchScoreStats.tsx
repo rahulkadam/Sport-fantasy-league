@@ -5,10 +5,15 @@ import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {Badge} from 'react-bootstrap';
-import {largeRowStyles} from '../../../../common/components/DataTable/TableConfig';
+import {largeRowStyles} from 'common/components/DataTable/TableConfig';
+import {getUserTeamData} from '../../UserTeam/redux';
+import {returnMapFromList} from 'common/util';
 
 const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
   const configProps = getCommonData();
+  const userteamDataProps = getUserTeamData();
+  const currentUserTeamPlayers = userteamDataProps.userTeamPlayers;
+  const playerTeamMap = returnMapFromList(currentUserTeamPlayers);
 
   function customPointScore(row: any) {
     let variant = row.pointscore > 20 ? 'success' : 'warning';
@@ -18,6 +23,15 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
     return <Badge variant={variant}>{row.pointscore}</Badge>;
   }
 
+  function customPlayerName(row: any) {
+    const isAvailable = playerTeamMap.get(row.playerId);
+    return (
+      <div className="nameColumn">
+        {isAvailable && <span className="ownedPlayer">{row.playerName}</span>}
+        {!isAvailable && row.playerName}
+      </div>
+    );
+  }
   const columns: any[] = [
     {
       name: 'Match',
@@ -37,6 +51,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       style: {
         'font-weight': 'bold',
       },
+      cell: customPlayerName,
     },
     {
       name: 'Points',
