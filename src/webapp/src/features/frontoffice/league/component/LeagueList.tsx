@@ -21,6 +21,14 @@ const LeagueList = (props: LeagueUserListProps) => {
     );
   }
 
+  function customTotalUser(row: any) {
+    return (
+      <div className="leagueNameColumn">
+        <Badge variant="info">{row.totalUserCount} </Badge>
+      </div>
+    );
+  }
+
   function customRank(row: any) {
     const userRank = row.userRank;
     const totalUser = row.totalUserCount;
@@ -46,6 +54,7 @@ const LeagueList = (props: LeagueUserListProps) => {
       selector: 'totalUserCount',
       sortable: true,
       center: true,
+      cell: customTotalUser,
     },
     {
       name: 'RANK',

@@ -29,8 +29,10 @@ const CreateSquadCard = () => {
               <Row className="justify-content-md-center">
                 <Col>
                   Use Credit of{' '}
-                  <strong>100 to pick a squad of 11 players</strong> from the
-                  League.{' '}
+                  <strong>
+                    100 to pick a squad of 11 players and 1 captain
+                  </strong>{' '}
+                  from the League.{' '}
                   <strong>Play IPL Fantasy with limited Transfer</strong>
                   {loginUser && (
                     <Button

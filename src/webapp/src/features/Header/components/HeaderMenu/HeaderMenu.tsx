@@ -58,7 +58,7 @@ const HeaderMenu = () => {
           <Logo logoSource={fantasyLogo} width="48" />
         </Navbar.Brand>
         <Navbar.Collapse>
-          <Nav variant="pills" defaultActiveKey="/home">
+          <Nav defaultActiveKey="/home">
             {publicMenu && renderMenuLink('Home', '/')}
             {userMenu && renderMenu(userMenuConfig)}
             {adminMenu && renderMenu(adminMenuConfig)}

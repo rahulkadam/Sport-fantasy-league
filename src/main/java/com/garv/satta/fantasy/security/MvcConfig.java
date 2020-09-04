@@ -19,10 +19,10 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        Duration d = Duration.ofSeconds(6000, 1);
+        Duration d = Duration.ofSeconds(600, 1);
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:Resources", "classpath:static")
-                .setCacheControl(CacheControl.maxAge(d).cachePublic());
+                .setCacheControl(CacheControl.maxAge(d).cachePublic().mustRevalidate());
     }
 
     @Override

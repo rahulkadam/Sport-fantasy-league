@@ -183,7 +183,9 @@ const UserTeamPlayerDetails = ({
             />
           </Col>
           <Col>
-            <Form.Label>Captain</Form.Label>
+            <Form.Label>
+              Captain <Badge variant="danger">(2X Pts)</Badge>
+            </Form.Label>
             {!editable && <Badge variant="success">{captainName}</Badge>}
             {editable && (
               <FantasyDropDown

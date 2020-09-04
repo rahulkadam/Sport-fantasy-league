@@ -19,6 +19,9 @@ public interface MatchPlayerScoreRepository extends CrudRepository<MatchPlayerSc
     List<MatchPlayerScore> findMatchPlayerScoreByMatchId(Long id);
 
     @EntityGraph(value = "MatchPlayerScore.full")
+    List<MatchPlayerScore> findMatchPlayerScoreByMatchIdIn(long[] matchids);
+
+    @EntityGraph(value = "MatchPlayerScore.full")
     MatchPlayerScore findPlayerScoreByMatchIdAndPlayerId(Long matchId, Long playerId);
 
     @EntityGraph(value = "MatchPlayerScore.full")
