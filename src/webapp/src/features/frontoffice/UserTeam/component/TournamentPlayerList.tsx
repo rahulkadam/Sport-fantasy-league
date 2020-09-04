@@ -14,6 +14,7 @@ import {
 import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 import {playerRowStyeForNew} from '../../../../common/components/DataTable/TableConfig';
+import {minuscolor, pluscolor} from '@logos/index';
 
 const TournamentPlayerList = ({
   data,
@@ -91,12 +92,9 @@ const TournamentPlayerList = ({
   function addAction(row: any) {
     return (
       <div onClick={() => onRowSelected([row])} className="removeIcon">
-        <Button
-          size={'sm'}
-          variant="outline-success"
-          onClick={() => onRowSelected([row])}>
-          +
-        </Button>
+        <span onClick={() => onRowSelected([row])} className="removeIcon">
+          <Logo logoSource={pluscolor} width="20" />
+        </span>
       </div>
     );
   }

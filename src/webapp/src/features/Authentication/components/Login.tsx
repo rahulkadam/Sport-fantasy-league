@@ -1,13 +1,18 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {getLoginRedirectionUrl, GetLoginStoreData} from '../redux';
 import {Logo} from 'common/components';
 import {googleLogo} from '@logos/index';
 import './Login.styles.scss';
+import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
 
 const Login = () => {
   const loginUserData = GetLoginStoreData();
   const authUserName = loginUserData.username;
   const GOOGLE_AUTH_URL = getLoginRedirectionUrl();
+
+  function renderTwitterHashtag() {
+    return <TwitterFantasyTimeline type="list" id="1301204689589997568" />;
+  }
 
   return (
     <div
@@ -20,6 +25,7 @@ const Login = () => {
         </a>
       )}
       {authUserName && <div>Welcome {authUserName}</div>}
+      {renderTwitterHashtag()}
     </div>
   );
 };
