@@ -13,6 +13,9 @@ const FantasyHelpContent = () => {
   function renderFantasyDefinition() {
     return (
       <div>
+        <Row className="iplContentTitle">
+          <Col>IPL Fantasy League</Col>
+        </Row>
         <Row className="headerRow">
           <Col>
             <h3>
@@ -36,8 +39,9 @@ const FantasyHelpContent = () => {
         </Row>
         <Row className="contentRow">
           <Col>
-            The main aim is to Play friendly Fantasy Cricket With your friend,
-            In IPL with your team by managing transfer properly!
+            The main <strong>aim is to Play friendly Fantasy Cricket</strong>{' '}
+            With your friend, In IPL with your team by managing transfer
+            properly!
           </Col>
         </Row>
       </div>

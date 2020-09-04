@@ -138,6 +138,7 @@ const League = () => {
         <Helmet>
           <title>IPL Leagues : public/private</title>
         </Helmet>
+        <div className="leagueTitle">Leagues</div>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}
         {renderLeagueActions()}

@@ -27,7 +27,6 @@ const Fixtures = () => {
   function renderMatchListView() {
     return (
       <div>
-        <StatusMessage type="info" text="Upcoming Matches" />
         <MatchDetails
           title="Fixtures"
           data={matchList}
@@ -56,6 +55,7 @@ const Fixtures = () => {
         <Helmet>
           <title>IPL-20 Fixture</title>
         </Helmet>
+        <div className="fixtureTitle">IPL-20 Fixture</div>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {renderMatchListView()}
         {renderTwitterHashtag()}

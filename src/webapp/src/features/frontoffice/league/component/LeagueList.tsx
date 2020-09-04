@@ -93,9 +93,6 @@ const LeagueList = (props: LeagueUserListProps) => {
   function renderLeagueList() {
     return (
       <Fragment>
-        <div className="leagueAction">
-          <StatusMessage type="info" text="My Leagues" />
-        </div>
         {userLeagueList && userLeagueList.length > 0 && (
           <DataTable
             noHeader

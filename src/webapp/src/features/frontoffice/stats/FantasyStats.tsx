@@ -157,6 +157,7 @@ const FantasyStats = () => {
         active={configProps.isLoading}
         spinner
         text="Loading Stats Details ...">
+        <div className="statsTitle">IPL Stats</div>
         {renderStatsActions()}
         {renderStatsComponent()}
         {renderTwitterHashtag()}
