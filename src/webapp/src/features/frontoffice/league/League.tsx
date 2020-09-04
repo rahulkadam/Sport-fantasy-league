@@ -14,7 +14,7 @@ import './League.styles.scss';
 import {getTournamentData} from '../../admin/Tournament/redux';
 import {checkUserAccess, GetLoginStoreData} from '../../Authentication/redux';
 import LoadingOverlay from 'react-loading-overlay';
-import {Button, Form} from 'react-bootstrap';
+import {Button, Form, Badge} from 'react-bootstrap';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from '../../../common/util';
 import Helmet from 'react-helmet';
@@ -22,6 +22,7 @@ import {
   TwitterFantasyTimeline,
   TWITTER_LIST_LEAGUE,
 } from 'common/components/Footer/socialmedia';
+import history from 'common/config/history';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -132,6 +133,39 @@ const League = () => {
     return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_LEAGUE} />;
   }
 
+  function renderJoinPublicLeagueMsg() {
+    return (
+      <div className="secondaryMenu">
+        <Badge variant="warning">Join More Public League from HomePage</Badge>
+      </div>
+    );
+  }
+
+  function goto(link: string) {
+    history.push(link);
+  }
+
+  function renderGoToButton(title: string, gotoUrl: string) {
+    return (
+      <Button
+        variant="outline-success"
+        className="mr-1 buttonMargin"
+        onClick={() => goto(gotoUrl)}>
+        {title}
+      </Button>
+    );
+  }
+
+  function renderActionFooterForSwitch() {
+    return (
+      <div className="secondaryMenu">
+        <Form inline>
+          {renderGoToButton('Home', '/')}
+          {renderGoToButton('View Team', '/team')}
+        </Form>
+      </div>
+    );
+  }
   return (
     <div className="leagueContainer">
       <LoadingOverlay
@@ -146,6 +180,8 @@ const League = () => {
         {checkUserAccess()}
         {renderLeagueActions()}
         {renderLeagueComponents()}
+        {renderJoinPublicLeagueMsg()}
+        {renderActionFooterForSwitch()}
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
