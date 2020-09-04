@@ -21,10 +21,9 @@ const FantasyInfoCard = () => {
                 IPL Fantasy is a <strong>Fantasy Cricket Game</strong> played
                 over internet between IPL fans.
                 <strong>Fans act like team owner </strong>
-                who own team during tournament.{' '}
-                <Badge variant="warning">
-                  {' '}
-                  1 Team, 60 matches And 100 Transfer
+                who own team during tournament.
+                <Badge variant="success">
+                  1 Team, 60 matches and 100 Transfer = IPL Fantasy
                 </Badge>
               </Col>
             </Row>
