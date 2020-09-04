@@ -7,14 +7,23 @@ const TeamCriteria = ({criteria}: TeamCriteriaProps) => {
     {
       name: 'Type',
       selector: 'shortName',
+      style: {
+        'font-weight': 'bold',
+      },
     },
     {
       name: 'Min',
       selector: 'minPerTeam',
+      style: {
+        'font-weight': 'bold',
+      },
     },
     {
       name: 'Max',
       selector: 'maxPerTeam',
+      style: {
+        'font-weight': 'bold',
+      },
     },
   ];
   function renderTeamCriteriaInTable() {

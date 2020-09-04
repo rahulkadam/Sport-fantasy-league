@@ -21,6 +21,9 @@ const IPLPointSystems = () => {
       name: 'Type',
       selector: 'name',
       left: true,
+      style: {
+        'font-weight': 'bold',
+      },
     },
     {
       name: 'Points',
