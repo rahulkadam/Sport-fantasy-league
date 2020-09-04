@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import DataTable from 'react-data-table-component';
-import {Form, Button, Badge, Row, Col} from 'react-bootstrap';
+import {Form, Badge, Row, Col} from 'react-bootstrap';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandPlayerRow} from './ExpandPlayerRow';
 import '../UserTeam.styles.scss';
@@ -184,9 +184,7 @@ const UserTeamPlayerDetails = ({
             />
           </Col>
           <Col>
-            <Form.Label>
-              Captain <Badge variant="danger">(2X Pts)</Badge>
-            </Form.Label>
+            Captain <Badge variant="danger">(2X Pts)</Badge>
             {!editable && <Badge variant="success">{captainName}</Badge>}
             {editable && (
               <FantasyDropDown

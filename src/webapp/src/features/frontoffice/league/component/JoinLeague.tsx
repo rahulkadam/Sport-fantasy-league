@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
-import {StatusMessage} from '../../../../common/components';
+import {StatusMessage} from 'common/components';
 
-const JoinLeague = ({data, userid}: JoinLeagueProps) => {
+const JoinLeague = ({data}: JoinLeagueProps) => {
   const [leagueCode, setLeagueCode] = useState('');
   const joinLeagueAction = data && data.joinleague;
 
@@ -11,7 +11,7 @@ const JoinLeague = ({data, userid}: JoinLeagueProps) => {
   }
 
   function joinLeague() {
-    joinLeagueAction(leagueCode, userid);
+    joinLeagueAction(leagueCode);
   }
 
   const joinleageMsg =

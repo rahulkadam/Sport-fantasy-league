@@ -15,4 +15,6 @@ public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
     List<Tournament> findTournamentByStatus(Boolean status);
 
+    Tournament findFirstByIsActive(Boolean status);
+
 }

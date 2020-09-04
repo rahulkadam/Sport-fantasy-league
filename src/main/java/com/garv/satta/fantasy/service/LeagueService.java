@@ -5,11 +5,14 @@ import com.garv.satta.fantasy.dao.repository.LeagueRepository;
 import com.garv.satta.fantasy.dao.repository.LeagueUserTeamRepository;
 import com.garv.satta.fantasy.dao.repository.UserTeamRepository;
 import com.garv.satta.fantasy.dto.LeagueDTO;
+import com.garv.satta.fantasy.dto.TournamentDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.fantasyenum.OperationEnum;
+import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
+import com.garv.satta.fantasy.model.frontoffice.User;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
@@ -48,6 +51,9 @@ public class LeagueService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TournamentService tournamentService;
+
 
     public List<LeagueDTO> getLeaguesList() {
         List<League> leagues = repository.findAll();
@@ -59,20 +65,23 @@ public class LeagueService {
         return converter.convertToFullDTO(league);
     }
 
-    public LeagueDTO createLeague(LeagueDTO leagueDTO) {
-        League league = converter.convertToFullEntity(leagueDTO);
+    public void createLeague(LeagueDTO leagueDTO) {
+        League league = converter.convertToEntity(leagueDTO);
+        Long userId = userService.getCurrentUserId();
         league.setId(null);
-        tournamentValidator.validateTournamentById(leagueDTO.getTournamentId());
+        TournamentDTO tournamentDTO = tournamentService.getFirstActiveTournament();
+        league.setTournament(new Tournament(tournamentDTO.getId()));
         String leagueCode = LeagueCodeGenerator.randomAlphaNumeric(FantasyConstant.DEFAULT_LEAGUE_CODE_LENGTH);
         league.setLeagueCode(leagueCode);
         league.setStatus(true);
+        league.setCreated_by(new User(userId));
+        league.setUpdated_by(new User(userId));
         league = repository.save(league);
-        joinLeagueByCode(league.getLeagueCode(), userService.getCurrentUserId());
-        return converter.convertToFullDTO(league);
+        joinLeagueByCode(league.getLeagueCode());
     }
 
-    public void joinLeagueByCode(String leagueCode, Long userId) {
-        userId = userService.getCurrentUserId();
+    public void joinLeagueByCode(String leagueCode) {
+        Long userId = userService.getCurrentUserId();
         League league = repository.findLeagueByLeagueCode(leagueCode);
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(userId);
         Assert.isTrue(userTeamList.size() == 1, "Please create team first and join League");
@@ -138,17 +147,8 @@ public class LeagueService {
         return leagueDTOS;
     }
 
-    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public List<LeagueDTO> getLeagueByPublic() {
         List<League> userLeagueList = repository.findLeagueByPublicLeague(true);
         return converter.convertToDTOList(userLeagueList);
     }
-
-    public void joinPublicLeague() {
-        List<League> publicLeague = repository.findLeagueByPublicLeague(true);
-        if (!CollectionUtils.isEmpty(publicLeague)) {
-            publicLeague.stream().forEach((leauge) ->joinLeagueByCode(leauge.getLeagueCode(), userService.getCurrentUserId()));
-        }
-    }
-
 }

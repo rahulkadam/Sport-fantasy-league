@@ -97,7 +97,7 @@ const League = () => {
   }
 
   function renderJoinLeague() {
-    return <JoinLeague data={{joinleague: joinLeague}} userid={userId} />;
+    return <JoinLeague data={{joinleague: joinLeague}} />;
   }
 
   function renderCreateLeague() {

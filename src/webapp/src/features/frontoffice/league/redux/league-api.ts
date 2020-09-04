@@ -1,8 +1,8 @@
 import {Get, Post} from 'API';
 
-export function joinLeague(leagueCode: string, userId: number) {
+export function joinLeague(leagueCode: string) {
   return Post('/fantasy/league/join/bycode', {
-    data: {leagueCode: leagueCode, add: userId},
+    data: {leagueCode: leagueCode},
   });
 }
 

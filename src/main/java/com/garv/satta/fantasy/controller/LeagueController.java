@@ -30,8 +30,9 @@ public class LeagueController {
 
     @PostMapping(value = "/create")
     @ResponseBody
-    public LeagueDTO createLeague(@RequestBody LeagueDTO leagueDTO) {
-        return leagueService.createLeague(leagueDTO);
+    public String createLeague(@RequestBody LeagueDTO leagueDTO) {
+        leagueService.createLeague(leagueDTO);
+        return "League Created Successfuly";
     }
 
     @PostMapping(value = "/add/userteam")
@@ -45,8 +46,7 @@ public class LeagueController {
     @PostMapping(value = "/join/bycode")
     public String joinLeagueByCode(@RequestBody RequestDTO dto) {
         String leagueCode = dto.getLeagueCode();
-        Long userId = dto.getAdd();
-        leagueService.joinLeagueByCode(leagueCode, userId);
+        leagueService.joinLeagueByCode(leagueCode);
         return "League Joined successfully";
     }
 
