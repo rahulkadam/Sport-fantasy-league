@@ -21,6 +21,7 @@ const TournamentPlayerList = ({
   currentUserTeamPlayers,
   playerStats,
   fetchPlayerHistory,
+  editable,
 }: UserTeamPlayerDetails) => {
   const [filterText, setFilterText] = React.useState('');
   const [filterPlayerType, setFilterPlayerType] = React.useState('ALL');
@@ -148,7 +149,9 @@ const TournamentPlayerList = ({
   ];
 
   function checkDisabledPlayer() {
-    return currentUserTeamPlayers.length == 15 || teamValueByPlayers > 150;
+    return editable
+      ? currentUserTeamPlayers.length == 15 || teamValueByPlayers > 150
+      : true;
   }
   const newColumns: any = checkDisabledPlayer()
     ? columns

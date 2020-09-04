@@ -55,7 +55,7 @@ const League = () => {
   });
 
   function renderTabActionBtn(actionName: string, title: string) {
-    const variant = tabName == actionName ? 'info' : 'outline-info';
+    const variant = tabName == actionName ? 'success' : 'outline-success';
     return (
       <Button
         variant={variant}

@@ -127,7 +127,7 @@ const FantasyStats = () => {
   }
 
   function renderActionBtn(value: string, action: string) {
-    const isprimary = tabName == action ? 'info' : 'outline-info';
+    const isprimary = tabName == action ? 'success' : 'outline-success';
     return (
       <Button
         variant={isprimary}

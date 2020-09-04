@@ -9,7 +9,6 @@ import {
 import './Home.styles.scss';
 import {isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
-import HowToPlay from '../../../common/components/HelpPage/fantasy/HowToPlay';
 import {Form, Button, Row, Col, Image} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
@@ -78,8 +77,8 @@ const FantasyHome = () => {
   function renderGoToButton(title: string, gotoUrl: string) {
     return (
       <Button
-        variant="outline-primary"
-        className="mr-1"
+        variant="outline-success"
+        className="mr-1 buttonMargin"
         onClick={() => goto(gotoUrl)}>
         {title}
       </Button>
@@ -93,8 +92,8 @@ const FantasyHome = () => {
           {renderGoToButton('League', '/league')}
           {renderGoToButton('View Team', '/team')}
           <Button
-            variant="outline-primary"
-            className="mr-1"
+            variant="outline-success"
+            className="mr-1 buttonMargin"
             onClick={() => setShowPrivateLeagueModal(true)}>
             Join League
           </Button>
