@@ -21,7 +21,10 @@ import {bannerComingsoon} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
 import Helmet from 'react-helmet';
-import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import {
+  TWITTER_LIST_HOME,
+  TwitterFantasyTimeline,
+} from 'common/components/Footer/socialmedia';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -210,7 +213,7 @@ const FantasyHome = () => {
   }
 
   function renderTwitterHashtag() {
-    return <TwitterFantasyTimeline type="list" id="1301204689589997568" />;
+    return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_HOME} />;
   }
 
   return (

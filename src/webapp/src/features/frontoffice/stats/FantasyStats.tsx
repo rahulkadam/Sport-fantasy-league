@@ -16,10 +16,13 @@ import {
 } from '../../admin/Match/redux';
 import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
 import {Button, Form} from 'react-bootstrap';
-import {StatusMessage} from '../../../common/components';
-import {isUserLogin} from '../../../API';
+import {StatusMessage} from 'common/components';
+import {isUserLogin} from 'API';
 import {getCommonData} from '../../common/redux';
-import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import {
+  TWITTER_LIST_STATS,
+  TwitterFantasyTimeline,
+} from 'common/components/Footer/socialmedia';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -148,7 +151,7 @@ const FantasyStats = () => {
     );
   }
   function renderTwitterHashtag() {
-    return <TwitterFantasyTimeline type="list" id="1301204235044794370" />;
+    return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_STATS} />;
   }
 
   return (

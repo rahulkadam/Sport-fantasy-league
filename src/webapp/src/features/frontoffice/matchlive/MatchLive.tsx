@@ -1,14 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './MatchLive.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
 import {fetchPlayerScoreByLiveMatchesAction, getLiveMatchProps} from './redux';
-import {Button, Col, Form} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from 'common/util';
-import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
 import Helmet from 'react-helmet';
 import PlayerMatchScoreStats from './components/PlayerMatchScoreStats';
+import {
+  TWITTER_LIST_SCORE,
+  TwitterFantasyTimeline,
+} from 'common/components/Footer/socialmedia';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -44,7 +47,7 @@ const MatchLive = () => {
   }
 
   function renderTwitterHashtag() {
-    return <TwitterFantasyTimeline type="list" id="1301204455279398912" />;
+    return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_SCORE} />;
   }
 
   return (
