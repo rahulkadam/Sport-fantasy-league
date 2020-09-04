@@ -4,8 +4,20 @@ import {customStyles} from 'common/components/DataTable';
 import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
+import {Badge} from 'react-bootstrap';
+import {largeRowStyles} from '../../../../common/components/DataTable/TableConfig';
+
 const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
   const configProps = getCommonData();
+
+  function customPointScore(row: any) {
+    let variant = row.pointscore > 20 ? 'success' : 'warning';
+    if (variant == 'warning') {
+      variant = row.pointscore <= 0 ? 'danger' : 'warning';
+    }
+    return <Badge variant={variant}>{row.pointscore}</Badge>;
+  }
+
   const columns: any[] = [
     {
       name: 'Match',
@@ -13,36 +25,52 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       selector: 'matchDescription',
       sortable: true,
       center: true,
+      style: {
+        'font-weight': 'bold',
+      },
     },
     {
       name: 'PLAYER',
       selector: 'playerName',
       sortable: true,
       left: true,
+      style: {
+        'font-weight': 'bold',
+      },
     },
     {
       name: 'Points',
       selector: 'pointscore',
       sortable: true,
       left: true,
+      cell: customPointScore,
     },
     {
       name: 'Runs',
       selector: 'run_scored',
       sortable: true,
       left: true,
+      style: {
+        'font-weight': 'bold',
+      },
     },
     {
       name: 'Wicket',
       selector: 'wicket',
       sortable: true,
       left: true,
+      style: {
+        'font-weight': 'bold',
+      },
     },
     {
       name: 'Catch',
       selector: 'catches',
       sortable: true,
       left: true,
+      style: {
+        'font-weight': 'bold',
+      },
     },
   ];
 
@@ -66,10 +94,11 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
             noHeader
             columns={columns}
             customStyles={customStyles}
+            conditionalRowStyles={largeRowStyles}
             data={data}
             highlightOnHover
             fixedHeader
-            fixedHeaderScrollHeight="400px"
+            fixedHeaderScrollHeight="600px"
             defaultSortField="pointscore"
             defaultSortAsc={false}
           />
