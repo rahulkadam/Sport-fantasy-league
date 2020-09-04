@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './MatchLive.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
 import {fetchPlayerScoreByLiveMatchesAction, getLiveMatchProps} from './redux';
-import {Button, Form} from 'react-bootstrap';
+import {Button, Col, Form} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from 'common/util';
@@ -23,11 +23,17 @@ const MatchLive = () => {
   function renderPlayerLiveScore() {
     return (
       <div>
-        Live Match Stats:
+        <div className="liveMatchTitle">Live Match Points</div>
+        <Button
+          variant="outline-success"
+          className="mr-2 "
+          onClick={() => fetchPlayerLiveScore()}>
+          Refresh Score
+        </Button>
         {isListEmpty(playerStats) && (
           <StatusMessage
             type="error"
-            text="IPL live matches not present. Please check after some time"
+            text="IPL live match not present. Please check after some time"
           />
         )}
         {!isListEmpty(playerStats) && (
