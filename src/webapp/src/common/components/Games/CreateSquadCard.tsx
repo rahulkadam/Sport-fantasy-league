@@ -27,10 +27,12 @@ const CreateSquadCard = () => {
                 </Col>
               </Row>
               <Row className="justify-content-md-center">
-                <Col>
+                <Col className="textFont">
                   Use Credit of{' '}
-                  <strong>100 to pick a squad of 11 players</strong> from the
-                  League.{' '}
+                  <strong>
+                    100 to pick a squad of 11 players and 1 captain
+                  </strong>{' '}
+                  from the League.{' '}
                   <strong>Play IPL Fantasy with limited Transfer</strong>
                   {loginUser && (
                     <Button
@@ -42,6 +44,7 @@ const CreateSquadCard = () => {
                   {!loginUser && (
                     <Button
                       variant="link"
+                      className="textFont"
                       onClick={() => history.push('/login')}>
                       Login and Create Team
                     </Button>

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {getLoginRedirectionUrl, GetLoginStoreData} from '../redux';
 import {Logo} from 'common/components';
 import {googleLogo} from '@logos/index';

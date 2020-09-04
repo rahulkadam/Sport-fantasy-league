@@ -1,13 +1,20 @@
 .contentRow {
   margin-left: 1rem;
   margin-bottom: 0.2rem;
+  font-family: Source Sans Pro,sans-serif;
 }
 
 .headerRow {
+  font-family: Source Sans Pro,sans-serif;
   padding: 0.5rem;
-  margin-left: 3rem;
+  margin-left: 1rem;
   margin-top: 0.3rem;
 }
+
+.textFont {
+  font-family: Source Sans Pro,sans-serif;
+}
+
 
 .stepHeaderContentCol {
   margin-top: 0.5rem;
@@ -23,6 +30,7 @@
 }
 
 .iplContentTitle {
+  font-family: Source Sans Pro,sans-serif;
   border-radius: 0.5rem;
   font-weight: 600;
   background-color: mediumseagreen;

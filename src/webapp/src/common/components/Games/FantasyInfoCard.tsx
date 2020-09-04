@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
-import {Card, Row, Col, Button} from 'react-bootstrap';
+import {Card, Row, Col, Button, Badge} from 'react-bootstrap';
 import './GameCard.styles.scss';
 import history from 'common/config/history';
-import {isUserLogin} from '../../../API';
+import {isUserLogin} from 'API';
 
 const FantasyInfoCard = () => {
   const loginUser = isUserLogin();
@@ -17,11 +17,14 @@ const FantasyInfoCard = () => {
           </Card.Title>
           <Card.Text>
             <Row>
-              <Col>
-                IPL Fantasy is a Fantasy Cricket Game played over internet
-                between IPL fans.
+              <Col className="textFont">
+                IPL Fantasy is a <strong>Fantasy Cricket Game</strong> played
+                over internet between IPL fans.
                 <strong>Fans act like team owner </strong>
-                who own team during tournament
+                who own team during tournament.
+                <Badge variant="success">
+                  1 Team, 60 matches and 100 Transfer = IPL Fantasy
+                </Badge>
               </Col>
             </Row>
             <Row>
@@ -29,6 +32,7 @@ const FantasyInfoCard = () => {
                 It’s FREE to play,{' '}
                 <Button
                   variant="link"
+                  className="textFont"
                   onClick={() =>
                     loginUser ? history.push('/team') : history.push('/login')
                   }>

@@ -8,7 +8,10 @@ import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 import {fetchUpComingAllMatchesAction, getHomeData} from '../home/redux';
 import {getCommonData} from '../../common/redux';
 import Helmet from 'react-helmet';
-import TwitterFantasyTimeline from 'common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import {
+  TwitterFantasyTimeline,
+  TWITTER_LIST_SCHEDULE,
+} from 'common/components/Footer/socialmedia';
 
 const Fixtures = () => {
   const homeProps = getHomeData();
@@ -27,7 +30,6 @@ const Fixtures = () => {
   function renderMatchListView() {
     return (
       <div>
-        <StatusMessage type="info" text="Upcoming Matches" />
         <MatchDetails
           title="Fixtures"
           data={matchList}
@@ -44,7 +46,7 @@ const Fixtures = () => {
   }
 
   function renderTwitterHashtag() {
-    return <TwitterFantasyTimeline type="list" id="1301203927308726272" />;
+    return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_SCHEDULE} />;
   }
 
   return (
@@ -56,6 +58,7 @@ const Fixtures = () => {
         <Helmet>
           <title>IPL-20 Fixture</title>
         </Helmet>
+        <div className="fixtureTitle">IPL-20 Fixture</div>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {renderMatchListView()}
         {renderTwitterHashtag()}

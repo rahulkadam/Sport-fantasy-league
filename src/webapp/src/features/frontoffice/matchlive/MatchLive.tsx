@@ -1,87 +1,53 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './MatchLive.styles.scss';
-import MatchStats from './components/MatchStats';
 import LoadingOverlay from 'react-loading-overlay';
-import {fetchLiveMatchListAction, getLiveMatchProps} from './redux';
-import {Button, Form} from 'react-bootstrap';
+import {fetchPlayerScoreByLiveMatchesAction, getLiveMatchProps} from './redux';
+import {Button} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
-import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
-import {isListEmpty} from '../../../common/util';
-import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import {isListEmpty} from 'common/util';
+import Helmet from 'react-helmet';
+import PlayerMatchScoreStats from './components/PlayerMatchScoreStats';
+import {
+  TWITTER_LIST_SCORE,
+  TwitterFantasyTimeline,
+} from 'common/components/Footer/socialmedia';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
-  const statsProps = getStatsProps();
   const configProps = getCommonData();
-  const fetchLiveMatchlist = fetchLiveMatchListAction();
-  const fetchMatchStats = fetchMatchStatsListAction();
+  const fetchPlayerLiveScore = fetchPlayerScoreByLiveMatchesAction();
+  const playerStats = liveMatchProps.playerStats || [];
 
   useEffect(() => {
-    fetchLiveMatchlist();
+    fetchPlayerLiveScore();
   }, []);
 
-  const defaultTabKey = 'matchstats';
-  const [tabName, setTabName] = useState(defaultTabKey);
-
-  function renderMatchStats() {
-    const isLiveMatchEmpty = isListEmpty(liveMatchProps.livematches);
+  function renderPlayerLiveScore() {
     return (
       <div>
-        {!isLiveMatchEmpty && (
-          <StatusMessage
-            type="info"
-            text="Select below match to see Player scoring history From Live Match"
-          />
-        )}
-        <MatchStats
-          data={liveMatchProps.livematches}
-          action={fetchMatchStats}
-          playerStats={statsProps.playerStats}
-          title="Match Player Stats"
-        />
-
-        {isLiveMatchEmpty && (
+        <div className="liveMatchTitle">Live Match Points</div>
+        <Button
+          variant="outline-success"
+          className="mr-2 "
+          onClick={() => fetchPlayerLiveScore()}>
+          Refresh Score
+        </Button>
+        {isListEmpty(playerStats) && (
           <StatusMessage
             type="error"
-            text="IPL live matches not present. Please check after some time"
+            text="IPL live match not present. Please check after some time"
           />
+        )}
+        {!isListEmpty(playerStats) && (
+          <PlayerMatchScoreStats data={playerStats} />
         )}
       </div>
     );
   }
 
-  const tabConfig: TabConfig[] = [
-    {
-      key: 'matchstats',
-      title: 'Match Stats',
-      renderfunction: renderMatchStats(),
-    },
-  ];
-
-  function renderStatsComponent() {
-    let component: any = <div></div>;
-    component = tabConfig.find(tab => {
-      return tab.key == tabName;
-    });
-    return component.renderfunction || <div></div>;
-  }
-
-  function renderStatsActions() {
-    return (
-      <Form inline className="statsAction">
-        <Button
-          variant={tabName == 'matchstats' ? 'info' : 'outline-info'}
-          className="mr-2"
-          onClick={() => setTabName('matchstats')}>
-          Live Match
-        </Button>
-      </Form>
-    );
-  }
-
   function renderTwitterHashtag() {
-    return <TwitterFantasyTimeline type="list" id="1301204455279398912" />;
+    return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_SCORE} />;
   }
 
   return (
@@ -90,8 +56,10 @@ const MatchLive = () => {
         active={configProps.isLoading}
         spinner
         text="Loading Stats Details ...">
-        {renderStatsActions()}
-        {renderStatsComponent()}
+        <Helmet>
+          <title>Live Match Points</title>
+        </Helmet>
+        {renderPlayerLiveScore()}
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>

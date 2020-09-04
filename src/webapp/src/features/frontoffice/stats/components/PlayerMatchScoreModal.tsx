@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Modal} from 'react-bootstrap';
-import PlayerMatchScoreStats from './PlayerMatchScoreStats';
+import PlayerMatchScoreStats from '../../matchlive/components/PlayerMatchScoreStats';
 const PlayerMatchScoreModal = (props: PlayerMatchScoreModal) => {
   function renderModal() {
     return (

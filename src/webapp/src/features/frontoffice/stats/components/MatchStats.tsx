@@ -7,7 +7,7 @@ const MatchStats = (props: MatchStatsProps) => {
   function renderMatchListView() {
     if (!matchList || matchList.length == 0) return;
     return (
-      <div className="container">
+      <div>
         <MatchDetails
           title={props.title}
           data={matchList}

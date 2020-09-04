@@ -11,7 +11,7 @@ const TwitterFantasyTimeline = (props: TwitterHashtagProps) => {
         <TwitterTimelineEmbed
           sourceType={props.type || 'profile'}
           screenName={props.tag || 'IPLFantasy20201'}
-          borderColor="#03a9f4"
+          borderColor="#28a745"
           options={{height: 600, width: 400}}
           noHeader
         />
@@ -20,9 +20,8 @@ const TwitterFantasyTimeline = (props: TwitterHashtagProps) => {
         <TwitterTimelineEmbed
           sourceType={props.type || 'profile'}
           id={props.id}
-          borderColor="#03a9f4"
+          borderColor="#28a745"
           noHeader
-          linkColor="#F44336"
           noFooter
           options={{height: 600, width: 400}}
         />

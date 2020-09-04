@@ -105,6 +105,11 @@ public class MatchPlayerScoreService {
         return converter.convertToFullDTOList(matchPlayerScores);
     }
 
+    public List<MatchPlayerScoreDTO> findMatchPlayerScoreByMatchIdIn(long[] ids) {
+        List<MatchPlayerScore> matchPlayerScores = repository.findMatchPlayerScoreByMatchIdIn(ids);
+        return converter.convertToFullDTOList(matchPlayerScores);
+    }
+
     public List<MatchPlayerScoreDTO> getTopPerformerPlayer() {
         List<MatchPlayerScore> matchPlayerScores = repository.findAll();
         return converter.convertToFullDTOList(matchPlayerScores);

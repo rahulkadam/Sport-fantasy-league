@@ -190,21 +190,21 @@ const UserTeam = () => {
         <Nav>
           <Form inline>
             <Button
-              variant={!teamValid ? 'outline-secondary' : 'outline-primary'}
+              variant={!teamValid ? 'outline-secondary' : 'outline-success'}
               className="mr-2"
               onClick={() => saveTeam()}
               disabled={!teamValid}>
               Save Team
             </Button>
             <Button
-              variant="outline-primary"
+              variant="outline-success"
               className="mr-2"
               onClick={() => resetUserTeam()}>
               Reset
             </Button>
             {!isListEmpty(userteamDataProps.userTeamPlayers) && (
               <Button
-                variant="outline-primary"
+                variant="outline-success"
                 className="mr-2"
                 onClick={() => setTabName('teamDetails')}>
                 Current Team
@@ -217,7 +217,7 @@ const UserTeam = () => {
   }
 
   function renderPrimaryBtn(value: string, action: string) {
-    const isprimary = transferAction == action ? 'info' : 'outline-info';
+    const isprimary = transferAction == action ? 'success' : 'outline-success';
     return (
       <Button
         variant={isprimary}
@@ -271,6 +271,7 @@ const UserTeam = () => {
               currentUserTeamPlayers={userteamDataProps.currentUserTeamPlayers}
               playerStats={statsProps.playerStats}
               fetchPlayerHistory={fetchPlayerHistoryList}
+              editable={true}
             />
           </Fragment>
         )}
@@ -313,7 +314,7 @@ const UserTeam = () => {
               <Nav>
                 <Form inline>
                   <Button
-                    variant="outline-primary"
+                    variant="outline-success"
                     className="mr-4"
                     onClick={() => setTabName('transfer')}>
                     Make Transfer

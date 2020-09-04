@@ -12,6 +12,7 @@ import {playerRowStyeForNew} from 'common/components/DataTable/TableConfig';
 import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
+import {minuscolor} from '@logos/index';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -86,20 +87,20 @@ const UserTeamPlayerDetails = ({
 
   /**
    *
-   <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
-   <Logo logoSource={minuscolor} width="20" />
-   </span>
+   * <Button
+      size={'sm'}
+      variant="outline-danger"
+      onClick={() => onRemoveRowAction(row)}>
+        X
+      </Button>
    * @param row
    */
   function removeAction(row: any) {
     return (
       <div onClick={() => onRemoveRowAction(row)} className="removeIcon">
-        <Button
-          size={'sm'}
-          variant="outline-danger"
-          onClick={() => onRemoveRowAction(row)}>
-          X
-        </Button>
+        <span onClick={() => onRemoveRowAction(row)} className="removeIcon">
+          <Logo logoSource={minuscolor} width="20" />
+        </span>
       </div>
     );
   }
@@ -183,7 +184,9 @@ const UserTeamPlayerDetails = ({
             />
           </Col>
           <Col>
-            <Form.Label>Captain</Form.Label>
+            <Form.Label>
+              Captain <Badge variant="danger">(2X Pts)</Badge>
+            </Form.Label>
             {!editable && <Badge variant="success">{captainName}</Badge>}
             {editable && (
               <FantasyDropDown

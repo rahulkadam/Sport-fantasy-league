@@ -18,7 +18,10 @@ import {Button, Form} from 'react-bootstrap';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from '../../../common/util';
 import Helmet from 'react-helmet';
-import TwitterFantasyTimeline from '../../../common/components/Footer/socialmedia/TwitterFantasyTimeline';
+import {
+  TwitterFantasyTimeline,
+  TWITTER_LIST_LEAGUE,
+} from 'common/components/Footer/socialmedia';
 
 const League = () => {
   const leagueProps = getLeagueData();
@@ -55,7 +58,7 @@ const League = () => {
   });
 
   function renderTabActionBtn(actionName: string, title: string) {
-    const variant = tabName == actionName ? 'info' : 'outline-info';
+    const variant = tabName == actionName ? 'success' : 'outline-success';
     return (
       <Button
         variant={variant}
@@ -126,7 +129,7 @@ const League = () => {
   }
 
   function renderTwitterHashtag() {
-    return <TwitterFantasyTimeline type="list" id="1301207289567748097" />;
+    return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_LEAGUE} />;
   }
 
   return (
@@ -138,6 +141,7 @@ const League = () => {
         <Helmet>
           <title>IPL Leagues : public/private</title>
         </Helmet>
+        <div className="leagueTitle">Leagues</div>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}
         {renderLeagueActions()}

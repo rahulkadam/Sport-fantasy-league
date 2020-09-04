@@ -1,8 +1,18 @@
 .statsContainer {
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 .statsAction {
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0.5rem;
+}
+
+.statsTitle {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  background-color: mediumseagreen;
+  padding: 1rem;
+  margin: 1rem;
+  text-align: center;
+  font-family: Source Sans Pro,sans-serif;
 }

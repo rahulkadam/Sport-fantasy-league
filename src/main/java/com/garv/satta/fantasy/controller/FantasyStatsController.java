@@ -1,13 +1,17 @@
 package com.garv.satta.fantasy.controller;
 
 import com.garv.satta.fantasy.dto.LeagueUserTeamScoreHistoryDTO;
+import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.service.LeagueUserTeamScorePerMatchService;
 import com.garv.satta.fantasy.service.MatchPlayerScoreService;
+import com.garv.satta.fantasy.service.MatchService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,6 +22,9 @@ public class FantasyStatsController {
     private MatchPlayerScoreService matchPlayerScoreService;
 
     @Autowired
+    private MatchService matchService;
+
+    @Autowired
     private LeagueUserTeamScorePerMatchService leagueUserTeamScorePerMatchService;
 
     @PostMapping(value = "/list/playerScoreByMatch")
@@ -25,6 +32,15 @@ public class FantasyStatsController {
         return matchPlayerScoreService.findMatchPlayerScoreByMatchId(dto.getId());
     }
 
+    @PostMapping(value = "/list/playerScoreByLiveMatch")
+    public List<MatchPlayerScoreDTO> getPlayeScoreByLiveMatch() {
+        List<MatchDTO> matchDTOS = matchService.getLiveMatches();
+        if (CollectionUtils.isEmpty(matchDTOS)) {
+            return new ArrayList<>();
+        }
+        long[] matchIds = matchDTOS.stream().mapToLong(matchDTO -> matchDTO.getId()).toArray();
+        return matchPlayerScoreService.findMatchPlayerScoreByMatchIdIn(matchIds);
+    }
 
     @PostMapping(value = "/list/playerScoringHistory")
     public List<MatchPlayerScoreDTO> getMatchScoreByPlayer(@RequestBody RequestDTO dto) {

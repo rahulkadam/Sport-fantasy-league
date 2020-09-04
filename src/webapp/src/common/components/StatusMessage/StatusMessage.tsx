@@ -22,7 +22,7 @@ const StatusMessage = ({text, type}: FantasyStatusMessageProps) => {
       <Fragment>
         {show && (
           <Alert key={type} onClose={() => setShow(false)} variant={modalType}>
-            {text}
+            <span className="textFont">{text}</span>
           </Alert>
         )}
       </Fragment>

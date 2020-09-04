@@ -26,6 +26,7 @@ export function returnUniqueArrayElement(arrayList: any[]) {
 
 export function returnMapFromList(arrayList: any[]) {
   const map = new Map();
+  if (!arrayList) return map;
   for (const item of arrayList) {
     if (!map.has(item.id)) {
       map.set(item.id, true);
