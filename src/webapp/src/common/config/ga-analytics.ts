@@ -2,7 +2,7 @@ import ReactGA from 'react-ga';
 import history from './history';
 
 export function init_GA(trackingCode: string) {
-  trackingCode = 'UA-163626855-1';
+  trackingCode = 'UA-177301387-1';
   ReactGA.initialize(trackingCode);
 }
 
