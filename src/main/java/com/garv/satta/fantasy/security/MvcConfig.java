@@ -20,9 +20,13 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         Duration d = Duration.ofSeconds(600, 1);
-        registry.addResourceHandler("/**")
+        registry.addResourceHandler("/**/*.js", "/**/*.css", "/**/*.scss", "/**/*.svg",
+                "/**/*.jpeg", "/**/*.json", "/**/*.png", "/**/*.txt")
                 .addResourceLocations("classpath:Resources", "classpath:static")
                 .setCacheControl(CacheControl.maxAge(d).cachePublic().mustRevalidate());
+        registry.addResourceHandler("/**/*.html")
+                .addResourceLocations("classpath:Resources", "classpath:static")
+                .setCacheControl(CacheControl.noCache());
     }
 
     @Override
@@ -74,7 +78,7 @@ public class MvcConfig implements WebMvcConfigurer {
         List<String> urlList = Arrays.asList(
                 "/", "team", "league", "login", "redirect",
                 "/userinfo", "home", "error", "Error",
-                "/back/venue" , "/back/team",
+                "/back/venue", "/back/team",
                 "/back/player", "/back/tournament",
                 "/back/match",
                 "/termsAndconditions", "/helppage",
