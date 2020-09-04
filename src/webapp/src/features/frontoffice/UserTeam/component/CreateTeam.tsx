@@ -1,11 +1,13 @@
 import React, {Fragment, useState} from 'react';
 import {Button, FormControl} from 'react-bootstrap';
-import {StatusMessage} from '../../../../common/components';
+import {StatusMessage} from 'common/components';
+import {GA_Team_Event} from 'common/config';
 
 const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
   const [teamName, setTeamName] = useState('');
 
   function createTeam() {
+    GA_Team_Event('Create Team');
     createTeamAction(teamName);
   }
   function updateTeamName(teamNameTxt: string) {

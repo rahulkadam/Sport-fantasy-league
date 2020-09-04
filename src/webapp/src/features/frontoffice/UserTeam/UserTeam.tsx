@@ -29,6 +29,7 @@ import {fetchPlayerStatsListAction, getStatsProps} from '../stats/redux';
 import TeamCriteria from '../UserTeam/component/common/TeamCriteria';
 import {getCommonData} from '../../common/redux';
 import Helmet from 'react-helmet';
+import {GA_Team_Event} from 'common/config';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -82,6 +83,7 @@ const UserTeam = () => {
 
   function saveTeam() {
     const userteamId = userTeamId;
+    GA_Team_Event('Save Team');
     saveUserTeam(userteamId, currentUserTeamPlayers, captainPlayerId);
   }
 
@@ -154,7 +156,10 @@ const UserTeam = () => {
             <Button
               variant="outline-success"
               className="mr-2 userTeamTabMenuLink"
-              onClick={() => autoPickUserTeam()}>
+              onClick={() => {
+                GA_Team_Event('Auto Pick Team');
+                autoPickUserTeam();
+              }}>
               Auto Pick Team
             </Button>
           </Col>
@@ -343,7 +348,7 @@ const UserTeam = () => {
         spinner
         text="Loading User Team Details ...">
         <Helmet>
-          <title>Your Fantasy Team IPL 20</title>
+          <title>IPl Fantasy Team - 20</title>
         </Helmet>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
+import {GA_League_Event} from 'common/config';
 
 const JoinLeague = ({data}: JoinLeagueProps) => {
   const [leagueCode, setLeagueCode] = useState('');
@@ -11,6 +12,7 @@ const JoinLeague = ({data}: JoinLeagueProps) => {
   }
 
   function joinLeague() {
+    GA_League_Event('Join League');
     joinLeagueAction(leagueCode);
   }
 

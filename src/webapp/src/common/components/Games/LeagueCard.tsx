@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Row, Col, Button, Image, Badge} from 'react-bootstrap';
+import {Card, Row, Col, Button, Badge} from 'react-bootstrap';
 import './GameCard.styles.scss';
 import history from 'common/config/history';
 import {Logo} from '..';
@@ -7,6 +7,7 @@ import {getLogoNameByLeagueName} from '../FantasyDropDown';
 import {joinLeagueAction} from '../../../features/frontoffice/league/redux';
 import {isUserLogin} from '../../../API';
 import {wrapTextWithLength} from '../../util';
+import {GA_League_Event} from '../../config';
 
 const LeagueCard = (props: LeagueCardProps) => {
   const data = props.data;
@@ -71,7 +72,10 @@ const LeagueCard = (props: LeagueCardProps) => {
                     <Col>
                       <Button
                         variant="link"
-                        onClick={() => joinLeague(data.leagueCode)}>
+                        onClick={() => {
+                          GA_League_Event('Join Public League');
+                          joinLeague(data.leagueCode);
+                        }}>
                         Join League
                       </Button>
                     </Col>

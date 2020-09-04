@@ -1,5 +1,6 @@
 import {Badge} from 'react-bootstrap';
 import React from 'react';
+import {GA_Exception} from '../config';
 
 export function getIdFromSelectList(text: string, list: any[]) {
   let defaultId = text;
@@ -55,9 +56,14 @@ export function findCountDifferenceInList(
 export function getErrorMessage(error: any) {
   const errorResponse = error.response;
   if (errorResponse && errorResponse.data) {
-    return errorResponse.data.error;
+    const errorMsg = errorResponse.data.error;
+    GA_Exception(errorMsg);
+    return errorMsg;
   }
-  return 'opps! something went wrong, please logout/login or refresh again';
+  const err =
+    'opps! something went wrong, please logout/login or refresh again';
+  GA_Exception(err);
+  return err;
 }
 
 export function isListEmpty(list: any) {

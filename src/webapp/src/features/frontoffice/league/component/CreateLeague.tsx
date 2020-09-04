@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
+import {GA_League_Event} from 'common/config';
 
 const CreateLeague = ({createLeague}: CreateLeagueProps) => {
   const [leagueName, setLeagueName] = useState('');
 
   function createLeagueAction() {
+    GA_League_Event('Create League');
     const request: CreateLeagueRequestObj = {
       name: leagueName,
     };
