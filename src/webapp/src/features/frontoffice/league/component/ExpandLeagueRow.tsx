@@ -5,7 +5,8 @@ import {Row, Col, Badge} from 'react-bootstrap';
 import './LeagueComponent.styles.scss';
 import {Nav} from 'react-bootstrap';
 import LeagueMemberTeamDetails from './LeagueMemberTeamDetails';
-import {StatusMessage} from '../../../../common/components';
+import {StatusMessage} from 'common/components';
+import {GA_League_Event} from 'common/config';
 
 const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
   const userList = data.leagueUserTeamDTOS;
@@ -35,7 +36,11 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
 
   function customName(row: any) {
     return (
-      <div onClick={() => fetchUserLeagueList(row.user_team_id)}>
+      <div
+        onClick={() => {
+          GA_League_Event('View Other member Team');
+          fetchUserLeagueList(row.user_team_id);
+        }}>
         <Nav.Link>{row.userName} </Nav.Link>
       </div>
     );

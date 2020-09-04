@@ -1,9 +1,11 @@
 import {UserLogOutActions} from './authenticationActions';
 import {domainName, getAccessToken} from '../../../API';
+import {GA_USER_Event} from '../../../common/config';
 
 export function checkUserAccess() {
   const UserLogOut = UserLogOutActions();
   if (!getAccessToken()) {
+    GA_USER_Event('Logout Success');
     UserLogOut();
   }
 }

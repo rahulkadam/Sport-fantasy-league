@@ -9,6 +9,7 @@ import {
 import {UserAvatar} from 'common/components';
 import {getAccessToken, removeAccessToken} from 'API';
 import LoginModal from '../../../Authentication/components/LoginModal';
+import {GA_USER_Event} from '../../../../common/config';
 
 const HeaderUser = () => {
   const loggedUser = GetLoginStoreData();
@@ -38,6 +39,7 @@ const HeaderUser = () => {
   }
 
   function logoutUser() {
+    GA_USER_Event('Logout Success');
     userLogOutAction();
     removeAccessToken();
     history.replace(`/home`);

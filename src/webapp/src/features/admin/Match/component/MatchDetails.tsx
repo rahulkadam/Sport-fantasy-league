@@ -128,7 +128,7 @@ const MatchDetails = ({
             <Form.Control
               type="text"
               size="sm"
-              placeholder="Match"
+              placeholder="Team Name"
               onChange={(e: any) => setFilterText(e.target.value)}
               value={filterText}
             />
@@ -142,8 +142,12 @@ const MatchDetails = ({
     data &&
     data.filter(
       (item: any) =>
-        item.description &&
-        item.description.toLowerCase().includes(filterText.toLowerCase())
+        (item.team_host_name &&
+          item.team_host_name
+            .toLowerCase()
+            .includes(filterText.toLowerCase())) ||
+        (item.team_away_name &&
+          item.team_away_name.toLowerCase().includes(filterText.toLowerCase()))
     );
 
   return (

@@ -52,6 +52,12 @@ public class TournamentService {
         return tournamentConverter.convertToDTO(tournament);
     }
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
+    public TournamentDTO getFirstActiveTournament() {
+        Tournament tournament = tournamentRepository.findFirstByIsActive(Boolean.TRUE);
+        return tournamentConverter.convertToDTO(tournament);
+    }
+
     public void lockTournament(RequestDTO dto) {
         Tournament tournament = tournamentRepository.findTournamentById(dto.getId());
         tournament.setStatus(false);

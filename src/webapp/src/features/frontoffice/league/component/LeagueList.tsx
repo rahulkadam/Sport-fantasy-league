@@ -1,16 +1,15 @@
-import React, {Fragment, useMemo} from 'react';
-import {Form, Badge} from 'react-bootstrap';
+import React, {Fragment} from 'react';
+import {Badge} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import {customStyles} from 'common/components/DataTable';
 import {ExpandLeagueRow} from './ExpandLeagueRow';
-import {Logo, StatusMessage} from 'common/components';
+import {Logo} from 'common/components';
 import {lockcolor} from '@logos/index';
 import {largeRowStyles} from 'common/components/DataTable/TableConfig';
 import './LeagueComponent.styles.scss';
 
 const LeagueList = (props: LeagueUserListProps) => {
   const userLeagueList: any = props.userleagueList || [];
-  const [filterText, setFilterText] = React.useState('');
 
   function customName(row: any) {
     return (
@@ -67,28 +66,9 @@ const LeagueList = (props: LeagueUserListProps) => {
       name: 'CODE',
       selector: 'leagueCode',
       center: true,
+      style: {'font-weight': 'bold'},
     },
   ];
-
-  const filteredRows =
-    userLeagueList &&
-    userLeagueList.filter(
-      (item: any) =>
-        item.name && item.name.toLowerCase().includes(filterText.toLowerCase())
-    );
-
-  const renderCustomSearch = useMemo(() => {
-    return (
-      <div>
-        <Form.Control
-          type="text"
-          placeholder="League Name"
-          onChange={(e: any) => setFilterText(e.target.value)}
-          value={filterText}
-        />
-      </div>
-    );
-  }, [filterText]);
 
   function renderLeagueList() {
     return (
@@ -100,9 +80,7 @@ const LeagueList = (props: LeagueUserListProps) => {
             customStyles={customStyles}
             fixedHeader
             fixedHeaderScrollHeight="500px"
-            data={filteredRows}
-            subHeader
-            subHeaderComponent={renderCustomSearch}
+            data={userLeagueList}
             conditionalRowStyles={largeRowStyles}
             subHeaderAlign="left"
             striped

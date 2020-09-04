@@ -7,6 +7,6 @@ declare type League = {
 
 declare type CreateLeagueRequestObj = {
   name: string;
-  tournamentId: string;
-  createByUserId: string;
+  tournamentId?: string;
+  createByUserId?: string;
 };

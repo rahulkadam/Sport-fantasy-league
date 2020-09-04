@@ -1,49 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, FormControl, Row, Col} from 'react-bootstrap';
-import {getIdFromSelectList} from '../../../../common/util';
-import {fetchTournamentListAction} from '../../../admin/Tournament/redux';
-import {FantasyDropDown, StatusMessage} from '../../../../common/components';
+import {StatusMessage} from 'common/components';
+import {GA_League_Event} from 'common/config';
 
-const CreateLeague = ({
-  createLeague,
-  tournamentList,
-  userId,
-}: CreateLeagueProps) => {
+const CreateLeague = ({createLeague}: CreateLeagueProps) => {
   const [leagueName, setLeagueName] = useState('');
-  const [tournamentId, setTournamentId] = useState('');
-  const fetchTournamentList = fetchTournamentListAction();
-  useEffect(() => {
-    if (!tournamentList || tournamentList.length == 0) {
-      fetchTournamentList();
-    }
-  }, []);
-  function changeLeagueName(leagueCode: string) {
-    setLeagueName(leagueCode);
-  }
 
   function createLeagueAction() {
-    const defaultTournamentId = getIdFromSelectList(
-      tournamentId,
-      tournamentList
-    );
+    GA_League_Event('Create League');
     const request: CreateLeagueRequestObj = {
       name: leagueName,
-      createByUserId: userId + '',
-      tournamentId: defaultTournamentId,
     };
-
     createLeague(request);
-  }
-
-  function updateCreateLeagueDetails(value: string, types: number) {
-    switch (types) {
-      case 1:
-        setTournamentId(value);
-        break;
-      case 2:
-        setLeagueName(value);
-        break;
-    }
   }
 
   const createleagueMsg = 'Create Private league and share code with friends';
@@ -56,22 +24,12 @@ const CreateLeague = ({
         <StatusMessage type={'info'} text={createleagueMsg} />
         <Row>
           <Col>
-            <FantasyDropDown
-              onSelect={(value: string) => {
-                updateCreateLeagueDetails(value, 1);
-              }}
-              list={tournamentList}
-            />
-          </Col>
-          <Col>
             <FormControl
               value={leagueName}
               placeholder="League Name"
               aria-label="leagueName"
               aria-describedby="basic-addon1"
-              onChange={event =>
-                updateCreateLeagueDetails(event.target.value, 2)
-              }
+              onChange={event => setLeagueName(event.target.value)}
             />
           </Col>
         </Row>
