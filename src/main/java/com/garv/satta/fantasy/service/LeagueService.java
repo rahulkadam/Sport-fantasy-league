@@ -81,6 +81,7 @@ public class LeagueService {
     public void joinLeagueByCode(String leagueCode) {
         Long userId = userService.getCurrentUserId();
         League league = repository.findLeagueByLeagueCode(leagueCode);
+        Assert.notNull(league,"League not found, please check with League admin again");
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(userId);
         Assert.isTrue(userTeamList.size() == 1, "Please create team first and join League");
         UserTeam userTeam = userTeamList.get(0);
