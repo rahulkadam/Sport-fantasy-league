@@ -10,16 +10,18 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/user")
-public class UserController {
+public class UserController  extends BaseController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/list")
-    @ResponseBody
-    public List<UserDTO> getUserList() {
-        return userService.getUserList();
-    }
+    /**
+        @GetMapping(value = "/list")
+        @ResponseBody
+        public List<UserDTO> getUserList() {
+            return userService.getUserList();
+        }
+     */
 
     @GetMapping(value = "/get/{id}")
     @ResponseBody
@@ -34,9 +36,11 @@ public class UserController {
         return userService.getUserByMe();
     }
 
+    /**
     @PostMapping(value = "/create")
     @ResponseBody
     public UserDTO createUser(@RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO);
     }
+    */
 }

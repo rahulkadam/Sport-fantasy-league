@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/fantasy/team")
 @CrossOrigin
-public class TeamController {
+public class TeamController  extends BaseController {
 
     @Autowired
     private TeamService teamService;

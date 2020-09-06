@@ -5,10 +5,10 @@ import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.dto.PlayerDTO;
-import com.garv.satta.fantasy.dto.reponsedto.DashboardDTO;
 import com.garv.satta.fantasy.model.monitoring.FantasyNotice;
 import com.garv.satta.fantasy.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/public/home")
-public class HomePageController {
+public class HomePageController  extends BaseController {
 
     @Autowired
     private MatchService matchService;
@@ -38,14 +38,16 @@ public class HomePageController {
     private DashboardService dashboardService;
 
     @GetMapping(value = "/comingmatches")
-    public List<MatchDTO> getUpcomingMatches() {
-        return matchService.getUpComingTOP5MatchList();
+    public ResponseEntity<List<MatchDTO>> getUpcomingMatches() {
+        List<MatchDTO> matchDTOS =  matchService.getUpComingTOP5MatchList();
+        return getResponseBodyWithCache(matchDTOS, FOR_1_HOUR);
     }
 
 
     @GetMapping(value = "/comingAllmatches")
-    public List<MatchDTO> getUpcomingAllMatches() {
-        return matchService.getUpComingAllMatchList();
+    public ResponseEntity<List<MatchDTO>> getUpcomingAllMatches() {
+        List<MatchDTO> matchDTOS = matchService.getUpComingAllMatchList();
+        return getResponseBodyWithCache(matchDTOS, FOR_1_HOUR);
     }
 
 
@@ -60,8 +62,9 @@ public class HomePageController {
     }
 
     @GetMapping(value = "list/public")
-    public List<LeagueDTO> getLeagueByPublic() {
-        return leagueService.getLeagueByPublic();
+    public ResponseEntity<List<LeagueDTO>> getLeagueByPublic() {
+        List<LeagueDTO> leagueDTOList =  leagueService.getLeagueByPublic();
+        return getResponseBodyWithCache(leagueDTOList, FOR_12_HOUR);
     }
 
     @GetMapping(value = "/matches/live")

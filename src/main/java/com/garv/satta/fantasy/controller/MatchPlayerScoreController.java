@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/match/playerscore")
-public class MatchPlayerScoreController {
+public class MatchPlayerScoreController  extends BaseController {
 
     @Autowired
     private MatchPlayerScoreService service;

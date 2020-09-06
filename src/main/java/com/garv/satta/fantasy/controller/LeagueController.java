@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/league")
-public class LeagueController {
+public class LeagueController  extends BaseController {
 
     @Autowired
     private LeagueService leagueService;
@@ -48,8 +49,9 @@ public class LeagueController {
     }
 
     @GetMapping(value = "list/public")
-    public List<LeagueDTO> getLeagueByPublic() {
-        return leagueService.getLeagueByPublic();
+    public ResponseEntity<List<LeagueDTO>> getLeagueByPublic() {
+        List<LeagueDTO> list = leagueService.getLeagueByPublic();
+        return getResponseBodyWithCache(list, FOR_12_HOUR);
     }
 
 }

@@ -1,13 +1,11 @@
 package com.garv.satta.fantasy.controller;
 
-import com.garv.satta.fantasy.cache.ClientCacheControl;
 import com.garv.satta.fantasy.dto.PlayerDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.converter.PlayerConverter;
 import com.garv.satta.fantasy.service.UserTeamService;
 import com.garv.satta.fantasy.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/player")
-public class PlayerController {
+public class PlayerController  extends BaseController {
 
     @Autowired
     private PlayerService playerService;
@@ -32,8 +30,7 @@ public class PlayerController {
     @ResponseBody
     public ResponseEntity<List<PlayerDTO>> getPlayerList() {
         List<PlayerDTO> playerList =  playerService.getPlayerList();
-        CacheControl cacheControl = ClientCacheControl.getCacheControl();
-        return ResponseEntity.ok().cacheControl(cacheControl).body(playerList);
+        return getResponseBodyWithCache(playerList, FOR_1_DAY);
     }
 
     @GetMapping(value = "/list/byuser/{id}")
@@ -42,7 +39,6 @@ public class PlayerController {
         List<PlayerDTO> playerList =  userTeamService.getPlayerListByUserTeamId(id);
         return playerList;
     }
-
 
     @PostMapping(value = "/create")
     @ResponseBody

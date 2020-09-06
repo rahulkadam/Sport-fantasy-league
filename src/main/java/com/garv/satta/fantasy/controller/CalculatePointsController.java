@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/process/point")
-public class CalculatePointsController {
+public class CalculatePointsController extends BaseController {
 
     @Autowired
     private CalculatePointsService service;

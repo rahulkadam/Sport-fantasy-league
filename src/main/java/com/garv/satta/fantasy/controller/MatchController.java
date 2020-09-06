@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/match")
-public class MatchController {
+public class MatchController extends BaseController {
 
     @Autowired
     private MatchService service;
@@ -20,14 +21,16 @@ public class MatchController {
 
     @GetMapping(value = "/list")
     @ResponseBody
-    public List<MatchDTO> getMatchList() {
-        return service.getMatchList();
+    public ResponseEntity<List<MatchDTO>> getMatchList() {
+        List<MatchDTO> matchList = service.getMatchList();
+        return getResponseBodyWithCache(matchList);
     }
 
     @GetMapping(value = "/completed/list")
     @ResponseBody
-    public List<MatchDTO> getCompletedMatchList() {
-        return service.getCompletedMatchList();
+    public ResponseEntity<List<MatchDTO>> getCompletedMatchList() {
+        List<MatchDTO> matchList = service.getCompletedMatchList();
+        return getResponseBodyWithCache(matchList, FOR_5_MIN);
     }
 
     @GetMapping(value = "/get/{id}")

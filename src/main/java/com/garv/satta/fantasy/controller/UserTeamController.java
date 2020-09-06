@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/userteam")
-public class UserTeamController {
+public class UserTeamController  extends BaseController {
 
     @Autowired
     private UserTeamService service;

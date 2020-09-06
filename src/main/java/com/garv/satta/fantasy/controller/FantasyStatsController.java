@@ -9,6 +9,7 @@ import com.garv.satta.fantasy.service.MatchPlayerScoreService;
 import com.garv.satta.fantasy.service.MatchService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/public/stats")
-public class FantasyStatsController {
+public class FantasyStatsController extends BaseController {
 
     @Autowired
     private MatchPlayerScoreService matchPlayerScoreService;
@@ -28,36 +29,39 @@ public class FantasyStatsController {
     private LeagueUserTeamScorePerMatchService leagueUserTeamScorePerMatchService;
 
     @PostMapping(value = "/list/playerScoreByMatch")
-    public List<MatchPlayerScoreDTO> getPlayerScoreByMatch(@RequestBody RequestDTO dto) {
-        return matchPlayerScoreService.findMatchPlayerScoreByMatchId(dto.getId());
+    public ResponseEntity<List<MatchPlayerScoreDTO>> getPlayerScoreByMatch(@RequestBody RequestDTO dto) {
+        List<MatchPlayerScoreDTO> list = matchPlayerScoreService.findMatchPlayerScoreByMatchId(dto.getId());
+        return getResponseBodyWithCache(list, FOR_12_HOUR);
     }
 
     @PostMapping(value = "/list/playerScoreByLiveMatch")
-    public List<MatchPlayerScoreDTO> getPlayeScoreByLiveMatch() {
+    public ResponseEntity<List<MatchPlayerScoreDTO>> getPlayeScoreByLiveMatch() {
         List<MatchDTO> matchDTOS = matchService.getLiveMatches();
+        List<MatchPlayerScoreDTO> matchPlayerScoreDTOLIst =  new ArrayList<>();
+
         if (CollectionUtils.isEmpty(matchDTOS)) {
-            return new ArrayList<>();
+            return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_3_MIN);
         }
         long[] matchIds = matchDTOS.stream().mapToLong(matchDTO -> matchDTO.getId()).toArray();
-        if (matchIds.length > 0) {
-            return matchPlayerScoreService.findMatchPlayerScoreByMatchIdIn(matchIds);
-        }
-        return new ArrayList<>();
+        matchPlayerScoreDTOLIst =  matchPlayerScoreService.findMatchPlayerScoreByMatchIdIn(matchIds);
+        return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_3_MIN);
     }
 
     @PostMapping(value = "/list/playerScoringHistory")
-    public List<MatchPlayerScoreDTO> getMatchScoreByPlayer(@RequestBody RequestDTO dto) {
-        return matchPlayerScoreService.getMatchScoreByPlayer(dto.getId());
+    public ResponseEntity<List<MatchPlayerScoreDTO>> getMatchScoreByPlayer(@RequestBody RequestDTO dto) {
+        List<MatchPlayerScoreDTO> list = matchPlayerScoreService.getMatchScoreByPlayer(dto.getId());
+        return getResponseBodyWithCache(list, FOR_12_HOUR);
     }
 
     @PostMapping(value = "/list/userScoreHistoryByMatch1")
-    public LeagueUserTeamScoreHistoryDTO getUserScorePerMatch(@RequestBody RequestDTO dto) {
-        return leagueUserTeamScorePerMatchService.getUserScorePerMatch(dto);
+    public ResponseEntity<LeagueUserTeamScoreHistoryDTO> getUserScorePerMatch(@RequestBody RequestDTO dto) {
+        return getResponseBodyWithCache(leagueUserTeamScorePerMatchService.getUserScorePerMatch(dto));
     }
 
     @PostMapping(value = "/list/userScoreHistoryByMatch")
-    public List<MatchPlayerScoreDTO> getUserScorePerMatchStats(@RequestBody RequestDTO dto) {
-        return leagueUserTeamScorePerMatchService.getUserScorePerMatchStats(dto);
+    public ResponseEntity<List<MatchPlayerScoreDTO>> getUserScorePerMatchStats(@RequestBody RequestDTO dto) {
+        List<MatchPlayerScoreDTO> list = leagueUserTeamScorePerMatchService.getUserScorePerMatchStats(dto);
+        return getResponseBodyWithCache(list, FOR_12_HOUR);
     }
 
 }

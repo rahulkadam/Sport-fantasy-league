@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/matchdetails")
-public class MatchResultController {
+public class MatchResultController  extends BaseController {
 
     @Autowired
     private MatchResultService service;
