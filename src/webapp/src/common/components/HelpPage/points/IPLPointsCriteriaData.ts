@@ -33,11 +33,11 @@ export const battingPoints = [
   },
   {
     name: 'SR > 120 (Min 20 Runs)',
-    points: 5,
+    points: 10,
   },
   {
     name: 'SR > 150 (Min 20 Runs)',
-    points: 10,
+    points: 15,
   },
   {
     name: 'SR > 170 (Min 20 Runs)',
@@ -52,10 +52,6 @@ export const bowlingPoints = [
   {
     name: 'Per Dot Ball',
     points: 1,
-  },
-  {
-    name: 'Per Maiden Over',
-    points: 10,
   },
   {
     name: 'Per Maiden Over',

@@ -35,27 +35,11 @@ public class LeagueController {
         return "League Created Successfuly";
     }
 
-    @PostMapping(value = "/add/userteam")
-    public String addUserTeamToLeague(@RequestBody RequestDTO dto) {
-        Long leagueId = dto.getAddTo();
-        Long userTeamID = dto.getAdd();
-        leagueService.addUserTeamToLeague(leagueId, userTeamID);
-        return "User Team added successfully";
-    }
-
     @PostMapping(value = "/join/bycode")
     public String joinLeagueByCode(@RequestBody RequestDTO dto) {
         String leagueCode = dto.getLeagueCode();
         leagueService.joinLeagueByCode(leagueCode);
         return "League Joined successfully";
-    }
-
-    @PostMapping(value = "/remove/userteam")
-    public String removeUserTeamFromLeague(@RequestBody RequestDTO dto) {
-        Long leagueId = dto.getRemoveFrom();
-        Long userTeamID = dto.getRemove();
-        leagueService.removeUserTeamFromLeague(leagueId, userTeamID);
-        return "User Team Removed successfully";
     }
 
     @GetMapping(value = "list/byuser/{id}")

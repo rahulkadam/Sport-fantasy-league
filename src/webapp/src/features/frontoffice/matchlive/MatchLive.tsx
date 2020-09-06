@@ -12,6 +12,7 @@ import {
   TWITTER_LIST_SCORE,
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
+import {GA_Other_Event} from 'common/config';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -20,6 +21,7 @@ const MatchLive = () => {
   const playerStats = liveMatchProps.playerStats || [];
 
   useEffect(() => {
+    GA_Other_Event('GET_LIVE_SCORE');
     fetchPlayerLiveScore();
   }, []);
 
@@ -30,7 +32,10 @@ const MatchLive = () => {
         <Button
           variant="outline-success"
           className="mr-2 "
-          onClick={() => fetchPlayerLiveScore()}>
+          onClick={() => {
+            GA_Other_Event('REFRESH_SCORE_FOR_LIVE');
+            fetchPlayerLiveScore();
+          }}>
           Refresh Score
         </Button>
         {isListEmpty(playerStats) && (

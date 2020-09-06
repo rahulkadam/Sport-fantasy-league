@@ -15,6 +15,7 @@ import {renderLogoByPLayerType, teamValueByPlayerList} from '../redux';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 import {playerRowStyeForNew} from '../../../../common/components/DataTable/TableConfig';
 import {minuscolor, pluscolor} from '@logos/index';
+import {GA_Other_Event} from '../../../../common/config';
 
 const TournamentPlayerList = ({
   data,
@@ -37,6 +38,7 @@ const TournamentPlayerList = ({
 
   function fetchPlayerHistoryList(playerId: string) {
     fetchPlayerHistory(playerId);
+    GA_Other_Event('FETCH_PLAYER_STATS');
     if (showPlayerHistory) {
       handlePlayerHistoryClose();
     } else {

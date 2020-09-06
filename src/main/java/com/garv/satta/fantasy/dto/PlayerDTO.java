@@ -14,6 +14,7 @@ public class PlayerDTO extends ShortBaseDTO {
     private String Country;
     private float value;
     private Integer externalpid;
+    private Integer totalIplPoints;
     private List<Long> teamIds;
     private List<TeamDTO> teamDTOList;
     private List<String> teamsNameList;

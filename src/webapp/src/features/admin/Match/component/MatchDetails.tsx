@@ -11,6 +11,7 @@ import {
 import {largeRowStyles} from 'common/components/DataTable/TableConfig';
 import {Logo} from 'common/components';
 import '../Match.styles.scss';
+import {GA_Other_Event} from '../../../../common/config';
 
 const MatchDetails = ({
   data,
@@ -26,6 +27,7 @@ const MatchDetails = ({
 
   function fetchPlayerHistoryList(matchId: string) {
     fetchMatchHistory(matchId);
+    GA_Other_Event('FETCH_MATCH_STATS');
     if (showPlayerHistory) {
       handlePlayerHistoryClose();
     } else {

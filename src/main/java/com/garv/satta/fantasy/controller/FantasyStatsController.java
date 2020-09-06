@@ -39,7 +39,10 @@ public class FantasyStatsController {
             return new ArrayList<>();
         }
         long[] matchIds = matchDTOS.stream().mapToLong(matchDTO -> matchDTO.getId()).toArray();
-        return matchPlayerScoreService.findMatchPlayerScoreByMatchIdIn(matchIds);
+        if (matchIds.length > 0) {
+            return matchPlayerScoreService.findMatchPlayerScoreByMatchIdIn(matchIds);
+        }
+        return new ArrayList<>();
     }
 
     @PostMapping(value = "/list/playerScoringHistory")

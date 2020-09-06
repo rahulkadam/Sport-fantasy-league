@@ -13,6 +13,7 @@ import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import PlayerMatchScoreModal from '../../stats/components/PlayerMatchScoreModal';
 import {minuscolor} from '@logos/index';
+import {GA_Other_Event} from '../../../../common/config';
 
 const UserTeamPlayerDetails = ({
   data,
@@ -30,6 +31,7 @@ const UserTeamPlayerDetails = ({
   const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
 
   function fetchPlayerHistoryList(playerId: string) {
+    GA_Other_Event('FETCH_PLAYER_STATS');
     fetchPlayerHistory(playerId);
     if (showPlayerHistory) {
       handlePlayerHistoryClose();

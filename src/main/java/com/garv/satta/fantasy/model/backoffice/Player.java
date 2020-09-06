@@ -34,6 +34,7 @@ public class Player extends BaseDaoObject {
     private String Country;
     private Float value;
     private Integer externalpid;
+    private Integer totalIplPoints;
 
     @ManyToMany
     @JoinTable(

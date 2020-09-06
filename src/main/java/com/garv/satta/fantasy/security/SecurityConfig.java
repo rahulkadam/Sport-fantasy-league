@@ -63,12 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                //.antMatchers("/auth/**", "/oauth2/**", "/public/**" , "/fantasy/match/**")  // security loop for testing
-                .antMatchers("/auth/**", "/oauth2/**", "/public/**", "/fantasy/match/list", "/fantasy/match/completed/list", "/fantasy/player/list", "public/stats/**", "/admin/matchprocess/**", "/process/**", "/admin/**")
+                .antMatchers("/auth/**", "/oauth2/**", "/public/**", "/fantasy/match/list", "/fantasy/match/completed/list", "/fantasy/player/list", "public/stats/**")
                 .permitAll();
         http.
                 authorizeRequests()
                 .antMatchers( "/fantasy/**").hasRole("USER")
+                .antMatchers( "/process/**").hasRole("USER")
+                .antMatchers( "/admin/**").hasRole("USER")
                 .antMatchers( "/private/**").hasRole("USER")
                 .antMatchers("/fantasy/**").authenticated()
                 .and()

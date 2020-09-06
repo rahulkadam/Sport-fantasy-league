@@ -23,6 +23,7 @@ import {
   TWITTER_LIST_STATS,
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
+import {GA_Other_Event} from '../../../common/config';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -83,6 +84,7 @@ const FantasyStats = () => {
   }
 
   function fetchUserStatsMatchWise(matchId: any) {
+    GA_Other_Event('FETCH_USER_STATS_BY_MATCH');
     fetchUserStats(userTeamProps.userteam.id, matchId);
   }
 

@@ -46,7 +46,6 @@ public class CricAPIService {
      */
     public List<MatchPlayerScoreCricDTO> getMatchSummaryDetails(Integer matchId) {
         MatchSummaryCricDTO matchSummaryCricDTO = cricAPIHttpClient.getMatchSummaryDetails(matchId);
-
         Map<Integer, MatchPlayerScoreCricDTO> playerScoreDTOMap = cricApiServiceHelper.
                 getPlayerScoreFromMatchSummary(matchSummaryCricDTO);
         playerScoreDTOMap = pointCalculateService.calculatePointForPlayers(playerScoreDTOMap);

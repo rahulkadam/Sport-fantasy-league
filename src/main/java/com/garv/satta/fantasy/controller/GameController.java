@@ -1,10 +1,13 @@
 package com.garv.satta.fantasy.controller;
 
+import com.garv.satta.fantasy.cache.ClientCacheControl;
 import com.garv.satta.fantasy.dto.GameDTO;
 import com.garv.satta.fantasy.dto.PlayerCriteriaDTO;
 import com.garv.satta.fantasy.dto.TeamCriteriaDTO;
 import com.garv.satta.fantasy.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +31,10 @@ public class GameController {
     }
 
     @GetMapping(value = "/get/byname/{name}")
-    public GameDTO getGameByUserTeamId(@PathVariable(name = "name") String name) {
-        return service.findGameByName(name);
+    public ResponseEntity<GameDTO> getGameByUserTeamId(@PathVariable(name = "name") String name) {
+        GameDTO gameDTO =  service.findGameByName(name);
+        CacheControl cacheControl = ClientCacheControl.getCacheControl(6000);
+        return ResponseEntity.ok().cacheControl(cacheControl).body(gameDTO);
     }
 
 

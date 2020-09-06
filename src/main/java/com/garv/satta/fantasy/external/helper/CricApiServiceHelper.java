@@ -41,10 +41,12 @@ public class CricApiServiceHelper {
             List<PlayerCricDTO> playerCricDTOList = squad.getPlayers();
             playerCricDTOList.stream().forEach(player -> {
                 Integer pid = player.getPid();
-                MatchPlayerScoreCricDTO dto = new MatchPlayerScoreCricDTO();
-                dto.setPid(pid);
-                dto.setName(player.getName());
-                playerMapList.put(pid, dto);
+                if (pid != null) {
+                    MatchPlayerScoreCricDTO dto = new MatchPlayerScoreCricDTO();
+                    dto.setPid(pid);
+                    dto.setName(player.getName());
+                    playerMapList.put(pid, dto);
+                }
             });
         });
         return playerMapList;
@@ -54,7 +56,7 @@ public class CricApiServiceHelper {
     /**
      * COllecting all other stats of players  , batting, bowling, fielding
      *
-     * @param typeList
+     * @param typeList    bowling , batting , fielding
      * @param playerMap
      * @param playingType
      * @return
@@ -69,11 +71,10 @@ public class CricApiServiceHelper {
             type.getScores().stream().forEach(player -> {
                 Integer pid = player.getPid();
                 MatchPlayerScoreCricDTO playerDto = playerMap.get(pid);
-                if (playerDto == null) {
-                    playerDto = new MatchPlayerScoreCricDTO();
+                if (playerDto != null) {
+                    playerDto = copyPlayerScoreFromCricDto(playerDto, player, playingType);
+                    playerMap.put(pid, playerDto);
                 }
-                playerDto = copyPlayerScoreFromCricDto(playerDto, player, playingType);
-                playerMap.put(pid, playerDto);
             });
         });
         return playerMap;
@@ -95,6 +96,12 @@ public class CricApiServiceHelper {
         return to;
     }
 
+    /**
+     * COpy bowling attribute into player score
+     * @param to
+     * @param from
+     * @return
+     */
     private MatchPlayerScoreCricDTO copyBowlingAttribute(MatchPlayerScoreCricDTO to, MatchPlayerScoreCricDTO from) {
         to.setEconomy(from.getEconomy());
         to.setOvers(from.getOvers());
@@ -105,6 +112,12 @@ public class CricApiServiceHelper {
         return to;
     }
 
+    /**
+     * copy batting attribute into player score
+     * @param to
+     * @param from
+     * @return
+     */
     private MatchPlayerScoreCricDTO copyBattingAttribute(MatchPlayerScoreCricDTO to, MatchPlayerScoreCricDTO from) {
         to.setRuns_scored(from.getRuns_scored());
         to.setSixes(from.getSixes());
@@ -114,6 +127,12 @@ public class CricApiServiceHelper {
         return to;
     }
 
+    /**
+     * Copy Fielding attribute from Player score
+     * @param to
+     * @param from
+     * @return
+     */
     private MatchPlayerScoreCricDTO copyFieldingAttribute(MatchPlayerScoreCricDTO to, MatchPlayerScoreCricDTO from) {
         to.setCatches(from.getCatches());
         to.setStumped(from.getStumped());

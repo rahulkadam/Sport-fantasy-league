@@ -9,6 +9,7 @@ import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.service.FantasyErrorService;
+import com.garv.satta.fantasy.service.admin.CacheService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,9 @@ public class CricMatchPlayerScoreService {
     @Autowired
     private CricMatchPlayerScoreConverter scoreConverter;
 
+    @Autowired
+    private CacheService cacheService;
+
     private final String INIT_SCORE = "INIT_SCORE";
     private final String UPDATE_SCORE = "UPDATE_SCORE";
 
@@ -48,7 +52,8 @@ public class CricMatchPlayerScoreService {
         Integer externalMatchId = match.getExternal_mid();
         Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricAPIService.getMatchSummaryDetails(externalMatchId);
-        saveMatchPLayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
+        saveMatchPlayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
+        cacheService.evictAllCacheValues("LiveScoreCache");
     }
 
     public void initiateMatchPlayerSquadFromCricAPI(Long matchId) {
@@ -58,10 +63,10 @@ public class CricMatchPlayerScoreService {
         Integer externalMatchId = match.getExternal_mid();
         Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricAPIService.getPlayerSquadListForMatch(externalMatchId);
-        saveMatchPLayerScoreFromCric(playerScoreDTOList, match, INIT_SCORE);
+        saveMatchPlayerScoreFromCric(playerScoreDTOList, match, INIT_SCORE);
     }
 
-    public void saveMatchPLayerScoreFromCric(List<MatchPlayerScoreCricDTO> playerScoreDTOList, Match match,
+    public void saveMatchPlayerScoreFromCric(List<MatchPlayerScoreCricDTO> playerScoreDTOList, Match match,
                                              String action) {
 
         if (CollectionUtils.isEmpty(playerScoreDTOList)) {
@@ -102,8 +107,7 @@ public class CricMatchPlayerScoreService {
         repository.saveAll(matchPlayerScores);
 
         if(CollectionUtils.isNotEmpty(missingPlayerId)) {
-            errorService.logMessage("PLAYER_NOT_AVAIABLE", missingPlayerId.toString());
+            errorService.logMessage("PLAYER_NOT_AVAILABLE", missingPlayerId.toString());
         }
     }
-
 }
