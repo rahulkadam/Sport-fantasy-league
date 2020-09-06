@@ -8,7 +8,6 @@ import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.TournamentDTO;
 import com.garv.satta.fantasy.dto.converter.LeagueConverter;
 import com.garv.satta.fantasy.exceptions.GenericException;
-import com.garv.satta.fantasy.fantasyenum.OperationEnum;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
@@ -17,7 +16,6 @@ import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -83,6 +81,7 @@ public class LeagueService {
     public void joinLeagueByCode(String leagueCode) {
         Long userId = userService.getCurrentUserId();
         League league = repository.findLeagueByLeagueCode(leagueCode);
+        Assert.notNull(league,"League not found, please check with League admin again");
         List<UserTeam> userTeamList = userTeamRepository.findUserTeamByUserId(userId);
         Assert.isTrue(userTeamList.size() == 1, "Please create team first and join League");
         UserTeam userTeam = userTeamList.get(0);
@@ -91,34 +90,11 @@ public class LeagueService {
         if (leagueObject.isPresent()) {
             throw new GenericException("already member of league : "+ leagueObject.get().getName());
         }
-        addRemoveUserTeamFromLeague(league, userTeam.getId(), OperationEnum.ADD);
-    }
 
-    public void addUserTeamToLeague(Long leagueId, Long userTeamId) {
-        League league = repository.findLeagueById(leagueId);
-        addRemoveUserTeamFromLeague(league, userTeamId, OperationEnum.ADD);
-    }
-
-    public void removeUserTeamFromLeague(Long leagueId, Long userTeamId) {
-        League league = repository.findLeagueById(leagueId);
-        addRemoveUserTeamFromLeague(league, userTeamId, OperationEnum.REMOVE);
-    }
-
-    /**
-     * Function to add or remove UserTeam from League
-     * @param league
-     * @param userTeamId
-     * @param operation
-     */
-    private void addRemoveUserTeamFromLeague(League league, Long userTeamId, OperationEnum operation) {
-        UserTeam userTeam = userTeamRepository.findUserTeamById(userTeamId);
-        Assert.notNull(userTeam, "User id is missing, Please logout and login again");
-        Assert.notNull(league,"League not found, please check with League admin again");
-        if (OperationEnum.ADD.equals(operation)) {
-            league.addLeagueMembers(userTeam);
-        } else {
-            league.removeLeague(userTeam);
+        if((league.getPublicLeague() != null && !league.getPublicLeague()) && league.getTotalUserCount() > 20) {
+            throw new GenericException("league private member count exceed, can not add more than 20 users in private league");
         }
+        league.addLeagueMembers(userTeam);
         repository.save(league);
     }
 

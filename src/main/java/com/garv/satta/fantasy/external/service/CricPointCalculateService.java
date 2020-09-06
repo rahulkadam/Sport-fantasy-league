@@ -2,6 +2,8 @@ package com.garv.satta.fantasy.external.service;
 
 import com.garv.satta.fantasy.external.DTO.MatchPlayerScoreCricDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +22,7 @@ public class CricPointCalculateService {
      * @return
      */
     public MatchPlayerScoreCricDTO calculatePointForPlayer(MatchPlayerScoreCricDTO player) {
-        Integer points = 0;
-        points = calculateBattingPoints(player);
+        Integer points = calculateBattingPoints(player);
         points = points + calculateBowlingPoints(player);
         points = points + calculateFieldingPoints(player);
         player.setPointscore(points);
@@ -37,7 +38,7 @@ public class CricPointCalculateService {
             return 0;
         }
         // if player batted and scored zero runs, then -10
-        if (runs == 0) {
+        if (runs == 0 && !StringUtils.isEmpty(player.getDismissed())) {
             return -10;
         }
 
@@ -74,7 +75,7 @@ public class CricPointCalculateService {
         if (runs >= 30 && runs < 50) {
             return 5;
         } else if (runs >= 50 && runs < 100) {
-            return 15;
+            return 10;
         } else if (runs >= 100) {
             return 20;
         }
@@ -153,7 +154,7 @@ public class CricPointCalculateService {
             return 0;
         }
         if (wickets == 3) {
-            return 5;
+            return 10;
         } else if (wickets == 4) {
             return 15;
         } else if (wickets > 4) {

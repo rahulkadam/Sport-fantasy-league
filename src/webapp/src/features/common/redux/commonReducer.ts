@@ -23,6 +23,7 @@ export default (
         ...state,
         isLoading: true,
         hasError: false,
+        statusMessage: '',
         shouldRefresh: false,
       };
     case ACTION_ERROR:

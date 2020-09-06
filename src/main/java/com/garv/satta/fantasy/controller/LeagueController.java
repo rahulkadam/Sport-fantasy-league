@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.LeagueDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/league")
-public class LeagueController {
+public class LeagueController  extends BaseController {
 
     @Autowired
     private LeagueService leagueService;
@@ -35,27 +36,11 @@ public class LeagueController {
         return "League Created Successfuly";
     }
 
-    @PostMapping(value = "/add/userteam")
-    public String addUserTeamToLeague(@RequestBody RequestDTO dto) {
-        Long leagueId = dto.getAddTo();
-        Long userTeamID = dto.getAdd();
-        leagueService.addUserTeamToLeague(leagueId, userTeamID);
-        return "User Team added successfully";
-    }
-
     @PostMapping(value = "/join/bycode")
     public String joinLeagueByCode(@RequestBody RequestDTO dto) {
         String leagueCode = dto.getLeagueCode();
         leagueService.joinLeagueByCode(leagueCode);
         return "League Joined successfully";
-    }
-
-    @PostMapping(value = "/remove/userteam")
-    public String removeUserTeamFromLeague(@RequestBody RequestDTO dto) {
-        Long leagueId = dto.getRemoveFrom();
-        Long userTeamID = dto.getRemove();
-        leagueService.removeUserTeamFromLeague(leagueId, userTeamID);
-        return "User Team Removed successfully";
     }
 
     @GetMapping(value = "list/byuser/{id}")
@@ -64,8 +49,9 @@ public class LeagueController {
     }
 
     @GetMapping(value = "list/public")
-    public List<LeagueDTO> getLeagueByPublic() {
-        return leagueService.getLeagueByPublic();
+    public ResponseEntity<List<LeagueDTO>> getLeagueByPublic() {
+        List<LeagueDTO> list = leagueService.getLeagueByPublic();
+        return getResponseBodyWithCache(list, FOR_12_HOUR);
     }
 
 }

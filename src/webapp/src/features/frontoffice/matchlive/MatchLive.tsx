@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './MatchLive.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
 import {fetchPlayerScoreByLiveMatchesAction, getLiveMatchProps} from './redux';
-import {Button} from 'react-bootstrap';
+import {Button, Row, Col, Badge} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from 'common/util';
@@ -12,6 +12,7 @@ import {
   TWITTER_LIST_SCORE,
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
+import {GA_Other_Event} from 'common/config';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -20,6 +21,7 @@ const MatchLive = () => {
   const playerStats = liveMatchProps.playerStats || [];
 
   useEffect(() => {
+    GA_Other_Event('GET_LIVE_SCORE');
     fetchPlayerLiveScore();
   }, []);
 
@@ -27,12 +29,24 @@ const MatchLive = () => {
     return (
       <div>
         <div className="liveMatchTitle">Live Match Points</div>
-        <Button
-          variant="outline-success"
-          className="mr-2 "
-          onClick={() => fetchPlayerLiveScore()}>
-          Refresh Score
-        </Button>
+        <Row>
+          <Col>
+            <Button
+              variant="outline-success"
+              className="mr-2 "
+              onClick={() => {
+                GA_Other_Event('REFRESH_SCORE_FOR_LIVE');
+                fetchPlayerLiveScore();
+              }}>
+              Refresh Score
+            </Button>
+          </Col>
+          <Col>
+            <Badge variant="warning">
+              Keep checking Live Points every 5 Min
+            </Badge>{' '}
+          </Col>
+        </Row>
         {isListEmpty(playerStats) && (
           <StatusMessage
             type="error"

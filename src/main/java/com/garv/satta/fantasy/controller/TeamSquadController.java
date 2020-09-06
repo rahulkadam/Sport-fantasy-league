@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/teamsquad")
-public class TeamSquadController {
+public class TeamSquadController  extends BaseController {
 
     @Autowired
     private TeamSquadService service;

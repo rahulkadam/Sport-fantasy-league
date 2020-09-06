@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/fantasy/home")
-public class DashboardController {
+public class DashboardController extends BaseController {
 
     @Autowired
     private MatchPlayerScoreService playerScoreService;

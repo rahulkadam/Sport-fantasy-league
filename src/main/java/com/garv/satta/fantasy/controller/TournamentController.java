@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.dto.TournamentDTO;
 import com.garv.satta.fantasy.service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,15 +12,16 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/fantasy/tournament")
-public class TournamentController {
+public class TournamentController  extends BaseController {
 
     @Autowired
     private TournamentService tournamentService;
 
     @GetMapping(value = "/list")
     @ResponseBody
-    public List<TournamentDTO> getTournamentList() {
-        return tournamentService.getTournamentList();
+    public ResponseEntity<List<TournamentDTO>> getTournamentList() {
+        List<TournamentDTO> list = tournamentService.getTournamentList();
+        return getResponseBodyWithCache(list, FOR_1_DAY);
     }
 
     @GetMapping(value = "/get/{id}")

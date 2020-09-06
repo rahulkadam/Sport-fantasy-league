@@ -1,7 +1,6 @@
 package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.dao.repository.MatchPlayerScoreRepository;
-import com.garv.satta.fantasy.dao.repository.MatchRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.dto.converter.MatchPlayerScoreConverter;
@@ -13,6 +12,7 @@ import com.garv.satta.fantasy.validation.MatchValidator;
 import com.garv.satta.fantasy.validation.PlayerValidator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,6 +105,7 @@ public class MatchPlayerScoreService {
         return converter.convertToFullDTOList(matchPlayerScores);
     }
 
+    @Cacheable(cacheNames = "LiveScoreCache", keyGenerator = "customKeyGenerator")
     public List<MatchPlayerScoreDTO> findMatchPlayerScoreByMatchIdIn(long[] ids) {
         List<MatchPlayerScore> matchPlayerScores = repository.findMatchPlayerScoreByMatchIdIn(ids);
         return converter.convertToFullDTOList(matchPlayerScores);

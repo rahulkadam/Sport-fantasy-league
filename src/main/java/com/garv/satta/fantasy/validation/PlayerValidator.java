@@ -30,7 +30,7 @@ public class PlayerValidator {
 
     public void validatePlayerScore(Integer score) {
         if (score == null) {
-            throw new GenericException("Player Score/value should not be null");
+            throw new GenericException("Player Score/configvalue should not be null");
         }
     }
 

@@ -73,11 +73,13 @@ public class MatchService {
         return converter.convertToFullDTOList(matches);
     }
 
+    @Cacheable(cacheNames = "LiveScoreCache", keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getLiveMatches() {
         List<Match> matches = repository.findMatchesByStatus(Boolean.TRUE);
         return converter.convertToFullDTOList(matches);
     }
 
+    @Cacheable(cacheNames = "LiveScoreCache", keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getLiveMatchesShortDto() {
         List<Match> matches = repository.findMatchesByStatus(Boolean.TRUE);
         return converter.convertToDTOList(matches);
