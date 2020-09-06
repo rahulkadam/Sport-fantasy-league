@@ -153,7 +153,7 @@ const FantasyNotice = (props: AdminProcess) => {
               onClick={() => {
                 removeCachebyCacheName();
               }}>
-              Remove Notice
+              Clear Cache
             </Button>
           </Col>
         </Row>
