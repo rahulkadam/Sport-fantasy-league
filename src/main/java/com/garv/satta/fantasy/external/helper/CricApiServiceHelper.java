@@ -96,6 +96,18 @@ public class CricApiServiceHelper {
         return to;
     }
 
+
+    public Float parseFloatValue(Object value) {
+        try {
+            if (value == null) {
+                return 0F;
+            }
+            return Float.valueOf(value.toString());
+        } catch (Exception e) {
+            return 0F;
+        }
+    }
+
     /**
      * COpy bowling attribute into player score
      * @param to
@@ -103,6 +115,10 @@ public class CricApiServiceHelper {
      * @return
      */
     private MatchPlayerScoreCricDTO copyBowlingAttribute(MatchPlayerScoreCricDTO to, MatchPlayerScoreCricDTO from) {
+        Float overs = parseFloatValue(from.getOvers());
+        if (overs == 0F) {
+            return to;
+        }
         to.setEconomy(from.getEconomy());
         to.setOvers(from.getOvers());
         to.setWicket(from.getWicket());
@@ -119,6 +135,7 @@ public class CricApiServiceHelper {
      * @return
      */
     private MatchPlayerScoreCricDTO copyBattingAttribute(MatchPlayerScoreCricDTO to, MatchPlayerScoreCricDTO from) {
+        to.setDismissed(from.getDismissed());
         to.setRuns_scored(from.getRuns_scored());
         to.setSixes(from.getSixes());
         to.setFours(from.getFours());

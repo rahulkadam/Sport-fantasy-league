@@ -123,7 +123,6 @@ public class UserTeamService {
         userTeam.setTotalbalance(FantasyConstant.DEFAULT_CREDIT_BALANCE);
         userTeam.setCaptain_player(null);
         userTeam = repository.save(userTeam);
-        // leagueService.joinPublicLeague();
         return converter.convertToFullDTO(userTeam);
     }
 
@@ -151,6 +150,8 @@ public class UserTeamService {
         Float creditBalance = userTeam.getTotalbalance() - (float) ((double) teamValue);
         userTeam.setCreditbalance(creditBalance);
 
+        //TODO enable on 19th Sept
+        /**
         List<Player> playerList1 = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
         if (playerList1.isEmpty()) {
             userTeam.setUsed_Transfer(0);
@@ -163,6 +164,7 @@ public class UserTeamService {
             userTeam.setUsed_Transfer(usedTransafer);
             userTeam.setRemained_Transfer(userTeam.getTotal_Transfer() - usedTransafer);
         }
+         */
 
         userTeam.setCaptain_player(new Player(captainId));
         userTeam.resetPlayerList(playerList);

@@ -2,6 +2,8 @@ package com.garv.satta.fantasy.external.service;
 
 import com.garv.satta.fantasy.external.DTO.MatchPlayerScoreCricDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +38,7 @@ public class CricPointCalculateService {
             return 0;
         }
         // if player batted and scored zero runs, then -10
-        if (runs == 0) {
+        if (runs == 0 && !StringUtils.isEmpty(player.getDismissed())) {
             return -10;
         }
 

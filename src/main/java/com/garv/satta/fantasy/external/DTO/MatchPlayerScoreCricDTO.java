@@ -22,6 +22,8 @@ public class MatchPlayerScoreCricDTO {
     private Integer balls;
     @JsonAlias({"SR"})
     private Integer strikeRate;
+    @JsonAlias({"dismissal-info"})
+    private String dismissed;
     @JsonAlias({"0s"})
     private Integer dot_balls;
     @JsonAlias({"4s"})
