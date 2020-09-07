@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, Row, Col} from 'react-bootstrap';
 import './GameCard.styles.scss';
 import {Logo} from '..';
-import {blackplayer} from '@logos/index';
+import {colorbat} from '@logos/index';
 const PlayerScoreCard = (props: PlayerScoreCardProps) => {
   return (
     <Card className="gamecardcontainer">
@@ -13,7 +13,7 @@ const PlayerScoreCard = (props: PlayerScoreCardProps) => {
         <Card.Text>
           <Row>
             <Col>
-              <Logo logoSource={blackplayer} width="48" />
+              <Logo logoSource={colorbat} width="48" />
               {props.matches} , {props.score}
             </Col>
           </Row>

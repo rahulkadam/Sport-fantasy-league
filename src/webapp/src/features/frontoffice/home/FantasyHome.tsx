@@ -17,7 +17,7 @@ import {GameCorousel, StatusMessage} from 'common/components';
 import UserTeamCard from 'common/components/Games/UserTeamCard';
 import {isListEmpty} from 'common/util';
 import {checkUserAccess} from '../../Authentication/redux';
-import {bannerComingsoon} from '@logos/index';
+import {banneriplmain} from '@logos/index';
 import JoinLeagueModal from '../league/component/JoinLeagueModal';
 import {joinLeagueAction} from '../league/redux';
 import Helmet from 'react-helmet';
@@ -189,7 +189,7 @@ const FantasyHome = () => {
   function renderIPLImage() {
     return (
       <div>
-        <Image src={bannerComingsoon} width="100%" height="100px" />
+        <Image src={banneriplmain} width="100%" height="100px" />
       </div>
     );
   }
