@@ -50,7 +50,7 @@ const MatchLive = () => {
         {isListEmpty(playerStats) && (
           <StatusMessage
             type="error"
-            text="IPL live match not present. Please check after some time"
+            text="No IPL Live Match. Please check during live IPL match"
           />
         )}
         {!isListEmpty(playerStats) && (
