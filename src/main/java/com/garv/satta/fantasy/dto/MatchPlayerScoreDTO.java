@@ -11,6 +11,17 @@ public class MatchPlayerScoreDTO extends ShortBaseDTO {
     private Integer run_scored;
     private Integer wicket;
     private Integer catches;
+    private Integer balls;
+    private Integer strikeRate;
+    private Integer dot_balls;
+    private Integer fours;
+    private Integer sixes;
+    private Float overs;
+    private Integer maiden;
+    private Integer runs_concede;
+    private Float economy;
+    private Integer stumped;
+    private Integer runout;
     private Long playerId;
     private Long matchId;
     private String playerName;

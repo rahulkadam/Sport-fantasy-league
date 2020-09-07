@@ -30,7 +30,7 @@ const MatchLive = () => {
       <div>
         <div className="liveMatchTitle">Live Match Points</div>
         <Row>
-          <Col>
+          <Col md={4}>
             <Button
               variant="outline-success"
               className="mr-2 "
