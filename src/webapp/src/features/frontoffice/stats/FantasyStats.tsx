@@ -24,6 +24,7 @@ import {
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
 import {GA_Other_Event} from '../../../common/config';
+import {isListEmpty} from '../../../common/util';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -53,10 +54,18 @@ const FantasyStats = () => {
   function renderMatchStats() {
     return (
       <div>
-        <StatusMessage
-          type="info"
-          text="Select below match to see Player scoring history in Match"
-        />
+        {!isListEmpty(matchList) && (
+          <StatusMessage
+            type="info"
+            text="Select Match to see IPL-20 Match Stats"
+          />
+        )}
+        {isListEmpty(matchList) && (
+          <StatusMessage
+            type="error"
+            text="You will able to see Stats after first IPL match (19th Sept). Keep checking below Twitter stats till the time"
+          />
+        )}
         <MatchStats
           data={matchList}
           action={fetchMatchStats}
@@ -70,10 +79,7 @@ const FantasyStats = () => {
   function renderPlayerStats() {
     return (
       <div>
-        <StatusMessage
-          type="info"
-          text="Click on  below Player to see Player scoring history in League"
-        />
+        <StatusMessage type="info" text="Click on Player to see IPL-20 stats" />
         <PlayerStats
           playerList={playerList}
           playerStats={statsProps.playerStats}
@@ -89,12 +95,21 @@ const FantasyStats = () => {
   }
 
   function renderUserStats() {
+    const emptyList = isListEmpty(matchList);
     return (
       <div>
-        <StatusMessage
-          type="info"
-          text="Select below match to see your scoring history"
-        />
+        {!emptyList && (
+          <StatusMessage
+            type="info"
+            text="Click on Match to see your Match Stats"
+          />
+        )}
+        {emptyList && (
+          <StatusMessage
+            type="error"
+            text="You will able to see your Stats after first IPL match (19th Sept). Keep focus on IPL fantasy till the time"
+          />
+        )}
         <UserStats
           playerList={playerList}
           playerStats={statsProps.playerStats}

@@ -21,7 +21,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
         Duration d = Duration.ofSeconds(60000, 1);
         registry.addResourceHandler("/**/*.js", "/**/*.css", "/**/*.scss", "/**/*.svg",
-                "/**/*.jpeg", "/**/*.json", "/**/*.png", "/**/*.txt","/**/*.ico")
+                "/**/*.jpeg", "/**/*.json", "/**/*.png", "/**/*.jpg", "/**/*.txt","/**/*.ico")
                 .addResourceLocations("classpath:Resources", "classpath:static")
                 .setCacheControl(CacheControl.maxAge(d).cachePublic().mustRevalidate());
         registry.addResourceHandler("/**/*.html")

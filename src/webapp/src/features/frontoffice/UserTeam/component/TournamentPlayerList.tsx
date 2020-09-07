@@ -75,7 +75,7 @@ const TournamentPlayerList = ({
           fetchPlayerData(row);
         }}>
         {row.name}
-        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="20" />
       </div>
     );
   }
@@ -86,7 +86,7 @@ const TournamentPlayerList = ({
       : '';
     return (
       <div>
-        <Logo logoSource={getLogoNameByTeam(teamName)} width="25" />
+        <Logo logoSource={getLogoNameByTeam(teamName)} width="30" />
       </div>
     );
   }

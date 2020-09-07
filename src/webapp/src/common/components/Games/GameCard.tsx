@@ -20,7 +20,11 @@ const GameCard = (cardProps: GameCardProps) => {
     let msg = '';
     if (days > 0) {
       msg = days + ' Days ';
-      return <span className="timeMsg">{msg} left</span>;
+      return (
+        <span className="timeMsg" onClick={() => history.push(goto)}>
+          {msg} left
+        </span>
+      );
     }
     if (hours > 0) {
       msg = hours + ' Hrs ';
@@ -60,7 +64,7 @@ const GameCard = (cardProps: GameCardProps) => {
               <Col>{getShortNameByTeam(cardProps.team_host_name)}</Col>
               <Col>
                 <Button variant="link" onClick={() => history.push(goto)}>
-                  View All
+                  {liveMatch ? 'View Points' : 'View All'}
                 </Button>
               </Col>
               <Col>{getShortNameByTeam(cardProps.team_away_name)}</Col>

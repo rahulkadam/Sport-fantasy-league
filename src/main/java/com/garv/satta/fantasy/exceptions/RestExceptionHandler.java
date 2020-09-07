@@ -25,6 +25,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         logger.error("Exception : ", ex);
         String error = ex.getMessage();
         String error_description = ex.getLocalizedMessage();
+        if (!(ex instanceof GenericException)) {
+            error = "Unable to process request! Please try after sometime";
+        }
         ErrorInfo errorInfo = new ErrorInfo(error, error_description);
         fantasyErrorService.saveError(errorInfo, ex);
         return new ResponseEntity(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);

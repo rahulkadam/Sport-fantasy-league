@@ -30,7 +30,7 @@ const MatchLive = () => {
       <div>
         <div className="liveMatchTitle">Live Match Points</div>
         <Row>
-          <Col>
+          <Col md={4}>
             <Button
               variant="outline-success"
               className="mr-2 "
@@ -50,7 +50,7 @@ const MatchLive = () => {
         {isListEmpty(playerStats) && (
           <StatusMessage
             type="error"
-            text="IPL live match not present. Please check after some time"
+            text="No IPL Live Match. Please check during live IPL match"
           />
         )}
         {!isListEmpty(playerStats) && (

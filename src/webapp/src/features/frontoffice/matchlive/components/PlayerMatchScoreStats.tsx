@@ -32,9 +32,57 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       </div>
     );
   }
+
+  function getNumber(number: any) {
+    if (!isNaN(number)) {
+      return number;
+    }
+    return 0;
+  }
+
+  function renderStatsNumber(total: any) {
+    if (total > 0) {
+      return <Badge variant="info">{total}</Badge>;
+    }
+    return <span>{total}</span>;
+  }
+
+  function renderStatsWithDash(total: any) {
+    if (total > 0) {
+      return <span>{total}</span>;
+    }
+    return <span>-</span>;
+  }
+
+  function customStrikeRate(row: any) {
+    const total = getNumber(row.strikeRate);
+    return renderStatsWithDash(total);
+  }
+
+  function customEconomy(row: any) {
+    const total = getNumber(row.economy);
+    return renderStatsWithDash(total);
+  }
+
+  function customWickets(row: any) {
+    const total = getNumber(row.wicket);
+    return renderStatsNumber(total);
+  }
+
+  function customRuns(row: any) {
+    const total = getNumber(row.run_scored);
+    return renderStatsNumber(total);
+  }
+
+  function customFielding(row: any) {
+    const total =
+      getNumber(row.catches) + getNumber(row.stumped) + getNumber(row.runout);
+    return renderStatsNumber(total);
+  }
+
   const columns: any[] = [
     {
-      name: 'PLAYER',
+      name: 'Player',
       selector: 'playerName',
       sortable: true,
       left: true,
@@ -47,16 +95,15 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
     {
       name: 'Points',
       selector: 'pointscore',
-      width: '5%',
+      width: '10%',
       sortable: true,
       left: true,
       cell: customPointScore,
     },
     {
       name: 'Runs',
-      selector: 'run_scored',
-      sortable: true,
-      width: '5%',
+      cell: customRuns,
+      width: '10%',
       left: true,
       style: {
         'font-weight': 'bold',
@@ -64,27 +111,43 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
     },
     {
       name: 'Wicket',
-      selector: 'wicket',
-      sortable: true,
       left: true,
-      width: '5%',
+      cell: customWickets,
+      width: '10%',
       style: {
         'font-weight': 'bold',
       },
     },
     {
-      name: 'Catch',
-      selector: 'catches',
-      sortable: true,
+      name: 'Fielding',
       left: true,
-      width: '5%',
+      width: '10%',
+      cell: customFielding,
+      style: {
+        'font-weight': 'bold',
+      },
+    },
+    {
+      name: 'SR',
+      cell: customStrikeRate,
+      left: true,
+      width: '10%',
+      style: {
+        'font-weight': 'bold',
+      },
+    },
+    {
+      name: 'Eco',
+      cell: customEconomy,
+      left: true,
+      width: '10%',
       style: {
         'font-weight': 'bold',
       },
     },
     {
       name: 'Match',
-      width: '15%',
+      width: '25%',
       selector: 'matchDescription',
       sortable: true,
       center: true,

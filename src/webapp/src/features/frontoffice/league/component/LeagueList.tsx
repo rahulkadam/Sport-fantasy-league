@@ -14,7 +14,7 @@ const LeagueList = (props: LeagueUserListProps) => {
   function customName(row: any) {
     return (
       <div className="leagueNameColumn">
-        {!row.publicLeague && <Logo logoSource={lockcolor} width="15" />}
+        {!row.publicLeague && <Logo logoSource={lockcolor} width="20" />}
         {row.name}
       </div>
     );
