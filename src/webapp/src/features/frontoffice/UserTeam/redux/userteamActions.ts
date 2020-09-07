@@ -1,8 +1,6 @@
 import {useDispatch} from 'react-redux';
 import {
   fetchAllPlayerlist,
-  fetchPlayerlistByUser,
-  fetchUserTeamByUser,
   saveTeamForUser,
   createTeamForUser,
   fetchGameCriteriaByName,
@@ -12,8 +10,6 @@ import {
   ACTION_START,
   UPDATE_INTERNAL_USER_TEAM,
   FETCH_ALL_PLAYER_LIST,
-  FETCH_PLAYER_LIST_BY_USER,
-  FETCH_USER_TEAM,
   SAVE_USER_TEAM,
   REMOVE_FROM_INTERNAL_USER_TEAM,
   FETCH_GAME_CRITERIA,
@@ -28,7 +24,6 @@ import {
   dispatchActionWrapper,
   dispatchAction,
   getErrorMessage,
-  isListEmpty,
 } from 'common/util';
 import {
   ACTION_COMPLETED,
@@ -73,46 +68,6 @@ const fetchUserTeamDataAction = () => {
             userteam: data,
           });
           dispatch({type: ACTION_COMPLETED});
-        })
-        .catch((error: any) => {
-          dispatch({
-            type: ACTION_ERROR,
-            errorMessage: getErrorMessage(error),
-          });
-        });
-    }
-  );
-};
-
-const fetchPlayerListByUserAction = () => {
-  const dispatch = useDispatch();
-  return dispatchActionWrapper(
-    dispatch,
-    dispatchAction(dispatch, ACTION_START),
-    dispatchAction(dispatch, SHOULD_REFRESH_STOP),
-    (userid: number) => {
-      fetchUserTeamByUser(userid)
-        .then((data: any) => {
-          dispatch({
-            type: FETCH_USER_TEAM,
-            userteam: data,
-          });
-          dispatch({type: ACTION_COMPLETED});
-          !isListEmpty(data) &&
-            fetchPlayerlistByUser(data[0].id)
-              .then((data: any) => {
-                dispatch({
-                  type: FETCH_PLAYER_LIST_BY_USER,
-                  userTeamPlayers: data,
-                });
-                dispatch({type: ACTION_COMPLETED});
-              })
-              .catch((error: any) => {
-                dispatch({
-                  type: ACTION_ERROR,
-                  errorMessage: getErrorMessage(error),
-                });
-              });
         })
         .catch((error: any) => {
           dispatch({
@@ -244,7 +199,6 @@ const fetchGameCriteriaByNameAction = () => {
 };
 
 export {
-  fetchPlayerListByUserAction,
   fetchAllPlayerListAction,
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,

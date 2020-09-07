@@ -9,7 +9,6 @@ import {
 import {
   fetchAllPlayerListAction,
   getUserTeamData,
-  fetchPlayerListByUserAction,
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
   createUserTeamAction,
