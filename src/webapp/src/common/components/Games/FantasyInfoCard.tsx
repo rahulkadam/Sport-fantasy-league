@@ -20,8 +20,6 @@ const FantasyInfoCard = () => {
               <Col className="textFont">
                 IPL Fantasy is a <strong>Fantasy Cricket Game</strong> played
                 over internet between IPL fans.
-                <strong>Fans act like team owner </strong>
-                who own team during tournament.
                 <Badge variant="success">
                   1 Team, 60 matches and 100 Transfer = IPL Fantasy
                 </Badge>
@@ -36,8 +34,8 @@ const FantasyInfoCard = () => {
                   onClick={() =>
                     loginUser ? history.push('/team') : history.push('/login')
                   }>
-                  {!loginUser && 'Please login and '}
-                  Create Team!
+                  {!loginUser && 'Login and '}
+                  Create Team
                 </Button>
               </Col>
             </Row>

@@ -189,7 +189,7 @@ const FantasyHome = () => {
   function renderIPLImage() {
     return (
       <div>
-        <Image src={banneriplmain} width="100%" height="100px" />
+        <Image src={banneriplmain} width="100%" height="130px" />
       </div>
     );
   }
