@@ -10,5 +10,6 @@ export {
   resetUserTeamAction,
   updateTeamCaptionAction,
   autoPickUserTeamAction,
+  fetchUserTeamDataAction,
 } from './userteamActions';
 export * from './userteam-util';

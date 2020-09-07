@@ -6,6 +6,7 @@ import {
   saveTeamForUser,
   createTeamForUser,
   fetchGameCriteriaByName,
+  fetchUserTeamFullDataByUser,
 } from './userteam-api';
 import {
   ACTION_START,
@@ -21,6 +22,7 @@ import {
   AUTO_PICK_USER_TEAM,
   SHOULD_REFRESH_STOP,
   ACTION_ERROR,
+  FETCH_USER_TEAM_WITH_PLAYERS,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
@@ -44,6 +46,31 @@ const fetchAllPlayerListAction = () => {
           dispatch({
             type: FETCH_ALL_PLAYER_LIST,
             playerList: data,
+          });
+          dispatch({type: ACTION_COMPLETED});
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: ACTION_ERROR,
+            errorMessage: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+const fetchUserTeamDataAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    dispatchAction(dispatch, SHOULD_REFRESH_STOP),
+    (userid: number) => {
+      fetchUserTeamFullDataByUser(userid)
+        .then((data: any) => {
+          dispatch({
+            type: FETCH_USER_TEAM_WITH_PLAYERS,
+            userteam: data,
           });
           dispatch({type: ACTION_COMPLETED});
         })
@@ -226,4 +253,5 @@ export {
   resetUserTeamAction,
   updateTeamCaptionAction,
   autoPickUserTeamAction,
+  fetchUserTeamDataAction,
 };

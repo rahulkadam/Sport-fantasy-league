@@ -10,6 +10,7 @@ import {
   UPDATE_CAPTION_FOR_TEAM,
   AUTO_PICK_USER_TEAM,
   SHOULD_REFRESH_STOP,
+  FETCH_USER_TEAM_WITH_PLAYERS,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -40,6 +41,18 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
   let userteam = state.userteam;
   let captionPlayerId = state.captionPlayerId;
   switch (action.type) {
+    case FETCH_USER_TEAM_WITH_PLAYERS:
+      userLeaguestate = {
+        ...state,
+        userTeamPlayers: action.userteam.teamPlayersPlayerDTOList,
+        currentUserTeamPlayers: action.userteam.teamPlayersPlayerDTOList,
+        currentTransferChanges: 0,
+        userteam: action.userteam,
+        currentUserTeamValue: action.userteam.creditbalance,
+        captionPlayerId: action.userteam.team_captain_player_Id,
+        captainName: action.userteam.captainName,
+      };
+      return {...userLeaguestate};
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
         ...state,
