@@ -39,16 +39,19 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
   let captionPlayerId = state.captionPlayerId;
   switch (action.type) {
     case FETCH_USER_TEAM_WITH_PLAYERS:
-      userLeaguestate = {
-        ...state,
-        userTeamPlayers: action.userteam.teamPlayersPlayerDTOList,
-        currentUserTeamPlayers: action.userteam.teamPlayersPlayerDTOList,
-        currentTransferChanges: 0,
-        userteam: action.userteam,
-        currentUserTeamValue: action.userteam.creditbalance,
-        captionPlayerId: action.userteam.team_captain_player_Id,
-        captainName: action.userteam.captainName,
-      };
+      const actionUserTeam = action.userteam;
+      if (actionUserTeam.name) {
+        userLeaguestate = {
+          ...state,
+          userTeamPlayers: actionUserTeam.teamPlayersPlayerDTOList,
+          currentUserTeamPlayers: actionUserTeam.teamPlayersPlayerDTOList,
+          currentTransferChanges: 0,
+          userteam: actionUserTeam,
+          currentUserTeamValue: actionUserTeam.creditbalance,
+          captionPlayerId: actionUserTeam.team_captain_player_Id,
+          captainName: actionUserTeam.captainName,
+        };
+      }
       return {...userLeaguestate};
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {

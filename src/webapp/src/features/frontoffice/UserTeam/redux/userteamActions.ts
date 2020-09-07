@@ -65,7 +65,7 @@ const fetchUserTeamDataAction = () => {
         .then((data: any) => {
           dispatch({
             type: FETCH_USER_TEAM_WITH_PLAYERS,
-            userteam: data,
+            userteam: data || {},
           });
           dispatch({type: ACTION_COMPLETED});
         })
