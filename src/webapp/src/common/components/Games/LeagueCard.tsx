@@ -50,7 +50,7 @@ const LeagueCard = (props: LeagueCardProps) => {
             </Row>
           </Card.Title>
           <Card.Text>
-            <Row>
+            <Row className="bottomMargin">
               <Col>
                 <Row>
                   <Col>

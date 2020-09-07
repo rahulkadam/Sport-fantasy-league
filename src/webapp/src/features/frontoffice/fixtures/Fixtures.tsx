@@ -8,6 +8,8 @@ import {fetchMatchStatsListAction, getStatsProps} from '../stats/redux';
 import {fetchUpComingAllMatchesAction, getHomeData} from '../home/redux';
 import {getCommonData} from '../../common/redux';
 import Helmet from 'react-helmet';
+import {Badge} from 'react-bootstrap';
+
 import {
   TwitterFantasyTimeline,
   TWITTER_LIST_SCHEDULE,
@@ -60,6 +62,7 @@ const Fixtures = () => {
         </Helmet>
         <div className="fixtureTitle">IPL-20 Fixture</div>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
+        <Badge variant="warning">*All Match Time are in IST*</Badge>
         {renderMatchListView()}
         {renderTwitterHashtag()}
       </LoadingOverlay>

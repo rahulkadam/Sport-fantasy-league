@@ -231,11 +231,11 @@ const FantasyHome = () => {
         {renderIPLImage()}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
+        {renderLiveMatchesSchedule()}
+        {renderUpComingMatchesSchedule()}
         {loginUser && dashboard.userTeamDTO && renderUserTeamCard()}
         {!dashboard.userTeamDTO && renderFantasyInfoCard()}
         {renderUserPublicLeagues()}
-        {renderLiveMatchesSchedule()}
-        {renderUpComingMatchesSchedule()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}
         {renderTwitterHashtag()}
