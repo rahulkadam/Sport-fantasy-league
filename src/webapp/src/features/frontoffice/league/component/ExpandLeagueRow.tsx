@@ -46,22 +46,48 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
     );
   }
 
+  function customTeamName(row: any) {
+    return (
+      <div
+        onClick={() => {
+          GA_League_Event('View Other member Team');
+          fetchUserLeagueList(row.user_team_id);
+        }}>
+        <Nav.Link>{row.teamName} </Nav.Link>
+      </div>
+    );
+  }
+
   const columns = [
     {
       name: 'Rank',
       selector: 'userrank',
       sortable: true,
+      width: '15%',
+      center: true,
     },
     {
-      name: 'Name',
-      selector: 'userName',
+      name: 'Team',
+      selector: 'teamName',
       sortable: true,
-      cell: customName,
+      width: '35%',
+      left: true,
+      cell: customTeamName,
     },
     {
       name: 'Score',
       selector: 'score',
       sortable: true,
+      width: '15%',
+      left: true,
+    },
+    {
+      name: 'Name',
+      selector: 'userName',
+      sortable: true,
+      width: '35%',
+      cell: customName,
+      left: true,
     },
   ];
 
