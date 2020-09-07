@@ -71,7 +71,7 @@ const UserTeamPlayerDetails = ({
         }}>
         {captionId == row.id && <Badge variant={'success'}>C </Badge>}
         {row.name}
-        <Logo logoSource={renderLogoByPLayerType(row.type)} width="15" />
+        <Logo logoSource={renderLogoByPLayerType(row.type)} width="20" />
       </div>
     );
   }
@@ -82,7 +82,7 @@ const UserTeamPlayerDetails = ({
       : '';
     return (
       <div>
-        <Logo logoSource={getLogoNameByTeam(teamName)} width="25" />
+        <Logo logoSource={getLogoNameByTeam(teamName)} width="30" />
       </div>
     );
   }
