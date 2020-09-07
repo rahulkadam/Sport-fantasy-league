@@ -9,7 +9,9 @@ const FantasyFooterBanner = () => {
   function renderSecondaryTitle() {
     return (
       <div className="secondaryTitle">
-        Watch IPL and Play Fantasy league like never Before{' '}
+        <div className="secondaryTitle">
+          Watch IPL and Play Fantasy league like never Before{' '}
+        </div>
       </div>
     );
   }
@@ -18,6 +20,9 @@ const FantasyFooterBanner = () => {
     return (
       <div className="description">
         Show your Cricket Skill in friendly Contest! Its Free to play
+        <div className="description">
+          Play Fantasy with 1 team and 100 transfer
+        </div>
       </div>
     );
   }

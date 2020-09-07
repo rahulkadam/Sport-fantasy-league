@@ -230,7 +230,7 @@ const FantasyHome = () => {
         {checkUserAccess()}
         <UserHomePageBoard />
         {renderIPLImage()}
-        <FantasyFooterBanner />
+        {!loginUser && <FantasyFooterBanner />}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
         {renderLiveMatchesSchedule()}
