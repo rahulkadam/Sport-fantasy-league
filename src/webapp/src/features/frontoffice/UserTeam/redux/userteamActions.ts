@@ -1,18 +1,15 @@
 import {useDispatch} from 'react-redux';
 import {
   fetchAllPlayerlist,
-  fetchPlayerlistByUser,
-  fetchUserTeamByUser,
   saveTeamForUser,
   createTeamForUser,
   fetchGameCriteriaByName,
+  fetchUserTeamFullDataByUser,
 } from './userteam-api';
 import {
   ACTION_START,
   UPDATE_INTERNAL_USER_TEAM,
   FETCH_ALL_PLAYER_LIST,
-  FETCH_PLAYER_LIST_BY_USER,
-  FETCH_USER_TEAM,
   SAVE_USER_TEAM,
   REMOVE_FROM_INTERNAL_USER_TEAM,
   FETCH_GAME_CRITERIA,
@@ -21,12 +18,12 @@ import {
   AUTO_PICK_USER_TEAM,
   SHOULD_REFRESH_STOP,
   ACTION_ERROR,
+  FETCH_USER_TEAM_WITH_PLAYERS,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
   dispatchAction,
   getErrorMessage,
-  isListEmpty,
 } from 'common/util';
 import {
   ACTION_COMPLETED,
@@ -57,35 +54,20 @@ const fetchAllPlayerListAction = () => {
   );
 };
 
-const fetchPlayerListByUserAction = () => {
+const fetchUserTeamDataAction = () => {
   const dispatch = useDispatch();
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
     dispatchAction(dispatch, SHOULD_REFRESH_STOP),
     (userid: number) => {
-      fetchUserTeamByUser(userid)
+      fetchUserTeamFullDataByUser(userid)
         .then((data: any) => {
           dispatch({
-            type: FETCH_USER_TEAM,
-            userteam: data,
+            type: FETCH_USER_TEAM_WITH_PLAYERS,
+            userteam: data || {},
           });
           dispatch({type: ACTION_COMPLETED});
-          !isListEmpty(data) &&
-            fetchPlayerlistByUser(data[0].id)
-              .then((data: any) => {
-                dispatch({
-                  type: FETCH_PLAYER_LIST_BY_USER,
-                  userTeamPlayers: data,
-                });
-                dispatch({type: ACTION_COMPLETED});
-              })
-              .catch((error: any) => {
-                dispatch({
-                  type: ACTION_ERROR,
-                  errorMessage: getErrorMessage(error),
-                });
-              });
         })
         .catch((error: any) => {
           dispatch({
@@ -217,7 +199,6 @@ const fetchGameCriteriaByNameAction = () => {
 };
 
 export {
-  fetchPlayerListByUserAction,
   fetchAllPlayerListAction,
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
@@ -226,4 +207,5 @@ export {
   resetUserTeamAction,
   updateTeamCaptionAction,
   autoPickUserTeamAction,
+  fetchUserTeamDataAction,
 };

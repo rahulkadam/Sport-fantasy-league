@@ -1,8 +1,6 @@
 import {
   FETCH_ALL_PLAYER_LIST,
-  FETCH_PLAYER_LIST_BY_USER,
   UPDATE_INTERNAL_USER_TEAM,
-  FETCH_USER_TEAM,
   SAVE_USER_TEAM,
   REMOVE_FROM_INTERNAL_USER_TEAM,
   FETCH_GAME_CRITERIA,
@@ -10,6 +8,7 @@ import {
   UPDATE_CAPTION_FOR_TEAM,
   AUTO_PICK_USER_TEAM,
   SHOULD_REFRESH_STOP,
+  FETCH_USER_TEAM_WITH_PLAYERS,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -37,21 +36,27 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
   let currentTeamValue = 0;
   let currentUserTeamPlayers = state.currentUserTeamPlayers;
   let transferCount = state.currentTransferChanges;
-  let userteam = state.userteam;
   let captionPlayerId = state.captionPlayerId;
   switch (action.type) {
+    case FETCH_USER_TEAM_WITH_PLAYERS:
+      const actionUserTeam = action.userteam;
+      if (actionUserTeam.name) {
+        userLeaguestate = {
+          ...state,
+          userTeamPlayers: actionUserTeam.teamPlayersPlayerDTOList,
+          currentUserTeamPlayers: actionUserTeam.teamPlayersPlayerDTOList,
+          currentTransferChanges: 0,
+          userteam: actionUserTeam,
+          currentUserTeamValue: actionUserTeam.creditbalance,
+          captionPlayerId: actionUserTeam.team_captain_player_Id,
+          captainName: actionUserTeam.captainName,
+        };
+      }
+      return {...userLeaguestate};
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
         ...state,
         playerList: action.playerList,
-      };
-      return userLeaguestate;
-    case FETCH_PLAYER_LIST_BY_USER:
-      userLeaguestate = {
-        ...state,
-        userTeamPlayers: action.userTeamPlayers,
-        currentUserTeamPlayers: action.userTeamPlayers,
-        currentTransferChanges: 0,
       };
       return userLeaguestate;
     case UPDATE_INTERNAL_USER_TEAM:
@@ -110,16 +115,6 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         currentUserTeamPlayers: currentUserTeamPlayers,
         currentUserTeamValue: currentTeamValue,
         currentTransferChanges: transferCount,
-      };
-      return userLeaguestate;
-    case FETCH_USER_TEAM:
-      userteam = action.userteam.length > 0 ? action.userteam[0] : {};
-      userLeaguestate = {
-        ...state,
-        userteam: userteam,
-        currentUserTeamValue: userteam.creditbalance,
-        captionPlayerId: userteam.team_captain_player_Id,
-        captainName: userteam.captainName,
       };
       return userLeaguestate;
     case SHOULD_REFRESH_STOP:

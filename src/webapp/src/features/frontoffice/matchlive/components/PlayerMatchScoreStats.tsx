@@ -34,16 +34,6 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
   }
   const columns: any[] = [
     {
-      name: 'Match',
-      width: '15%',
-      selector: 'matchDescription',
-      sortable: true,
-      center: true,
-      style: {
-        'font-weight': 'bold',
-      },
-    },
-    {
       name: 'PLAYER',
       selector: 'playerName',
       sortable: true,
@@ -51,11 +41,13 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       style: {
         'font-weight': 'bold',
       },
+      width: '15%',
       cell: customPlayerName,
     },
     {
       name: 'Points',
       selector: 'pointscore',
+      width: '5%',
       sortable: true,
       left: true,
       cell: customPointScore,
@@ -64,6 +56,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       name: 'Runs',
       selector: 'run_scored',
       sortable: true,
+      width: '5%',
       left: true,
       style: {
         'font-weight': 'bold',
@@ -74,6 +67,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       selector: 'wicket',
       sortable: true,
       left: true,
+      width: '5%',
       style: {
         'font-weight': 'bold',
       },
@@ -83,6 +77,17 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       selector: 'catches',
       sortable: true,
       left: true,
+      width: '5%',
+      style: {
+        'font-weight': 'bold',
+      },
+    },
+    {
+      name: 'Match',
+      width: '15%',
+      selector: 'matchDescription',
+      sortable: true,
+      center: true,
       style: {
         'font-weight': 'bold',
       },

@@ -56,7 +56,7 @@ const GameCard = (cardProps: GameCardProps) => {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row className="bottomMargin">
               <Col>{getShortNameByTeam(cardProps.team_host_name)}</Col>
               <Col>
                 <Button variant="link" onClick={() => history.push(goto)}>

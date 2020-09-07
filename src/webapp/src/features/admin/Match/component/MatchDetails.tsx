@@ -83,6 +83,7 @@ const MatchDetails = ({
     {
       name: 'Time',
       selector: 'matchTime',
+      grow: 2,
       sortable: true,
       cell: convertDateTime,
     },
@@ -105,6 +106,7 @@ const MatchDetails = ({
       selector: 'matchResult',
       left: true,
       cell: customMatchResult,
+      omit: !(title == 'fixture'),
     },
     {
       name: 'Venue',

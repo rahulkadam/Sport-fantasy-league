@@ -32,6 +32,10 @@ export function fetchUserTeamByUser(id: number) {
   return Get('/fantasy/userteam/get/user/' + id);
 }
 
+export function fetchUserTeamFullDataByUser(id: number) {
+  return Get('/fantasy/userteam/get/userteam/data/' + id);
+}
+
 export function fetchGameCriteriaByName(name: string) {
   return Get('/fantasy/game/get/byname/' + name);
 }

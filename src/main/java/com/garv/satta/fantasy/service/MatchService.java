@@ -62,14 +62,14 @@ public class MatchService {
     @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getUpComingTOP5MatchList() {
         DateTime currentTime = new DateTime();
-        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
+        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqualAndIsDeletedOrderByMatchTimeAsc(currentTime, Boolean.FALSE);
         return converter.convertToFullDTOList(matches);
     }
 
     @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getUpComingAllMatchList() {
         DateTime currentTime = new DateTime();
-        List<Match> matches = repository.findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
+        List<Match> matches = repository.findUpcomingMatchesByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
         return converter.convertToFullDTOList(matches);
     }
 
@@ -155,6 +155,7 @@ public class MatchService {
     public void uploadTeamList(MultipartFile file) {
         Iterator<Row> rowList = excelFileService.readData(file);
         Map<String, Long> map = new HashMap<>();
+        Map<String, String> mapWithShortName = new HashMap<>();
         List<Match> matchList = new ArrayList<>();
 
         rowList.next();  // Skipping title of excel header
@@ -172,6 +173,7 @@ public class MatchService {
                 TeamDTO hometeam = teamService.getTeamByName(home_team_name);
                 homeTeamId = hometeam.getId();
                 map.put(home_team_name, homeTeamId);
+                mapWithShortName.put(home_team_name, hometeam.getShortName());
             }
             match.setTeam_host(new Team(homeTeamId));
 
@@ -180,6 +182,7 @@ public class MatchService {
                 TeamDTO awayteam = teamService.getTeamByName(away_team_name);
                 awayTeamId = awayteam.getId();
                 map.put(away_team_name, awayTeamId);
+                mapWithShortName.put(away_team_name, awayteam.getShortName());
             }
 
             match.setTeam_away(new Team(awayTeamId));
@@ -203,7 +206,10 @@ public class MatchService {
             DateTime dateTime = DateTime.parse(matchTime);
             match.setMatchTime(dateTime);
 
-            match.setDescription(home_team_name + " VS " + away_team_name + " On " + dateTime.getDayOfMonth() + "-" + dateTime.getMonthOfYear());
+            String shortHomeName = mapWithShortName.get(home_team_name)!= null ? mapWithShortName.get(home_team_name) : home_team_name;
+            String shortAwayName = mapWithShortName.get(away_team_name)!= null ? mapWithShortName.get(away_team_name) : away_team_name;
+
+            match.setDescription(shortHomeName + " VS " + shortAwayName + " -- " + dateTime.getDayOfMonth() + "-" + dateTime.getMonthOfYear());
             matchList.add(match);
         }
         repository.saveAll(matchList);

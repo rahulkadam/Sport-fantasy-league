@@ -21,7 +21,7 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
     List<Match> findCompletedMatchesByMatchTimeLessThanEqualAndIsDeleted(DateTime currentTime, Boolean isDeleted);
 
     @EntityGraph(value = "Match.matchschedule")
-    List<Match> findFirst5ByMatchTimeGreaterThanEqualAndIsDeleted(DateTime currentTime, Boolean isDeleted);
+    List<Match> findFirst5ByMatchTimeGreaterThanEqualAndIsDeletedOrderByMatchTimeAsc(DateTime currentTime, Boolean isDeleted);
 
     List<Match> findMatchesByStatus(Boolean status);
 

@@ -9,7 +9,6 @@ import {
 import {
   fetchAllPlayerListAction,
   getUserTeamData,
-  fetchPlayerListByUserAction,
   addRemovePlayerToInternalUserTeamAction,
   saveUserTeamAction,
   createUserTeamAction,
@@ -18,6 +17,7 @@ import {
   resetUserTeamAction,
   updateTeamCaptionAction,
   autoPickUserTeamAction,
+  fetchUserTeamDataAction,
 } from './redux';
 import {Button, Row, Col, Badge, Navbar, Nav, Form} from 'react-bootstrap';
 import {GetLoginStoreData, checkUserAccess} from '../../Authentication/redux';
@@ -36,7 +36,7 @@ const UserTeam = () => {
   const userProps = GetLoginStoreData();
   const configProps = getCommonData();
   const fetchPlayerList = fetchAllPlayerListAction();
-  const fetchPlayerListByUser = fetchPlayerListByUserAction();
+  const fetchPlayerListByUser = fetchUserTeamDataAction();
   const updateCurrentUserTeam = addRemovePlayerToInternalUserTeamAction();
   const resetUserTeam = resetUserTeamAction();
   const fetchGameCriteriaByName = fetchGameCriteriaByNameAction();
