@@ -82,7 +82,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
 
   const columns: any[] = [
     {
-      name: 'PLAYER',
+      name: 'Player',
       selector: 'playerName',
       sortable: true,
       left: true,
