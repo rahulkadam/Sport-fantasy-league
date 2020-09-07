@@ -25,6 +25,7 @@ import {
   TWITTER_LIST_HOME,
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
+import {FantasyFooterBanner} from '../../../common/components/Footer';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -229,6 +230,7 @@ const FantasyHome = () => {
         {checkUserAccess()}
         <UserHomePageBoard />
         {renderIPLImage()}
+        <FantasyFooterBanner />
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
         {renderLiveMatchesSchedule()}
