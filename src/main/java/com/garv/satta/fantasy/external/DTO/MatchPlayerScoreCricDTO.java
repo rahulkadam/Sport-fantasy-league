@@ -13,6 +13,7 @@ public class MatchPlayerScoreCricDTO {
 
     private Integer pid;
     private String batsman;
+    private String shortName;
     private String name;
     private String bowler;
     private String fielder;
