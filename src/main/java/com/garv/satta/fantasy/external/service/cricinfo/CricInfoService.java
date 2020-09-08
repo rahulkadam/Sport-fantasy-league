@@ -2,13 +2,15 @@ package com.garv.satta.fantasy.external.service.cricinfo;
 
 import com.garv.satta.fantasy.external.DTO.MatchPlayerScoreCricDTO;
 import com.garv.satta.fantasy.external.service.CricPointCalculateService;
+import com.garv.satta.fantasy.external.service.cricinfo.parser.CommonParser;
+import com.garv.satta.fantasy.external.service.cricinfo.parser.FieldingParser;
+import com.garv.satta.fantasy.external.service.cricinfo.parser.PlayerParser;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,24 +25,38 @@ public class CricInfoService {
     private CricInfoCrawler cricInfoCrawler;
 
     @Autowired
+    private FieldingParser fieldingParser;
+
+    @Autowired
+    private PlayerParser playerParser;
+
+    @Autowired
+    private CommonParser commonParser;
+
+    @Autowired
     private CricPointCalculateService pointCalculateService;
 
     public List<MatchPlayerScoreCricDTO> getMatchPlayerScore(Long id) throws Exception {
         Document document = cricInfoCrawler.getScoreCardDocumentByMatchId(id);
-        Map<Integer, MatchPlayerScoreCricDTO> map = getPlayerScoreFromScorePage(document);
-        map = getFieldingPoints(map);
+        Map<Integer, MatchPlayerScoreCricDTO> map = parsePlayerScoreFromScorePage(document);
+        map = fieldingParser.getFieldingPoints(map);
         map = pointCalculateService.calculatePointForPlayers(map);
         return map.values().stream().collect(Collectors.toList());
     }
 
-    public Map<Integer, MatchPlayerScoreCricDTO> getPlayerScoreFromScorePage(Document document) {
+    /**
+     * Get player list of 22 player with scoring stats
+     *
+     * @param document
+     * @return
+     */
+    public Map<Integer, MatchPlayerScoreCricDTO> parsePlayerScoreFromScorePage(Document document) {
         Map<Integer, MatchPlayerScoreCricDTO> map = new HashMap<>();
         try {
             Elements scoreCardTables = document.select(".match-scorecard-table");
             int size = scoreCardTables.size();
-
-            // both innings played
             if (size == 3) {
+                // both innings played
                 Element firstInnings = scoreCardTables.get(0);
                 Element secondInnings = scoreCardTables.get(1);
                 map = parsePlayersInningsScore(firstInnings, map);
@@ -49,17 +65,18 @@ public class CricInfoService {
                 // only one innings played
                 Element firstInnings = scoreCardTables.get(0);
                 map = parsePlayersInningsScore(firstInnings, map);
-                map = getSecondInningsPlayerList(document, map);
+                map = parseSecondInningsPlayerList(document, map);
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return map;
     }
 
     /**
      * parse score by  innings scrore table innings batting bowling section
-     * + batting +  bowling + yeto to bat
+     * + batting +  bowling + yet to bat
+     *
      * @param firstInnings
      * @param map
      * @return
@@ -70,26 +87,25 @@ public class CricInfoService {
             Element batsmanSection = firstInnings.select(".batsman").get(0);
             Element batsmanScoreList = batsmanSection.getElementsByTag("tbody").get(0);
             Element yetToBatSection = batsmanSection.getElementsByTag("tfoot").get(0);
-            getYetToBat(yetToBatSection, map);
-            map = getBatsmanList(batsmanScoreList, map);
+            parseYetToBat(yetToBatSection, map);
+            map = parseBatsmanList(batsmanScoreList, map);
             Element bowlingSection = firstInnings.select(".bowler").get(0);
             Element bowlerList = bowlingSection.getElementsByTag("tbody").get(0);
-            map = getBowlerList(bowlerList, map);
+            map = parseBowlerList(bowlerList, map);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return map;
     }
 
-
-    public Map<Integer, MatchPlayerScoreCricDTO> getSecondInningsPlayerList(Document document,
-                                                                            Map<Integer, MatchPlayerScoreCricDTO> map) {
-        Elements playerListNode =  document.select(".w-100.table.bowler").select("tbody").get(0).children();
+    public Map<Integer, MatchPlayerScoreCricDTO> parseYetToBat(Element element1,
+                                                               Map<Integer, MatchPlayerScoreCricDTO> map) {
+        Elements playerListNode = element1.select("a");
         playerListNode.forEach(element -> {
-            MatchPlayerScoreCricDTO player = parsePlayer(element.child(0));
+            MatchPlayerScoreCricDTO player = playerParser.parsePlayer(element);
             if (player != null) {
                 Integer playerId = player.getPid();
-                if(map.get(playerId) == null) {
+                if (map.get(playerId) == null) {
                     map.put(playerId, player);
                 }
             }
@@ -97,268 +113,120 @@ public class CricInfoService {
         return map;
     }
 
-    public Map<Integer, MatchPlayerScoreCricDTO> getYetToBat(Element element1,
-                                                             Map<Integer, MatchPlayerScoreCricDTO> map) {
-
-        Elements playerListNode =  element1.select("a");
-        playerListNode.forEach(element -> {
-            MatchPlayerScoreCricDTO player = parsePlayer(element);
-            if (player != null) {
-                Integer playerId = player.getPid();
-                if(map.get(playerId) == null) {
-                    map.put(playerId, player);
-                }
-            }
-        });
-        return map;
+    /**
+     * Parse second innings player list showed in below section
+     *
+     * @param document
+     * @param playerMap
+     * @return
+     */
+    public Map<Integer, MatchPlayerScoreCricDTO> parseSecondInningsPlayerList(Document document,
+                                                                              Map<Integer, MatchPlayerScoreCricDTO> playerMap) {
+        Elements playerListNode = document.select(".w-100.table.bowler").select("tbody").get(0).children();
+        for (Element element : playerListNode) {
+            playerMap = updatePlayerAttribute(element, playerMap, "secondInnings");
+        }
+        return playerMap;
     }
 
-    public Map<Integer, MatchPlayerScoreCricDTO> getBowlerList(Element batsmanBody, Map<Integer, MatchPlayerScoreCricDTO> playerMap) {
+    public Map<Integer, MatchPlayerScoreCricDTO> parseBowlerList(Element batsmanBody, Map<Integer, MatchPlayerScoreCricDTO> playerMap) {
         Elements children = batsmanBody.children();
-        children.forEach(element -> {
-            MatchPlayerScoreCricDTO player = parsePlayer(element.child(0));
+        for (Element element : children) {
+            playerMap = updatePlayerAttribute(element, playerMap, "bowling");
+        }
+        return playerMap;
+    }
+
+    public Map<Integer, MatchPlayerScoreCricDTO> parseBatsmanList(Element batsmanBody, Map<Integer, MatchPlayerScoreCricDTO> playerMap) {
+        Elements children = batsmanBody.children();
+        for (Element element : children) {
+            // adding this to avoid that extra row from cricinfo
+            Element element1 = element.selectFirst(".batsman-cell");
+            if (element1 != null) {
+                playerMap = updatePlayerAttribute(element, playerMap, "batting");
+            }
+        }
+        return playerMap;
+    }
+
+    public Map<Integer, MatchPlayerScoreCricDTO> updatePlayerAttribute(Element element,
+                                                                       Map<Integer, MatchPlayerScoreCricDTO> playerMap, String type) {
+        try {
+            MatchPlayerScoreCricDTO player = playerParser.parsePlayer(element.child(0));
             if (player != null) {
                 Integer pid = player.getPid();
                 if (playerMap.get(pid) != null) {
                     player = playerMap.get(pid);
                 }
-                player = getBowlingAttribute(element, player);
+                player = getPlayerAttributeByType(element, player, type);
                 playerMap.put(pid, player);
             }
-        });
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
         return playerMap;
     }
 
-    public Map<Integer, MatchPlayerScoreCricDTO> getBatsmanList(Element batsmanBody, Map<Integer, MatchPlayerScoreCricDTO> playerMap) {
-        Elements children = batsmanBody.children();
-        children.forEach(element -> {
-            Element element1 = element.selectFirst(".batsman-cell");
-            if (element1 != null) {
-                MatchPlayerScoreCricDTO player = parsePlayer(element.child(0));
-                if (player != null) {
-                    Integer pid = player.getPid();
-                    if (playerMap.get(pid) != null) {
-                        player = playerMap.get(pid);
-                    }
-                    player = getBattingAttribute(element, player);
-                    playerMap.put(pid, player);
-                }
-            }
-        });
-        return playerMap;
-    }
-
-    public MatchPlayerScoreCricDTO getBowlingAttribute(Element node, MatchPlayerScoreCricDTO player) {
-        Elements attrNode = node.children();
-        player.setOvers(getFloat(attrNode.get(1)));
-        player.setMaiden(getInteger(attrNode.get(2)));
-        player.setRuns_concede(getInteger(attrNode.get(3)));
-        player.setWicket(getInteger(attrNode.get(4)));
-        player.setEconomy(getFloat(attrNode.get(5)));
-        player.setDot_balls(getInteger(attrNode.get(6)));
+    /**
+     * Fetching attribute by type
+     *
+     * @param element
+     * @param player
+     * @param type
+     * @return
+     */
+    public MatchPlayerScoreCricDTO getPlayerAttributeByType(Element element, MatchPlayerScoreCricDTO player, String type) {
+        switch (type) {
+            case "bowling":
+                player = parseBowlingAttribute(element, player);
+                break;
+            case "batting":
+                player = parseBattingAttribute(element, player);
+                break;
+            case "secondInnings":
+                break;
+        }
         return player;
     }
 
-    public MatchPlayerScoreCricDTO getBattingAttribute(Element node, MatchPlayerScoreCricDTO player) {
+    /**
+     * Paring other attibure of bowler from bowling section
+     *
+     * @param node
+     * @param player
+     * @return
+     */
+    public MatchPlayerScoreCricDTO parseBowlingAttribute(Element node, MatchPlayerScoreCricDTO player) {
         Elements attrNode = node.children();
-        player.setDismissed(getText(attrNode.get(1)));
-        player.setRuns_scored(getInteger(attrNode.get(2)));
-        player.setBalls(getInteger(attrNode.get(3)));
-        player.setFours(getInteger(attrNode.get(5)));
-        player.setSixes(getInteger(attrNode.get(6)));
-        float strikeRate = getFloat(attrNode.get(7));
+        player.setOvers(commonParser.getFloat(attrNode, 1));
+        player.setMaiden(commonParser.getInteger(attrNode, 2));
+        player.setRuns_concede(commonParser.getInteger(attrNode, 3));
+        player.setWicket(commonParser.getInteger(attrNode, 4));
+        player.setEconomy(commonParser.getFloat(attrNode, 5));
+        player.setDot_balls(commonParser.getInteger(attrNode, 6));
+        return player;
+    }
+
+    /**
+     * Parsing other attribute of Batsman from batsman scoring section
+     *
+     * @param node
+     * @param player
+     * @return
+     */
+    public MatchPlayerScoreCricDTO parseBattingAttribute(Element node, MatchPlayerScoreCricDTO player) {
+        Elements attrNode = node.children();
+        String dismissed = commonParser.getText(attrNode, 1);
+        if (!"not out".equalsIgnoreCase(dismissed)) {
+            player.setDismissed(dismissed);
+        }
+        player.setRuns_scored(commonParser.getInteger(attrNode, 2));
+        player.setBalls(commonParser.getInteger(attrNode, 3));
+        player.setFours(commonParser.getInteger(attrNode, 5));
+        player.setSixes(commonParser.getInteger(attrNode, 6));
+        float strikeRate = commonParser.getFloat(attrNode, 7);
         player.setStrikeRate((int) strikeRate);
         return player;
-    }
-
-    public String getShortName(String name) {
-        try {
-            name = name.trim();
-            if (name.contains("(c)")) {
-                name = name.substring(0, name.length() - 4);
-                return name;
-            }
-            if (name.contains("†")) {
-                name = name.substring(0, name.length() - 2);
-                return name;
-            }
-        } catch (Exception e) {
-            return name;
-        }
-        return name;
-    }
-
-    public Map<Integer, MatchPlayerScoreCricDTO> getFieldingPoints(Map<Integer, MatchPlayerScoreCricDTO> map) {
-
-        Map<String, Integer> catchMap = new HashMap<>();
-        Map<String, Integer> runoutMap = new HashMap<>();
-        Map<String, Integer> stumpingMap = new HashMap<>();
-        Map<String, Integer> playerShortMap = new HashMap<>();
-        Map<String, Integer> playerlastNameMap = new HashMap<>();
-
-        map.values().stream().forEach(value -> {
-            playerShortMap.put(value.getShortName().trim(), value.getPid());
-            String playerName = value.getName();
-            playerName = playerName.substring(playerName.indexOf(" ")).trim();
-            playerlastNameMap.put(playerName, value.getPid());
-            String dismisal = value.getDismissed();
-            if (!StringUtils.isEmpty(dismisal)) {
-                String runout = handleRunout(dismisal);
-                if (!StringUtils.isEmpty(runout)) {
-                    if (!runout.contains("/")) {
-                        // String[] playerList = runout.split("/");
-                        if (runoutMap.get(runout) != null) {
-                            runoutMap.put(runout, runoutMap.get(runout) + 1);
-                        } else {
-                            runoutMap.put(runout, 1);
-                        }
-                    }
-                }
-                String catchout = handleOut(dismisal, "catch");
-                if (!StringUtils.isEmpty(catchout)) {
-                    if (catchMap.get(catchout) != null) {
-                        catchMap.put(catchout, catchMap.get(catchout) + 1);
-                    } else {
-                        catchMap.put(catchout, 1);
-                    }
-                }
-
-                String stumping = handleOut(dismisal, "stumping");
-                if (!StringUtils.isEmpty(stumping)) {
-                    if (stumpingMap.get(stumping) != null) {
-                        stumpingMap.put(stumping, stumpingMap.get(stumping) + 1);
-                    } else {
-                        stumpingMap.put(stumping, 1);
-                    }
-                }
-            }
-        });
-
-        stumpingMap.forEach((key, value) -> {
-            Integer playerId = playerlastNameMap.get(key);
-            if (playerId == null) {
-                playerId = playerShortMap.get(key);
-            }
-            if (playerId != null) {
-                MatchPlayerScoreCricDTO player = map.get(playerId);
-                player.setStumped(value);
-                map.put(playerId, player);
-            }
-        });
-
-        catchMap.forEach((key, value) -> {
-            Integer playerId = playerlastNameMap.get(key);
-            if (playerId == null) {
-                playerId = playerShortMap.get(key);
-            }
-            if (playerId != null) {
-                MatchPlayerScoreCricDTO player = map.get(playerId);
-                player.setCatches(value);
-                map.put(playerId, player);
-            }
-        });
-
-        runoutMap.forEach((key, value) -> {
-            Integer playerId = playerlastNameMap.get(key);
-            if (playerId == null) {
-                playerId = playerShortMap.get(key);
-            }
-            if (playerId != null) {
-                MatchPlayerScoreCricDTO player = map.get(playerId);
-                player.setRunout(value);
-                map.put(playerId, player);
-            }
-        });
-
-        return map;
-    }
-
-    public String handleOut(String dismisal, String type) {
-        String starting = "c ";
-        String out = "";
-        try {
-            if (type.equalsIgnoreCase("stumping")) {
-                starting = "st ";
-            }
-            if (dismisal.startsWith(starting)) {
-                int to = dismisal.indexOf(" b");
-                out = dismisal.substring(starting.length(), to).trim();
-                if (out.contains("†")) {
-                    out = out.substring(1);
-                }
-            }
-            return out;
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    public String handleRunout(String dismisal) {
-        String runout = "";
-        try {
-            if (dismisal.contains("run out")) {
-                int from = dismisal.indexOf('(');
-                int to = dismisal.indexOf('(');
-                runout = dismisal.substring(from, to);
-            }
-            return runout;
-        } catch (Exception e) {
-            return runout;
-        }
-    }
-
-    public String getText(Element node) {
-        return node.text();
-    }
-
-    public static Float getFloat(Element node) {
-        try {
-            String number = node.text();
-            return Float.valueOf(number);
-        } catch (Exception e) {
-            return 0F;
-        }
-    }
-
-    public static Integer getInteger(Element node) {
-        try {
-            String number = node.text();
-            return Integer.parseInt(number);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    public MatchPlayerScoreCricDTO parsePlayer(Element node) {
-        try {
-            MatchPlayerScoreCricDTO player = new MatchPlayerScoreCricDTO();
-            player.setPid(getPlayerId(node));
-            player.setName(getPlayerName(node));
-            String shortName = getShortName(node.text()).trim();
-            if(shortName.indexOf(",") > 0) {
-                shortName = shortName.substring(0, shortName.indexOf(",")-1);
-            }
-            player.setBatsman(shortName);
-            player.setShortName(shortName);
-            return player;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public Integer getPlayerId(Element node) {
-        String link = node.select("a").attr("href");
-        int length = "https://www.espncricinfo.com/ci/content/player/".length();
-        String playerId = link.substring(length, link.length() - 5);
-        Integer playerIdInt = Integer.parseInt(playerId);
-        return playerIdInt;
-    }
-
-    public String getPlayerName(Element node) {
-        String LinkTitle = node.select("a").attr("title");
-        int length2 = "View full profile of ".length();
-        String playerName = LinkTitle.substring(length2);
-        return playerName;
     }
 
 }
