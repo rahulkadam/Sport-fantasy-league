@@ -54,29 +54,38 @@ public class CricMatchPlayerScoreService {
         try {
             Match match = matchRepository.findMatchById(matchId);
             Assert.notNull(match, "Match Id is not Valid, " + matchId);
-            Integer externalMatchId = match.getExternal_mid();
-            Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
-
-            List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricInfoService.getMatchPlayerScore((long)externalMatchId);
-            saveMatchPlayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
-            cacheService.evictAllCacheValues("LiveScoreCache");
+            updateMatchScoreFromCricAPI(match);
         } catch (Exception e) {
             throw new GenericException(e.getMessage());
         }
     }
 
-    public void initiateMatchPlayerSquadFromCricAPI(Long matchId) {
+    public void updateMatchScoreFromCricAPI(Match match) throws Exception {
+        Long matchId = match.getId();
+        Integer externalMatchId = match.getExternal_mid();
+        Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
 
+        List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricInfoService.getMatchPlayerScore((long) externalMatchId);
+        saveMatchPlayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
+        cacheService.evictAllCacheValues("LiveScoreCache");
+    }
+
+    public void initiateMatchPlayerSquadFromCricAPI(Long matchId) {
         Match match = matchRepository.findMatchById(matchId);
         Assert.notNull(match, "Match Id is not Valid, " + matchId);
+        initiateMatchPlayerSquadFromCricAPI(match);
+    }
+
+    public void initiateMatchPlayerSquadFromCricAPI(Match match) {
+        Long matchId = match.getId();
         Integer externalMatchId = match.getExternal_mid();
         Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricAPIService.getPlayerSquadListForMatch(externalMatchId);
         saveMatchPlayerScoreFromCric(playerScoreDTOList, match, INIT_SCORE);
     }
 
-    public void saveMatchPlayerScoreFromCric(List<MatchPlayerScoreCricDTO> playerScoreDTOList, Match match,
-                                             String action) {
+    public void saveMatchPlayerScoreFromCric(List<MatchPlayerScoreCricDTO> playerScoreDTOList,
+                                             Match match, String action) {
 
         if (CollectionUtils.isEmpty(playerScoreDTOList)) {
             return;

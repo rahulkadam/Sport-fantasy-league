@@ -80,15 +80,15 @@ public class MatchService {
     }
 
     @Cacheable(cacheNames = "LiveScoreCache", keyGenerator = "customKeyGenerator")
-    public List<MatchDTO> getLiveMatchesShortDto() {
+    public List<Match> getLiveMatchesForSchedular() {
         List<Match> matches = repository.findMatchesByStatus(Boolean.TRUE);
-        return converter.convertToDTOList(matches);
+        return matches;
     }
 
-    public MatchDTO getMatchStartingInNext1Hour() {
+    public Match getMatchStartingInNext1Hour() {
         DateTime currentTime = new DateTime();
         Match match = repository.findFirstByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, false);
-        return converter.convertToDTO(match);
+        return match;
     }
 
     @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")

@@ -1,7 +1,6 @@
 package com.garv.satta.fantasy.schedular;
 
 import com.garv.satta.fantasy.dao.repository.TaskSchedularRepository;
-import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.external.service.CricMatchPlayerScoreService;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.monitoring.TaskSchedular;
@@ -60,15 +59,15 @@ public class FantasyTaskSchedular {
     }
 
     public void executeInitiateMatchSquadForNextMatch() {
-        MatchDTO matchDto = matchService.getMatchStartingInNext1Hour();
-        if (matchDto == null) {
+        Match match = matchService.getMatchStartingInNext1Hour();
+        if (match == null) {
             return;
         }
-        DateTime matchTime = matchDto.getMatchTime();
+        DateTime matchTime = match.getMatchTime();
         DateTime currentTime = DateTime.now();
         currentTime.plusMinutes(30);
         if (matchTime.getMillis() < currentTime.getMillis()) {
-            cricMatchPlayerScoreService.initiateMatchPlayerSquadFromCricAPI(matchDto.getId());
+            cricMatchPlayerScoreService.initiateMatchPlayerSquadFromCricAPI(match);
         } else {
             Long hrsDiff = (matchTime.getMillis() - currentTime.getMillis())/(1000*60*60);
             System.out.println("Match is not avaialble , will start in Hours " + hrsDiff);
@@ -80,15 +79,15 @@ public class FantasyTaskSchedular {
      */
     public void executeLiveMatchScoreTaskScheduler() {
         try {
-            List<MatchDTO> matchDTOList = matchService.getLiveMatchesShortDto();
-            if (CollectionUtils.isEmpty(matchDTOList)) {
+            List<Match> liveMatchList = matchService.getLiveMatchesForSchedular();
+            if (CollectionUtils.isEmpty(liveMatchList)) {
                 return;
             }
 
-            matchDTOList.stream().forEach(matchDTO -> {
-                Long matchId = matchDTO.getId();
+            liveMatchList.stream().forEach(match -> {
+                Long matchId = match.getId();
                 try {
-                    cricMatchPlayerScoreService.updateMatchScoreFromCricAPI(matchDTO.getId());
+                    cricMatchPlayerScoreService.updateMatchScoreFromCricAPI(match);
                 } catch (Exception e) {
                     fantasyErrorService.logMessage("SCHEDULE_ERROR", matchId + " " + e.getMessage());
                 }
@@ -96,7 +95,5 @@ public class FantasyTaskSchedular {
         } catch (Exception e) {
             fantasyErrorService.logMessage("SCHEDULE_ERROR", e.getMessage());
         }
-
     }
-
 }
