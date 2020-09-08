@@ -31,7 +31,7 @@ public class FantasyStatsController extends BaseController {
     @PostMapping(value = "/list/playerScoreByMatch")
     public ResponseEntity<List<MatchPlayerScoreDTO>> getPlayerScoreByMatch(@RequestBody RequestDTO dto) {
         List<MatchPlayerScoreDTO> list = matchPlayerScoreService.findMatchPlayerScoreByMatchId(dto.getId());
-        return getResponseBodyWithCache(list, FOR_12_HOUR);
+        return getResponseBodyWithCache(list, FOR_1_HOUR);
     }
 
     @PostMapping(value = "/list/playerScoreByLiveMatch")
@@ -40,17 +40,17 @@ public class FantasyStatsController extends BaseController {
         List<MatchPlayerScoreDTO> matchPlayerScoreDTOLIst =  new ArrayList<>();
 
         if (CollectionUtils.isEmpty(matchDTOS)) {
-            return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_3_MIN);
+            return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_2_MIN);
         }
         long[] matchIds = matchDTOS.stream().mapToLong(matchDTO -> matchDTO.getId()).toArray();
         matchPlayerScoreDTOLIst =  matchPlayerScoreService.findMatchPlayerScoreByMatchIdIn(matchIds);
-        return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_3_MIN);
+        return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_2_MIN);
     }
 
     @PostMapping(value = "/list/playerScoringHistory")
     public ResponseEntity<List<MatchPlayerScoreDTO>> getMatchScoreByPlayer(@RequestBody RequestDTO dto) {
         List<MatchPlayerScoreDTO> list = matchPlayerScoreService.getMatchScoreByPlayer(dto.getId());
-        return getResponseBodyWithCache(list, FOR_12_HOUR);
+        return getResponseBodyWithCache(list, FOR_1_HOUR);
     }
 
     @PostMapping(value = "/list/userScoreHistoryByMatch1")
@@ -61,7 +61,7 @@ public class FantasyStatsController extends BaseController {
     @PostMapping(value = "/list/userScoreHistoryByMatch")
     public ResponseEntity<List<MatchPlayerScoreDTO>> getUserScorePerMatchStats(@RequestBody RequestDTO dto) {
         List<MatchPlayerScoreDTO> list = leagueUserTeamScorePerMatchService.getUserScorePerMatchStats(dto);
-        return getResponseBodyWithCache(list, FOR_12_HOUR);
+        return getResponseBodyWithCache(list, FOR_1_HOUR);
     }
 
 }
