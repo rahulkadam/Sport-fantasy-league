@@ -3,7 +3,7 @@ import './MatchLive.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
 import {fetchPlayerScoreByLiveMatchesAction, getLiveMatchProps} from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
-import {StatusMessage} from 'common/components';
+import {Logo, StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from 'common/util';
 import Helmet from 'react-helmet';
@@ -13,6 +13,7 @@ import {
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
 import {GA_Other_Event} from 'common/config';
+import {getLogoNameByTeam} from '../../../common/components/FantasyDropDown';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -27,18 +28,28 @@ const MatchLive = () => {
   }, []);
 
   function renderMatchScore() {
+    const hometeam = matchScore.team_host_name;
+    const awayteam = matchScore.team_away_name;
     return (
-      <div>
-        <Row>
-          <Col>{matchScore.team_host_name}</Col>
+      <div className="ownedPlayer">
+        <Row className="nameColumn">
+          <Col>
+            <Logo logoSource={getLogoNameByTeam(hometeam)} width="20" />
+            {hometeam}
+          </Col>
           <Col>{matchScore.team_host_name_score}</Col>
         </Row>
-        <Row>
-          <Col>{matchScore.team_away_name}</Col>
+        <Row className="nameColumn">
+          <Col>
+            <Logo logoSource={getLogoNameByTeam(awayteam)} width="20" />
+            {awayteam}
+          </Col>
           <Col>{matchScore.team_away_name_score}</Col>
         </Row>
-        <Row>
-          <Col>{matchScore.matchResult}</Col>
+        <Row className="nameColumn">
+          <Col>
+            <Badge variant="info"> {matchScore.matchResult}</Badge>
+          </Col>
         </Row>
       </div>
     );
