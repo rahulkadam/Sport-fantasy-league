@@ -10,7 +10,7 @@ const FantasyPrize = () => {
     return (
       <div className="secondaryTitle">
         <div className="secondaryTitle">
-          ALl IPL Public League winner will win prizes from RK Fatansy
+          All IPL Public League winner will win prizes from RK Fatansy
         </div>
       </div>
     );
