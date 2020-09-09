@@ -13,11 +13,11 @@ const TwitterFooter = () => {
       <div>
         <Row>
           <Col>
-            <TwitterHashtagButton tag="IPLFantasy2020" />
-          </Col>
-          <Col>
             {' '}
             <TwitterFollowButton screenName={'IPLFantasy20201'} />
+          </Col>
+          <Col>
+            <TwitterHashtagButton tag="IPLFantasy2020" />
           </Col>
         </Row>
       </div>

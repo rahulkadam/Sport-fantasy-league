@@ -2,13 +2,7 @@ import * as React from 'react';
 import {Col, Container, Row} from 'react-bootstrap';
 import {FooterLinkConfig, FooterLinkConfigObject} from './FooterLinkConfig';
 import './Footer.css';
-import TwitterFantasyTimeline from './socialmedia/TwitterFantasyTimeline';
-import {
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterDMButton,
-} from 'react-twitter-embed';
-import TwitterFooter from './socialmedia/TwitterFooter';
+import TwitterFooter from '../Footer/socialmedia/TwitterFooter';
 
 const Footer = () => {
   const linksArray = FooterLinkConfig.FooterLinks;

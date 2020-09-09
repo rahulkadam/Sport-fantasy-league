@@ -3,8 +3,10 @@ package com.garv.satta.fantasy.external.service;
 import com.garv.satta.fantasy.dao.repository.MatchPlayerScoreRepository;
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
+import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.external.DTO.MatchPlayerScoreCricDTO;
 import com.garv.satta.fantasy.external.DTO.converter.CricMatchPlayerScoreConverter;
+import com.garv.satta.fantasy.external.service.cricinfo.CricInfoService;
 import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
 import com.garv.satta.fantasy.model.backoffice.Player;
@@ -40,34 +42,50 @@ public class CricMatchPlayerScoreService {
     private CricMatchPlayerScoreConverter scoreConverter;
 
     @Autowired
+    private CricInfoService cricInfoService;
+
+    @Autowired
     private CacheService cacheService;
 
     private final String INIT_SCORE = "INIT_SCORE";
     private final String UPDATE_SCORE = "UPDATE_SCORE";
 
     public void updateMatchScoreFromCricAPI(Long matchId) {
+        try {
+            Match match = matchRepository.findMatchById(matchId);
+            Assert.notNull(match, "Match Id is not Valid, " + matchId);
+            updateMatchScoreFromCricAPI(match);
+        } catch (Exception e) {
+            throw new GenericException(e.getMessage());
+        }
+    }
 
-        Match match = matchRepository.findMatchById(matchId);
-        Assert.notNull(match, "Match Id is not Valid, " + matchId);
+    public void updateMatchScoreFromCricAPI(Match match) throws Exception {
+        Long matchId = match.getId();
         Integer externalMatchId = match.getExternal_mid();
         Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
-        List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricAPIService.getMatchSummaryDetails(externalMatchId);
+
+        List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricInfoService.getMatchPlayerScore((long) externalMatchId);
         saveMatchPlayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
         cacheService.evictAllCacheValues("LiveScoreCache");
     }
 
     public void initiateMatchPlayerSquadFromCricAPI(Long matchId) {
-
         Match match = matchRepository.findMatchById(matchId);
         Assert.notNull(match, "Match Id is not Valid, " + matchId);
+        initiateMatchPlayerSquadFromCricAPI(match);
+    }
+
+    public void initiateMatchPlayerSquadFromCricAPI(Match match) {
+        Long matchId = match.getId();
         Integer externalMatchId = match.getExternal_mid();
         Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricAPIService.getPlayerSquadListForMatch(externalMatchId);
         saveMatchPlayerScoreFromCric(playerScoreDTOList, match, INIT_SCORE);
     }
 
-    public void saveMatchPlayerScoreFromCric(List<MatchPlayerScoreCricDTO> playerScoreDTOList, Match match,
-                                             String action) {
+    public void saveMatchPlayerScoreFromCric(List<MatchPlayerScoreCricDTO> playerScoreDTOList,
+                                             Match match, String action) {
 
         if (CollectionUtils.isEmpty(playerScoreDTOList)) {
             return;
@@ -106,7 +124,7 @@ public class CricMatchPlayerScoreService {
         });
         repository.saveAll(matchPlayerScores);
 
-        if(CollectionUtils.isNotEmpty(missingPlayerId)) {
+        if (CollectionUtils.isNotEmpty(missingPlayerId)) {
             errorService.logMessage("PLAYER_NOT_AVAILABLE", missingPlayerId.toString());
         }
     }
