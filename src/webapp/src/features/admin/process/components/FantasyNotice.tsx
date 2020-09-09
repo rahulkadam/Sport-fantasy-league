@@ -169,6 +169,7 @@ const FantasyNotice = (props: AdminProcess) => {
     return (
       <div className="innerProcessContainer">
         {renderActionHeader('Update Fantasy Config')}
+        (CRIC_API_KEY, CRIC_INFO_IPL_SERIES_ID, LIVE_DATA_PROVIDER)
         <Row>
           <Col md={4}>
             <FormControl
