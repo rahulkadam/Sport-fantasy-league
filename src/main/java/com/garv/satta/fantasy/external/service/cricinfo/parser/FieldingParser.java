@@ -24,7 +24,7 @@ public class FieldingParser {
             map.values().stream().forEach(value -> {
                 playerShortMap.put(value.getShortName().trim(), value.getPid());
                 String playerName = value.getName();
-                if (!StringUtils.isEmpty(playerName)) {
+                if (!StringUtils.isEmpty(playerName) && playerName.contains(" ")) {
                     playerName = playerName.substring(playerName.indexOf(" ")).trim();
                 }
                 playerlastNameMap.put(playerName, value.getPid());

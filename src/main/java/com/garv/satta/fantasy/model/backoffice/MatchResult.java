@@ -23,6 +23,9 @@ public class MatchResult extends BaseDaoObject {
     @JoinColumn(name = "player_of_match_id")
     private Player matchPlayer;
 
+    private String hometeamScore;
+    private String awayteamscore;
+
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "match_schedule_id", nullable = false)

@@ -2,17 +2,20 @@ package com.garv.satta.fantasy.external.service;
 
 import com.garv.satta.fantasy.dao.repository.MatchPlayerScoreRepository;
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
+import com.garv.satta.fantasy.dao.repository.MatchResultRepository;
 import com.garv.satta.fantasy.dao.repository.PlayerRepository;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.external.DTO.MatchPlayerScoreCricDTO;
 import com.garv.satta.fantasy.external.DTO.converter.CricMatchPlayerScoreConverter;
+import com.garv.satta.fantasy.external.DTO.cricinfo.CricInfoMatchData;
+import com.garv.satta.fantasy.external.DTO.cricinfo.CricInfoMatchScore;
 import com.garv.satta.fantasy.external.service.cricinfo.CricInfoService;
-import com.garv.satta.fantasy.model.backoffice.Match;
-import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
-import com.garv.satta.fantasy.model.backoffice.Player;
+import com.garv.satta.fantasy.model.backoffice.*;
 import com.garv.satta.fantasy.service.FantasyErrorService;
+import com.garv.satta.fantasy.service.TeamService;
 import com.garv.satta.fantasy.service.admin.CacheService;
 import com.garv.satta.fantasy.service.admin.FantasyConfigService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CricMatchPlayerScoreService {
 
     @Autowired
@@ -46,7 +50,13 @@ public class CricMatchPlayerScoreService {
     private CricInfoService cricInfoService;
 
     @Autowired
+    private TeamService teamService;
+
+    @Autowired
     private FantasyConfigService fantasyConfigService;
+
+    @Autowired
+    private MatchResultRepository matchResultRepository;
 
     @Autowired
     private CacheService cacheService;
@@ -72,7 +82,9 @@ public class CricMatchPlayerScoreService {
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = new ArrayList<>();
 
         if ("CRICINFO".equals(providerKey)) {
-            playerScoreDTOList = cricInfoService.getMatchPlayerScore((long) externalMatchId);
+            CricInfoMatchData cricInfoMatchData = cricInfoService.getMatchPlayerScore((long) externalMatchId);
+            playerScoreDTOList = cricInfoMatchData.getMatchPlayerScoreCricDTOS();
+            saveMatchScoreFromCricInfo(cricInfoMatchData.getMatchScore(), match);
         } else {
             playerScoreDTOList = cricAPIService.getMatchSummaryDetails(externalMatchId);
         }
@@ -150,6 +162,24 @@ public class CricMatchPlayerScoreService {
             playerRepository.saveAll(playerList);
         } catch (Exception e) {
             errorService.logMessage("PLAYER_MISSING_SAVE_ERROR" , e.getMessage());
+        }
+    }
+
+    public void saveMatchScoreFromCricInfo(CricInfoMatchScore cricInfoMatchScore, Match match) {
+        try {
+            MatchResult matchResult  = match.getMatchResult();
+            if (matchResult ==  null) {
+                matchResult = new MatchResult();
+            }
+            matchResult.setDescription(cricInfoMatchScore.getSummary());
+            matchResult.setAwayteamscore(cricInfoMatchScore.getSecondTeamScore());
+            matchResult.setHometeamScore(cricInfoMatchScore.getFirstTeamScore());
+            matchResult.setTeam_winner(match.getTeam_host());
+            matchResult.setMatch(match);
+            matchResultRepository.save(matchResult);
+        } catch (Exception e) {
+            log.error( "Save match Result " + e.getMessage());
+
         }
     }
 

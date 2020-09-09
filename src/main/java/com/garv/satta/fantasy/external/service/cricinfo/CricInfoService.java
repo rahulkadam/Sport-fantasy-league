@@ -1,9 +1,12 @@
 package com.garv.satta.fantasy.external.service.cricinfo;
 
 import com.garv.satta.fantasy.external.DTO.MatchPlayerScoreCricDTO;
+import com.garv.satta.fantasy.external.DTO.cricinfo.CricInfoMatchData;
+import com.garv.satta.fantasy.external.DTO.cricinfo.CricInfoMatchScore;
 import com.garv.satta.fantasy.external.service.CricPointCalculateService;
 import com.garv.satta.fantasy.external.service.cricinfo.parser.CommonParser;
 import com.garv.satta.fantasy.external.service.cricinfo.parser.FieldingParser;
+import com.garv.satta.fantasy.external.service.cricinfo.parser.MatchScoreParser;
 import com.garv.satta.fantasy.external.service.cricinfo.parser.PlayerParser;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
@@ -36,12 +39,18 @@ public class CricInfoService {
     @Autowired
     private CricPointCalculateService pointCalculateService;
 
-    public List<MatchPlayerScoreCricDTO> getMatchPlayerScore(Long id) throws Exception {
+    @Autowired
+    private MatchScoreParser matchScoreParser;
+
+    public CricInfoMatchData getMatchPlayerScore(Long id) throws Exception {
         Document document = cricInfoCrawler.getScoreCardDocumentByMatchId(id);
         Map<Integer, MatchPlayerScoreCricDTO> map = parsePlayerScoreFromScorePage(document);
         map = fieldingParser.getFieldingPoints(map);
         map = pointCalculateService.calculatePointForPlayers(map);
-        return map.values().stream().collect(Collectors.toList());
+        CricInfoMatchScore matchScore = matchScoreParser.getMatchScore(document);
+        List<MatchPlayerScoreCricDTO> list =  map.values().stream().collect(Collectors.toList());
+        CricInfoMatchData matchData = new CricInfoMatchData(matchScore, list);
+        return matchData;
     }
 
     /**
