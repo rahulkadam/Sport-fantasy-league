@@ -13,15 +13,16 @@ const FantasyInfoCard = () => {
         <Card.Body>
           <Card.Title className="userTeamTitle">
             {!loginUser && <span className="userTeamTitle">Register to</span>}{' '}
-            Play IPL Fantasy League
+            Play IPL Season Fantasy League
           </Card.Title>
           <Card.Text>
             <Row>
               <Col className="textFont">
-                IPL Fantasy is a <strong>Fantasy Cricket Game</strong> played
-                over internet between IPL fans.
+                <strong>Season-Long Fantasy Cricket</strong> played between IPL
+                fans for Full IPL with{' '}
+                <strong>Single Team and limited Transfer.</strong>
                 <Badge variant="success">
-                  1 Team, 60 matches and 100 Transfer = IPL Fantasy
+                  1 Team, 60 matches and 100 Transfer = IPL Season Fantasy
                 </Badge>
               </Col>
             </Row>
