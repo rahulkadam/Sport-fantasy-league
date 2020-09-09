@@ -25,7 +25,7 @@ import {
   TWITTER_LIST_HOME,
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
-import {FantasyFooterBanner} from '../../../common/components/Footer';
+import {FantasyFooterBanner, FantasyPrize} from 'common/components/Footer';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -240,6 +240,7 @@ const FantasyHome = () => {
         {renderUserPublicLeagues()}
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}
+        <FantasyPrize />
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
