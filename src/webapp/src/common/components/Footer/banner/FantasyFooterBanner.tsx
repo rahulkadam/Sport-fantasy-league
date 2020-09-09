@@ -10,7 +10,7 @@ const FantasyFooterBanner = () => {
     return (
       <div className="secondaryTitle">
         <div className="secondaryTitle">
-          Watch IPL and Play Long Season Fantasy against your friends
+          Watch IPL and Play Fantasy against your friends
         </div>
       </div>
     );
