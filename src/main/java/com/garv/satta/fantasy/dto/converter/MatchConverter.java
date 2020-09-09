@@ -44,6 +44,8 @@ public class MatchConverter extends Converter<Match, MatchDTO> {
         MatchResult matchResult = entity.getMatchResult();
         if (matchResult != null) {
             matchDTO.setMatchResult(matchResult.getDescription());
+            matchDTO.setTeam_host_name_score(matchResult.getHometeamScore());
+            matchDTO.setTeam_away_name_score(matchResult.getAwayteamscore());
         }
         Team homeTeam = entity.getTeam_host();
         Team awayTeam = entity.getTeam_away();

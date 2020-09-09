@@ -48,7 +48,7 @@ const fetchPlayerScoreByLiveMatchesAction = () => {
         .then((data: any) => {
           dispatch({
             type: FETCH_PLAYER_SCORE_BY_LIVE_MATCHES,
-            playerStats: data,
+            livedata: data,
           });
           dispatch({type: ACTION_COMPLETED});
         })

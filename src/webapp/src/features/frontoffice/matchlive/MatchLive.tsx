@@ -19,11 +19,30 @@ const MatchLive = () => {
   const configProps = getCommonData();
   const fetchPlayerLiveScore = fetchPlayerScoreByLiveMatchesAction();
   const playerStats = liveMatchProps.playerStats || [];
+  const matchScore = liveMatchProps.matchScore;
 
   useEffect(() => {
     GA_Other_Event('GET_LIVE_SCORE');
     fetchPlayerLiveScore();
   }, []);
+
+  function renderMatchScore() {
+    return (
+      <div>
+        <Row>
+          <Col>{matchScore.team_host_name}</Col>
+          <Col>{matchScore.team_host_name_score}</Col>
+        </Row>
+        <Row>
+          <Col>{matchScore.team_away_name}</Col>
+          <Col>{matchScore.team_away_name_score}</Col>
+        </Row>
+        <Row>
+          <Col>{matchScore.matchResult}</Col>
+        </Row>
+      </div>
+    );
+  }
 
   function renderPlayerLiveScore() {
     return (
@@ -53,6 +72,7 @@ const MatchLive = () => {
             text="No IPL Live Match. Please check during live IPL match"
           />
         )}
+        {!isListEmpty(playerStats) && renderMatchScore()}
         {!isListEmpty(playerStats) && (
           <PlayerMatchScoreStats data={playerStats} />
         )}

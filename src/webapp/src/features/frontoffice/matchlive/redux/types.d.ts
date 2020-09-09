@@ -5,4 +5,5 @@ declare type MatchLiveStats = {
   userStats?: any;
   playerMatchScoreList?: any;
   livematches?: any;
+  matchScore?: any;
 };

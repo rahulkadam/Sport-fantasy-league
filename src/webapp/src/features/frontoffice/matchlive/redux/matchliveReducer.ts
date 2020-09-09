@@ -9,6 +9,7 @@ const initialState: MatchLiveStats = {
   playerStats: [],
   matchStats: [],
   livematches: [],
+  matchScore: {},
 };
 
 export default (
@@ -24,7 +25,8 @@ export default (
     case FETCH_PLAYER_SCORE_BY_LIVE_MATCHES:
       return {
         ...state,
-        playerStats: action.playerStats,
+        playerStats: action.livedata.playerScoreDTOS,
+        matchScore: action.livedata.matchDTO,
       };
     default:
       return state;
