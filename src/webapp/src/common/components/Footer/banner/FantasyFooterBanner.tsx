@@ -19,7 +19,7 @@ const FantasyFooterBanner = () => {
   function renderDescription() {
     return (
       <div className="description">
-        Show your Skill in friendly Fantasy Contest! Its Free to play
+        Fantasy for Entertainment Only! Its Free to play
         <div className="description">
           Play Fantasy with 1 team and 100 transfer
         </div>

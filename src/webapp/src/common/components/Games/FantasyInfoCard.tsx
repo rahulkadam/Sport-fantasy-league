@@ -19,8 +19,8 @@ const FantasyInfoCard = () => {
             <Row>
               <Col className="textFont">
                 <strong>Season-Long Fantasy Cricket</strong> played between IPL
-                fans for Full IPL with{' '}
-                <strong>Single Team and limited Transfer.</strong>
+                fans for{' '}
+                <strong>Full IPL with Single Team and limited Transfer.</strong>
                 <Badge variant="success">
                   1 Team, 60 matches and 100 Transfer = IPL Season Fantasy
                 </Badge>
