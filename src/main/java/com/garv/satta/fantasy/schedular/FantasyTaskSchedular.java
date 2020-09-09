@@ -65,7 +65,7 @@ public class FantasyTaskSchedular {
         }
         DateTime matchTime = match.getMatchTime();
         DateTime currentTime = DateTime.now();
-        currentTime.plusMinutes(30);
+        currentTime.plusMinutes(20);
         if (matchTime.getMillis() < currentTime.getMillis()) {
             cricMatchPlayerScoreService.initiateMatchPlayerSquadFromCricAPI(match);
         } else {

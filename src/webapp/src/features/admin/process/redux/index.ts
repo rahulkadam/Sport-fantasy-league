@@ -14,4 +14,5 @@ export {
   fetchNoticeListAction,
   toggleTaskSchedularAction,
   clearCacheByNameAction,
+  updateFantasyConfigAction,
 } from './processActions';

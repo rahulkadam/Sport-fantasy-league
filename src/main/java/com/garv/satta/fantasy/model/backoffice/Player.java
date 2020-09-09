@@ -49,6 +49,14 @@ public class Player extends BaseDaoObject {
         super(id);
     }
 
+    public Player(String name, Integer externalpid) {
+        this.name = name;
+        this.externalpid = externalpid;
+        this.type = PlayerEnum.ALLROUNDER;
+        this.Country = "UnKnown";
+        this.value = 8F;
+    }
+
 
     public void addTeam(Team team) {
         if (teams == null) {

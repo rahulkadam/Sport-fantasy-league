@@ -12,6 +12,7 @@ import com.garv.satta.fantasy.model.backoffice.MatchPlayerScore;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.service.FantasyErrorService;
 import com.garv.satta.fantasy.service.admin.CacheService;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,9 @@ public class CricMatchPlayerScoreService {
     private CricInfoService cricInfoService;
 
     @Autowired
+    private FantasyConfigService fantasyConfigService;
+
+    @Autowired
     private CacheService cacheService;
 
     private final String INIT_SCORE = "INIT_SCORE";
@@ -64,8 +68,14 @@ public class CricMatchPlayerScoreService {
         Long matchId = match.getId();
         Integer externalMatchId = match.getExternal_mid();
         Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
+        String providerKey = fantasyConfigService.getLiveDataProviderKey();
+        List<MatchPlayerScoreCricDTO> playerScoreDTOList = new ArrayList<>();
 
-        List<MatchPlayerScoreCricDTO> playerScoreDTOList = cricInfoService.getMatchPlayerScore((long) externalMatchId);
+        if ("CRICINFO".equals(providerKey)) {
+            playerScoreDTOList = cricInfoService.getMatchPlayerScore((long) externalMatchId);
+        } else {
+            playerScoreDTOList = cricAPIService.getMatchSummaryDetails(externalMatchId);
+        }
         saveMatchPlayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
         cacheService.evictAllCacheValues("LiveScoreCache");
     }
@@ -92,6 +102,7 @@ public class CricMatchPlayerScoreService {
         }
 
         List<Integer> missingPlayerId = new ArrayList<>();
+        List<Player> missingPlayerList = new ArrayList<>();
 
         List<MatchPlayerScore> matchPlayerScores = new ArrayList<>();
         playerScoreDTOList.stream().forEach(playerScore -> {
@@ -103,6 +114,7 @@ public class CricMatchPlayerScoreService {
             }
             if (player == null) {
                 missingPlayerId.add(pid);
+                missingPlayerList.add(new Player(name, pid));
                 return;
             }
             if (player.getExternalpid() == null) {
@@ -123,9 +135,22 @@ public class CricMatchPlayerScoreService {
             matchPlayerScores.add(matchPlayerScore);
         });
         repository.saveAll(matchPlayerScores);
-
+        saveMissingPlayerInDB(missingPlayerList);
         if (CollectionUtils.isNotEmpty(missingPlayerId)) {
             errorService.logMessage("PLAYER_NOT_AVAILABLE", missingPlayerId.toString());
         }
     }
+
+    /**
+     * Adding and saving all player which are missed or not available in DB
+     * @param playerList
+     */
+    public void saveMissingPlayerInDB(List<Player> playerList) {
+        try {
+            playerRepository.saveAll(playerList);
+        } catch (Exception e) {
+            errorService.logMessage("PLAYER_MISSING_SAVE_ERROR" , e.getMessage());
+        }
+    }
+
 }

@@ -21,7 +21,7 @@ public class FantasyConfigController {
     public String addConfig(@RequestBody RequestDTO requestDTO) {
         FantasyConfig fantasyConfig = new FantasyConfig();
         fantasyConfig.setConfigkey(requestDTO.getKey());
-        fantasyConfig.setConfigvalue(requestDTO.getVelue());
+        fantasyConfig.setConfigvalue(requestDTO.getValue());
         repository.save(fantasyConfig);
         return "Notice saved successfully";
     }
@@ -37,7 +37,7 @@ public class FantasyConfigController {
     @ResponseBody
     public FantasyConfig updateValueByKey(@RequestBody RequestDTO requestDTO) {
         FantasyConfig fantasyConfig = repository.findConfigByConfigkey(requestDTO.getKey());
-        fantasyConfig.setConfigvalue(requestDTO.getVelue());
+        fantasyConfig.setConfigvalue(requestDTO.getValue());
         return repository.save(fantasyConfig);
     }
 

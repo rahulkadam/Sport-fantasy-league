@@ -6,6 +6,7 @@ import {
   disableNoticeAction,
   fetchNoticeListAction,
   toggleTaskSchedularAction,
+  updateFantasyConfigAction,
 } from '../redux';
 import {Badge, Button, Col, FormControl, Row} from 'react-bootstrap';
 import {FantasyDropDown} from 'common/components';
@@ -16,10 +17,13 @@ const FantasyNotice = (props: AdminProcess) => {
   const fetchNotice = fetchNoticeListAction();
   const toggleSchedularAction = toggleTaskSchedularAction();
   const removeCache = clearCacheByNameAction();
+  const updateFantasyConfig = updateFantasyConfigAction();
   const noticeList = props.notice;
   const [noticeId, setNoticeId] = useState();
   const [message, setMessage] = useState('');
   const [cacheName, setCacheName] = useState('');
+  const [configKey, setConfigKey] = useState('');
+  const [configValue, setConfigValue] = useState('');
   const cacheNameList = [
     {id: 'PlayerCache', name: 'PlayerCache'},
     {id: 'MatchCache', name: 'MatchCache'},
@@ -161,12 +165,47 @@ const FantasyNotice = (props: AdminProcess) => {
     );
   }
 
+  function renderUpdateFantasyConfig() {
+    return (
+      <div className="innerProcessContainer">
+        {renderActionHeader('Update Fantasy Config')}
+        <Row>
+          <Col md={4}>
+            <FormControl
+              value={configKey}
+              placeholder="Key"
+              onChange={event => setConfigKey(event.target.value)}
+            />
+          </Col>
+          <Col md={4}>
+            <FormControl
+              value={configValue}
+              placeholder="Value"
+              onChange={event => setConfigValue(event.target.value)}
+            />
+          </Col>
+          <Col>
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              disabled={configKey.length == 0 || configValue.length == 0}
+              onClick={() => {
+                updateFantasyConfig(configKey, configValue);
+              }}>
+              Update Config
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
   return (
     <div>
       {renderAddFantasyNotice()}
       {renderRemoveNotice()}
       {renderToggleTaskSchedular()}
       {renderClearCacheByNameComponent()}
+      {renderUpdateFantasyConfig()}
     </div>
   );
 };
