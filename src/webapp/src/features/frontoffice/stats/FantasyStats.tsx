@@ -55,7 +55,7 @@ const FantasyStats = () => {
     return (
       <div>
         {!isListEmpty(matchList) && (
-          <div className="secondaryTitle">
+          <div className="secondaryStatsTitle">
             Select Match to see IPL-20 Match Stats
           </div>
         )}
@@ -78,7 +78,7 @@ const FantasyStats = () => {
   function renderPlayerStats() {
     return (
       <div>
-        <div className="secondaryTitle">
+        <div className="secondaryStatsTitle">
           Click on Player to see IPL-20 stats{' '}
         </div>
         <PlayerStats
@@ -100,7 +100,7 @@ const FantasyStats = () => {
     return (
       <div>
         {!emptyList && (
-          <div className="secondaryTitle">
+          <div className="secondaryStatsTitle">
             Click on Match to see your Match Stats
           </div>
         )}

@@ -21,7 +21,7 @@ const CreateLeague = ({createLeague}: CreateLeagueProps) => {
   return (
     <div className="createLeagueContainer">
       <div className="mb-3">
-        <div className="secondaryTitle">{createleagueMsg}</div>
+        <div className="secondaryLeagueTitle">{createleagueMsg}</div>
         <Row>
           <Col>
             <FormControl

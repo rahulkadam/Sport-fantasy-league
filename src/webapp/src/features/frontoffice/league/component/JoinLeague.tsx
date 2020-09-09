@@ -23,7 +23,7 @@ const JoinLeague = ({data}: JoinLeagueProps) => {
   return (
     <div className="createLeagueContainer">
       <div className="mb-3">
-        <div className="secondaryTitle">{joinleageMsg}</div>
+        <div className="secondaryLeagueTitle">{joinleageMsg}</div>
         <Form.Control
           value={leagueCode}
           placeholder="IPL League Code"
