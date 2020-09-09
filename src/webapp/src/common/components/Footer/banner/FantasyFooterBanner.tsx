@@ -3,7 +3,7 @@ import './FantasyBanner.styles.scss';
 
 const FantasyFooterBanner = () => {
   function renderTitle() {
-    return <div className="title">Fantasy League </div>;
+    return <div className="title">First Season Fantasy League for IPL </div>;
   }
 
   function renderSecondaryTitle() {
