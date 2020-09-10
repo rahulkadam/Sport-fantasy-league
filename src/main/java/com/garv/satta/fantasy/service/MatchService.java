@@ -75,7 +75,7 @@ public class MatchService {
 
     public Match getJustStartedMatchList() {
         DateTime currentTime = new DateTime();
-        Match matches = repository.findFirst1ByMatchTimeLessThanEqualAndIsDeletedOrderByMatchTimeDsc(currentTime, Boolean.FALSE);
+        Match matches = repository.findFirst1ByMatchTimeLessThanEqualAndIsDeletedOrderByMatchTimeDesc(currentTime, Boolean.FALSE);
         return matches;
     }
 
