@@ -74,6 +74,7 @@ public class CalculatePointsService {
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
         calculateScoreForUser(tournament, matchPlayerScoreMap, match);
+        fantasyErrorService.logMessage("AFTER_MATCH_SCORE_USER_CALCULATION" , match.getId().toString());
     }
 
     public void calculateScoreForUser(Tournament tournament,
@@ -198,10 +199,21 @@ public class CalculatePointsService {
 
     @Transactional
     public void updateRankingForLeague(Long tournamentId) {
-        List<League> leagueList = leagueRepository.findLeagueByTournamentId(tournamentId);
-        leagueList.forEach(league -> {
-            updateRankingForLeague(league);
-        });
+        int totalPageSize = Integer.MAX_VALUE;
+        int index = 0;
+        int size = 10;
+        while (totalPageSize > index) {
+            Pageable paging = PageRequest.of(index, size);
+            Page<League> pageLeague = leagueRepository.findLeagueByTournamentId(tournamentId, paging);
+            if (index == 0) {
+                totalPageSize = pageLeague.getTotalPages();
+            }
+            index++;
+            List<League> leagueList = pageLeague.getContent();
+            leagueList.forEach(league -> {
+                updateRankingForLeague(league);
+            });
+        }
     }
 
     public void resetToLastScore(RequestDTO dto) {
