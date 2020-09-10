@@ -9,7 +9,7 @@ import {largeRowStyles} from 'common/components/DataTable/TableConfig';
 import {getUserTeamData} from '../../UserTeam/redux';
 import {returnMapFromList} from 'common/util';
 
-const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
+const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
   const configProps = getCommonData();
   const userteamDataProps = getUserTeamData();
   const currentUserTeamPlayers = userteamDataProps.userTeamPlayers;
@@ -64,6 +64,16 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
     return renderStatsWithDash(total);
   }
 
+  function customSixes(row: any) {
+    const total = getNumber(row.sixes);
+    return renderStatsWithDash(total);
+  }
+
+  function customOvers(row: any) {
+    const total = getNumber(row.overs);
+    return renderStatsWithDash(total);
+  }
+
   function customWickets(row: any) {
     const total = getNumber(row.wicket);
     return renderStatsNumber(total);
@@ -89,7 +99,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       style: {
         'font-weight': 'bold',
       },
-      width: '15%',
+      width: '25%',
       cell: customPlayerName,
     },
     {
@@ -145,12 +155,35 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
         'font-weight': 'bold',
       },
     },
+
+    {
+      name: '6s',
+      cell: customSixes,
+      left: true,
+      width: '10%',
+      omit: type != 'live',
+      style: {
+        'font-weight': 'bold',
+      },
+    },
+
+    {
+      name: 'O',
+      cell: customOvers,
+      left: true,
+      width: '10%',
+      omit: type != 'live',
+      style: {
+        'font-weight': 'bold',
+      },
+    },
     {
       name: 'Match',
-      width: '25%',
+      width: '15%',
       selector: 'matchDescription',
       sortable: true,
       center: true,
+      omit: type == 'live',
       style: {
         'font-weight': 'bold',
       },

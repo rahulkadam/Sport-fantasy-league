@@ -37,6 +37,9 @@ const MatchLive = () => {
     return (
       <div className="ownedPlayer">
         <Row className="nameColumn">
+          <Col>{matchScore.description || matchScore.state}</Col>
+        </Row>
+        <Row className="nameColumn">
           <Col>
             <Logo logoSource={getLogoNameByTeam(hometeam)} width="20" />
             {getShortNameByTeam(hometeam)}
@@ -92,7 +95,7 @@ const MatchLive = () => {
         )}
         {isMatchPresent && renderMatchScore()}
         {!isListEmpty(playerStats) && (
-          <PlayerMatchScoreStats data={playerStats} />
+          <PlayerMatchScoreStats data={playerStats} type="live" />
         )}
       </div>
     );
