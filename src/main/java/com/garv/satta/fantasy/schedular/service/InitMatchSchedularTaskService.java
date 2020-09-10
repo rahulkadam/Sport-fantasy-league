@@ -109,6 +109,7 @@ public class InitMatchSchedularTaskService {
         DateTime plus10MinTime = getTimePlusMinuite(10);
         if (matchTime.getMillis() < plus10MinTime.getMillis()) {
             tournamentService.lockTournamentByName("IPL-20");
+            calculatePointsService.initUserScoreForMatch(match);
         }
     }
 

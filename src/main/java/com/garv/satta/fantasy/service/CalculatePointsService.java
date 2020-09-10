@@ -8,6 +8,7 @@ import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -16,6 +17,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Slf4j
 public class CalculatePointsService {
 
     @Autowired
@@ -198,13 +200,19 @@ public class CalculatePointsService {
         initUserScoreForMatch(match);
     }
 
+
+    @Transactional
     public void initUserScoreForMatch(Match match) {
-        Long matchId = match.getId();
-        Boolean isInitialized = leagueUserTeamScorePerMatchService.isLeagueUserInitializeForMatch(matchId);
-        Assert.isTrue(!isInitialized, "Match is initialize already ," + matchId);
-        Tournament tournament = match.getTournament();
-        List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
-        leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
+        try {
+            Long matchId = match.getId();
+            Boolean isInitialized = leagueUserTeamScorePerMatchService.isLeagueUserInitializeForMatch(matchId);
+            Assert.isTrue(!isInitialized, "Match is initialize already ," + matchId);
+            Tournament tournament = match.getTournament();
+            List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
+            leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
+        } catch (Exception e) {
+            log.error("Init user score error : " + e.getMessage());
+        }
     }
 
     protected Comparator<LeagueUserTeam> compareByTotalScore = Comparator.comparing((o1) -> o1.getUserTeam().getTotal_score());

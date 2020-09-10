@@ -367,19 +367,19 @@ const AdminProcess = () => {
   }
 
   function renderBeforematchComponent() {
+    return <div>{renderInitUserForMatch()}</div>;
+  }
+
+  function renderduringmatchComponent() {
     return (
       <div>
+        {renderUpdatePlayerScoreViaCric()}
         {renderLockUnLockTournamentAction()}
         {renderMatchStartCompletedAction()}
         {renderInitMatchForTournament()}
         {renderInitMatchSquadViaCric()}
-        {renderInitUserForMatch()}
       </div>
     );
-  }
-
-  function renderduringmatchComponent() {
-    return <div>{renderUpdatePlayerScoreViaCric()}</div>;
   }
 
   function renderAftergmatchComponent() {

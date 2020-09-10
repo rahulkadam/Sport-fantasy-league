@@ -23,7 +23,7 @@ const MatchLive = () => {
   const configProps = getCommonData();
   const fetchPlayerLiveScore = fetchPlayerScoreByLiveMatchesAction();
   const playerStats = liveMatchProps.playerStats || [];
-  const matchScore = liveMatchProps.matchScore;
+  const matchScore = liveMatchProps.matchScore || {};
   const isMatchPresent = matchScore.id;
 
   useEffect(() => {
