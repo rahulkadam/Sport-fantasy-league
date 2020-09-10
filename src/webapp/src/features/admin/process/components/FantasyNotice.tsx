@@ -29,6 +29,8 @@ const FantasyNotice = (props: AdminProcess) => {
     {id: 'MatchCache', name: 'MatchCache'},
     {id: 'FantasyCache', name: 'FantasyCache'},
     {id: 'LiveScoreCache', name: 'LiveScoreCache'},
+    {id: 'TOURNAMENT_CACHE', name: 'TOURNAMENT_CACHE'},
+    {id: 'ALL', name: 'ALL'},
   ];
 
   useEffect(() => {

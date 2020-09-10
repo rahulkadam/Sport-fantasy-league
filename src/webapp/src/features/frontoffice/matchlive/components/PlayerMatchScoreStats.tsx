@@ -93,7 +93,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       cell: customPlayerName,
     },
     {
-      name: 'Points',
+      name: 'Pts',
       selector: 'pointscore',
       width: '10%',
       sortable: true,
@@ -101,7 +101,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       cell: customPointScore,
     },
     {
-      name: 'Runs',
+      name: 'R',
       cell: customRuns,
       width: '10%',
       left: true,
@@ -110,7 +110,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       },
     },
     {
-      name: 'Wicket',
+      name: 'W',
       left: true,
       cell: customWickets,
       width: '10%',
@@ -119,7 +119,7 @@ const PlayerMatchScoreStats = ({data}: PlayerMatchScoreStatsProps) => {
       },
     },
     {
-      name: 'Fielding',
+      name: 'F',
       left: true,
       width: '10%',
       cell: customFielding,

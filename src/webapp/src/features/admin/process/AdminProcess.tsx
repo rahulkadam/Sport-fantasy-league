@@ -221,6 +221,7 @@ const AdminProcess = () => {
           <Col>
             <FantasyDropDown
               list={[
+                {name: 'Toss', id: 'Toss'},
                 {name: 'Start', id: 'start'},
                 {name: 'Complete', id: 'complete'},
               ]}

@@ -22,6 +22,9 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
 
     @EntityGraph(value = "Match.matchschedule")
     List<Match> findFirst5ByMatchTimeGreaterThanEqualAndIsDeletedOrderByMatchTimeAsc(DateTime currentTime, Boolean isDeleted);
+    @EntityGraph(value = "Match.matchschedule")
+
+    List<Match> findFirst2ByMatchTimeGreaterThanEqualAndIsDeletedOrderByMatchTimeAsc(DateTime currentTime, Boolean isDeleted);
 
     List<Match> findMatchesByStatus(Boolean status);
 

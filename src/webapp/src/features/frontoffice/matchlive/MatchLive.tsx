@@ -13,7 +13,10 @@ import {
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
 import {GA_Other_Event} from 'common/config';
-import {getLogoNameByTeam} from '../../../common/components/FantasyDropDown';
+import {
+  getLogoNameByTeam,
+  getShortNameByTeam,
+} from 'common/components/FantasyDropDown';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -21,6 +24,7 @@ const MatchLive = () => {
   const fetchPlayerLiveScore = fetchPlayerScoreByLiveMatchesAction();
   const playerStats = liveMatchProps.playerStats || [];
   const matchScore = liveMatchProps.matchScore;
+  const isMatchPresent = matchScore.id;
 
   useEffect(() => {
     GA_Other_Event('GET_LIVE_SCORE');
@@ -35,20 +39,23 @@ const MatchLive = () => {
         <Row className="nameColumn">
           <Col>
             <Logo logoSource={getLogoNameByTeam(hometeam)} width="20" />
-            {hometeam}
+            {getShortNameByTeam(hometeam)}
           </Col>
-          <Col>{matchScore.team_host_name_score}</Col>
+          <Col>{matchScore.team_host_name_score || '-'}</Col>
         </Row>
         <Row className="nameColumn">
           <Col>
             <Logo logoSource={getLogoNameByTeam(awayteam)} width="20" />
-            {awayteam}
+            {getShortNameByTeam(awayteam)}
           </Col>
-          <Col>{matchScore.team_away_name_score}</Col>
+          <Col>{matchScore.team_away_name_score || '-'}</Col>
         </Row>
         <Row className="nameColumn">
           <Col>
-            <Badge variant="info"> {matchScore.matchResult}</Badge>
+            <Badge variant="info">
+              {' '}
+              {matchScore.matchResult || matchScore.state}
+            </Badge>
           </Col>
         </Row>
       </div>
@@ -77,13 +84,13 @@ const MatchLive = () => {
             </Badge>{' '}
           </Col>
         </Row>
-        {isListEmpty(playerStats) && (
+        {!isMatchPresent && (
           <StatusMessage
             type="error"
             text="No IPL Live Match. Please check during live IPL match"
           />
         )}
-        {!isListEmpty(playerStats) && renderMatchScore()}
+        {isMatchPresent && renderMatchScore()}
         {!isListEmpty(playerStats) && (
           <PlayerMatchScoreStats data={playerStats} />
         )}
