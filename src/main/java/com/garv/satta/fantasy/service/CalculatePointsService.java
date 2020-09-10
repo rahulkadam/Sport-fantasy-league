@@ -51,6 +51,9 @@ public class CalculatePointsService {
     private LeagueUserTeamScorePerMatchService leagueUserTeamScorePerMatchService;
 
     @Autowired
+    private FantasyErrorService fantasyErrorService;
+
+    @Autowired
     private LeagueUserTeamScorePerMatchRepository leagueUserTeamScorePerMatchRepository;
 
     /**
@@ -58,6 +61,7 @@ public class CalculatePointsService {
      *
      * @param id
      */
+    @Transactional
     public void calculateByMatchId(Long id) {
         Match match = matchRepository.findMatchById(id);
         if (match == null) {
@@ -68,6 +72,21 @@ public class CalculatePointsService {
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
         processScoreUpdateforUserTeamsList(userTeams, matchPlayerScoreMap, match);
+    }
+
+    /**
+     * Process score update for users after match and calculate ranking also
+     * @param match
+     */
+    public void processScoreAndRankingAfterMatch(Match match) {
+        try {
+            Long matchId = match.getId();
+            calculateByMatchId(matchId);
+            updateRankingForLeague(match.getTournament().getId());
+            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING" , match.getId().toString());
+        } catch (Exception e) {
+            log.error("Process Ranking and calculate score, " + e.getMessage());
+        }
     }
 
     /**
@@ -152,6 +171,7 @@ public class CalculatePointsService {
         return userTeams;
     }
 
+    @Transactional
     public void updateRankingForLeague(Long tournamentId) {
         List<League> leagueList = leagueRepository.findLeagueByTournamentId(tournamentId);
         leagueList.forEach(league -> {
@@ -210,6 +230,7 @@ public class CalculatePointsService {
             Tournament tournament = match.getTournament();
             List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
             leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE" , match.getId().toString());
         } catch (Exception e) {
             log.error("Init user score error : " + e.getMessage());
         }

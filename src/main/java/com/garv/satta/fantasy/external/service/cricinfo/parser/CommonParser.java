@@ -24,7 +24,7 @@ public class CommonParser {
             String number = node.text().trim();
             return Float.valueOf(number);
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             return 0F;
         }
     }
@@ -35,7 +35,7 @@ public class CommonParser {
             String number = node.text().trim();
             return Float.valueOf(number);
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             return 0F;
         }
     }
@@ -46,7 +46,7 @@ public class CommonParser {
             String number = node.text().trim();
             return Integer.parseInt(number);
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             return 0;
         }
     }
@@ -56,7 +56,7 @@ public class CommonParser {
             String number = node.text().trim();
             return Integer.parseInt(number);
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
             return 0;
         }
     }

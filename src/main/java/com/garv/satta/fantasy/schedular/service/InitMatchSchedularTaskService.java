@@ -87,16 +87,20 @@ public class InitMatchSchedularTaskService {
      * @param match
      */
     public void initMatchBefore25Min(Match match) {
-        DateTime matchTime = match.getMatchTime();
-        DateTime plus25MinTime = getTimePlusMinuite(25);
-        if (matchTime.getMillis() < plus25MinTime.getMillis() && match.getState() == null) {
-            match.setState(MatchStateEnum.TOSS_COMPLETED);
-            match.setStatus(Boolean.TRUE);
-            matchService.saveMatch(match);
-            updateScoreSchedularTaskService.updateScoreForMatch(match);
-        } else {
-            Long hrsDiff = (matchTime.getMillis() - plus25MinTime.getMillis()) / (1000 * 60 * 60);
-            System.out.println("Match is not avaialble , will start in Hours " + hrsDiff);
+        try {
+            DateTime matchTime = match.getMatchTime();
+            DateTime plus25MinTime = getTimePlusMinuite(25);
+            if (matchTime.getMillis() < plus25MinTime.getMillis() && match.getState() == null) {
+                match.setState(MatchStateEnum.TOSS_COMPLETED);
+                match.setStatus(Boolean.TRUE);
+                matchService.saveMatch(match);
+                updateScoreSchedularTaskService.updateScoreForMatch(match);
+            } else {
+                Long hrsDiff = (matchTime.getMillis() - plus25MinTime.getMillis()) / (1000 * 60 * 60);
+                System.out.println("Match is not avaialble , will start in Hours " + hrsDiff);
+            }
+        } catch (Exception e) {
+            log.error("Init before 25 min error:" + e.getMessage());
         }
     }
 
@@ -109,6 +113,7 @@ public class InitMatchSchedularTaskService {
         DateTime plus10MinTime = getTimePlusMinuite(10);
         if (matchTime.getMillis() < plus10MinTime.getMillis()) {
             tournamentService.lockTournamentByName("IPL-20");
+            // after tournament lock, init user for Same Match
             calculatePointsService.initUserScoreForMatch(match);
         }
     }

@@ -12,6 +12,7 @@ import com.garv.satta.fantasy.external.DTO.cricinfo.CricInfoMatchScore;
 import com.garv.satta.fantasy.external.service.cricinfo.CricInfoService;
 import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.*;
+import com.garv.satta.fantasy.service.CalculatePointsService;
 import com.garv.satta.fantasy.service.FantasyErrorService;
 import com.garv.satta.fantasy.service.MatchService;
 import com.garv.satta.fantasy.service.TeamService;
@@ -53,6 +54,9 @@ public class CricMatchPlayerScoreService {
 
     @Autowired
     private CricInfoService cricInfoService;
+
+    @Autowired
+    private CalculatePointsService calculatePointsService;
 
     @Autowired
     private TeamService teamService;
@@ -195,6 +199,9 @@ public class CricMatchPlayerScoreService {
             match.setStatus(false);
             match.setState(MatchStateEnum.COMPLETED);
             matchService.saveMatch(match);
+            if(matchSummary.contains("won by")) {
+                calculatePointsService.processScoreAndRankingAfterMatch(match);
+            }
         }
     }
 
