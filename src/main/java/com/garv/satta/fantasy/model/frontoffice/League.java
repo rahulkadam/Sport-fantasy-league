@@ -17,10 +17,14 @@ import java.util.function.Predicate;
 @Data
 @NoArgsConstructor
 @NamedEntityGraph(name = "League.userTeams",
-        attributeNodes = {
-                @NamedAttributeNode("leagueUserTeams")
-        }
+        attributeNodes =
+                @NamedAttributeNode(value = "leagueUserTeams",subgraph = "loadUserTeam"),
+        subgraphs = @NamedSubgraph(name = "loadUserTeam",
+                attributeNodes = {
+                     @NamedAttributeNode("userTeam")
+                })
 )
+
 @EqualsAndHashCode(callSuper = true, of = {"id"})
 @ToString(exclude = {"created_by", "updated_by", "tournament","leagueUserTeams"}, callSuper = true)
 public class League extends BaseDaoObject {

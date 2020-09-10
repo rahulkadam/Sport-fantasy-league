@@ -85,6 +85,8 @@ public class CalculatePointsService {
             updateRankingForLeague(match.getTournament().getId());
             fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING" , match.getId().toString());
         } catch (Exception e) {
+            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING_ERROR" , match.getId().toString()
+            + " : " + e.getMessage());
             log.error("Process Ranking and calculate score, " + e.getMessage());
         }
     }
@@ -105,7 +107,6 @@ public class CalculatePointsService {
      * @param userTeam
      * @param matchPlayerScoreMap
      */
-    @Transactional
     private void processScoreUpdateforSingleUserTeam(UserTeam userTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap, Match match) {
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch = leagueUserTeamScorePerMatchRepository.
                 findTeamScoreByUserTeamIdAndMatchId(userTeam.getId(), match.getId());
@@ -232,6 +233,8 @@ public class CalculatePointsService {
             leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
             fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE" , match.getId().toString());
         } catch (Exception e) {
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE_ERROR" , match.getId().toString()
+                    + " : " + e.getMessage());
             log.error("Init user score error : " + e.getMessage());
         }
     }

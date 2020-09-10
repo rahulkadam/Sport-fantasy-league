@@ -193,15 +193,19 @@ public class CricMatchPlayerScoreService {
     }
 
     public void completeMatch(CricInfoMatchScore cricInfoMatchScore, Match match) {
-        String matchSummary = cricInfoMatchScore.getSummary();
-        boolean matchComplete = isMatchComplete(matchSummary);
-        if (matchComplete) {
-            match.setStatus(false);
-            match.setState(MatchStateEnum.COMPLETED);
-            matchService.saveMatch(match);
-            if(matchSummary.contains("won by")) {
-                calculatePointsService.processScoreAndRankingAfterMatch(match);
+        try {
+            String matchSummary = cricInfoMatchScore.getSummary();
+            boolean matchComplete = isMatchComplete(matchSummary);
+            if (matchComplete) {
+                match.setStatus(false);
+                match.setState(MatchStateEnum.COMPLETED);
+                matchService.saveMatch(match);
+                if (matchSummary.contains("won by")) {
+                    calculatePointsService.processScoreAndRankingAfterMatch(match);
+                }
             }
+        } catch (Exception e) {
+            log.error( "completeMatch: " + e.getMessage());
         }
     }
 
