@@ -10,8 +10,10 @@ import com.garv.satta.fantasy.external.DTO.converter.CricMatchPlayerScoreConvert
 import com.garv.satta.fantasy.external.DTO.cricinfo.CricInfoMatchData;
 import com.garv.satta.fantasy.external.DTO.cricinfo.CricInfoMatchScore;
 import com.garv.satta.fantasy.external.service.cricinfo.CricInfoService;
+import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.*;
 import com.garv.satta.fantasy.service.FantasyErrorService;
+import com.garv.satta.fantasy.service.MatchService;
 import com.garv.satta.fantasy.service.TeamService;
 import com.garv.satta.fantasy.service.admin.CacheService;
 import com.garv.satta.fantasy.service.admin.FantasyConfigService;
@@ -36,6 +38,9 @@ public class CricMatchPlayerScoreService {
 
     @Autowired
     private MatchRepository matchRepository;
+
+    @Autowired
+    private MatchService matchService;
 
     @Autowired
     private CricAPIService cricAPIService;
@@ -177,10 +182,30 @@ public class CricMatchPlayerScoreService {
             matchResult.setTeam_winner(match.getTeam_host());
             matchResult.setMatch(match);
             matchResultRepository.save(matchResult);
+            completeMatch(cricInfoMatchScore, match);
         } catch (Exception e) {
             log.error( "Save match Result " + e.getMessage());
-
         }
+    }
+
+    public void completeMatch(CricInfoMatchScore cricInfoMatchScore, Match match) {
+        String matchSummary = cricInfoMatchScore.getSummary();
+        boolean matchComplete = isMatchComplete(matchSummary);
+        if (matchComplete) {
+            match.setStatus(false);
+            match.setState(MatchStateEnum.COMPLETED);
+            matchService.saveMatch(match);
+        }
+    }
+
+    public boolean isMatchComplete(String summary) {
+        if (summary != null){
+            if(summary.contains("won by") || summary.contains("result")
+                    || summary.contains("Match drawn")) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
