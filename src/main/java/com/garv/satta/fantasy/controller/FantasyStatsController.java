@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dto.LeagueUserTeamScoreHistoryDTO;
 import com.garv.satta.fantasy.dto.MatchDTO;
 import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
 import com.garv.satta.fantasy.dto.RequestDTO;
+import com.garv.satta.fantasy.dto.reponsedto.LiveMatchDataDTO;
 import com.garv.satta.fantasy.service.LeagueUserTeamScorePerMatchService;
 import com.garv.satta.fantasy.service.MatchPlayerScoreService;
 import com.garv.satta.fantasy.service.MatchService;
@@ -35,16 +36,19 @@ public class FantasyStatsController extends BaseController {
     }
 
     @PostMapping(value = "/list/playerScoreByLiveMatch")
-    public ResponseEntity<List<MatchPlayerScoreDTO>> getPlayeScoreByLiveMatch() {
+    public ResponseEntity<LiveMatchDataDTO> getPlayeScoreByLiveMatch() {
         List<MatchDTO> matchDTOS = matchService.getLiveMatches();
         List<MatchPlayerScoreDTO> matchPlayerScoreDTOLIst =  new ArrayList<>();
+        LiveMatchDataDTO liveMatchDataDTO = new LiveMatchDataDTO();
 
         if (CollectionUtils.isEmpty(matchDTOS)) {
-            return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_2_MIN);
+            return getResponseBodyWithCache(liveMatchDataDTO, FOR_2_MIN);
         }
         long[] matchIds = matchDTOS.stream().mapToLong(matchDTO -> matchDTO.getId()).toArray();
         matchPlayerScoreDTOLIst =  matchPlayerScoreService.findMatchPlayerScoreByMatchIdIn(matchIds);
-        return getResponseBodyWithCache(matchPlayerScoreDTOLIst, FOR_2_MIN);
+        liveMatchDataDTO.setPlayerScoreDTOS(matchPlayerScoreDTOLIst);
+        liveMatchDataDTO.setMatchDTO(matchDTOS.get(0));  // returning result for 1 match for now
+        return getResponseBodyWithCache(liveMatchDataDTO, FOR_2_MIN);
     }
 
     @PostMapping(value = "/list/playerScoringHistory")

@@ -25,7 +25,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         logger.error("Exception : ", ex);
         String error = ex.getMessage();
         String error_description = ex.getLocalizedMessage();
-        if (!(ex instanceof GenericException)) {
+        if (!(ex instanceof GenericException) && !(ex instanceof IllegalArgumentException)) {
             error = "Unable to process request! Please try after sometime";
         }
         ErrorInfo errorInfo = new ErrorInfo(error, error_description);

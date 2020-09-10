@@ -16,15 +16,14 @@ const JoinLeague = ({data}: JoinLeagueProps) => {
     joinLeagueAction(leagueCode);
   }
 
-  const joinleageMsg =
-    'Ask friends to share league code with you to directly enter into private league';
+  const joinleageMsg = 'Enter league code shared by friend to Join league';
 
   const isInvalid = leagueCode.length == 0;
 
   return (
     <div className="createLeagueContainer">
       <div className="mb-3">
-        <StatusMessage type={'info'} text={joinleageMsg} />
+        <div className="secondaryLeagueTitle">{joinleageMsg}</div>
         <Form.Control
           value={leagueCode}
           placeholder="IPL League Code"

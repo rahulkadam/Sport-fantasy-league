@@ -16,6 +16,8 @@ import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.frontoffice.User;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import com.garv.satta.fantasy.model.monitoring.FantasyConfig;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import com.garv.satta.fantasy.validation.GameTeamValidator;
 import com.garv.satta.fantasy.validation.PlayerValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
@@ -44,6 +46,9 @@ public class UserTeamService {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private FantasyConfigService fantasyConfigService;
 
     @Autowired
     private PlayerValidator playerValidator;
@@ -151,21 +156,22 @@ public class UserTeamService {
         userTeam.setCreditbalance(creditBalance);
 
         //TODO enable on 19th Sept
-        /**
-        List<Player> playerList1 = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
-        if (playerList1.isEmpty()) {
-            userTeam.setUsed_Transfer(0);
-            userTeam.setCreditbalance(creditBalance);
-        } else {
-            long transferCount = playerList1.size() - playerList1.stream().filter(player -> playerIdList.contains(player.getId())).count();
-            Integer usedTransafer = (int) (userTeam.getUsed_Transfer() + transferCount);
-            Integer totalTransfer = userTeam.getTotal_Transfer();
-            Assert.isTrue(usedTransafer < totalTransfer, "Transfer count exceeded is not Valid");
-            userTeam.setUsed_Transfer(usedTransafer);
-            userTeam.setRemained_Transfer(userTeam.getTotal_Transfer() - usedTransafer);
-        }
-         */
 
+        String value = fantasyConfigService.getTransferCountKeyValue();
+        if ("ENABLE".equalsIgnoreCase(value)) {
+            List<Player> playerList1 = playerUserTeamRepository.findPlayerByUserTeam(userTeam);
+            if (playerList1.isEmpty()) {
+                userTeam.setUsed_Transfer(0);
+                userTeam.setCreditbalance(creditBalance);
+            } else {
+                long transferCount = playerList1.size() - playerList1.stream().filter(player -> playerIdList.contains(player.getId())).count();
+                Integer usedTransafer = (int) (userTeam.getUsed_Transfer() + transferCount);
+                Integer totalTransfer = userTeam.getTotal_Transfer();
+                Assert.isTrue(usedTransafer < totalTransfer, "Transfer count exceeded is not Valid");
+                userTeam.setUsed_Transfer(usedTransafer);
+                userTeam.setRemained_Transfer(userTeam.getTotal_Transfer() - usedTransafer);
+            }
+        }
         userTeam.setCaptain_player(new Player(captainId));
         userTeam.resetPlayerList(playerList);
         repository.save(userTeam);

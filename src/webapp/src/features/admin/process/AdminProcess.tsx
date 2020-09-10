@@ -51,6 +51,19 @@ const AdminProcess = () => {
     }
   }, []);
 
+  function getRecentAndUpcomingMatches() {
+    const matches = matchProps.matchList;
+    if (isListEmpty(matches)) return [];
+    const fromTime = Date.now() - 178800000;
+    const toTime = Date.now() + 178800000;
+    const filtered = matches.filter((match: any) => {
+      return match.matchTime > fromTime && match.matchTime < toTime;
+    });
+    return filtered;
+  }
+
+  const matchList = getRecentAndUpcomingMatches();
+
   function getTournamentId() {
     let toumntId = tournamentId;
     if (!tournamentId) {
@@ -62,7 +75,7 @@ const AdminProcess = () => {
   function getMatchId() {
     let mid = matchId;
     if (!mid) {
-      mid = matchProps.matchList[0].id;
+      mid = matchList[0].id;
     }
     return mid;
   }
@@ -88,7 +101,7 @@ const AdminProcess = () => {
   function renderMatchDropDown() {
     return (
       <FantasyDropDown
-        list={matchProps.matchList}
+        list={matchList}
         onSelect={(value: any) => {
           setMatchId(value);
         }}
@@ -160,7 +173,7 @@ const AdminProcess = () => {
   function renderInitMatchForTournament() {
     return (
       <div className="innerProcessContainer">
-        {renderActionHeader('3. Init Match Player Score For Tournament')}
+        {renderActionHeader('3. Init Match Player Score For Match')}
         <Row>
           <Col md={8}>{renderMatchDropDown()}</Col>
           <Col>
@@ -208,6 +221,7 @@ const AdminProcess = () => {
           <Col>
             <FantasyDropDown
               list={[
+                {name: 'Toss', id: 'Toss'},
                 {name: 'Start', id: 'start'},
                 {name: 'Complete', id: 'complete'},
               ]}
@@ -345,27 +359,27 @@ const AdminProcess = () => {
     return (
       <Form inline className="processMenuAction">
         {renderTabActionBtn('beforematch', 'Match Start')}
-        {renderTabActionBtn('duringmatch', 'Live')}
         {renderTabActionBtn('aftermatch', 'After Match')}
+        {renderTabActionBtn('duringmatch', 'Live')}
         {renderTabActionBtn('notice', 'Manage Notice')}
       </Form>
     );
   }
 
   function renderBeforematchComponent() {
+    return <div>{renderInitUserForMatch()}</div>;
+  }
+
+  function renderduringmatchComponent() {
     return (
       <div>
+        {renderUpdatePlayerScoreViaCric()}
         {renderLockUnLockTournamentAction()}
         {renderMatchStartCompletedAction()}
         {renderInitMatchForTournament()}
         {renderInitMatchSquadViaCric()}
-        {renderInitUserForMatch()}
       </div>
     );
-  }
-
-  function renderduringmatchComponent() {
-    return <div>{renderUpdatePlayerScoreViaCric()}</div>;
   }
 
   function renderAftergmatchComponent() {

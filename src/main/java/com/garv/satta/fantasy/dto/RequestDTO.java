@@ -11,7 +11,7 @@ public class RequestDTO extends ShortBaseDTO {
     private String name;
     private String description;
     private String key;
-    private String velue;
+    private String value;
     private String otherString;
     private Long addTo;
     private Long add;

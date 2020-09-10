@@ -67,6 +67,13 @@ public class MatchService {
     }
 
     @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
+    public List<Match> getUpComingTOP2MatchList() {
+        DateTime currentTime = new DateTime();
+        List<Match> matches = repository.findFirst2ByMatchTimeGreaterThanEqualAndIsDeletedOrderByMatchTimeAsc(currentTime, Boolean.FALSE);
+        return matches;
+    }
+
+    @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getUpComingAllMatchList() {
         DateTime currentTime = new DateTime();
         List<Match> matches = repository.findUpcomingMatchesByMatchTimeGreaterThanEqualAndIsDeleted(currentTime, Boolean.FALSE);
@@ -83,6 +90,12 @@ public class MatchService {
     public List<Match> getLiveMatchesForSchedular() {
         List<Match> matches = repository.findMatchesByStatus(Boolean.TRUE);
         return matches;
+    }
+
+    public Match saveMatch(Match match) {
+        Match match1 =  repository.save(match);
+        clearMatchCache();
+        return match1;
     }
 
     public Match getMatchStartingInNext1Hour() {

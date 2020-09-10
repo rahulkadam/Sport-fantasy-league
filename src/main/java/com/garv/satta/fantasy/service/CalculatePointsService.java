@@ -8,6 +8,7 @@ import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -16,6 +17,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Slf4j
 public class CalculatePointsService {
 
     @Autowired
@@ -49,6 +51,9 @@ public class CalculatePointsService {
     private LeagueUserTeamScorePerMatchService leagueUserTeamScorePerMatchService;
 
     @Autowired
+    private FantasyErrorService fantasyErrorService;
+
+    @Autowired
     private LeagueUserTeamScorePerMatchRepository leagueUserTeamScorePerMatchRepository;
 
     /**
@@ -56,6 +61,7 @@ public class CalculatePointsService {
      *
      * @param id
      */
+    @Transactional
     public void calculateByMatchId(Long id) {
         Match match = matchRepository.findMatchById(id);
         if (match == null) {
@@ -66,6 +72,23 @@ public class CalculatePointsService {
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
         processScoreUpdateforUserTeamsList(userTeams, matchPlayerScoreMap, match);
+    }
+
+    /**
+     * Process score update for users after match and calculate ranking also
+     * @param match
+     */
+    public void processScoreAndRankingAfterMatch(Match match) {
+        try {
+            Long matchId = match.getId();
+            calculateByMatchId(matchId);
+            updateRankingForLeague(match.getTournament().getId());
+            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING" , match.getId().toString());
+        } catch (Exception e) {
+            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING_ERROR" , match.getId().toString()
+            + " : " + e.getMessage());
+            log.error("Process Ranking and calculate score, " + e.getMessage());
+        }
     }
 
     /**
@@ -84,7 +107,6 @@ public class CalculatePointsService {
      * @param userTeam
      * @param matchPlayerScoreMap
      */
-    @Transactional
     private void processScoreUpdateforSingleUserTeam(UserTeam userTeam, Map<Long, MatchPlayerScore> matchPlayerScoreMap, Match match) {
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch = leagueUserTeamScorePerMatchRepository.
                 findTeamScoreByUserTeamIdAndMatchId(userTeam.getId(), match.getId());
@@ -150,6 +172,7 @@ public class CalculatePointsService {
         return userTeams;
     }
 
+    @Transactional
     public void updateRankingForLeague(Long tournamentId) {
         List<League> leagueList = leagueRepository.findLeagueByTournamentId(tournamentId);
         leagueList.forEach(league -> {
@@ -198,13 +221,22 @@ public class CalculatePointsService {
         initUserScoreForMatch(match);
     }
 
+
+    @Transactional
     public void initUserScoreForMatch(Match match) {
-        Long matchId = match.getId();
-        Boolean isInitialized = leagueUserTeamScorePerMatchService.isLeagueUserInitializeForMatch(matchId);
-        Assert.isTrue(!isInitialized, "Match is initialize already ," + matchId);
-        Tournament tournament = match.getTournament();
-        List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
-        leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
+        try {
+            Long matchId = match.getId();
+            Boolean isInitialized = leagueUserTeamScorePerMatchService.isLeagueUserInitializeForMatch(matchId);
+            Assert.isTrue(!isInitialized, "Match is initialize already ," + matchId);
+            Tournament tournament = match.getTournament();
+            List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
+            leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE" , match.getId().toString());
+        } catch (Exception e) {
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE_ERROR" , match.getId().toString()
+                    + " : " + e.getMessage());
+            log.error("Init user score error : " + e.getMessage());
+        }
     }
 
     protected Comparator<LeagueUserTeam> compareByTotalScore = Comparator.comparing((o1) -> o1.getUserTeam().getTotal_score());

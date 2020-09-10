@@ -12,6 +12,7 @@ import {
   statrCompleteMatch,
   toggleTaskSchedularForScoreAPI,
   unLockTournament,
+  updateFantasyConfig,
   updateMatchPlayerScoreFromCricAPI,
 } from './process-api';
 import {
@@ -315,6 +316,29 @@ export const clearCacheByNameAction = () => {
           dispatch({
             type: PROCESS_ACTION_COMPLETED,
             message: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: PROCESS_ACTION_ERROR,
+            data: getErrorMessage(error),
+          });
+        });
+    }
+  );
+};
+
+export const updateFantasyConfigAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, PROCESS_ACTION_START),
+    (key: string, value: string) => {
+      updateFantasyConfig(key, value)
+        .then((data: any) => {
+          dispatch({
+            type: PROCESS_ACTION_COMPLETED,
+            message: 'Value Updated successfully',
           });
         })
         .catch((error: any) => {

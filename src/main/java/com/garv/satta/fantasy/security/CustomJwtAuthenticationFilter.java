@@ -41,7 +41,7 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
             ExchangeforFantasyToken(req, res);
             authorizeAPGToken(req, res);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Auth JWT TOken error : " + e.getMessage());
         }
         chain.doFilter(req, res);
     }

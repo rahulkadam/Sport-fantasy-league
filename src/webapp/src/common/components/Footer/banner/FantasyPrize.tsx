@@ -1,30 +1,23 @@
 import React from 'react';
 import './FantasyBanner.styles.scss';
 
-const FantasyFooterBanner = () => {
+const FantasyPrize = () => {
   function renderTitle() {
-    return <div className="title">First Season Fantasy League for IPL </div>;
+    return <div className="title">Win Fantasy Prizes</div>;
   }
 
   function renderSecondaryTitle() {
     return (
       <div className="secondaryTitle">
         <div className="secondaryTitle">
-          Watch IPL and Play Fantasy against your friends
+          All IPL Public League winner will win prizes from RK Fatansy
         </div>
       </div>
     );
   }
 
   function renderDescription() {
-    return (
-      <div className="description">
-        Fantasy for Entertainment Only! Its Free to play
-        <div className="description">
-          Play Fantasy with 1 team and 100 transfer
-        </div>
-      </div>
-    );
+    return <div className="description">Join Public league to Win Prizes!</div>;
   }
 
   return (
@@ -36,4 +29,4 @@ const FantasyFooterBanner = () => {
   );
 };
 
-export default FantasyFooterBanner;
+export default FantasyPrize;

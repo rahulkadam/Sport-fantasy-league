@@ -3,7 +3,7 @@ import './MatchLive.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
 import {fetchPlayerScoreByLiveMatchesAction, getLiveMatchProps} from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
-import {StatusMessage} from 'common/components';
+import {Logo, StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
 import {isListEmpty} from 'common/util';
 import Helmet from 'react-helmet';
@@ -13,17 +13,57 @@ import {
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
 import {GA_Other_Event} from 'common/config';
+import {
+  getLogoNameByTeam,
+  getShortNameByTeam,
+} from 'common/components/FantasyDropDown';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
   const configProps = getCommonData();
   const fetchPlayerLiveScore = fetchPlayerScoreByLiveMatchesAction();
   const playerStats = liveMatchProps.playerStats || [];
+  const matchScore = liveMatchProps.matchScore || {};
+  const isMatchPresent = matchScore.id;
 
   useEffect(() => {
     GA_Other_Event('GET_LIVE_SCORE');
     fetchPlayerLiveScore();
   }, []);
+
+  function renderMatchScore() {
+    const hometeam = matchScore.team_host_name;
+    const awayteam = matchScore.team_away_name;
+    return (
+      <div className="ownedPlayer">
+        <Row className="nameColumn">
+          <Col>{matchScore.description || matchScore.state}</Col>
+        </Row>
+        <Row className="nameColumn">
+          <Col>
+            <Logo logoSource={getLogoNameByTeam(hometeam)} width="20" />
+            {getShortNameByTeam(hometeam)}
+          </Col>
+          <Col>{matchScore.team_host_name_score || '-'}</Col>
+        </Row>
+        <Row className="nameColumn">
+          <Col>
+            <Logo logoSource={getLogoNameByTeam(awayteam)} width="20" />
+            {getShortNameByTeam(awayteam)}
+          </Col>
+          <Col>{matchScore.team_away_name_score || '-'}</Col>
+        </Row>
+        <Row className="nameColumn">
+          <Col>
+            <Badge variant="info">
+              {' '}
+              {matchScore.matchResult || matchScore.state}
+            </Badge>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
 
   function renderPlayerLiveScore() {
     return (
@@ -47,14 +87,15 @@ const MatchLive = () => {
             </Badge>{' '}
           </Col>
         </Row>
-        {isListEmpty(playerStats) && (
+        {!isMatchPresent && (
           <StatusMessage
             type="error"
             text="No IPL Live Match. Please check during live IPL match"
           />
         )}
+        {isMatchPresent && renderMatchScore()}
         {!isListEmpty(playerStats) && (
-          <PlayerMatchScoreStats data={playerStats} />
+          <PlayerMatchScoreStats data={playerStats} type="live" />
         )}
       </div>
     );

@@ -88,25 +88,11 @@ const MatchDetails = ({
       cell: convertDateTime,
     },
     {
-      name: 'Home Team',
-      selector: 'team_host_name',
-      sortable: true,
-      right: true,
-      omit: true,
-    },
-    {
-      name: 'Away Team',
-      selector: 'team_away_name',
-      sortable: true,
-      right: true,
-      omit: true,
-    },
-    {
       name: 'Match Result',
       selector: 'matchResult',
       left: true,
       cell: customMatchResult,
-      omit: !(title == 'fixture'),
+      omit: title == 'fixture',
     },
     {
       name: 'Venue',

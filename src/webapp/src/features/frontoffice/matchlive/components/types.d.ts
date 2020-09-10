@@ -21,6 +21,7 @@ declare type UserStatsProps = {
 
 declare type PlayerMatchScoreStatsProps = {
   data?: any;
+  type?: any;
 };
 
 declare type PlayerMatchScoreModal = {

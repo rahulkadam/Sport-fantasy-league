@@ -1,18 +1,16 @@
 package com.garv.satta.fantasy.external.service.cricinfo;
 
-import com.garv.satta.fantasy.dao.repository.FantasyConfigRepository;
-import com.garv.satta.fantasy.model.monitoring.FantasyConfig;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CricInfoCrawler {
 
     @Autowired
-    private FantasyConfigRepository fantasyConfigRepository;
+    private FantasyConfigService fantasyConfigService;
 
     public Document getDocument(String link) throws Exception {
         Document document = Jsoup.connect(link)
@@ -30,14 +28,9 @@ public class CricInfoCrawler {
     }
 
     public String getScoreCardURL(Long id) {
-        String seriesId = getCricInfoSeriesId();
+        String seriesId = fantasyConfigService.getCricInfoSeriesId();
         String scoreUrl = "https://www.espncricinfo.com/series/"+seriesId+"/scorecard/"+id;
         return scoreUrl;
     }
 
-    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
-    public String getCricInfoSeriesId() {
-        FantasyConfig fantasyConfig = fantasyConfigRepository.findConfigByConfigkey("CRIC_INFO_IPL_SERIES_ID");
-        return fantasyConfig.getConfigvalue();
-    }
 }

@@ -21,7 +21,7 @@ const CreateLeague = ({createLeague}: CreateLeagueProps) => {
   return (
     <div className="createLeagueContainer">
       <div className="mb-3">
-        <StatusMessage type={'info'} text={createleagueMsg} />
+        <div className="secondaryLeagueTitle">{createleagueMsg}</div>
         <Row>
           <Col>
             <FormControl

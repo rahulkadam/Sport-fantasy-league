@@ -19,10 +19,6 @@ declare type UserStatsProps = {
   matchList?: any;
 };
 
-declare type PlayerMatchScoreStatsProps = {
-  data?: any;
-};
-
 declare type PlayerMatchScoreModal = {
   handleClose?: any;
   handleShow?: any;

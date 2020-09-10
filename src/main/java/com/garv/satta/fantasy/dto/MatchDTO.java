@@ -19,6 +19,8 @@ public class MatchDTO extends ShortBaseDTO {
     private Long tournament_id;
     private Long matchResultId;
     private String matchResult;
+    private String team_host_name_score;
+    private String team_away_name_score;
     private MatchStateEnum state;
     private String team_host_name;
     private String team_away_name;

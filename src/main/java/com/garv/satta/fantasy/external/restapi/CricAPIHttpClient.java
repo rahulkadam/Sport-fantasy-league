@@ -1,12 +1,10 @@
 package com.garv.satta.fantasy.external.restapi;
 
 import com.garv.satta.fantasy.configuration.FantasyProperties;
-import com.garv.satta.fantasy.dao.repository.FantasyConfigRepository;
 import com.garv.satta.fantasy.external.DTO.MatchSquadCricDTO;
 import com.garv.satta.fantasy.external.DTO.MatchSummaryCricDTO;
-import com.garv.satta.fantasy.model.monitoring.FantasyConfig;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -20,7 +18,7 @@ public class CricAPIHttpClient {
     private FantasyProperties properties;
 
     @Autowired
-    private FantasyConfigRepository fantasyConfigRepository;
+    private FantasyConfigService fantasyConfigService;
 
 
     public CricAPIHttpClient(WebClient.Builder webClientBuilder) {
@@ -42,15 +40,9 @@ public class CricAPIHttpClient {
 
     private String getPath(String urlPath, Integer uniqueId) {
         String path = urlPath;
-        path = path + "?apikey=" + getCricKey();
+        path = path + "?apikey=" + fantasyConfigService.getCricAPITokenKey();
         path = path + "&unique_id=" + uniqueId;
         return path;
-    }
-
-    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
-    private String getCricKey() {
-        FantasyConfig config = fantasyConfigRepository.findConfigByConfigkey(CRIC_API_KEY);
-        return config.getConfigvalue();
     }
 
 }

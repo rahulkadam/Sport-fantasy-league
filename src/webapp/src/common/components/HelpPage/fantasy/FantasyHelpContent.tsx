@@ -16,7 +16,7 @@ const FantasyHelpContent = () => {
         <Row className="iplContentTitle">
           <Col>IPL Fantasy League</Col>
         </Row>
-        <Row className="headerRow">
+        <Row>
           <Col className="textFont">
             <h3>
               <Badge variant="info">What is IPL Fantasy League? </Badge>
@@ -40,8 +40,7 @@ const FantasyHelpContent = () => {
         <Row className="contentRow">
           <Col className="textFont">
             The main <strong>aim is to Play friendly Fantasy Cricket</strong>{' '}
-            With your friend, In IPL with your team by managing transfer
-            properly!
+            With your friend, by managing transfer properly for Full season!
           </Col>
         </Row>
       </div>

@@ -65,3 +65,9 @@ export function clearCacheByName(cacheName: string) {
     data: {name: cacheName},
   });
 }
+
+export function updateFantasyConfig(key: string, value: string) {
+  return Post('/admin/config/update', {
+    data: {key: key, value: value},
+  });
+}

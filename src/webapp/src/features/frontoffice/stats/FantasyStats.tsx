@@ -55,10 +55,9 @@ const FantasyStats = () => {
     return (
       <div>
         {!isListEmpty(matchList) && (
-          <StatusMessage
-            type="info"
-            text="Select Match to see IPL-20 Match Stats"
-          />
+          <div className="secondaryStatsTitle">
+            Select Match to see IPL-20 Match Stats
+          </div>
         )}
         {isListEmpty(matchList) && (
           <StatusMessage
@@ -79,7 +78,9 @@ const FantasyStats = () => {
   function renderPlayerStats() {
     return (
       <div>
-        <StatusMessage type="info" text="Click on Player to see IPL-20 stats" />
+        <div className="secondaryStatsTitle">
+          Click on Player to see IPL-20 stats{' '}
+        </div>
         <PlayerStats
           playerList={playerList}
           playerStats={statsProps.playerStats}
@@ -99,10 +100,9 @@ const FantasyStats = () => {
     return (
       <div>
         {!emptyList && (
-          <StatusMessage
-            type="info"
-            text="Click on Match to see your Match Stats"
-          />
+          <div className="secondaryStatsTitle">
+            Click on Match to see your Match Stats
+          </div>
         )}
         {emptyList && (
           <StatusMessage
