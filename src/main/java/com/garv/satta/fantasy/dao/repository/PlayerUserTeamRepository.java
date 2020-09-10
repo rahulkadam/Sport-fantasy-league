@@ -13,9 +13,9 @@ import java.util.List;
 
 public interface PlayerUserTeamRepository extends CrudRepository<PlayerUserTeam, PlayerUserTeamId> {
 
-    @Query("SELECT query.player FROM PlayerUserTeam query join fetch " +
-            "query.player.teams teams WHERE query.userTeam = :userTeam")
+    @Query("SELECT query.player FROM PlayerUserTeam query WHERE query.userTeam = :userTeam")
     List<Player> findPlayerByUserTeam(@Param("userTeam") UserTeam userTeam);
+
     @Query("SELECT query.userTeam FROM PlayerUserTeam query WHERE query.player = :player")
     List<UserTeam> findUserTeamByPlayer(@Param("player") Player player);
     List<PlayerUserTeam>  findAll();

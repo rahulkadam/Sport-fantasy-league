@@ -10,6 +10,9 @@ import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -165,6 +168,14 @@ public class CalculatePointsService {
         Map<Long, MatchPlayerScore> map = new HashMap<>();
         matchPlayerScoreList.stream().forEach(matchPlayerScore -> map.put(matchPlayerScore.getPlayer().getId(), matchPlayerScore));
         return map;
+    }
+
+    private List<UserTeam> findUserTeamByTournament(Long id, int pageindex, int pagesize) {
+        Pageable paging = PageRequest.of(pageindex, pagesize);
+        Page<UserTeam> userTeams = userTeamRepository.findUserTeamByTournamentId(id, paging);
+        int totalPages = userTeams.getTotalPages();
+        List<UserTeam> userTeamList = userTeams.getContent();
+        return userTeamList;
     }
 
     private List<UserTeam> findUserTeamByTournament(Long id) {
