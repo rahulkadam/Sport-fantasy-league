@@ -30,4 +30,11 @@ public class FantasyConfigService {
         return config.getConfigvalue();
     }
 
+
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
+    public String getTransferCountKeyValue() {
+        FantasyConfig config = fantasyConfigRepository.findConfigByConfigkey("TRANSFER_COUNT");
+        return config.getConfigvalue();
+    }
+
 }

@@ -359,8 +359,8 @@ const AdminProcess = () => {
     return (
       <Form inline className="processMenuAction">
         {renderTabActionBtn('beforematch', 'Match Start')}
-        {renderTabActionBtn('duringmatch', 'Live')}
         {renderTabActionBtn('aftermatch', 'After Match')}
+        {renderTabActionBtn('duringmatch', 'Live')}
         {renderTabActionBtn('notice', 'Manage Notice')}
       </Form>
     );
