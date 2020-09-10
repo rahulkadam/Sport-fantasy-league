@@ -71,10 +71,25 @@ public class CalculatePointsService {
             throw new GenericException("Match id is Not Valid" + id);
         }
         Tournament tournament = match.getTournament();
-        List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
-        processScoreUpdateforUserTeamsList(userTeams, matchPlayerScoreMap, match);
+        calculateScoreForUser(tournament, matchPlayerScoreMap, match);
+    }
+
+    public void calculateScoreForUser(Tournament tournament,
+                                      Map<Long, MatchPlayerScore> matchPlayerScoreMap, Match match) {
+        int totalPageSize = Integer.MAX_VALUE;
+        int index = 0;
+        int size = 20;
+        while (totalPageSize > index) {
+            Page<UserTeam> pageUserTeam = findUserTeamByTournament(tournament.getId(), index, size);
+            if (index == 0) {
+                totalPageSize = pageUserTeam.getTotalPages();
+            }
+            index++;
+            List<UserTeam> userTeamList = pageUserTeam.getContent();
+            processScoreUpdateforUserTeamsList(userTeamList, matchPlayerScoreMap, match);
+        }
     }
 
     /**
@@ -170,12 +185,10 @@ public class CalculatePointsService {
         return map;
     }
 
-    private List<UserTeam> findUserTeamByTournament(Long id, int pageindex, int pagesize) {
+    private Page<UserTeam> findUserTeamByTournament(Long id, int pageindex, int pagesize) {
         Pageable paging = PageRequest.of(pageindex, pagesize);
         Page<UserTeam> userTeams = userTeamRepository.findUserTeamByTournamentId(id, paging);
-        int totalPages = userTeams.getTotalPages();
-        List<UserTeam> userTeamList = userTeams.getContent();
-        return userTeamList;
+        return userTeams;
     }
 
     private List<UserTeam> findUserTeamByTournament(Long id) {
