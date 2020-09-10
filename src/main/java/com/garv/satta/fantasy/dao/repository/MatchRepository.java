@@ -26,6 +26,8 @@ public interface MatchRepository extends CrudRepository<Match, Long> {
 
     List<Match> findFirst2ByMatchTimeGreaterThanEqualAndIsDeletedOrderByMatchTimeAsc(DateTime currentTime, Boolean isDeleted);
 
+    Match findFirst1ByMatchTimeLessThanEqualAndIsDeletedOrderByMatchTimeDsc(DateTime currentTime, Boolean isDeleted);
+
     List<Match> findMatchesByStatus(Boolean status);
 
     Match findFirstByMatchTimeGreaterThanEqualAndIsDeleted(DateTime currentTime, Boolean isDeleted);

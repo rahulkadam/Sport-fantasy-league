@@ -73,6 +73,12 @@ public class MatchService {
         return matches;
     }
 
+    public Match getJustStartedMatchList() {
+        DateTime currentTime = new DateTime();
+        Match matches = repository.findFirst1ByMatchTimeLessThanEqualAndIsDeletedOrderByMatchTimeDsc(currentTime, Boolean.FALSE);
+        return matches;
+    }
+
     @Cacheable(cacheNames = MATCH_CACHE_NAME, keyGenerator = "customKeyGenerator")
     public List<MatchDTO> getUpComingAllMatchList() {
         DateTime currentTime = new DateTime();

@@ -98,7 +98,7 @@ public class CricMatchPlayerScoreService {
             playerScoreDTOList = cricAPIService.getMatchSummaryDetails(externalMatchId);
         }
         saveMatchPlayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
-        cacheService.evictAllCacheValues("LiveScoreCache");
+        cacheService.clearLiveScoreCache();
     }
 
     public void initiateMatchPlayerSquadFromCricAPI(Long matchId) {
@@ -129,31 +129,36 @@ public class CricMatchPlayerScoreService {
         playerScoreDTOList.stream().forEach(playerScore -> {
             Integer pid = playerScore.getPid();
             String name = playerScore.getName();
-            Player player = null;
-            if (pid != null && name != null) {
-                player = playerRepository.findPlayerByNameOrExternalpid(name, pid);
-            }
-            if (player == null) {
-                missingPlayerId.add(pid);
-                missingPlayerList.add(new Player(name, pid));
-                return;
-            }
-            if (player.getExternalpid() == null) {
-                player.setExternalpid(pid);
-                playerRepository.save(player);
-            }
-            Long playerId = player.getId();
-            MatchPlayerScore matchPlayerScore = repository.findPlayerScoreByMatchIdAndPlayerId(match.getId(), playerId);
-            if (matchPlayerScore == null) {
-                matchPlayerScore = new MatchPlayerScore(player, match);
-                if (INIT_SCORE.equals(action)) {
-                    matchPlayerScore = scoreConverter.initiateMatchPlayerScore(matchPlayerScore);
+            try {
+                Player player = null;
+                if (pid != null && name != null) {
+                    player = playerRepository.findPlayerByNameOrExternalpid(name, pid);
                 }
+                if (player == null) {
+                    missingPlayerId.add(pid);
+                    missingPlayerList.add(new Player(name, pid));
+                    return;
+                }
+                if (player.getExternalpid() == null) {
+                    player.setExternalpid(pid);
+                    playerRepository.save(player);
+                }
+                Long playerId = player.getId();
+                MatchPlayerScore matchPlayerScore = repository.findPlayerScoreByMatchIdAndPlayerId(match.getId(), playerId);
+                if (matchPlayerScore == null) {
+                    matchPlayerScore = new MatchPlayerScore(player, match);
+                    if (INIT_SCORE.equals(action)) {
+                        matchPlayerScore = scoreConverter.initiateMatchPlayerScore(matchPlayerScore);
+                    }
+                }
+                if (UPDATE_SCORE.equals(action)) {
+                    matchPlayerScore = scoreConverter.copyPlayerScoresDataFromCricDTO(matchPlayerScore, playerScore);
+                }
+                matchPlayerScores.add(matchPlayerScore);
+            } catch (Exception e) {
+                errorService.logMessage("PLAYER_UPDATE_SCORE ERROR", pid + " " + name);
+                log.error("PLAYER_UPDATE_SCORE Error", e);
             }
-            if (UPDATE_SCORE.equals(action)) {
-                matchPlayerScore = scoreConverter.copyPlayerScoresDataFromCricDTO(matchPlayerScore, playerScore);
-            }
-            matchPlayerScores.add(matchPlayerScore);
         });
         repository.saveAll(matchPlayerScores);
         saveMissingPlayerInDB(missingPlayerList);
@@ -180,15 +185,19 @@ public class CricMatchPlayerScoreService {
             if (matchResult ==  null) {
                 matchResult = new MatchResult();
             }
+
+            String firstTeamName = cricInfoMatchScore.getFirstTeam();
+            String secondTeamName = cricInfoMatchScore.getSecondTeam();
+
             matchResult.setDescription(cricInfoMatchScore.getSummary());
-            matchResult.setAwayteamscore(cricInfoMatchScore.getSecondTeamScore());
-            matchResult.setHometeamScore(cricInfoMatchScore.getFirstTeamScore());
+            matchResult.setAwayteamscore(firstTeamName + ":" + cricInfoMatchScore.getSecondTeamScore());
+            matchResult.setHometeamScore(secondTeamName + ":" + cricInfoMatchScore.getFirstTeamScore());
             matchResult.setTeam_winner(match.getTeam_host());
             matchResult.setMatch(match);
             matchResultRepository.save(matchResult);
             completeMatch(cricInfoMatchScore, match);
         } catch (Exception e) {
-            log.error( "Save match Result " + e.getMessage());
+            errorService.logMessage("save_match_score_result Error" , e.getMessage());
         }
     }
 
@@ -206,6 +215,7 @@ public class CricMatchPlayerScoreService {
             }
         } catch (Exception e) {
             log.error( "completeMatch: " + e.getMessage());
+            errorService.logMessage("completeMatch Error" , e.getMessage());
         }
     }
 

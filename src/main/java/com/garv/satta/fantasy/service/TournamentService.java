@@ -33,9 +33,9 @@ public class TournamentService {
     }
 
     @Cacheable(cacheNames = T_CACHE , keyGenerator = "customKeyGenerator")
-    public List<TournamentDTO> getTournamentShortList() {
+    public List<Tournament> getTournamentShortList() {
         List<Tournament> tournamentList = tournamentRepository.findAll();
-        return tournamentConverter.convertToDTOList(tournamentList);
+        return tournamentList;
     }
 
 
@@ -81,6 +81,12 @@ public class TournamentService {
     public void lockTournamentByName(String name) {
         Tournament tournament = tournamentRepository.findTournamentByName(name);
         tournament.setStatus(false);
+        tournamentRepository.save(tournament);
+        clearTournamentCache();
+    }
+
+    public void unLockTournament(Tournament tournament) {
+        tournament.setStatus(true);
         tournamentRepository.save(tournament);
         clearTournamentCache();
     }

@@ -61,5 +61,9 @@ public class CacheService {
         evictAllCacheValues("PlayerCache");
     }
 
+    public void clearLiveScoreCache() {
+        evictAllCacheValues("LiveScoreCache");
+    }
+
 
 }

@@ -1,10 +1,10 @@
 package com.garv.satta.fantasy.schedular.service;
 
 import com.garv.satta.fantasy.dao.repository.TaskSchedularRepository;
-import com.garv.satta.fantasy.dto.TournamentDTO;
 import com.garv.satta.fantasy.external.service.CricMatchPlayerScoreService;
 import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.Match;
+import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.monitoring.TaskSchedular;
 import com.garv.satta.fantasy.service.CalculatePointsService;
 import com.garv.satta.fantasy.service.FantasyErrorService;
@@ -14,6 +14,7 @@ import com.garv.satta.fantasy.service.admin.CacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,23 +64,44 @@ public class InitMatchSchedularTaskService {
             if (!isTaskEnable) {
                 return;
             }
-            List<TournamentDTO> tournamentList = tournamentService.getTournamentShortList();
-            Boolean tournamentStatus = tournamentList.get(0).getStatus();
+            List<Tournament> tournamentList = tournamentService.getTournamentShortList();
+            Tournament tournament = tournamentList.get(0);
             List<Match> matchList = matchService.getUpComingTOP2MatchList();
             matchList.forEach(match -> {
-                executeInitiateMatchSquadForNextMatch(match, tournamentStatus);
+                executeInitiateMatchSquadForNextMatch(match, tournament);
             });
+            unLockTournamentAfter30Min(tournament);
         } catch (Exception e) {
             fantasyErrorService.logMessage("Execute Init Match SCHEDULE_ERROR", e.getMessage());
         }
     }
 
-    public void executeInitiateMatchSquadForNextMatch(Match match, Boolean tournamentStatus) {
-        if (tournamentStatus == true) {
+    public void executeInitiateMatchSquadForNextMatch(Match match, Tournament tournament) {
+        if (tournament.getStatus() == true) {
             initMatchBefore25Min(match);
             lockTournamentBefore10Min(match);
         }
         startMatchAtMatchTime(match);
+    }
+
+    /**
+     * UnLock Tournament , if tournament is locked due to match start
+     * Unlock after 30 min of Match Start
+     * @param tournament
+     */
+    public void unLockTournamentAfter30Min(Tournament tournament) {
+        try {
+            if (tournament.getStatus() == false) {
+                Match match = matchService.getJustStartedMatchList();
+                DateTime dateTime = DateTime.now();
+                DateTime matchTime = match.getMatchTime().plusMinutes(25);
+                if (matchTime.getMillis() < dateTime.getMillis()) {
+                    tournamentService.unLockTournament(tournament);
+                }
+            }
+        } catch (Exception e) {
+            fantasyErrorService.logMessage("Unlock after 30 min error",  e.getMessage());
+        }
     }
 
     /**
@@ -95,12 +117,10 @@ public class InitMatchSchedularTaskService {
                 match.setStatus(Boolean.TRUE);
                 matchService.saveMatch(match);
                 updateScoreSchedularTaskService.updateScoreForMatch(match);
-            } else {
-                Long hrsDiff = (matchTime.getMillis() - plus25MinTime.getMillis()) / (1000 * 60 * 60);
-                System.out.println("Match is not avaialble , will start in Hours " + hrsDiff);
             }
         } catch (Exception e) {
-            log.error("Init before 25 min error:" + e.getMessage());
+            log.error("Init before 25 min error:" + e.getMessage(), e);
+            fantasyErrorService.logMessage("Init before 25 min error", match.getId() + " : " + e.getMessage());
         }
     }
 
@@ -133,6 +153,7 @@ public class InitMatchSchedularTaskService {
         }
     }
 
+    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
     public boolean isTaskEnable(String taskName) {
         TaskSchedular taskSchedular = repository.findTaskByName(taskName);
         if (taskSchedular == null) {
@@ -149,6 +170,12 @@ public class InitMatchSchedularTaskService {
     public DateTime getTimePlusMinuite(int minuite) {
         DateTime dateTime = DateTime.now();
         dateTime = dateTime.plusMinutes(minuite);
+        return dateTime;
+    }
+
+    public DateTime getTimeMinusMinutes(int minuite) {
+        DateTime dateTime = DateTime.now();
+        dateTime = dateTime.minusMinutes(minuite);
         return dateTime;
     }
 }
