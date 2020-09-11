@@ -190,8 +190,8 @@ public class CricMatchPlayerScoreService {
             String secondTeamName = cricInfoMatchScore.getSecondTeam();
 
             matchResult.setDescription(cricInfoMatchScore.getSummary());
-            matchResult.setAwayteamscore(firstTeamName + ":" + cricInfoMatchScore.getSecondTeamScore());
-            matchResult.setHometeamScore(secondTeamName + ":" + cricInfoMatchScore.getFirstTeamScore());
+            matchResult.setHometeamScore(firstTeamName + ":" + cricInfoMatchScore.getFirstTeamScore());
+            matchResult.setAwayteamscore(secondTeamName + ":" + cricInfoMatchScore.getSecondTeamScore());
             matchResult.setTeam_winner(match.getTeam_host());
             matchResult.setMatch(match);
             matchResultRepository.save(matchResult);

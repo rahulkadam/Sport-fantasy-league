@@ -8,4 +8,8 @@ import java.util.List;
 public interface FantasyErrorRepository extends CrudRepository<FantasyError, Long> {
 
     List<FantasyError> findAll();
+
+    List<FantasyError> findFirst10ByOrderByIdDesc();
+
+
 }

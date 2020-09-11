@@ -4,6 +4,8 @@ import {
   GET_TOURNAMENT_LIST_ERROR,
   CREATE_TOURNAMENT,
   CREATE_TOURNAMENT_ERROR,
+  GET_ERROR_LIST,
+  GET_FANTASY_CONFIG_LIST,
 } from './tournamentConstants';
 
 const initialState: Tournament = {
@@ -12,6 +14,8 @@ const initialState: Tournament = {
   hasError: false,
   statusMessage: '',
   tournamentList: [],
+  errorList: [],
+  configList: [],
 };
 
 export default (state: Tournament = initialState, action: any): Tournament => {
@@ -21,6 +25,20 @@ export default (state: Tournament = initialState, action: any): Tournament => {
       tournamentState = {
         ...state,
         tournamentList: action.tournamentList,
+        isLoading: false,
+      };
+      return tournamentState;
+    case GET_ERROR_LIST:
+      tournamentState = {
+        ...state,
+        errorList: action.errorList,
+        isLoading: false,
+      };
+      return tournamentState;
+    case GET_FANTASY_CONFIG_LIST:
+      tournamentState = {
+        ...state,
+        configList: action.configList,
         isLoading: false,
       };
       return tournamentState;

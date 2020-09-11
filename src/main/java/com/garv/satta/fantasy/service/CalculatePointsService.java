@@ -1,6 +1,7 @@
 package com.garv.satta.fantasy.service;
 
 import com.garv.satta.fantasy.dao.repository.*;
+import com.garv.satta.fantasy.dao.repository.specification.ObjectId;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.exceptions.GenericException;
 import com.garv.satta.fantasy.model.backoffice.*;
@@ -83,13 +84,16 @@ public class CalculatePointsService {
         int index = 0;
         int size = 20;
         while (totalPageSize > index) {
-            Page<UserTeam> pageUserTeam = findUserTeamByTournament(tournament.getId(), index, size);
+            Pageable paging = PageRequest.of(index, size);
+            Page<ObjectId> userteamIds = userTeamRepository.findUserTeamIdsByTournamentId(tournament.getId(), paging);
             if (index == 0) {
-                totalPageSize = pageUserTeam.getTotalPages();
+                totalPageSize = userteamIds.getTotalPages();
             }
-            index++;
-            List<UserTeam> userTeamList = pageUserTeam.getContent();
+            List<ObjectId> objectIds = userteamIds.getContent();
+            long arr[] = objectIds.stream().mapToLong(a -> a.getId()).toArray();
+            List<UserTeam> userTeamList = userTeamRepository.findUserTeamByIdIn(arr);
             processScoreUpdateforUserTeamsList(userTeamList, matchPlayerScoreMap, match);
+            index++;
         }
     }
 
@@ -204,12 +208,14 @@ public class CalculatePointsService {
         int size = 10;
         while (totalPageSize > index) {
             Pageable paging = PageRequest.of(index, size);
-            Page<League> pageLeague = leagueRepository.findLeagueByTournamentId(tournamentId, paging);
+            Page<ObjectId> leagueIds = leagueRepository.findLeagueIdByTournamentId(tournamentId, paging);
             if (index == 0) {
-                totalPageSize = pageLeague.getTotalPages();
+                totalPageSize = leagueIds.getTotalPages();
             }
             index++;
-            List<League> leagueList = pageLeague.getContent();
+            List<ObjectId> objectIds = leagueIds.getContent();
+            long arr[] = objectIds.stream().mapToLong(a -> a.getId()).toArray();
+            List<League> leagueList = leagueRepository.findLeagueByIdIn(arr);
             leagueList.forEach(league -> {
                 updateRankingForLeague(league);
             });

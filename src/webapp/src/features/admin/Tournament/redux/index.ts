@@ -3,4 +3,6 @@ export {getTournamentData} from './tournamentHooks';
 export {
   fetchTournamentListAction,
   createTournamentAction,
+  fetchTopErrorListAction,
+  fetchFantasyConfigDataAction,
 } from './tournamentActions';

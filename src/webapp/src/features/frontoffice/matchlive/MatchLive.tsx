@@ -32,8 +32,13 @@ const MatchLive = () => {
   }, []);
 
   function renderMatchScore() {
-    const hometeam = matchScore.team_host_name;
-    const awayteam = matchScore.team_away_name;
+    let team1score = matchScore.team_host_name_score || '';
+    team1score = team1score.split(':');
+    let team2score = matchScore.team_away_name_score || '';
+    team2score = team2score.split(':');
+    const hometeam = team1score[0] || matchScore.team_host_name;
+    const awayteam = team2score[0] || matchScore.team_away_name;
+
     return (
       <div className="ownedPlayer">
         <Row className="nameColumn">
@@ -42,16 +47,16 @@ const MatchLive = () => {
         <Row className="nameColumn">
           <Col>
             <Logo logoSource={getLogoNameByTeam(hometeam)} width="20" />
-            {getShortNameByTeam(hometeam)}
+            {getShortNameByTeam(hometeam) || hometeam}
           </Col>
-          <Col>{matchScore.team_host_name_score || '-'}</Col>
+          <Col>{team1score[1] || '-'}</Col>
         </Row>
         <Row className="nameColumn">
           <Col>
             <Logo logoSource={getLogoNameByTeam(awayteam)} width="20" />
-            {getShortNameByTeam(awayteam)}
+            {getShortNameByTeam(awayteam) || awayteam}
           </Col>
-          <Col>{matchScore.team_away_name_score || '-'}</Col>
+          <Col>{team2score[1] || '-'}</Col>
         </Row>
         <Row className="nameColumn">
           <Col>

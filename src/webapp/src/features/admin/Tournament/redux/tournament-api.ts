@@ -13,3 +13,11 @@ export function createTournament(
 export function fetchAllTournamentList() {
   return Get('/fantasy/tournament/list');
 }
+
+export function fetchTop10Error() {
+  return Get('/admin/error/list/10');
+}
+
+export function fetchFantasyConfigData() {
+  return Get('/admin/config/list');
+}
