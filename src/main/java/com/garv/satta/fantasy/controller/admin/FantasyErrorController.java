@@ -17,8 +17,8 @@ public class FantasyErrorController {
 
     @GetMapping(value = "/list/10")
     @ResponseBody
-    public List<FantasyError> getTop10List() {
-        return errorService.top10Error();
+    public List<FantasyError> top30Error() {
+        return errorService.top30Error();
     }
 
 }

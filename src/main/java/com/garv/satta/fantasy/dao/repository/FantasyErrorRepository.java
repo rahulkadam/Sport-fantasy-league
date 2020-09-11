@@ -9,7 +9,7 @@ public interface FantasyErrorRepository extends CrudRepository<FantasyError, Lon
 
     List<FantasyError> findAll();
 
-    List<FantasyError> findFirst10ByOrderByIdDesc();
+    List<FantasyError> findFirst30ByOrderByIdDesc();
 
 
 }

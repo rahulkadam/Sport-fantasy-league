@@ -22,15 +22,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleEntityNotFound(Exception ex) {
-        logger.error("Exception : ", ex);
         String error = ex.getMessage();
         String error_description = ex.getLocalizedMessage();
         if (!(ex instanceof GenericException) && !(ex instanceof IllegalArgumentException)) {
+            logger.error("Exception : ", ex);
             error = "Unable to process request! Please try after sometime";
         }
         ErrorInfo errorInfo = new ErrorInfo(error, error_description);
         fantasyErrorService.saveError(errorInfo, ex);
         return new ResponseEntity(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

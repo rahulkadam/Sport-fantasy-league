@@ -41,7 +41,7 @@ public class FantasyErrorService {
         }
     }
 
-    public List<FantasyError> top10Error() {
-        return repository.findFirst10ByOrderByIdDesc();
+    public List<FantasyError> top30Error() {
+        return repository.findFirst30ByOrderByIdDesc();
     }
 }

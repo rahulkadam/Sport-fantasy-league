@@ -75,7 +75,7 @@ public class CalculatePointsService {
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
         calculateScoreForUser(tournament, matchPlayerScoreMap, match);
-        fantasyErrorService.logMessage("AFTER_MATCH_SCORE_USER_CALCULATION" , match.getId().toString());
+        fantasyErrorService.logMessage("AFTER_MATCH_SCORE_USER_CALCULATION", match.getId().toString());
     }
 
     public void calculateScoreForUser(Tournament tournament,
@@ -99,6 +99,7 @@ public class CalculatePointsService {
 
     /**
      * Process score update for users after match and calculate ranking also
+     *
      * @param match
      */
     public void processScoreAndRankingAfterMatch(Match match) {
@@ -106,10 +107,10 @@ public class CalculatePointsService {
             Long matchId = match.getId();
             calculateByMatchId(matchId);
             updateRankingForLeague(match.getTournament().getId());
-            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING" , match.getId().toString());
+            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING", match.getId().toString());
         } catch (Exception e) {
-            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING_ERROR" , match.getId().toString()
-            + " : " + e.getMessage());
+            fantasyErrorService.logMessage("AFTER_MATCH_SCORE_RANKING_ERROR", match.getId().toString()
+                    + " : " + e.getMessage());
             log.error("Process Ranking and calculate score, " + e.getMessage());
         }
     }
@@ -135,7 +136,7 @@ public class CalculatePointsService {
                 findTeamScoreByUserTeamIdAndMatchId(userTeam.getId(), match.getId());
         long[] playerListIds = null;
         if (leagueUserTeamScorePerMatch == null) {
-            playerListIds = userTeam.getPlayerIds().stream().mapToLong(l-> l).toArray();
+            playerListIds = userTeam.getPlayerIds().stream().mapToLong(l -> l).toArray();
             leagueUserTeamScorePerMatch = new LeagueUserTeamScorePerMatch();
             leagueUserTeamScorePerMatch.setUserTeam(userTeam);
             leagueUserTeamScorePerMatch.setPlayerList(playerListIds);
@@ -271,11 +272,25 @@ public class CalculatePointsService {
             Boolean isInitialized = leagueUserTeamScorePerMatchService.isLeagueUserInitializeForMatch(matchId);
             Assert.isTrue(!isInitialized, "Match is initialize already ," + matchId);
             Tournament tournament = match.getTournament();
-            List<UserTeam> userTeams = findUserTeamByTournament(tournament.getId());
-            leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeams, match);
-            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE" , match.getId().toString());
+
+            int totalPageSize = Integer.MAX_VALUE;
+            int index = 0;
+            int size = 20;
+            while (totalPageSize > index) {
+                Pageable paging = PageRequest.of(index, size);
+                Page<ObjectId> userteamIds = userTeamRepository.findUserTeamIdsByTournamentId(tournament.getId(), paging);
+                if (index == 0) {
+                    totalPageSize = userteamIds.getTotalPages();
+                }
+                List<ObjectId> objectIds = userteamIds.getContent();
+                long arr[] = objectIds.stream().mapToLong(a -> a.getId()).toArray();
+                List<UserTeam> userTeamList = userTeamRepository.findUserTeamByIdIn(arr);
+                leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeamList, match);
+                index++;
+            }
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE", match.getId().toString());
         } catch (Exception e) {
-            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE_ERROR" , match.getId().toString()
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE_ERROR", match.getId().toString()
                     + " : " + e.getMessage());
             log.error("Init user score error : " + e.getMessage());
         }
