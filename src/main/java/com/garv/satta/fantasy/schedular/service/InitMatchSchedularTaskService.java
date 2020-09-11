@@ -56,6 +56,8 @@ public class InitMatchSchedularTaskService {
      * 2. get team and toss details
      * 3. lock tournament
      * 4. mark match in progress at time
+     * 5. unlock Tournament
+     * 6. Init USer Score
      * TODO pending or manual task : 1. unlock tournament 2. Init user Score
      */
     public void executeInitiateMatchSquadForNextMatch() {

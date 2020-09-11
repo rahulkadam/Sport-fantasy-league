@@ -9,6 +9,7 @@ import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,6 +59,9 @@ public class CalculatePointsService {
     private FantasyErrorService fantasyErrorService;
 
     @Autowired
+    private FantasyConfigService fantasyConfigService;
+
+    @Autowired
     private LeagueUserTeamScorePerMatchRepository leagueUserTeamScorePerMatchRepository;
 
     /**
@@ -82,7 +86,7 @@ public class CalculatePointsService {
                                       Map<Long, MatchPlayerScore> matchPlayerScoreMap, Match match) {
         int totalPageSize = Integer.MAX_VALUE;
         int index = 0;
-        int size = 20;
+        int size = fantasyConfigService.getPaginationValue();
         while (totalPageSize > index) {
             Pageable paging = PageRequest.of(index, size);
             Page<ObjectId> userteamIds = userTeamRepository.findUserTeamIdsByTournamentId(tournament.getId(), paging);
@@ -206,7 +210,7 @@ public class CalculatePointsService {
     public void updateRankingForLeague(Long tournamentId) {
         int totalPageSize = Integer.MAX_VALUE;
         int index = 0;
-        int size = 10;
+        int size = fantasyConfigService.getPaginationValue();
         while (totalPageSize > index) {
             Pageable paging = PageRequest.of(index, size);
             Page<ObjectId> leagueIds = leagueRepository.findLeagueIdByTournamentId(tournamentId, paging);
@@ -267,15 +271,15 @@ public class CalculatePointsService {
 
     @Transactional
     public void initUserScoreForMatch(Match match) {
+        Long matchId = match.getId();
         try {
-            Long matchId = match.getId();
             Boolean isInitialized = leagueUserTeamScorePerMatchService.isLeagueUserInitializeForMatch(matchId);
             Assert.isTrue(!isInitialized, "Match is initialize already ," + matchId);
             Tournament tournament = match.getTournament();
 
             int totalPageSize = Integer.MAX_VALUE;
             int index = 0;
-            int size = 20;
+            int size = fantasyConfigService.getPaginationValue();
             while (totalPageSize > index) {
                 Pageable paging = PageRequest.of(index, size);
                 Page<ObjectId> userteamIds = userTeamRepository.findUserTeamIdsByTournamentId(tournament.getId(), paging);
@@ -288,10 +292,10 @@ public class CalculatePointsService {
                 leagueUserTeamScorePerMatchService.saveListAtMatchInit(userTeamList, match);
                 index++;
             }
-            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE", match.getId().toString());
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE", matchId.toString());
         } catch (Exception e) {
-            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE_ERROR", match.getId().toString()
-                    + " : " + e.getMessage());
+            fantasyErrorService.logMessage("AT_START_INIT_USER_SCORE_ERROR",
+                    matchId + " : " + e.getMessage());
             log.error("Init user score error : " + e.getMessage());
         }
     }

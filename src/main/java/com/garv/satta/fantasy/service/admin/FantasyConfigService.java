@@ -12,28 +12,58 @@ public class FantasyConfigService {
     @Autowired
     private FantasyConfigRepository fantasyConfigRepository;
 
-    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
+    private final String FANTASY_CACHE = "FantasyCache";
+    private final String KEY_GENERATOR = "customKeyGenerator";
+
+    public FantasyConfig addFantasyConfig(String key, String value) {
+        FantasyConfig fantasyConfig = new FantasyConfig();
+        fantasyConfig.setConfigkey(key);
+        fantasyConfig.setConfigvalue(value);
+        fantasyConfig = fantasyConfigRepository.save(fantasyConfig);
+        return fantasyConfig;
+    }
+
+    @Cacheable(cacheNames = FANTASY_CACHE , keyGenerator = KEY_GENERATOR)
     public String getCricInfoSeriesId() {
-        FantasyConfig fantasyConfig = fantasyConfigRepository.findConfigByConfigkey("CRIC_INFO_IPL_SERIES_ID");
-        return fantasyConfig.getConfigvalue();
+        String key = "CRIC_INFO_IPL_SERIES_ID";
+        String defaultValue = "8048";
+        return getValue(key, defaultValue);
     }
 
-    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
+    @Cacheable(cacheNames = FANTASY_CACHE , keyGenerator = KEY_GENERATOR)
     public String getLiveDataProviderKey() {
-        FantasyConfig fantasyConfig = fantasyConfigRepository.findConfigByConfigkey("LIVE_DATA_PROVIDER");
-        return fantasyConfig.getConfigvalue();
+        String key = "LIVE_DATA_PROVIDER";
+        String defaultValue = "CRICINFO";
+        return getValue(key, defaultValue);
     }
 
-    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
+    @Cacheable(cacheNames = FANTASY_CACHE , keyGenerator = KEY_GENERATOR)
     public String getCricAPITokenKey() {
-        FantasyConfig config = fantasyConfigRepository.findConfigByConfigkey("CRIC_API_KEY");
-        return config.getConfigvalue();
+        String key = "CRIC_API_KEY";
+        String defaultValue = "kdbnBeYPF3aX2PEEcXGjgowpxwz1";
+        return getValue(key, defaultValue);
     }
 
+    @Cacheable(cacheNames = FANTASY_CACHE , keyGenerator = KEY_GENERATOR)
+    public int getPaginationValue() {
+        String key = "PAGINATION_COUNT";
+        String defaultValue = "20";
+        String value =  getValue(key, defaultValue);
+        return Integer.parseInt(value);
+    }
 
-    @Cacheable(cacheNames = "FantasyCache" , keyGenerator = "customKeyGenerator")
+    @Cacheable(cacheNames = FANTASY_CACHE , keyGenerator = KEY_GENERATOR)
     public String getTransferCountKeyValue() {
-        FantasyConfig config = fantasyConfigRepository.findConfigByConfigkey("TRANSFER_COUNT");
+        String key = "TRANSFER_COUNT";
+        String defaultValue = "DISABLE";
+        return getValue(key, defaultValue);
+    }
+
+    public String getValue(String key, String value) {
+        FantasyConfig config = fantasyConfigRepository.findConfigByConfigkey(key);
+        if (config == null) {
+            config = addFantasyConfig(key, value);
+        }
         return config.getConfigvalue();
     }
 
