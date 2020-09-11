@@ -11,27 +11,32 @@ const FantasyInfoCard = () => {
     return (
       <Card className="fantasyHelpcardcontainer">
         <Card.Body>
-          <Card.Title className="userTeamTitle">
-            {!loginUser && <span className="userTeamTitle">Register to</span>}{' '}
-            Play IPL Season Fantasy League
-          </Card.Title>
+          <Card.Title className="userTeamTitle">Play IPL fantasy</Card.Title>
           <Card.Text>
             <Row>
-              <Col className="textFont">
-                <strong>Season Fantasy Cricket</strong> played between IPL fans
-                for{' '}
-                <strong>Full IPL with Single Team and limited Transfer.</strong>
-                <Badge variant="success">
-                  1 Team, 60 matches and 100 Transfer = IPL Season Fantasy
-                </Badge>
+              <Col className="textFontForCards">
+                <div>
+                  <strong>
+                    Create one team for the tournament, make transfers every
+                    matchday.
+                  </strong>
+                </div>
+                <div>
+                  Play IPL fantasy against your friend/family or sport
+                  community.
+                </div>
+                <div>
+                  <Badge variant="success">
+                    1 Team, 60 matches and 100 Transfer = IPL Fantasy
+                  </Badge>
+                </div>
               </Col>
             </Row>
             <Row>
               <Col className="CardBoldText">
-                It’s FREE to play,{' '}
                 <Button
                   variant="link"
-                  className="textFont"
+                  className="textFontForCards"
                   onClick={() =>
                     loginUser ? history.push('/team') : history.push('/login')
                   }>

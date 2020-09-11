@@ -74,6 +74,11 @@ const TransferHelp = () => {
           match starts
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <strong>You can make unlimited changes for Captain!</strong>
+        </Col>
+      </Row>
       {renderTrasnferSystemViaAccordion()}
     </div>
   );

@@ -31,8 +31,10 @@
   font-family: Source Sans Pro,sans-serif;
 }
 
-.textFont {
+.textFontForCards {
   font-family: Source Sans Pro,sans-serif;
+  font-weight: 600;
+  font-size: small;
 }
 
 .CardBoldText {
@@ -81,4 +83,12 @@
 
 .bottomMargin{
   margin-bottom: 1rem;
+}
+
+.accordianCustomTitle {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  background-color: mediumseagreen;
+  padding: 1rem;
+  font-family: Source Sans Pro,sans-serif;
 }

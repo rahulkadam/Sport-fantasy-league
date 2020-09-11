@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {
   getHomeData,
   fetchUpComingMatchesAction,
@@ -9,7 +9,7 @@ import {
 import './Home.styles.scss';
 import {isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
-import {Form, Button, Row, Col, Image} from 'react-bootstrap';
+import {Form, Button, Row, Col, Image, Navbar, Nav} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
@@ -82,7 +82,7 @@ const FantasyHome = () => {
     return (
       <Button
         variant="outline-success"
-        className="mr-1 buttonMargin"
+        className="mr-2 buttonMargin"
         onClick={() => goto(gotoUrl)}>
         {title}
       </Button>
@@ -117,6 +117,23 @@ const FantasyHome = () => {
           {renderGoToButton('Fixtures', '/Fixtures')}
           {renderGoToButton('View Stats', '/statistics')}
         </Form>
+      </div>
+    );
+  }
+
+  function renderFooterMenuForHomePage() {
+    return (
+      <div>
+        <Navbar
+          fixed="bottom"
+          bg="light"
+          variant="light"
+          className="justify-content-center footerTeamBtn">
+          <Nav>
+            {renderGoToButton('League', '/league')}
+            {renderGoToButton('View Team', '/team')}
+          </Nav>
+        </Navbar>
       </div>
     );
   }
@@ -191,19 +208,6 @@ const FantasyHome = () => {
     return (
       <div>
         <Image src={banneriplmain} width="100%" height="130px" />
-      </div>
-    );
-  }
-
-  function renderIPLbanner() {
-    return (
-      <div className="fantasyBanner">
-        <Row>
-          <Col>IPL Fantasy</Col>
-        </Row>
-        <Row>
-          <Col>Play IPL fantasy with single Team. Old IPL Fantasy is Back</Col>
-        </Row>
       </div>
     );
   }

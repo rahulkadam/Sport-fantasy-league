@@ -20,7 +20,7 @@ const Login = () => {
       {!authUserName && (
         <a href={GOOGLE_AUTH_URL}>
           <Logo logoSource={googleLogo} width="26" />
-          <span className="googleText">Login via Google</span>
+          <span className="googleText">Sign in with Google</span>
         </a>
       )}
       {authUserName && <div>Welcome {authUserName}</div>}

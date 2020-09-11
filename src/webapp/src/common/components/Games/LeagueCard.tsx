@@ -60,7 +60,7 @@ const LeagueCard = (props: LeagueCardProps) => {
                   </Col>
                   {!loginUser && (
                     <Col className="CardBoldText">
-                      Playing Users: {successBadge(data.totalUserCount || 0)}
+                      Playing Teams: {successBadge(data.totalUserCount || 0)}
                     </Col>
                   )}
                   {!data.publicLeague && (
@@ -84,7 +84,7 @@ const LeagueCard = (props: LeagueCardProps) => {
                 {loginUser && (
                   <Row>
                     <Col className="CardBoldText">
-                      Playing Users: {successBadge(data.totalUserCount || 0)}
+                      Playing Teams: {successBadge(data.totalUserCount || 0)}
                     </Col>
                     <Col className="CardBoldText">
                       {data.userRank && (
