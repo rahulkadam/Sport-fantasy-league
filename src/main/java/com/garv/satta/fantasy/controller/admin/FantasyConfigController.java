@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.controller.admin;
 import com.garv.satta.fantasy.dao.repository.FantasyConfigRepository;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.model.monitoring.FantasyConfig;
+import com.garv.satta.fantasy.service.admin.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,9 @@ public class FantasyConfigController {
 
     @Autowired
     private FantasyConfigRepository repository;
+
+    @Autowired
+    private CacheService cacheService;
 
     @PostMapping(value = "/add")
     @ResponseBody
@@ -38,9 +42,10 @@ public class FantasyConfigController {
     public FantasyConfig updateValueByKey(@RequestBody RequestDTO requestDTO) {
         FantasyConfig fantasyConfig = repository.findConfigByConfigkey(requestDTO.getKey());
         fantasyConfig.setConfigvalue(requestDTO.getValue());
-        return repository.save(fantasyConfig);
+        fantasyConfig =  repository.save(fantasyConfig);
+        cacheService.clearFantasyCache();
+        return fantasyConfig;
     }
-
 
     @GetMapping(value = "/list")
     @ResponseBody

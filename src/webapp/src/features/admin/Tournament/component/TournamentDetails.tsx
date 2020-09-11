@@ -14,6 +14,9 @@ const TournamentDetails = ({data, title}: TournamentDetailsProps) => {
     );
   }
 
+  function customStatus(row: any) {
+    return <div>{row.status ? 'Active' : 'Inactive'}</div>;
+  }
   const columns = [
     {
       name: 'Name',
@@ -25,6 +28,12 @@ const TournamentDetails = ({data, title}: TournamentDetailsProps) => {
       name: 'Sport',
       selector: 'sportName',
       sortable: true,
+    },
+    {
+      name: 'Status',
+      selector: 'status',
+      sortable: true,
+      cell: customStatus,
     },
     {
       name: 'Total League',

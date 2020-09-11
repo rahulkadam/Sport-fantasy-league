@@ -73,6 +73,14 @@ const MatchDetails = ({
     return <div className="nameColumn">{row.venue_name}</div>;
   }
 
+  function customOtherDetails(row: any) {
+    return (
+      <div className="nameColumn">
+        {row.external_mid} ({row.state})
+      </div>
+    );
+  }
+
   const columns = [
     {
       name: 'Name',
@@ -106,6 +114,7 @@ const MatchDetails = ({
       selector: 'external_mid',
       sortable: true,
       right: true,
+      cell: customOtherDetails,
       omit: !showExtraData,
     },
   ];

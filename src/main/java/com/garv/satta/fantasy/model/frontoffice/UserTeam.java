@@ -23,7 +23,10 @@ import java.util.stream.Collectors;
 @Entity
 @Data
 @NamedEntityGraph(name = "UserTeam.leagueUserTeams",
-        attributeNodes = @NamedAttributeNode(value = "leagueUserTeams", subgraph = "loadUserTeam"),
+        attributeNodes = {
+                @NamedAttributeNode(value = "playerUserTeams"),
+                @NamedAttributeNode(value = "leagueUserTeams", subgraph = "loadUserTeam")
+            },
         subgraphs = @NamedSubgraph(name = "loadUserTeam",
                 attributeNodes = {
                         @NamedAttributeNode("league"),

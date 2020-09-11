@@ -1,21 +1,32 @@
 import React, {useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {TournamentDetails, CreateTournament} from './component';
+import {
+  TournamentDetails,
+  CreateTournament,
+  FantasyErrorList,
+  FantasyConfigList,
+} from './component';
 import {
   fetchTournamentListAction,
   createTournamentAction,
   getTournamentData,
+  fetchTopErrorListAction,
+  fetchFantasyConfigDataAction,
 } from './redux';
 import './Tournament.styles.scss';
 
 const Tournament = () => {
   const dataProps = getTournamentData();
   const fetchTournamentList = fetchTournamentListAction();
+  const fetchError = fetchTopErrorListAction();
+  const fetchConfig = fetchFantasyConfigDataAction();
   const createTournamentTeam = createTournamentAction();
   const tabName = 'tournamentoverview';
 
   useEffect(() => {
     fetchTournamentList();
+    fetchError();
+    fetchConfig();
   }, []);
   function createTournament(name: string, country: string, sport: string) {
     createTournamentTeam(name, country, sport);
@@ -36,6 +47,14 @@ const Tournament = () => {
     );
   }
 
+  function renderErrorList() {
+    return <FantasyErrorList errorList={dataProps.errorList} />;
+  }
+
+  function renderConfigList() {
+    return <FantasyConfigList list={dataProps.configList} />;
+  }
+
   const tabConfig: TabConfig[] = [
     {
       key: 'tournamentoverview',
@@ -46,6 +65,16 @@ const Tournament = () => {
       key: 'createTournament',
       title: 'Create Tournament',
       renderfunction: renderCreateTournament(),
+    },
+    {
+      key: 'errorList',
+      title: 'View Errors',
+      renderfunction: renderErrorList(),
+    },
+    {
+      key: 'configList',
+      title: 'View Config',
+      renderfunction: renderConfigList(),
     },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {

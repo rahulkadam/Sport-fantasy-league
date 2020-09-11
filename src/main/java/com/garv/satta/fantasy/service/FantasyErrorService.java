@@ -9,6 +9,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class FantasyErrorService {
@@ -37,5 +39,9 @@ public class FantasyErrorService {
         } catch (Exception e) {
             logger.error("Exception occured ", e);
         }
+    }
+
+    public List<FantasyError> top30Error() {
+        return repository.findFirst30ByOrderByIdDesc();
     }
 }

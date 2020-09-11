@@ -12,3 +12,13 @@ declare type TournamentDetailsProps = {
   title: string;
   onRowSelected?: any;
 };
+
+declare type ErrorListProps = {
+  errorList?: any;
+  title?: string;
+};
+
+declare type ConfigListProps = {
+  list?: any;
+  title?: string;
+};

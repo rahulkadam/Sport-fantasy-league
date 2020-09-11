@@ -49,4 +49,21 @@ public class CacheService {
         evictAllCacheValues(cacheName);
     }
 
+    public void clearFantasyCache() {
+        evictAllCacheValues("FantasyCache");
+    }
+
+    public void clearMatchCache() {
+        evictAllCacheValues("MatchCache");
+    }
+
+    public void clearPlayerCache() {
+        evictAllCacheValues("PlayerCache");
+    }
+
+    public void clearLiveScoreCache() {
+        evictAllCacheValues("LiveScoreCache");
+    }
+
+
 }
