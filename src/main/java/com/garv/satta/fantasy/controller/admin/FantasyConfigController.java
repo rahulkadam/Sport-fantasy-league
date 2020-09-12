@@ -41,6 +41,10 @@ public class FantasyConfigController {
     @ResponseBody
     public FantasyConfig updateValueByKey(@RequestBody RequestDTO requestDTO) {
         FantasyConfig fantasyConfig = repository.findConfigByConfigkey(requestDTO.getKey());
+        if (fantasyConfig == null) {
+            fantasyConfig = new FantasyConfig();
+            fantasyConfig.setConfigkey(requestDTO.getKey());
+        }
         fantasyConfig.setConfigvalue(requestDTO.getValue());
         fantasyConfig =  repository.save(fantasyConfig);
         cacheService.clearFantasyCache();

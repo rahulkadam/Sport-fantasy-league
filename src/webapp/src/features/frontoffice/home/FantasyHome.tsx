@@ -26,6 +26,7 @@ import {
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
 import {FantasyFooterBanner, FantasyPrize} from 'common/components/Footer';
+import HelpModal from 'common/components/HelpPage/modal/HelpModal';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -37,6 +38,8 @@ const FantasyHome = () => {
   const dashboard = homeProps.dashboard;
   const [isfetching, setIsFetching] = useState(false);
   const [showJoinLeagueModal, setShowPrivateLeagueModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
+  const [helpmodalType, setHelpModalType] = useState('');
   const joinPrivateLeague = joinLeagueAction();
   const fantasyNotice = homeProps.notice;
   const fetchNoticeAction = fetchFantasyNoticeAction();
@@ -78,6 +81,18 @@ const FantasyHome = () => {
     );
   }
 
+  function renderHelpModal() {
+    if (!helpmodalType) return;
+    return (
+      <HelpModal
+        show={true}
+        handleClose={() => setHelpModalType('')}
+        handleShow={() => setHelpModalType(helpmodalType)}
+        type={helpmodalType}
+      />
+    );
+  }
+
   function renderGoToButton(title: string, gotoUrl: string) {
     return (
       <Button
@@ -86,6 +101,29 @@ const FantasyHome = () => {
         onClick={() => goto(gotoUrl)}>
         {title}
       </Button>
+    );
+  }
+
+  function renderHelpModalTypeBtn(type: string, title: string) {
+    return (
+      <Button
+        variant="outline-success"
+        className="mr-1 buttonMargin"
+        onClick={() => setHelpModalType(type)}>
+        {title}
+      </Button>
+    );
+  }
+
+  function renderUnAuthUserDashboard() {
+    return (
+      <div className="secondaryMenu">
+        <Form inline>
+          {renderHelpModalTypeBtn('howtoplay', 'How To Play')}
+          {renderHelpModalTypeBtn('points', 'Points')}
+          {renderHelpModalTypeBtn('transfers', 'Transfer')}
+        </Form>
+      </div>
     );
   }
 
@@ -101,21 +139,9 @@ const FantasyHome = () => {
             onClick={() => setShowPrivateLeagueModal(true)}>
             Join League
           </Button>
-          {renderGoToButton('Help', '/helppage')}
-          {renderGoToButton('Fixtures', '/Fixtures')}
-          {renderGoToButton('View Stats', '/statistics')}
-        </Form>
-      </div>
-    );
-  }
-
-  function renderUnAuthUserDashboard() {
-    return (
-      <div className="secondaryMenu">
-        <Form inline>
-          {renderGoToButton('Help', '/helppage')}
-          {renderGoToButton('Fixtures', '/Fixtures')}
-          {renderGoToButton('View Stats', '/statistics')}
+          {renderHelpModalTypeBtn('howtoplay', 'How To Play')}
+          {renderHelpModalTypeBtn('points', 'Points')}
+          {renderHelpModalTypeBtn('transfers', 'Transfer')}
         </Form>
       </div>
     );
@@ -231,6 +257,7 @@ const FantasyHome = () => {
           <title>Home - IPL Fantasy</title>
         </Helmet>
         {renderJoinPrivateLeagueModal()}
+        {renderHelpModal()}
         {checkUserAccess()}
         <UserHomePageBoard />
         {renderIPLImage()}

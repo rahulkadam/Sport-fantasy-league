@@ -101,9 +101,7 @@ const HowToPlay = () => {
     <div>
       {showAlert && renderLoginAlert()}
       <Row>
-        <Col className="headerRow justify-content-center">
-          <h4>HOW TO PLAY</h4>
-        </Col>
+        <Col className="iplContentTitle">HOW TO PLAY</Col>
       </Row>
       {renderFantasyPlaySteps()}
     </div>

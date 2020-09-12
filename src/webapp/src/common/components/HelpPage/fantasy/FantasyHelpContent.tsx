@@ -19,13 +19,13 @@ const FantasyHelpContent = () => {
         <Row>
           <Col className="textFont">
             <h3>
-              <Badge variant="info">What is IPL Fantasy League? </Badge>
+              <Badge variant="info">Fantasy League</Badge>
             </h3>
           </Col>
         </Row>
         <Row className="contentRow">
           <Col className="textFont">
-            IPL Fantasy League is an {renderBoldText('online fantasy game')}, in
+            Fantasy League is an {renderBoldText('online fantasy game')}, in
             which a user form a{' '}
             {renderBoldText('virtual cricket team of 11 players')} from IPL
             teams.
@@ -51,19 +51,15 @@ const FantasyHelpContent = () => {
     return (
       <div>
         <Row className="headerRow">
-          <Col className="textFont">
-            <h3>
-              <Badge variant="info">Rules for IPL Fantasy League? </Badge>
-            </h3>
-          </Col>
+          <Col className="iplContentTitle">Rules for IPL Fantasy League?</Col>
         </Row>
         <Row className="contentRow">
           <Col md={4} className="textFont">
             <Badge variant="success">Budget</Badge>
           </Col>
           <Col md={8} className="textFont">
-            Fantasy Team will have an {renderBoldText('budget cap of 100')}, and
-            the players need to be selected within 100.
+            Fantasy Team will have an{' '}
+            {renderBoldText('budget cap of 100 for 11 Players')}.
           </Col>
         </Row>
         <Row className="contentRow">
@@ -71,7 +67,7 @@ const FantasyHelpContent = () => {
             <Badge variant="success">Transfer</Badge>
           </Col>
           <Col md={8} className="textFont">
-            Fantasy Team will have an Total Transfer cap for IPL, User will get
+            Total 100 Transfer
             {renderBoldText(
               ' 90 Transfer in Group matches and 10 in knockout.'
             )}
@@ -94,28 +90,16 @@ const FantasyHelpContent = () => {
     return (
       <div>
         <Row className="headerRow">
-          <Col className="textFont">
-            <h3>
-              <Badge variant="info">Why We are Different To Play? </Badge>
-            </h3>
-          </Col>
+          <Col className="iplContentTitle">Why We are Different To Play?</Col>
         </Row>
         <Row className="contentRow">
           <Col md={4} className="textFont">
             <Badge variant="success">Tournament Fantasy</Badge>
           </Col>
           <Col md={8} className="textFont">
-            Play IPl fantasy like FPL,{' '}
-            {renderBoldText('one team , manage transfer and calculate points.')}
-          </Col>
-        </Row>
-        <Row className="contentRow">
-          <Col md={4} className="textFont">
-            <Badge variant="success">Manage Transfer Budget</Badge>
-          </Col>
-          <Col md={8} className="textFont">
-            Play IPL fantasy with limited transfer for IPL{' '}
-            {renderBoldText('90 for group stages and 10 for knockout')}.
+            {renderBoldText(
+              'Play with one team , make transfer on each match day'
+            )}
           </Col>
         </Row>
         <Row className="contentRow">
@@ -167,13 +151,11 @@ const FantasyHelpContent = () => {
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="3">
-              How To Play
+              What is Fantasy League?
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="3">
-            <Card.Body>
-              <HowToPlay />
-            </Card.Body>
+            <Card.Body>{renderFantasyDefinition()}</Card.Body>
           </Accordion.Collapse>
         </Card>
       </Accordion>
@@ -226,11 +208,14 @@ const FantasyHelpContent = () => {
   }
   return (
     <div>
-      {renderFantasyDefinition()}
-      {renderViaAccordion()}
+      <Row className="iplContentTitle">
+        <Col>IPL Fantasy League</Col>
+      </Row>
       {renderIPLPointSystems()}
       {renderTransferHelp()}
       {renderTeamCriteria()}
+      <HowToPlay />
+      {renderViaAccordion()}
     </div>
   );
 };
