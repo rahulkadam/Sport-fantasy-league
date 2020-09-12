@@ -44,14 +44,15 @@ const TopUserTeamList = ({userList}: TopUserTeamListProps) => {
       )}
       {userList && userList.length > 0 && (
         <DataTable
-          title="Error List"
+          title="Top 30 User List"
           columns={columns}
           customStyles={customStyles}
           data={userList}
-          selectableRows
           subHeader
           subHeaderAlign="left"
           striped
+          defaultSortField="total_score"
+          defaultSortAsc={false}
         />
       )}
     </div>
