@@ -1,9 +1,10 @@
 import {useDispatch} from 'react-redux';
-import {createVenue, fetchAllVenueList} from './venue-api';
+import {createVenue, fetchAllVenueList, fetchTop30UserList} from './venue-api';
 import {
   ACTION_START,
   CREATE_VENUE,
   CREATE_VENUE_ERROR,
+  GET_TOP_30_USER_LIST,
   GET_VENUE_LIST,
   GET_VENUE_LIST_ERROR,
 } from './venueConstants';
@@ -20,6 +21,29 @@ const fetchVenueListAction = () => {
           dispatch({
             type: GET_VENUE_LIST,
             venueList: data,
+          });
+        })
+        .catch((error: any) => {
+          dispatch({
+            type: GET_VENUE_LIST_ERROR,
+            data: error.message,
+          });
+        });
+    }
+  );
+};
+
+const fetchTop30UserListAction = () => {
+  const dispatch = useDispatch();
+  return dispatchActionWrapper(
+    dispatch,
+    dispatchAction(dispatch, ACTION_START),
+    () => {
+      fetchTop30UserList()
+        .then((data: any) => {
+          dispatch({
+            type: GET_TOP_30_USER_LIST,
+            userList: data,
           });
         })
         .catch((error: any) => {
@@ -55,4 +79,4 @@ const createVenueAction = () => {
   );
 };
 
-export {fetchVenueListAction, createVenueAction};
+export {fetchVenueListAction, createVenueAction, fetchTop30UserListAction};

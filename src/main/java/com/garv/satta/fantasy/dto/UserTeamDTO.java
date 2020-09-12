@@ -28,6 +28,8 @@ public class UserTeamDTO extends BaseDTO {
     private List<PlayerDTO> teamPlayersPlayerDTOList;
     private Long leagueId;
     private Long userId;
+    private String userName;
+    private String emailId;
     private Long team_captain_player_Id;
     private String captainName;
     private List<Long> user_team_playerIds;

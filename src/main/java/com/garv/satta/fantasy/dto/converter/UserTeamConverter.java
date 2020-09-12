@@ -49,11 +49,14 @@ public class UserTeamConverter extends Converter<UserTeam, UserTeamDTO> {
     public UserTeamDTO convertToFullDTO(UserTeam entity) {
         UserTeamDTO userTeamDTO = convertToDTO(entity);
         Player captain = entity.getCaptain_player();
+        User user = entity.getUser();
         if (captain != null) {
             userTeamDTO.setTeam_captain_player_Id(captain.getId());
             userTeamDTO.setCaptainName(captain.getName());
         }
-        userTeamDTO.setUserId(entity.getUser().getId());
+        userTeamDTO.setUserId(user.getId());
+        userTeamDTO.setUserName(user.getName());
+        userTeamDTO.setEmailId(user.getEmail());
         return userTeamDTO;
     }
 

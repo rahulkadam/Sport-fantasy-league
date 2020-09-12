@@ -9,3 +9,7 @@ export function createVenue(name: string, country: string, city: string) {
 export function fetchAllVenueList() {
   return Get('/fantasy/venue/list');
 }
+
+export function fetchTop30UserList() {
+  return Post('/fantasy/userteam/get/top/30');
+}

@@ -4,4 +4,5 @@ declare type Venue = {
   hasError: boolean;
   statusMessage: string;
   venueList: any;
+  userList?: any;
 };

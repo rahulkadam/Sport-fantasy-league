@@ -101,6 +101,11 @@ public class UserTeamService {
         return playerConverter.convertToFullDTOList(playerList);
     }
 
+    public List<UserTeamDTO> getTop30Users() {
+        List<UserTeam> userTeamList = repository.findFirst30ByOrderByIdDesc();
+        return converter.convertToFullDTOList(userTeamList);
+    }
+
     public UserTeamDTO createUserTeam(UserTeamDTO userTeamDTO) {
         Long userId = userService.getCurrentUserId();
         List<UserTeam> userTeamList = repository.findUserTeamByUserId(userId);

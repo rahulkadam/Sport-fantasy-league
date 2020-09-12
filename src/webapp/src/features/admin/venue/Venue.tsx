@@ -1,17 +1,25 @@
 import React, {useEffect} from 'react';
 import {StatusMessage, TabContainer} from 'common/components';
-import {VenueDetails, CreateVenue} from './component';
-import {fetchVenueListAction, createVenueAction, getVenueData} from './redux';
+import {VenueDetails, CreateVenue, TopUserTeamList} from './component';
+import {
+  fetchVenueListAction,
+  createVenueAction,
+  getVenueData,
+  fetchTop30UserListAction,
+} from './redux';
 import './venue.styles.scss';
 
 const Venue = () => {
   const dataProps = getVenueData();
-  const fetchPlayerList = fetchVenueListAction();
+  const fetchVenueList = fetchVenueListAction();
   const createPlayer = createVenueAction();
+  const fetchTop30User = fetchTop30UserListAction();
   const tabName = 'venueoverview';
+  const userList = dataProps.userList;
 
   useEffect(() => {
-    fetchPlayerList();
+    fetchVenueList();
+    fetchTop30User();
   }, []);
   function createVenueFromAdmin(name: string, country: string, city: string) {
     createPlayer(name, country, city);
@@ -29,6 +37,14 @@ const Venue = () => {
     );
   }
 
+  function renderTopUserListView() {
+    return (
+      <div>
+        <TopUserTeamList userList={userList} />
+      </div>
+    );
+  }
+
   const tabConfig: TabConfig[] = [
     {
       key: 'venueoverview',
@@ -39,6 +55,11 @@ const Venue = () => {
       key: 'createvenue',
       title: 'Create Venue',
       renderfunction: renderVenue(),
+    },
+    {
+      key: 'userList',
+      title: 'User List',
+      renderfunction: renderTopUserListView(),
     },
   ];
   function renderStatusMessage(isError: boolean, statusMessage: string) {

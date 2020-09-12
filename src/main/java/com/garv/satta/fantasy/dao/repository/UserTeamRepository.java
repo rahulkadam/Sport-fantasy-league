@@ -2,6 +2,7 @@ package com.garv.satta.fantasy.dao.repository;
 
 import com.garv.satta.fantasy.dao.repository.specification.ObjectId;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import com.garv.satta.fantasy.model.monitoring.FantasyError;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -32,4 +33,7 @@ public interface UserTeamRepository extends JpaRepository<UserTeam, Long> {
 
     @Query("Update UserTeam u Set u.total_score = u.last_score where u.tournament.id = :tid")
     void resetToLastScoreByTournamentId(@Param("tid") Long id);
+
+    List<UserTeam> findFirst30ByOrderByIdDesc();
+
 }
