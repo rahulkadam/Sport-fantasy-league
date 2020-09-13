@@ -59,6 +59,13 @@ public class FantasyConfigService {
         return getValue(key, defaultValue);
     }
 
+    @Cacheable(cacheNames = FANTASY_CACHE , keyGenerator = KEY_GENERATOR)
+    public boolean getShowPublicLeagueKeyValue() {
+        String key = "SHOW_PUBLIC_LEAGUE";
+        String defaultValue = "DISABLE";
+        return "ENABLE".equalsIgnoreCase(getValue(key, defaultValue));
+    }
+
     public String getValue(String key, String value) {
         FantasyConfig config = fantasyConfigRepository.findConfigByConfigkey(key);
         if (config == null) {

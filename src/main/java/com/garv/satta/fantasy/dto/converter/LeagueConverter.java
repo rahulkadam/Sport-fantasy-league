@@ -8,6 +8,7 @@ import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.User;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,9 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
 
     @Autowired
     private LeagueUserTeamRepository repository;
+
+    @Autowired
+    private FantasyConfigService fantasyConfigService;
 
     public League convertToEntity(LeagueDTO dto) {
         return mapper.map(dto, League.class);
@@ -55,14 +59,14 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
         return dto;
     }
 
-    public LeagueDTO convertToFullDTO(League entity, Long userTeamId) {
+    public LeagueDTO convertToFullDTO(League entity, Long userTeamId, boolean showPublicLeague) {
         LeagueDTO dto = convertToDTO(entity);
         Boolean isPublicLeague  = entity.getPublicLeague() != null && entity.getPublicLeague();
         List<LeagueUserTeam> leagueUserTeams = entity.getLeagueUserTeams();
         if (leagueUserTeams.isEmpty()) {
             return dto;
         }
-        if (!isPublicLeague) {
+        if (!isPublicLeague || showPublicLeague) {
             LeagueUserTeam leagueUserTeam = leagueUserTeams.stream().filter(team ->team.getUser_team_id().equals(userTeamId)).findFirst().orElse(null);
             List<LeagueUserTeamDTO> leagueUserTeamDTOS = userTeamConverter.convertToDTOList(leagueUserTeams);
             dto.setLeagueUserTeamDTOS(leagueUserTeamDTOS);
@@ -96,8 +100,9 @@ public class LeagueConverter extends Converter<League, LeagueDTO> {
     }
 
     public List<LeagueDTO> convertToFullDTOListWithUserTeamId(List<League> entityList, Long userTeamId) {
+        boolean showPublicLeague = fantasyConfigService.getShowPublicLeagueKeyValue();
         return entityList.stream()
-                .map(entity -> convertToFullDTO(entity, userTeamId))
+                .map(entity -> convertToFullDTO(entity, userTeamId, showPublicLeague))
                 .collect(Collectors.toList());
     }
 

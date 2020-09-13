@@ -5,6 +5,7 @@ import IPLPointSystems from '../points/IPLPointSystems';
 import TransferHelp from '../transfer/TransferHelp';
 import TeamCriteria from 'features/frontoffice/UserTeam/component/common/TeamCriteria';
 import '../help.styles.scss';
+import {FantasyFAQ} from './FantasyFAQ';
 
 const FantasyHelpContent = () => {
   function renderBoldText(text: string) {
@@ -206,6 +207,18 @@ const FantasyHelpContent = () => {
       </div>
     );
   }
+
+  function renderFAQ() {
+    return (
+      <div>
+        <Row className="iplContentTitle">
+          <Col>FAQs</Col>
+        </Row>
+        <FantasyFAQ />
+      </div>
+    );
+  }
+
   return (
     <div>
       <Row className="iplContentTitle">
@@ -216,6 +229,7 @@ const FantasyHelpContent = () => {
       {renderTeamCriteria()}
       <HowToPlay />
       {renderViaAccordion()}
+      {renderFAQ()}
     </div>
   );
 };

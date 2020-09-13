@@ -133,6 +133,7 @@ public class UserTeamService {
         userTeam.setTotalbalance(FantasyConstant.DEFAULT_CREDIT_BALANCE);
         userTeam.setCaptain_player(null);
         userTeam = repository.save(userTeam);
+        leagueService.joinPublicGlobalLeague(userTeam);
         return converter.convertToFullDTO(userTeam);
     }
 

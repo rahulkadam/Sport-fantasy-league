@@ -13,6 +13,7 @@ import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.User;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import com.garv.satta.fantasy.validation.TournamentValidator;
 import com.garv.satta.fantasy.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,17 @@ public class LeagueService {
     @Autowired
     private TournamentValidator tournamentValidator;
 
-
     @Autowired
     private UserValidator userValidator;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FantasyErrorService fantasyErrorService;
+
+    @Autowired
+    private FantasyConfigService fantasyConfigService;
 
     @Autowired
     private TournamentService tournamentService;
@@ -126,5 +132,20 @@ public class LeagueService {
     public List<LeagueDTO> getLeagueByPublic() {
         List<League> userLeagueList = repository.findLeagueByPublicLeague(true);
         return converter.convertToDTOList(userLeagueList);
+    }
+
+    public void joinPublicGlobalLeague(UserTeam userteam) {
+        try {
+            List<League> userLeagueList = repository.findLeagueByPublicLeague(true);
+            Optional<League> globalLeague = userLeagueList.stream().filter(league -> league.getName().contains("Global")).findFirst();
+            if (globalLeague.isPresent()) {
+                League l = globalLeague.get();
+                joinLeagueByCode(l.getLeagueCode());
+                l.addLeagueMembers(userteam);
+                repository.save(l);
+            }
+        } catch (Exception e) {
+            fantasyErrorService.logMessage("Unable to add global league for: " + userteam.getId() , e.getMessage());
+        }
     }
 }

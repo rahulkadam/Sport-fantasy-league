@@ -3,6 +3,7 @@ import {Button, Modal} from 'react-bootstrap';
 import TransferHelp from '../transfer/TransferHelp';
 import IPLPointSystems from '../points/IPLPointSystems';
 import HowToPlay from '../fantasy/HowToPlay';
+import {FantasyFAQ} from '../fantasy/FantasyFAQ';
 
 const HelpModal = (props: HelpModalProps) => {
   function getTitle() {
@@ -13,6 +14,8 @@ const HelpModal = (props: HelpModalProps) => {
         return 'Transfer Count';
       case 'howtoplay':
         return 'How to Play';
+      case 'faq':
+        return 'Frequently Asked Question';
     }
   }
 
@@ -24,6 +27,8 @@ const HelpModal = (props: HelpModalProps) => {
         return <TransferHelp />;
       case 'howtoplay':
         return <HowToPlay />;
+      case 'faq':
+        return <FantasyFAQ />;
     }
   }
 

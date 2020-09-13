@@ -122,6 +122,7 @@ const FantasyHome = () => {
           {renderHelpModalTypeBtn('howtoplay', 'How To Play')}
           {renderHelpModalTypeBtn('points', 'Points')}
           {renderHelpModalTypeBtn('transfers', 'Transfer')}
+          {renderHelpModalTypeBtn('faq', 'FAQs')}
         </Form>
       </div>
     );
@@ -272,6 +273,7 @@ const FantasyHome = () => {
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}
         <FantasyPrize />
+        <UserHomePageBoard />
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
