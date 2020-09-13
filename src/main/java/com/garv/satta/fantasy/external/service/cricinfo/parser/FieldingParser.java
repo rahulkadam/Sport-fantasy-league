@@ -144,8 +144,8 @@ public class FieldingParser {
         String runout = "";
         try {
             if (dismisal.contains("run out")) {
-                int from = dismisal.indexOf('(');
-                int to = dismisal.indexOf('(');
+                int from = dismisal.indexOf('(') + 1;
+                int to = dismisal.indexOf(')');
                 runout = dismisal.substring(from, to);
             }
             return runout;

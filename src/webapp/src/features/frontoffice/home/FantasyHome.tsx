@@ -142,7 +142,7 @@ const FantasyHome = () => {
           </Button>
           {renderHelpModalTypeBtn('howtoplay', 'How To Play')}
           {renderHelpModalTypeBtn('points', 'Points')}
-          {renderHelpModalTypeBtn('transfers', 'Transfer')}
+          {renderHelpModalTypeBtn('faq', 'FAQs')}
         </Form>
       </div>
     );
