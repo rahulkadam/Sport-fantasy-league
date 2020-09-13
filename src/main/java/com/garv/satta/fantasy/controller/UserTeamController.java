@@ -51,4 +51,10 @@ public class UserTeamController  extends BaseController {
         return "Player added successfully";
     }
 
+    @PostMapping(value = "/get/top/30")
+    public List<UserTeamDTO> getTop30UserTeam() {
+        return service.getTop30Users();
+    }
+
+
 }

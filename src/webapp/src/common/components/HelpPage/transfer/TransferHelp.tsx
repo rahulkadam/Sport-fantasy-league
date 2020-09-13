@@ -70,8 +70,19 @@ const TransferHelp = () => {
       </Row>
       <Row>
         <Col>
-          Transfer will get reset, before first group match start, or knockout
-          match starts
+          User will get <strong>Limited transfer to play Fantasy!</strong>{' '}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <strong>Reset Transfer: </strong>Transfer will get reset 2 times
+          <div>1. Group Stage</div>
+          <div>2. PlayOff</div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <strong>You can make unlimited changes for Captain!</strong>
         </Col>
       </Row>
       {renderTrasnferSystemViaAccordion()}

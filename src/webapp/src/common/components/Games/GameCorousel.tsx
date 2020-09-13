@@ -1,5 +1,5 @@
 import React from 'react';
-import {Carousel} from 'react-bootstrap';
+import {Carousel, Row, Col} from 'react-bootstrap';
 import {
   CreateSquadCard,
   FantasyInfoCard,
@@ -57,11 +57,20 @@ const GameCorousel = (props: GameCorouselProps) => {
     );
   }
 
+  // md={6} sm={8}
   function renderDashboardFantasyInfoCard() {
     return (
       <div>
-        <FantasyInfoCard />
-        <CreateSquadCard />
+        <Row>
+          <Col>
+            <FantasyInfoCard />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <CreateSquadCard />
+          </Col>
+        </Row>
         <JoinLeagueCard />
       </div>
     );

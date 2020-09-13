@@ -108,6 +108,10 @@ public class CalculatePointsService {
      */
     public void processScoreAndRankingAfterMatch(Match match) {
         try {
+            boolean autoscoreCalculate = fantasyConfigService.getAutoUserScoreRankingCalculate();
+            if (!autoscoreCalculate) {
+                return;
+            }
             Long matchId = match.getId();
             calculateByMatchId(matchId);
             updateRankingForLeague(match.getTournament().getId());

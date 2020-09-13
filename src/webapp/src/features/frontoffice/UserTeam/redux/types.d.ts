@@ -8,6 +8,7 @@ declare type UserTeam = {
   currentTransferChanges?: number;
   teamcriteria?: any;
   shouldRefresh?: boolean;
+  isUserTeamLoading?: boolean;
   captionPlayerId?: any;
   captainName?: any;
 };

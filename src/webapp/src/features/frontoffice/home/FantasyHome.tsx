@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {
   getHomeData,
   fetchUpComingMatchesAction,
@@ -9,7 +9,7 @@ import {
 import './Home.styles.scss';
 import {isUserLogin} from 'API';
 import UserHomePageBoard from './components/UserHomePageBoard';
-import {Form, Button, Row, Col, Image} from 'react-bootstrap';
+import {Form, Button, Row, Col, Image, Navbar, Nav} from 'react-bootstrap';
 import history from 'common/config/history';
 import LoadingOverlay from 'react-loading-overlay';
 import {getCommonData} from '../../common/redux';
@@ -26,6 +26,7 @@ import {
   TwitterFantasyTimeline,
 } from 'common/components/Footer/socialmedia';
 import {FantasyFooterBanner, FantasyPrize} from 'common/components/Footer';
+import HelpModal from 'common/components/HelpPage/modal/HelpModal';
 
 const FantasyHome = () => {
   const homeProps = getHomeData();
@@ -37,6 +38,8 @@ const FantasyHome = () => {
   const dashboard = homeProps.dashboard;
   const [isfetching, setIsFetching] = useState(false);
   const [showJoinLeagueModal, setShowPrivateLeagueModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
+  const [helpmodalType, setHelpModalType] = useState('');
   const joinPrivateLeague = joinLeagueAction();
   const fantasyNotice = homeProps.notice;
   const fetchNoticeAction = fetchFantasyNoticeAction();
@@ -78,14 +81,50 @@ const FantasyHome = () => {
     );
   }
 
+  function renderHelpModal() {
+    if (!helpmodalType) return;
+    return (
+      <HelpModal
+        show={true}
+        handleClose={() => setHelpModalType('')}
+        handleShow={() => setHelpModalType(helpmodalType)}
+        type={helpmodalType}
+      />
+    );
+  }
+
   function renderGoToButton(title: string, gotoUrl: string) {
     return (
       <Button
         variant="outline-success"
-        className="mr-1 buttonMargin"
+        className="mr-2 buttonMargin"
         onClick={() => goto(gotoUrl)}>
         {title}
       </Button>
+    );
+  }
+
+  function renderHelpModalTypeBtn(type: string, title: string) {
+    return (
+      <Button
+        variant="outline-success"
+        className="mr-1 buttonMargin"
+        onClick={() => setHelpModalType(type)}>
+        {title}
+      </Button>
+    );
+  }
+
+  function renderUnAuthUserDashboard() {
+    return (
+      <div className="secondaryMenu">
+        <Form inline>
+          {renderHelpModalTypeBtn('howtoplay', 'How To Play')}
+          {renderHelpModalTypeBtn('points', 'Points')}
+          {renderHelpModalTypeBtn('transfers', 'Transfer')}
+          {renderHelpModalTypeBtn('faq', 'FAQs')}
+        </Form>
+      </div>
     );
   }
 
@@ -101,22 +140,27 @@ const FantasyHome = () => {
             onClick={() => setShowPrivateLeagueModal(true)}>
             Join League
           </Button>
-          {renderGoToButton('Help', '/helppage')}
-          {renderGoToButton('Fixtures', '/Fixtures')}
-          {renderGoToButton('View Stats', '/statistics')}
+          {renderHelpModalTypeBtn('howtoplay', 'How To Play')}
+          {renderHelpModalTypeBtn('points', 'Points')}
+          {renderHelpModalTypeBtn('faq', 'FAQs')}
         </Form>
       </div>
     );
   }
 
-  function renderUnAuthUserDashboard() {
+  function renderFooterMenuForHomePage() {
     return (
-      <div className="secondaryMenu">
-        <Form inline>
-          {renderGoToButton('Help', '/helppage')}
-          {renderGoToButton('Fixtures', '/Fixtures')}
-          {renderGoToButton('View Stats', '/statistics')}
-        </Form>
+      <div>
+        <Navbar
+          fixed="bottom"
+          bg="light"
+          variant="light"
+          className="justify-content-center footerTeamBtn">
+          <Nav>
+            {renderGoToButton('League', '/league')}
+            {renderGoToButton('View Team', '/team')}
+          </Nav>
+        </Navbar>
       </div>
     );
   }
@@ -195,19 +239,6 @@ const FantasyHome = () => {
     );
   }
 
-  function renderIPLbanner() {
-    return (
-      <div className="fantasyBanner">
-        <Row>
-          <Col>IPL Fantasy</Col>
-        </Row>
-        <Row>
-          <Col>Play IPL fantasy with single Team. Old IPL Fantasy is Back</Col>
-        </Row>
-      </div>
-    );
-  }
-
   function renderStatusMessage(isError: boolean, statusMessage: string) {
     const statusClassName = isError ? 'error' : 'success';
     return <StatusMessage text={statusMessage} type={statusClassName} />;
@@ -227,6 +258,7 @@ const FantasyHome = () => {
           <title>Home - IPL Fantasy</title>
         </Helmet>
         {renderJoinPrivateLeagueModal()}
+        {renderHelpModal()}
         {checkUserAccess()}
         <UserHomePageBoard />
         {renderIPLImage()}
@@ -241,6 +273,7 @@ const FantasyHome = () => {
         {loginUser && renderAuthUserDashboard()}
         {!loginUser && renderUnAuthUserDashboard()}
         <FantasyPrize />
+        <UserHomePageBoard />
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>

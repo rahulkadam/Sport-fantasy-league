@@ -4,6 +4,7 @@ import {
   CREATE_VENUE,
   GET_VENUE_LIST,
   GET_VENUE_LIST_ERROR,
+  GET_TOP_30_USER_LIST,
 } from './venueConstants';
 
 const initialState: Venue = {
@@ -12,6 +13,7 @@ const initialState: Venue = {
   hasError: false,
   statusMessage: '',
   venueList: [],
+  userList: [],
 };
 
 export default (state: Venue = initialState, action: any): Venue => {
@@ -21,6 +23,13 @@ export default (state: Venue = initialState, action: any): Venue => {
       venueState = {
         ...state,
         venueList: action.venueList,
+        isLoading: false,
+      };
+      return venueState;
+    case GET_TOP_30_USER_LIST:
+      venueState = {
+        ...state,
+        userList: action.userList,
         isLoading: false,
       };
       return venueState;

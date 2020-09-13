@@ -9,6 +9,7 @@ import {
   AUTO_PICK_USER_TEAM,
   SHOULD_REFRESH_STOP,
   FETCH_USER_TEAM_WITH_PLAYERS,
+  USER_TEAM_ACTION_START,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -29,6 +30,7 @@ const initialState: UserTeam = {
   shouldRefresh: false,
   captionPlayerId: 0,
   captainName: '',
+  isUserTeamLoading: false,
 };
 
 export default (state: UserTeam = initialState, action: any): UserTeam => {
@@ -50,6 +52,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
           currentUserTeamValue: actionUserTeam.creditbalance,
           captionPlayerId: actionUserTeam.team_captain_player_Id,
           captainName: actionUserTeam.captainName,
+          isUserTeamLoading: false,
         };
       }
       return {...userLeaguestate};
@@ -126,6 +129,12 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       userLeaguestate = {
         ...state,
         shouldRefresh: true,
+      };
+      return userLeaguestate;
+    case USER_TEAM_ACTION_START:
+      userLeaguestate = {
+        ...state,
+        isUserTeamLoading: true,
       };
       return userLeaguestate;
     case FETCH_GAME_CRITERIA:

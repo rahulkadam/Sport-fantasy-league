@@ -26,7 +26,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 .setCacheControl(CacheControl.maxAge(d).cachePublic().mustRevalidate());
         registry.addResourceHandler("/**/*.html")
                 .addResourceLocations("classpath:Resources", "classpath:static")
-                .setCacheControl(CacheControl.noCache());
+                .setCacheControl(CacheControl.noStore());
     }
 
     @Override

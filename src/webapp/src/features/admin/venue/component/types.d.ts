@@ -8,3 +8,8 @@ declare type VenueDetailsProps = {
   title: string;
   onRowSelected?: any;
 };
+
+declare type TopUserTeamListProps = {
+  userList?: any;
+  title?: string;
+};

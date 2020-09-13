@@ -11,6 +11,12 @@ const JoinLeagueCard = () => {
           <Card.Title className="userTeamTitle">Create/Join League</Card.Title>
           <Card.Text>
             <Row>
+              <Col className="textFontForCards">
+                Join Public League, win Exciting prizes! Or Play Private League
+                against friends/family
+              </Col>
+            </Row>
+            <Row>
               <Col>
                 <Image src={leagueListBanner} width="100%" height="120px" />
               </Col>

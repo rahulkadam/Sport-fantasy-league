@@ -4,23 +4,6 @@ import Login from '../../../Authentication/components';
 import {getAccessToken} from '../../../../API';
 const UserHomePageBoard = () => {
   const accessToken = getAccessToken();
-  function renderUserActionLinkCard() {
-    return (
-      <div className="userLinkCardContainer">
-        <Card className="userLinkCardContainer">
-          <Card.Body>
-            <Card.Title>Please Proceed with Below Actions</Card.Title>
-            <Card.Text>
-              <Row>
-                <Col md={4}>League link</Col>
-                <Col md={4}>League link</Col>
-              </Row>
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  }
 
   function renderNoAUthUserActionLinkCard() {
     return (

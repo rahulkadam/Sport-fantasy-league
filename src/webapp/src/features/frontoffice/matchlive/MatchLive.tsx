@@ -95,7 +95,7 @@ const MatchLive = () => {
         {!isMatchPresent && (
           <StatusMessage
             type="error"
-            text="No IPL Live Match. Please check during live IPL match"
+            text="Hold tight ! Match will starts very soon. Keep checking"
           />
         )}
         {isMatchPresent && renderMatchScore()}

@@ -7,6 +7,7 @@ import {Nav} from 'react-bootstrap';
 import LeagueMemberTeamDetails from './LeagueMemberTeamDetails';
 import {StatusMessage} from 'common/components';
 import {GA_League_Event} from 'common/config';
+import {isListEmpty} from '../../../../common/util';
 
 const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
   const userList = data.leagueUserTeamDTOS;
@@ -119,7 +120,7 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
             League Code : <Badge variant="success"> {data.leagueCode}</Badge>
           </Col>
         </Row>
-        {data.publicLeague && (
+        {isListEmpty(userList) && (
           <Row>
             <Col>
               <StatusMessage
