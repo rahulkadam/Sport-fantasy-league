@@ -5,7 +5,7 @@ import {GA_USER_Event} from '../../../common/config';
 export function checkUserAccess() {
   const UserLogOut = UserLogOutActions();
   if (!getAccessToken()) {
-    GA_USER_Event('Logout Success');
+    GA_USER_Event('Check Logout Access');
     UserLogOut();
   }
 }
