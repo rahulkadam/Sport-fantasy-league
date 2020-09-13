@@ -19,6 +19,7 @@ import {
   SHOULD_REFRESH_STOP,
   ACTION_ERROR,
   FETCH_USER_TEAM_WITH_PLAYERS,
+  USER_TEAM_ACTION_START,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
@@ -59,6 +60,7 @@ const fetchUserTeamDataAction = () => {
   return dispatchActionWrapper(
     dispatch,
     dispatchAction(dispatch, ACTION_START),
+    dispatchAction(dispatch, USER_TEAM_ACTION_START),
     dispatchAction(dispatch, SHOULD_REFRESH_STOP),
     (userid: number) => {
       fetchUserTeamFullDataByUser(userid)

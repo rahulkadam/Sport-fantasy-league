@@ -344,7 +344,7 @@ const UserTeam = () => {
   return (
     <div className="userTeamContainer">
       <LoadingOverlay
-        active={configProps.isLoading}
+        active={configProps.isLoading || userteamDataProps.isUserTeamLoading}
         spinner
         text="Loading User Team Details ...">
         <Helmet>
