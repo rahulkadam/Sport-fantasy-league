@@ -11,6 +11,7 @@ import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.math3.util.ArithmeticUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,6 +49,9 @@ public class CalculatePointsService {
 
     @Autowired
     private UserTeamRepository userTeamRepository;
+
+    @Autowired
+    private UserTeamService userTeamService;
 
     @Autowired
     private LeagueUserTeamRepository leagueUserTeamRepository;
