@@ -56,4 +56,12 @@ public class UserService {
         return id;
     }
 
+    public Long getAuthenticatedUserId() {
+        try {
+            return getCurrentUserId();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

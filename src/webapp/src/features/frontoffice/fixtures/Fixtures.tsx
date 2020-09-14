@@ -33,7 +33,7 @@ const Fixtures = () => {
     return (
       <div>
         <MatchDetails
-          title="Fixtures"
+          title="Fixture"
           data={matchList}
           fetchMatchHistory={fetchPlayerStats}
           playerStats={statsProps.playerStats}

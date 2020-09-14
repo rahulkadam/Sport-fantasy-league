@@ -29,7 +29,7 @@ public class MatchController extends BaseController {
     @GetMapping(value = "/completed/list")
     @ResponseBody
     public ResponseEntity<List<MatchDTO>> getCompletedMatchList() {
-        List<MatchDTO> matchList = service.getCompletedMatchList();
+        List<MatchDTO> matchList = service.getCompletedMatchListWithUserScore();
         return getResponseBodyWithCache(matchList, FOR_5_MIN);
     }
 

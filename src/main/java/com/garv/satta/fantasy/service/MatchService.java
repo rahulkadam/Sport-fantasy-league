@@ -1,5 +1,6 @@
 package com.garv.satta.fantasy.service;
 
+import com.garv.satta.fantasy.dao.repository.LeagueUserTeamScorePerMatchRepository;
 import com.garv.satta.fantasy.dao.repository.MatchRepository;
 import com.garv.satta.fantasy.dto.*;
 import com.garv.satta.fantasy.dto.converter.MatchConverter;
@@ -8,6 +9,8 @@ import com.garv.satta.fantasy.model.backoffice.Match;
 import com.garv.satta.fantasy.model.backoffice.Team;
 import com.garv.satta.fantasy.model.backoffice.Tournament;
 import com.garv.satta.fantasy.model.backoffice.Venue;
+import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
+import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.service.admin.CacheService;
 import com.garv.satta.fantasy.validation.TeamValidator;
 import com.garv.satta.fantasy.validation.TournamentValidator;
@@ -44,6 +47,12 @@ public class MatchService {
 
     @Autowired
     private TournamentService tournamentService;
+
+    @Autowired
+    private UserTeamService userTeamService;
+
+    @Autowired
+    private LeagueUserTeamScorePerMatchRepository leagueUserTeamScorePerMatchRepository;
 
     @Autowired
     private ExcelFileService excelFileService;
@@ -115,6 +124,25 @@ public class MatchService {
         DateTime currentTime = new DateTime();
         List<Match> matches = repository.findCompletedMatchesByMatchTimeLessThanEqualAndIsDeleted(currentTime, false);
         return converter.convertToFullDTOList(matches);
+    }
+
+    public List<MatchDTO> getCompletedMatchListWithUserScore() {
+        List<MatchDTO> matchDTOList = getCompletedMatchList();
+        UserTeam userTeam = userTeamService.getAuthenticatedUserTeam();
+        if (userTeam != null) {
+            long[] matchids = matchDTOList.stream().mapToLong(matchDTO -> matchDTO.getId()).toArray();
+            List<LeagueUserTeamScorePerMatch> usermatchScore = leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchIdIn(userTeam.getId(), matchids);
+            Map<Long, Integer> mapMatchwithScore = new HashMap<>();
+            usermatchScore.stream().forEach(score ->
+                    mapMatchwithScore.put(score.getMatch().getId(), score.getCurrent_match_point()));
+
+            matchDTOList.stream().forEach(matchDTO -> {
+                Integer score = mapMatchwithScore.get(matchDTO.getId());
+                matchDTO.setUserMatchScore(score);
+            });
+        }
+
+        return matchDTOList;
     }
 
 

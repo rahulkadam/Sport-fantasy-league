@@ -182,4 +182,13 @@ public class UserTeamService {
         userTeam.resetPlayerList(playerList);
         repository.save(userTeam);
     }
+
+    public UserTeam getAuthenticatedUserTeam() {
+        Long userId = userService.getAuthenticatedUserId();
+        if (userId == null) {
+            return null;
+        }
+        UserTeam userTeam = repository.findFirstByUserId(userId);
+        return userTeam;
+    }
 }
