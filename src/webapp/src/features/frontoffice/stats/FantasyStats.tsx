@@ -14,7 +14,11 @@ import {
   fetchCompletedMatchListAction,
   getMatchData,
 } from '../../admin/Match/redux';
-import {fetchAllPlayerListAction, getUserTeamData} from '../UserTeam/redux';
+import {
+  fetchAllPlayerListAction,
+  getUserTeamData,
+  fetchUserTeamDataAction,
+} from '../UserTeam/redux';
 import {Button, Form} from 'react-bootstrap';
 import {StatusMessage} from 'common/components';
 import {isUserLogin} from 'API';
@@ -25,6 +29,7 @@ import {
 } from 'common/components/Footer/socialmedia';
 import {GA_Other_Event} from '../../../common/config';
 import {isListEmpty} from '../../../common/util';
+import {GetLoginStoreData} from '../../Authentication/redux';
 
 const FantasyStats = () => {
   const statsProps = getStatsProps();
@@ -38,6 +43,8 @@ const FantasyStats = () => {
   const userTeamProps = getUserTeamData();
   const playerList = userTeamProps.playerList;
   const fetchPlayerList = fetchAllPlayerListAction();
+  const fetchuserTeamData = fetchUserTeamDataAction();
+  const userProps = GetLoginStoreData();
   const userLogin = isUserLogin();
   useEffect(() => {
     if (!matchList || matchList.length == 0) {
@@ -45,6 +52,9 @@ const FantasyStats = () => {
     }
     if (!playerList || playerList.length == 0) {
       fetchPlayerList();
+    }
+    if (userLogin && !userTeamProps.userteam.id) {
+      fetchuserTeamData(userProps.id);
     }
   }, []);
 

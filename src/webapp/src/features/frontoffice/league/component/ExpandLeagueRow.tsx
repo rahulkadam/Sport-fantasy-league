@@ -89,6 +89,7 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
       width: '35%',
       cell: customName,
       left: true,
+      omit: true,
     },
   ];
 

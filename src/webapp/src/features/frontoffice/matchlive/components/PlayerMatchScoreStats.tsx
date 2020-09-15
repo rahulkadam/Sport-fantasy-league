@@ -8,6 +8,7 @@ import {Badge} from 'react-bootstrap';
 import {largeRowStyles} from 'common/components/DataTable/TableConfig';
 import {getUserTeamData} from '../../UserTeam/redux';
 import {returnMapFromList} from 'common/util';
+import '../MatchLive.styles.scss';
 
 const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
   const configProps = getCommonData();
