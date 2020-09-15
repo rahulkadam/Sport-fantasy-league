@@ -14,6 +14,7 @@ public class MatchDTO extends ShortBaseDTO {
     private DateTime matchTime;
     private Boolean status;
     private Long venueId;
+    private Integer userMatchScore;
     private Long team_host_id;
     private Long team_away_id;
     private Long tournament_id;

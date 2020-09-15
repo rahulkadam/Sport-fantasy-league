@@ -14,7 +14,8 @@ const CreateTeam = ({createTeamAction}: CreateTeamProps) => {
     setTeamName(teamNameTxt);
   }
 
-  const createTeamMsg = 'Welcome to IPL Fantasy League , Please create team';
+  const createTeamMsg =
+    'Welcome to IPL Fantasy League , Please create Your Fantasy team';
 
   function renderCreateTeam() {
     const teambtnDisable = teamName.length == 0;

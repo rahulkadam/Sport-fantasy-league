@@ -119,7 +119,7 @@ const FantasyHelpContent = () => {
           <Col md={8} className="textFont">
             {renderBoldText('Fantasy will be friendly, No Money involved')}, You
             can created friendly League among your friends, You can join league
-            crated by your friends.
+            created by your friends.
           </Col>
         </Row>
       </div>

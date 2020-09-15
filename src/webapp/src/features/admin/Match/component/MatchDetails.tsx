@@ -12,6 +12,7 @@ import {largeRowStyles} from 'common/components/DataTable/TableConfig';
 import {Logo} from 'common/components';
 import '../Match.styles.scss';
 import {GA_Other_Event} from '../../../../common/config';
+import {isUserLogin} from '../../../../API';
 
 const MatchDetails = ({
   data,
@@ -24,6 +25,7 @@ const MatchDetails = ({
   const [showPlayerHistory, setShowPlayerHistory] = useState(false);
   const handlePlayerHistoryShow = () => setShowPlayerHistory(true);
   const handlePlayerHistoryClose = () => setShowPlayerHistory(false);
+  const loggedUser = isUserLogin();
 
   function fetchPlayerHistoryList(matchId: string) {
     fetchMatchHistory(matchId);
@@ -87,6 +89,7 @@ const MatchDetails = ({
       selector: 'team_host_name',
       sortable: true,
       cell: customName,
+      width: '30%',
     },
     {
       name: 'Time',
@@ -94,19 +97,33 @@ const MatchDetails = ({
       grow: 2,
       sortable: true,
       cell: convertDateTime,
+      width: '30%',
+    },
+    {
+      name: 'Your Score',
+      selector: 'userMatchScore',
+      sortable: true,
+      left: true,
+      omit: !loggedUser || title == 'Fixture',
+      style: {
+        'font-weight': 'bold',
+      },
+      width: '20%',
     },
     {
       name: 'Match Result',
       selector: 'matchResult',
       left: true,
       cell: customMatchResult,
-      omit: title == 'fixture',
+      omit: title == 'Fixture',
+      width: '20%',
     },
     {
       name: 'Venue',
       selector: 'venue_name',
       sortable: true,
       left: true,
+      omit: loggedUser && title != 'Fixture',
       cell: customVenue,
     },
     {

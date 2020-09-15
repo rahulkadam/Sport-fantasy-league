@@ -18,6 +18,8 @@ public interface UserTeamRepository extends JpaRepository<UserTeam, Long> {
     List<UserTeam> findAll();
     @EntityGraph(value = "UserTeam.leagueUserTeams")
     List<UserTeam> findUserTeamByUserId(Long id);
+
+    UserTeam findFirstByUserId(Long id);
     UserTeam findUserTeamById(Long id);
 
     Page<ObjectId> findUserTeamIdsByTournamentId(Long id,Pageable pageable);

@@ -10,6 +10,7 @@ import {
   SHOULD_REFRESH_STOP,
   FETCH_USER_TEAM_WITH_PLAYERS,
   USER_TEAM_ACTION_START,
+  USER_TEAM_ACTION_STOP,
 } from './userteamConstants';
 import {
   findCountDifferenceInList,
@@ -55,7 +56,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
           isUserTeamLoading: false,
         };
       }
-      return {...userLeaguestate};
+      return {...userLeaguestate, isUserTeamLoading: false};
     case FETCH_ALL_PLAYER_LIST:
       userLeaguestate = {
         ...state,
@@ -135,6 +136,12 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       userLeaguestate = {
         ...state,
         isUserTeamLoading: true,
+      };
+      return userLeaguestate;
+    case USER_TEAM_ACTION_STOP:
+      userLeaguestate = {
+        ...state,
+        isUserTeamLoading: false,
       };
       return userLeaguestate;
     case FETCH_GAME_CRITERIA:

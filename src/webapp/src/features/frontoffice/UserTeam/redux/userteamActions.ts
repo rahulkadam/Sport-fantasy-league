@@ -20,6 +20,7 @@ import {
   ACTION_ERROR,
   FETCH_USER_TEAM_WITH_PLAYERS,
   USER_TEAM_ACTION_START,
+  USER_TEAM_ACTION_STOP,
 } from './userteamConstants';
 import {
   dispatchActionWrapper,
@@ -72,10 +73,11 @@ const fetchUserTeamDataAction = () => {
           dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
-          dispatch({
-            type: ACTION_ERROR,
-            errorMessage: getErrorMessage(error),
-          });
+          dispatchAction(dispatch, USER_TEAM_ACTION_STOP),
+            dispatch({
+              type: ACTION_ERROR,
+              errorMessage: getErrorMessage(error),
+            });
         });
     }
   );
