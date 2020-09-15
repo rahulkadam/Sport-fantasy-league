@@ -17,6 +17,10 @@ import {
   getLogoNameByTeam,
   getShortNameByTeam,
 } from 'common/components/FantasyDropDown';
+import {fetchUserTeamDataAction, getUserTeamData} from '../UserTeam/redux';
+import {GetLoginStoreData} from '../../Authentication/redux';
+import {isUserLogin} from 'API';
+import {getLiveUserPoint} from './redux/matchlive-util';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -25,10 +29,19 @@ const MatchLive = () => {
   const playerStats = liveMatchProps.playerStats || [];
   const matchScore = liveMatchProps.matchScore || {};
   const isMatchPresent = matchScore.id;
+  const userTeamProps = getUserTeamData();
+  const fetchuserTeamData = fetchUserTeamDataAction();
+  const userProps = GetLoginStoreData();
+  const userLogin = isUserLogin();
+  const currentUserTeamPlayers = userTeamProps.userTeamPlayers;
+  const livePointScore = getLiveUserPoint(playerStats, currentUserTeamPlayers);
 
   useEffect(() => {
     GA_Other_Event('GET_LIVE_SCORE');
     fetchPlayerLiveScore();
+    if (userLogin && !userTeamProps.userteam.id) {
+      fetchuserTeamData(userProps.id);
+    }
   }, []);
 
   function renderMatchScore() {
@@ -75,7 +88,7 @@ const MatchLive = () => {
       <div>
         <div className="liveMatchTitle">Live Match Points</div>
         <Row>
-          <Col md={4}>
+          <Col>
             <Button
               variant="outline-success"
               className="mr-2 "
@@ -106,6 +119,17 @@ const MatchLive = () => {
     );
   }
 
+  function renderFooter() {
+    if (isListEmpty(playerStats)) return;
+    return (
+      <div>
+        <Badge variant="warning">
+          Note : Fielding point will get corrected after Match!
+        </Badge>
+      </div>
+    );
+  }
+
   function renderTwitterHashtag() {
     return <TwitterFantasyTimeline type="list" id={TWITTER_LIST_SCORE} />;
   }
@@ -120,6 +144,7 @@ const MatchLive = () => {
           <title>Live Match Points</title>
         </Helmet>
         {renderPlayerLiveScore()}
+        {renderFooter()}
         {renderTwitterHashtag()}
       </LoadingOverlay>
     </div>
