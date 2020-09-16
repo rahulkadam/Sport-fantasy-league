@@ -150,7 +150,7 @@ public class FieldingParser {
             }
             return runout;
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage() +" " + dismisal, e);
             return runout;
         }
     }

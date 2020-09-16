@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dao.repository.*;
 import com.garv.satta.fantasy.dao.repository.specification.ObjectId;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.exceptions.GenericException;
+import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.*;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
@@ -79,10 +80,17 @@ public class CalculatePointsService {
         if (match == null) {
             throw new GenericException("Match id is Not Valid" + id);
         }
+
+        if (match.getState() == MatchStateEnum.SCORE_CALCULATION_DONE) {
+            throw new GenericException("Match score already calculated : " + id);
+        }
+
         Tournament tournament = match.getTournament();
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
         calculateScoreForUser(tournament, matchPlayerScoreMap, match);
+        match.setState(MatchStateEnum.SCORE_CALCULATION_DONE);
+        matchRepository.save(match);
         fantasyErrorService.logMessage("AFTER_MATCH_SCORE_USER_CALCULATION", match.getId().toString());
     }
 

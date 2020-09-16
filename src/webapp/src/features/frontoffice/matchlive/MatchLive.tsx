@@ -20,7 +20,6 @@ import {
 import {fetchUserTeamDataAction, getUserTeamData} from '../UserTeam/redux';
 import {GetLoginStoreData} from '../../Authentication/redux';
 import {isUserLogin} from 'API';
-import {getLiveUserPoint} from './redux/matchlive-util';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -33,8 +32,6 @@ const MatchLive = () => {
   const fetchuserTeamData = fetchUserTeamDataAction();
   const userProps = GetLoginStoreData();
   const userLogin = isUserLogin();
-  const currentUserTeamPlayers = userTeamProps.userTeamPlayers;
-  const livePointScore = getLiveUserPoint(playerStats, currentUserTeamPlayers);
 
   useEffect(() => {
     GA_Other_Event('GET_LIVE_SCORE');
