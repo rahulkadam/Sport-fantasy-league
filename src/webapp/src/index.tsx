@@ -21,7 +21,7 @@ const Root = () => {
 
   return (
     <div className="mainContainer">
-      <div className="backgroundImageRight"></div>
+      <div className="backgroundImageRight">Text images and player List</div>
       <Header />
       <div className="fixedHeaderContainer">
         <BaseRoute />
@@ -45,4 +45,4 @@ ReactDOM.render(<WrappedApp />, document.getElementById('root'));
  * Note this comes with some pitfalls.
  * @see https://bit.ly/CRA-PWA
  */
-serviceWorker.unregister();
+serviceWorker.register({});
