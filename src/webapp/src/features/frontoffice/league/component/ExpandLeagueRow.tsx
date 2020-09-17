@@ -126,7 +126,7 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
             <Col>
               <StatusMessage
                 type="info"
-                text="Public League Member details is not avaialble"
+                text="Public League Member details is not available"
               />
             </Col>
           </Row>

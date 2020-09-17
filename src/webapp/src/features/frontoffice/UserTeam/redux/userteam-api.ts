@@ -24,7 +24,7 @@ export function fetchAllPlayerlist() {
   return Get('/fantasy/player/list');
 }
 
-export function fetchPlayerlistByUser(id: number) {
+export function fetchPlayerlistByUserForLeague(id: number) {
   return Get('/fantasy/player/list/byuser/' + id);
 }
 

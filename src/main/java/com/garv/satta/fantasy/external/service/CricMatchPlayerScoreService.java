@@ -209,6 +209,7 @@ public class CricMatchPlayerScoreService {
                 match.setStatus(false);
                 match.setState(MatchStateEnum.COMPLETED);
                 matchService.saveMatch(match);
+                fantasyConfigService.disableOtherUserTeamViewInLeague();
                 if (matchSummary.contains("won by")) {
                     calculatePointsService.processScoreAndRankingAfterMatch(match);
                 }

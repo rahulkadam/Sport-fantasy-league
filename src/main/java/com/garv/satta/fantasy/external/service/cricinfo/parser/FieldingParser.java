@@ -42,6 +42,10 @@ public class FieldingParser {
                             // handling multiple player fielding in runout
                             String[] playerList = runout.split("/");
                             for(String p: playerList) {
+                                if (p.contains("†")) {
+                                    p = p.substring(1);
+                                }
+
                                 if (runoutMap.get(p) != null) {
                                     runoutMap.put(p, runoutMap.get(p) + 1);
                                 } else {

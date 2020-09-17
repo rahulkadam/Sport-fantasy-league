@@ -11,6 +11,7 @@ import com.garv.satta.fantasy.fantasyenum.PlayerEnum;
 import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.backoffice.Team;
 import com.garv.satta.fantasy.service.admin.CacheService;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import com.garv.satta.fantasy.validation.PlayerValidator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,13 @@ public class PlayerService {
     private ExcelFileService excelFileService;
 
     @Autowired
+    private UserTeamService userTeamService;
+
+    @Autowired
     private CacheService cacheService;
+
+    @Autowired
+    private FantasyConfigService fantasyConfigService;
 
     public final String PLAYER_CACHE_NAME = "PlayerCache";
 
@@ -48,6 +55,14 @@ public class PlayerService {
     public List<PlayerDTO> getPlayerList() {
         List<Player> playerList = playerRepository.findAllByIsDeleted(Boolean.FALSE);
         return playerConverter.convertToFullDTOList(playerList);
+    }
+
+    public List<PlayerDTO> getPlayerListByUserTeamIdForLeagueView(Long id) {
+        boolean isviewAllowed = fantasyConfigService.getShowUserTeamDetailsInLeague();
+        if (isviewAllowed) {
+            return userTeamService.getPlayerListByUserTeamId(id);
+        }
+        throw new GenericException("User Team View disable, please check after match start");
     }
 
     public PlayerDTO getplayerbyname(String name) {

@@ -1,8 +1,15 @@
-import React, {useState} from 'react';
+import React, {Fragment} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import {UserTeamPlayerDetails} from '../../UserTeam/component';
+import {isListEmpty} from 'common/util';
 
 const LeagueMemberTeamDetails = (props: LeagueMemberTeamDetailsProps) => {
+  if (isListEmpty(props.playerList))
+    return (
+      <Fragment>
+        User Team View disable, please check after match start
+      </Fragment>
+    );
   return (
     <Modal
       show={props.show}

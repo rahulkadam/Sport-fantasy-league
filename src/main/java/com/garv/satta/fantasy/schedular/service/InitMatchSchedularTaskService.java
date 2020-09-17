@@ -11,6 +11,7 @@ import com.garv.satta.fantasy.service.FantasyErrorService;
 import com.garv.satta.fantasy.service.MatchService;
 import com.garv.satta.fantasy.service.TournamentService;
 import com.garv.satta.fantasy.service.admin.CacheService;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class InitMatchSchedularTaskService {
 
     @Autowired
     private CacheService cacheService;
+
+    @Autowired
+    private FantasyConfigService fantasyConfigService;
 
     @Autowired
     private CalculatePointsService calculatePointsService;
@@ -152,6 +156,7 @@ public class InitMatchSchedularTaskService {
             match.setState(MatchStateEnum.IN_PROGRESS);
             match.setStatus(Boolean.TRUE);
             matchService.saveMatch(match);
+            fantasyConfigService.enableOtherUserTeamViewInLeague();
         }
     }
 
