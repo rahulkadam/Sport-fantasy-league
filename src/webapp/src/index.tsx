@@ -45,4 +45,4 @@ ReactDOM.render(<WrappedApp />, document.getElementById('root'));
  * Note this comes with some pitfalls.
  * @see https://bit.ly/CRA-PWA
  */
-serviceWorker.register({});
+serviceWorker.unregister();

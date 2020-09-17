@@ -15,6 +15,7 @@ import {
 import {
   findCountDifferenceInList,
   getAutoPickTeam,
+  isListEmpty,
   returnMapFromList,
   returnUniqueArrayElement,
 } from 'common/util';
@@ -105,6 +106,12 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
       currentUserTeamPlayers = currentUserTeamPlayers.filter(
         (player: any) => player.id != action.rows.id
       );
+      const captionSearch = currentUserTeamPlayers.filter(
+        (player: any) => player.id == captionPlayerId
+      );
+      if (isListEmpty(captionSearch)) {
+        captionPlayerId = currentUserTeamPlayers[0].id;
+      }
       currentUserTeamPlayers.forEach(
         (player: any) => (currentTeamValue = currentTeamValue + player.value)
       );
@@ -119,6 +126,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         currentUserTeamPlayers: currentUserTeamPlayers,
         currentUserTeamValue: currentTeamValue,
         currentTransferChanges: transferCount,
+        captionPlayerId: captionPlayerId,
       };
       return userLeaguestate;
     case SHOULD_REFRESH_STOP:
@@ -161,6 +169,7 @@ export default (state: UserTeam = initialState, action: any): UserTeam => {
         ...state,
         currentUserTeamPlayers: state.userTeamPlayers,
         currentUserTeamValue: state.userteam.creditbalance,
+        captionPlayerId: state.userteam.team_captain_player_Id,
         currentTransferChanges: 0,
       };
     default:
