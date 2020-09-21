@@ -36,7 +36,7 @@ export const battingPoints = [
     points: 10,
   },
   {
-    name: 'SR > 150 (Min 20 Runs)',
+    name: 'SR > 140 (Min 20 Runs)',
     points: 15,
   },
   {

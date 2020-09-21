@@ -50,12 +50,23 @@ public class PlayerParser {
 
     private String getShortName(String name) {
         name = name.trim();
-        if (name.contains("(c)")) {
-            name = name.substring(0, name.length() - 4);
+        Boolean isCaptain = name.contains("(");
+        boolean isWK = name.contains("†");
+
+        if (isCaptain && isWK) {
+            int toIndex = name.indexOf("(");
+            name = name.substring(0, toIndex).trim();
             return name;
         }
-        if (name.contains("†")) {
-            name = name.substring(0, name.length() - 2);
+
+        if (isCaptain) {
+            int toIndex = name.indexOf("(");
+            name = name.substring(0, toIndex).trim();
+            return name;
+        }
+        if (isWK) {
+            int toIndex = name.indexOf("†");
+            name = name.substring(0, toIndex).trim();
             return name;
         }
         if (name.indexOf(",") > 0) {

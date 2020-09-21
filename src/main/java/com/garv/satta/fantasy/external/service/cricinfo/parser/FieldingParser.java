@@ -33,6 +33,9 @@ public class FieldingParser {
                     String runout = handleRunout(dismisal);
                     if (!StringUtils.isEmpty(runout)) {
                         if (!runout.contains("/")) {
+                            if (runout.contains("†")) {
+                                runout = runout.substring(1);
+                            }
                             if (runoutMap.get(runout) != null) {
                                 runoutMap.put(runout, runoutMap.get(runout) + 1);
                             } else {
@@ -134,7 +137,7 @@ public class FieldingParser {
                 int to = dismisal.indexOf(" b");
                 out = dismisal.substring(starting.length(), to).trim();
                 if (out.contains("†")) {
-                    out = out.substring(1);
+                    out = out.substring(out.indexOf("†") + 1);
                 }
             }
             return out;

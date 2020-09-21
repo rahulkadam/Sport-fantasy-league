@@ -136,14 +136,13 @@ public class InitMatchSchedularTaskService {
      */
     public void lockTournamentBefore10Min(Match match) {
         DateTime matchTime = match.getMatchTime();
-        DateTime plus10MinTime = getTimePlusMinuite(10);
+        DateTime plus10MinTime = getTimePlusMinuite(5);
         if (matchTime.getMillis() < plus10MinTime.getMillis()) {
             tournamentService.lockTournamentByName("IPL-20");
             // after tournament lock, init user for Same Match
             calculatePointsService.initUserScoreForMatch(match);
         }
     }
-
 
     /**
      * Start match at the time, mark inProgress

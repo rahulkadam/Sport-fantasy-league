@@ -3,6 +3,7 @@ package com.garv.satta.fantasy.service.admin;
 import com.garv.satta.fantasy.dao.repository.FantasyConfigRepository;
 import com.garv.satta.fantasy.model.monitoring.FantasyConfig;
 import com.garv.satta.fantasy.service.FantasyErrorService;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class FantasyConfigService {
     @Autowired
     private FantasyErrorService fantasyErrorService;
 
+    @Autowired
+    private CacheService cacheService;
+
     private final String FANTASY_CACHE = "FantasyCache";
     private final String KEY_GENERATOR = "customKeyGenerator";
 
@@ -24,6 +28,7 @@ public class FantasyConfigService {
         fantasyConfig.setConfigkey(key);
         fantasyConfig.setConfigvalue(value);
         fantasyConfig = fantasyConfigRepository.save(fantasyConfig);
+        cacheService.clearFantasyCache();
         return fantasyConfig;
     }
 
@@ -114,6 +119,7 @@ public class FantasyConfigService {
                 config.setConfigvalue(value);
             }
             config = fantasyConfigRepository.save(config);
+            cacheService.clearFantasyCache();
             return config;
         } catch (Exception e) {
             fantasyErrorService.logMessage("update config key: "+ key, e.getMessage() + " : " + value);
