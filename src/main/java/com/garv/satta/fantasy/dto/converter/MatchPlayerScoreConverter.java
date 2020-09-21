@@ -33,11 +33,38 @@ public class MatchPlayerScoreConverter extends Converter<MatchPlayerScore, Match
         return matchPlayerScore;
     }
 
+    public boolean isNotScoreEmpty(Integer integer) {
+        if (integer == null || integer == 0) {
+            return false;
+        }
+        return true;
+    }
+
     public MatchPlayerScore updateEntity(MatchPlayerScore matchPlayerScore, MatchPlayerScoreDTO dto) {
-        matchPlayerScore.setRun_scored(dto.getRun_scored());
-        matchPlayerScore.setWicket(dto.getWicket());
-        matchPlayerScore.setCatches(dto.getCatches());
-        matchPlayerScore.setPointscore(dto.getPointscore());
+
+        if (isNotScoreEmpty(dto.getCatches())) {
+            matchPlayerScore.setCatches(dto.getCatches());
+        }
+
+        if (isNotScoreEmpty(dto.getStumped())) {
+            matchPlayerScore.setStumped(dto.getStumped());
+        }
+
+        if (isNotScoreEmpty(dto.getRunout())) {
+            matchPlayerScore.setRunout(dto.getRunout());
+        }
+
+        if (isNotScoreEmpty(dto.getRun_scored())) {
+            matchPlayerScore.setRun_scored(dto.getRun_scored());
+        }
+
+        if (isNotScoreEmpty(dto.getWicket())) {
+            matchPlayerScore.setWicket(dto.getWicket());
+        }
+
+        if (dto.getPointscore() != null) {
+            matchPlayerScore.setPointscore(dto.getPointscore());
+        }
         return matchPlayerScore;
     }
 

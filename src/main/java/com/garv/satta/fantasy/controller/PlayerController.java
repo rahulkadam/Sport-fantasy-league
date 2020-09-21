@@ -36,7 +36,7 @@ public class PlayerController  extends BaseController {
     @GetMapping(value = "/list/byuser/{id}")
     @ResponseBody
     public List<PlayerDTO> getPlayerListByUserTeamId(@PathVariable(name = "id") Long id) {
-        List<PlayerDTO> playerList =  userTeamService.getPlayerListByUserTeamId(id);
+        List<PlayerDTO> playerList =  playerService.getPlayerListByUserTeamIdForLeagueView(id);
         return playerList;
     }
 

@@ -33,6 +33,9 @@ public class FieldingParser {
                     String runout = handleRunout(dismisal);
                     if (!StringUtils.isEmpty(runout)) {
                         if (!runout.contains("/")) {
+                            if (runout.contains("†")) {
+                                runout = runout.substring(1);
+                            }
                             if (runoutMap.get(runout) != null) {
                                 runoutMap.put(runout, runoutMap.get(runout) + 1);
                             } else {
@@ -42,6 +45,10 @@ public class FieldingParser {
                             // handling multiple player fielding in runout
                             String[] playerList = runout.split("/");
                             for(String p: playerList) {
+                                if (p.contains("†")) {
+                                    p = p.substring(1);
+                                }
+
                                 if (runoutMap.get(p) != null) {
                                     runoutMap.put(p, runoutMap.get(p) + 1);
                                 } else {
@@ -130,7 +137,7 @@ public class FieldingParser {
                 int to = dismisal.indexOf(" b");
                 out = dismisal.substring(starting.length(), to).trim();
                 if (out.contains("†")) {
-                    out = out.substring(1);
+                    out = out.substring(out.indexOf("†") + 1);
                 }
             }
             return out;
@@ -150,7 +157,7 @@ public class FieldingParser {
             }
             return runout;
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage() +" " + dismisal, e);
             return runout;
         }
     }

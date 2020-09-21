@@ -18,7 +18,6 @@ const teamRCB = require('./iplteams/rcb-color_new.jpg');
 const pluscolor = require('./action/plus-color.png');
 const lockcolor = require('./action/lock-color.png');
 const minuscolor = require('./action/minus-color.jpeg');
-const bannerComingsoon = require('./banner/comingsoonIPL.jpeg');
 const banneriplmain = require('./banner/iplmainBanner8.jpg');
 const leagueListBanner = require('./banner/leaguelistBanner1.png');
 const playerListBanner = require('./banner/playerListBanner.png');
@@ -45,7 +44,6 @@ export {
   teamSRH,
   pluscolor,
   minuscolor,
-  bannerComingsoon,
   leagueListBanner,
   playerListBanner,
   colorarr,

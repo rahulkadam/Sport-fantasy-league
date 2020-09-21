@@ -19,7 +19,7 @@ import {
   dispatchAction,
   getErrorMessage,
 } from 'common/util';
-import {fetchPlayerlistByUser} from '../../UserTeam/redux/userteam-api';
+import {fetchPlayerlistByUserForLeague} from '../../UserTeam/redux/userteam-api';
 import {
   ACTION_COMPLETED,
   ACTION_REFRESH,
@@ -128,7 +128,7 @@ const fetchPlayerListByUserForLeagueAction = () => {
     dispatch,
     dispatchAction(dispatch, ACTION_START),
     (userid: number) => {
-      fetchPlayerlistByUser(userid)
+      fetchPlayerlistByUserForLeague(userid)
         .then((data: any) => {
           dispatch({
             type: FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,

@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   getHomeData,
   fetchUpComingMatchesAction,
@@ -38,7 +38,6 @@ const FantasyHome = () => {
   const dashboard = homeProps.dashboard;
   const [isfetching, setIsFetching] = useState(false);
   const [showJoinLeagueModal, setShowPrivateLeagueModal] = useState(false);
-  const [showHelpModal, setShowHelpModal] = useState(false);
   const [helpmodalType, setHelpModalType] = useState('');
   const joinPrivateLeague = joinLeagueAction();
   const fantasyNotice = homeProps.notice;

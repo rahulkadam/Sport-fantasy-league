@@ -1,10 +1,23 @@
 import {colorarr, colorball, colorbat, colorwk} from '@logos/index';
+import {isListEmpty} from 'common/util';
 
 export function teamValueByPlayerList(playerList: any) {
   let teamValue = 0;
   if (!playerList) return teamValue;
   playerList.forEach((player: any) => (teamValue = teamValue + player.value));
   return teamValue;
+}
+
+export function getPlayerListByType(playerList: any, type: string) {
+  const list: any[] = [];
+  if (isListEmpty(playerList)) return list;
+  playerList.forEach((player: any) => {
+    const playerType = player.type;
+    if (playerType == type) {
+      list.push(player);
+    }
+  });
+  return list;
 }
 
 export function getTeamWithMaxPlayer(playerList: any) {

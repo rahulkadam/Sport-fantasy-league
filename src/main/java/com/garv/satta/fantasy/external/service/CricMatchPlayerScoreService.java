@@ -209,7 +209,8 @@ public class CricMatchPlayerScoreService {
                 match.setStatus(false);
                 match.setState(MatchStateEnum.COMPLETED);
                 matchService.saveMatch(match);
-                if (matchSummary.contains("won by")) {
+                fantasyConfigService.disableOtherUserTeamViewInLeague();
+                if (matchSummary.contains("won")) {
                     calculatePointsService.processScoreAndRankingAfterMatch(match);
                 }
             }
@@ -221,8 +222,9 @@ public class CricMatchPlayerScoreService {
 
     public boolean isMatchComplete(String summary) {
         if (summary != null){
-            if(summary.contains("won by") || summary.contains("result")
-                    || summary.contains("Match drawn")) {
+            if(summary.contains("won") || summary.contains("result")
+                    || summary.contains("Match drawn")
+                    || summary.contains("Match tied")) {
                 return true;
             }
         }

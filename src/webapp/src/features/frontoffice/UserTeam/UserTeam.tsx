@@ -30,6 +30,7 @@ import TeamCriteria from '../UserTeam/component/common/TeamCriteria';
 import {getCommonData} from '../../common/redux';
 import Helmet from 'react-helmet';
 import {GA_Team_Event} from 'common/config';
+import UserTeamViewModal from './component/common/TeamView/UserTeamViewModal';
 
 const UserTeam = () => {
   const userteamDataProps = getUserTeamData();
@@ -211,8 +212,8 @@ const UserTeam = () => {
               <Button
                 variant="outline-success"
                 className="mr-2"
-                onClick={() => setTabName('teamDetails')}>
-                Current Team
+                onClick={() => setTabName('teamview')}>
+                Preview
               </Button>
             )}
           </Form>
@@ -299,6 +300,21 @@ const UserTeam = () => {
     );
   }
 
+  function renderTeamView() {
+    return (
+      <Fragment>
+        <UserTeamViewModal
+          show={true}
+          userTeam={userteamDataProps}
+          handleClose={() => {
+            setTabName('transfer');
+          }}
+        />
+        {renderSaveButton()}
+      </Fragment>
+    );
+  }
+
   function renderTeamDetails() {
     if (isUserTeamAvailable) {
       if (isListEmpty(userteamDataProps.userTeamPlayers)) {
@@ -354,6 +370,7 @@ const UserTeam = () => {
         {checkUserAccess()}
         {tabName == 'teamDetails' && renderTeamDetails()}
         {tabName == 'transfer' && renderManageTransfer()}
+        {tabName == 'teamview' && renderTeamView()}
       </LoadingOverlay>
     </div>
   );

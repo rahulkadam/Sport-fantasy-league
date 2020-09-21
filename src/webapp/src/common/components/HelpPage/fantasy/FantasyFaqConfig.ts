@@ -45,7 +45,7 @@ export const faqConfig = [
   {
     question: 'What is Deadline of making changes?',
     answer:
-      'User will be allows to make team changes, till 10 min before match, after that transfer mode will locked, you will bale to make changes for next match after 30 min!',
+      'User will be allows to make team changes, till 5 min before match, after that transfer mode will locked, you will bale to make changes for next match after 30 min!',
     index: 8,
   },
   {

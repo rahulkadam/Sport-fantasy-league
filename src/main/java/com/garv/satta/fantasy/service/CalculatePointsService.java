@@ -4,6 +4,7 @@ import com.garv.satta.fantasy.dao.repository.*;
 import com.garv.satta.fantasy.dao.repository.specification.ObjectId;
 import com.garv.satta.fantasy.dto.RequestDTO;
 import com.garv.satta.fantasy.exceptions.GenericException;
+import com.garv.satta.fantasy.fantasyenum.MatchStateEnum;
 import com.garv.satta.fantasy.model.backoffice.*;
 import com.garv.satta.fantasy.model.frontoffice.League;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
@@ -11,7 +12,6 @@ import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
 import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.util.ArithmeticUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -79,10 +79,17 @@ public class CalculatePointsService {
         if (match == null) {
             throw new GenericException("Match id is Not Valid" + id);
         }
+
+        if (match.getState() == MatchStateEnum.SCORE_CALCULATION_DONE) {
+            throw new GenericException("Match score already calculated : " + id);
+        }
+
         Tournament tournament = match.getTournament();
         List<MatchPlayerScore> matchPlayerScoreList = findMatchPlayerScoreByMatchId(id);
         Map<Long, MatchPlayerScore> matchPlayerScoreMap = getMapOfMatchPlayerScores(matchPlayerScoreList);
         calculateScoreForUser(tournament, matchPlayerScoreMap, match);
+        match.setState(MatchStateEnum.SCORE_CALCULATION_DONE);
+        matchRepository.save(match);
         fantasyErrorService.logMessage("AFTER_MATCH_SCORE_USER_CALCULATION", match.getId().toString());
     }
 
