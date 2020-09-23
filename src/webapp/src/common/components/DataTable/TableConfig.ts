@@ -109,3 +109,18 @@ export const playerRowStyles = [
     },
   },
 ];
+
+export const playerLiveScoreStyleForUser = [
+  {
+    when: (row: any) => row.owned,
+    style: {
+      minHeight: '60px',
+    },
+  },
+  {
+    when: (row: any) => !row.owned,
+    style: {
+      minHeight: '60px',
+    },
+  },
+];

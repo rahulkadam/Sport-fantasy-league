@@ -5,7 +5,7 @@ import {StatusMessage} from 'common/components';
 import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {Badge} from 'react-bootstrap';
-import {largeRowStyles} from 'common/components/DataTable/TableConfig';
+import {playerLiveScoreStyleForUser} from 'common/components/DataTable/TableConfig';
 import {returnMapFromList} from 'common/util';
 import '../MatchLive.styles.scss';
 import {getLiveMatchProps} from '../redux';
@@ -226,7 +226,7 @@ const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
             noHeader
             columns={columns}
             customStyles={customStyles}
-            conditionalRowStyles={largeRowStyles}
+            conditionalRowStyles={playerLiveScoreStyleForUser}
             data={newData}
             highlightOnHover
             fixedHeader
