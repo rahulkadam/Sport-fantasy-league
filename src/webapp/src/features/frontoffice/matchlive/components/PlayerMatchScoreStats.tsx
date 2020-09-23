@@ -6,14 +6,16 @@ import {getCommonData} from '../../../common/redux';
 import LoadingOverlay from 'react-loading-overlay';
 import {Badge} from 'react-bootstrap';
 import {largeRowStyles} from 'common/components/DataTable/TableConfig';
-import {getUserTeamData} from '../../UserTeam/redux';
 import {returnMapFromList} from 'common/util';
 import '../MatchLive.styles.scss';
+import {getLiveMatchProps} from '../redux';
 
 const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
   const configProps = getCommonData();
-  const userteamDataProps = getUserTeamData();
-  const currentUserTeamPlayers = userteamDataProps.userTeamPlayers;
+  const liveMatchProps = getLiveMatchProps();
+  const liveUserTeam = liveMatchProps.userLiveTeam || {};
+  const currentUserTeamPlayers = liveUserTeam.teamPlayersPlayerDTOList;
+  const captainId = liveUserTeam.team_captain_player_Id;
   const playerTeamMap = returnMapFromList(currentUserTeamPlayers);
 
   function customPointScore(row: any) {
@@ -26,9 +28,14 @@ const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
 
   function customPlayerName(row: any) {
     const isAvailable = playerTeamMap.get(row.playerId);
+    const isCaptain = row.playerId == captainId ? '(C)' : '';
     return (
       <div className="nameColumn">
-        {isAvailable && <span className="ownedPlayer">{row.playerName}</span>}
+        {isAvailable && (
+          <span className="ownedPlayer">
+            {row.playerName} {isCaptain}
+          </span>
+        )}
         {!isAvailable && row.playerName}
       </div>
     );

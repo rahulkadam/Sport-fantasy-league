@@ -7,3 +7,9 @@ export function getLiveMatches() {
 export function getPlayerScoreByLiveMatches() {
   return Post('/public/stats/list/playerScoreByLiveMatch');
 }
+
+export function fetchUserTeamForLiveMatch() {
+  return Post('/public/stats/getUserTeamByLiveMatch', {
+    data: {id: 12398},
+  });
+}

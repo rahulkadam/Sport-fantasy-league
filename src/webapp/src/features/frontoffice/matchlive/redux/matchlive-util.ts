@@ -14,17 +14,22 @@ export function getMapWithPlayerScore(arrayList: any[]) {
 
 export function getLiveUserPoint(
   userPlayerList: any[],
-  matchPlayerList: any[]
+  matchPlayerList: any[],
+  captainId: any
 ) {
   const userLogin = isUserLogin();
   if (!userLogin) return 0;
   const matchplayerScore = getMapWithPlayerScore(matchPlayerList);
   let score = 0;
-  userPlayerList.forEach(player => {
-    const playerScore = matchplayerScore.get(player.id);
-    if (playerScore) {
-      score = score + playerScore;
-    }
-  });
+  userPlayerList &&
+    userPlayerList.forEach(player => {
+      const playerScore = matchplayerScore.get(player.id);
+      if (playerScore) {
+        score = score + playerScore;
+        if (player.id == captainId) {
+          score = score + playerScore;
+        }
+      }
+    });
   return score;
 }

@@ -1,7 +1,11 @@
 import React, {useEffect} from 'react';
 import './MatchLive.styles.scss';
 import LoadingOverlay from 'react-loading-overlay';
-import {fetchPlayerScoreByLiveMatchesAction, getLiveMatchProps} from './redux';
+import {
+  fetchPlayerScoreByLiveMatchesAction,
+  getLiveMatchProps,
+  fetchUserTeamByLiveMatchAction,
+} from './redux';
 import {Button, Row, Col, Badge} from 'react-bootstrap';
 import {Logo, StatusMessage} from 'common/components';
 import {getCommonData} from '../../common/redux';
@@ -17,9 +21,8 @@ import {
   getLogoNameByTeam,
   getShortNameByTeam,
 } from 'common/components/FantasyDropDown';
-import {fetchUserTeamDataAction, getUserTeamData} from '../UserTeam/redux';
-import {GetLoginStoreData} from '../../Authentication/redux';
 import {isUserLogin} from 'API';
+import {getLiveUserPoint} from './redux/matchlive-util';
 
 const MatchLive = () => {
   const liveMatchProps = getLiveMatchProps();
@@ -28,16 +31,18 @@ const MatchLive = () => {
   const playerStats = liveMatchProps.playerStats || [];
   const matchScore = liveMatchProps.matchScore || {};
   const isMatchPresent = matchScore.id;
-  const userTeamProps = getUserTeamData();
-  const fetchuserTeamData = fetchUserTeamDataAction();
-  const userProps = GetLoginStoreData();
+  const fetchuserTeamData = fetchUserTeamByLiveMatchAction();
   const userLogin = isUserLogin();
+  const liveUserTeam = liveMatchProps.userLiveTeam || {};
+  const playerList = liveUserTeam.teamPlayersPlayerDTOList;
+  const captainId = liveUserTeam.team_captain_player_Id;
+  const livePoints = getLiveUserPoint(playerList, playerStats, captainId);
 
   useEffect(() => {
     GA_Other_Event('GET_LIVE_SCORE');
     fetchPlayerLiveScore();
-    if (userLogin && !userTeamProps.userteam.id) {
-      fetchuserTeamData(userProps.id);
+    if (userLogin && !liveUserTeam.id) {
+      fetchuserTeamData();
     }
   }, []);
 
@@ -86,6 +91,16 @@ const MatchLive = () => {
         <div className="liveMatchTitle">Live Match Points</div>
         <Row>
           <Col>
+            <Badge variant="success">Your Points : {livePoints}</Badge>{' '}
+          </Col>
+          <Col>
+            <Badge variant="warning">
+              Keep checking Live Points every 5 Min
+            </Badge>{' '}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <Button
               variant="outline-success"
               className="mr-2 "
@@ -95,11 +110,6 @@ const MatchLive = () => {
               }}>
               Refresh Score
             </Button>
-          </Col>
-          <Col>
-            <Badge variant="warning">
-              Keep checking Live Points every 5 Min
-            </Badge>{' '}
           </Col>
         </Row>
         {!isMatchPresent && (

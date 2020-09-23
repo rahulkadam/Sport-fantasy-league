@@ -40,6 +40,9 @@ public class LeagueUserTeamScorePerMatchService {
     @Autowired
     private FantasyConfigService fantasyConfigService;
 
+    @Autowired
+    private UserTeamService userTeamService;
+
     public void saveLeagueUserTeamScorePerMatch(UserTeam userTeam, Match match, Integer matchPoint, Integer totalPoint) {
 
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch = new LeagueUserTeamScorePerMatch();
@@ -99,6 +102,10 @@ public class LeagueUserTeamScorePerMatchService {
             return null;
         }
         Long userTeamId = requestDTO.getUserTeamId();
+        if (userTeamId == null) {
+            UserTeam userTeam = userTeamService.getAuthenticatedUserTeam();
+            userTeamId = userTeam.getId();
+        }
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
                 leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchDTOS.get(0).getId());
         return leagueUserTeamScorePerMatch;
