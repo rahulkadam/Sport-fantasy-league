@@ -183,7 +183,7 @@ const MatchDetails = ({
           subHeaderComponent={renderCustomSearch}
           subHeaderAlign="left"
           defaultSortField="matchTime"
-          defaultSortAsc={true}
+          defaultSortAsc={title == 'Fixture' ? true : false}
         />
       )}
     </div>
