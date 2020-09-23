@@ -9,6 +9,8 @@ import {largeRowStyles} from 'common/components/DataTable/TableConfig';
 import {returnMapFromList} from 'common/util';
 import '../MatchLive.styles.scss';
 import {getLiveMatchProps} from '../redux';
+import {addUserPlayerInPlayerList} from '../redux/matchlive-util';
+import {isUserLogin} from '../../../../API';
 
 const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
   const configProps = getCommonData();
@@ -16,7 +18,13 @@ const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
   const liveUserTeam = liveMatchProps.userLiveTeam || {};
   const currentUserTeamPlayers = liveUserTeam.teamPlayersPlayerDTOList;
   const captainId = liveUserTeam.team_captain_player_Id;
+  const isUserLoggedIN = isUserLogin();
   const playerTeamMap = returnMapFromList(currentUserTeamPlayers);
+  const newData = addUserPlayerInPlayerList(
+    currentUserTeamPlayers,
+    data,
+    captainId
+  );
 
   function customPointScore(row: any) {
     let variant = row.pointscore > 20 ? 'success' : 'warning';
@@ -101,7 +109,7 @@ const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
   const columns: any[] = [
     {
       name: 'Player',
-      selector: 'playerName',
+      selector: isUserLoggedIN ? 'owned' : 'playerName',
       sortable: true,
       left: true,
       style: {
@@ -219,12 +227,12 @@ const PlayerMatchScoreStats = ({data, type}: PlayerMatchScoreStatsProps) => {
             columns={columns}
             customStyles={customStyles}
             conditionalRowStyles={largeRowStyles}
-            data={data}
+            data={newData}
             highlightOnHover
             fixedHeader
             fixedHeaderScrollHeight="600px"
-            defaultSortField="pointscore"
-            defaultSortAsc={false}
+            defaultSortField={isUserLoggedIN ? 'owned' : 'pointscore'}
+            defaultSortAsc={isUserLoggedIN ? true : false}
           />
         )}
       </LoadingOverlay>
