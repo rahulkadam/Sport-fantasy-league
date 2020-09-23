@@ -13,6 +13,7 @@ import {
   JOIN_LEAGUE,
   CREATE_LEAGUE,
   FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
+  FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE_ERROR,
 } from './leagueConstants';
 import {
   dispatchActionWrapper,
@@ -137,6 +138,7 @@ const fetchPlayerListByUserForLeagueAction = () => {
           dispatch({type: ACTION_COMPLETED});
         })
         .catch((error: any) => {
+          dispatch({type: FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE_ERROR});
           dispatch({
             type: ACTION_ERROR,
             errorMessage: getErrorMessage(error),
