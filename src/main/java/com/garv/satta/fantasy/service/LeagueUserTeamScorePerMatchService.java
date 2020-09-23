@@ -9,6 +9,7 @@ import com.garv.satta.fantasy.model.backoffice.Player;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeam;
 import com.garv.satta.fantasy.model.frontoffice.LeagueUserTeamScorePerMatch;
 import com.garv.satta.fantasy.model.frontoffice.UserTeam;
+import com.garv.satta.fantasy.service.admin.FantasyConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -35,6 +36,9 @@ public class LeagueUserTeamScorePerMatchService {
 
     @Autowired
     private MatchService matchService;
+
+    @Autowired
+    private FantasyConfigService fantasyConfigService;
 
     public void saveLeagueUserTeamScorePerMatch(UserTeam userTeam, Match match, Integer matchPoint, Integer totalPoint) {
 
@@ -85,6 +89,11 @@ public class LeagueUserTeamScorePerMatchService {
     }
 
     public LeagueUserTeamScorePerMatch getLeagueUserTeamScorePerMatchByLiveMatch(RequestDTO requestDTO) {
+        boolean isviewAllowed = fantasyConfigService.getShowUserTeamDetailsInLeague();
+        if (!isviewAllowed) {
+            throw new GenericException("User Team View disable, please check after match start");
+        }
+
         List<MatchDTO> matchDTOS = matchService.getLiveMatches();
         if (CollectionUtils.isEmpty(matchDTOS)) {
             return null;
