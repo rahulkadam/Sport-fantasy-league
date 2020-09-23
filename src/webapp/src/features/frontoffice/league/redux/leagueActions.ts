@@ -132,7 +132,7 @@ const fetchPlayerListByUserForLeagueAction = () => {
         .then((data: any) => {
           dispatch({
             type: FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
-            userTeamPlayers: data,
+            userTeam: data,
           });
           dispatch({type: ACTION_COMPLETED});
         })

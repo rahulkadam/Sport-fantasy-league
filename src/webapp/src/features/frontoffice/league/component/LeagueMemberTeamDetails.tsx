@@ -22,7 +22,11 @@ const LeagueMemberTeamDetails = (props: LeagueMemberTeamDetailsProps) => {
         <Modal.Title>User Team</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <UserTeamPlayerDetails data={props.playerList} title="Player List" />
+        <UserTeamPlayerDetails
+          data={props.playerList}
+          captionId={props.captainId}
+          title="User Team"
+        />
       </Modal.Body>
       <Button onClick={props.handleClose}>Close</Button>
     </Modal>

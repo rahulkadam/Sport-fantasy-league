@@ -25,7 +25,10 @@ export function fetchAllPlayerlist() {
 }
 
 export function fetchPlayerlistByUserForLeague(id: number) {
-  return Get('/fantasy/player/list/byuser/' + id);
+  return Post('/public/stats/getUserTeamByLiveMatch', {
+    data: {userTeamId: id},
+  });
+  // return Get('/fantasy/player/list/byuser/' + id);
 }
 
 export function fetchUserTeamByUser(id: number) {

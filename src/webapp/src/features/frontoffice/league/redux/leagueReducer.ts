@@ -41,7 +41,7 @@ export default (state: League = initialState, action: any): League => {
     case FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE:
       return {
         ...state,
-        leagueMemberTeam: action.userTeamPlayers,
+        leagueMemberTeam: action.userTeam,
       };
     default:
       return state;

@@ -31,7 +31,7 @@ const League = () => {
   const userProps = GetLoginStoreData();
   const leagueObjdata = leagueProps.data || {};
   const userleagueList = leagueObjdata.userleagueList || [];
-  const leagueMemberTeamDetails = leagueProps.leagueMemberTeam;
+  const leagueMemberTeamDetails = leagueProps.leagueMemberTeam || {};
   const fetchTeamListByUserForLeague = fetchPlayerListByUserForLeagueAction();
   const fetchUserLeagueList = fetchUserLeagueListAction();
   const joinLeague = joinLeagueAction();
@@ -87,7 +87,8 @@ const League = () => {
           <LeagueList
             userleagueList={userleagueList}
             fetchTeamListByUser={fetchTeamListByUserForLeague}
-            playerList={leagueMemberTeamDetails}
+            playerList={leagueMemberTeamDetails.teamPlayersPlayerDTOList}
+            captainId={leagueMemberTeamDetails.team_captain_player_Id}
           />
         )}
         {userleagueList.length == 0 && (

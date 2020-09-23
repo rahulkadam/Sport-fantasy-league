@@ -70,6 +70,12 @@ public class PlayerService {
         return playerConverter.convertToDTO(player);
     }
 
+    public List<PlayerDTO> getPlayerListbyids(long[] ids) {
+        List<Player> player = playerRepository.findAllPlayerByIdIn(ids);
+        return playerConverter.convertToFullDTOList(player);
+    }
+
+
     public PlayerDTO createPlayer(PlayerDTO playerDTO) {
         Player player = playerConverter.convertToEntity(playerDTO);
         player.setId(null);
