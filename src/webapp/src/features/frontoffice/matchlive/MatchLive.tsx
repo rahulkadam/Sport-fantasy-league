@@ -91,7 +91,9 @@ const MatchLive = () => {
         <div className="liveMatchTitle">Live Match Points</div>
         <Row>
           <Col>
-            <Badge variant="success">Your Points : {livePoints}</Badge>{' '}
+            {isMatchPresent && (
+              <Badge variant="success">Your Points : {livePoints}</Badge>
+            )}
           </Col>
           <Col>
             <Badge variant="warning">
