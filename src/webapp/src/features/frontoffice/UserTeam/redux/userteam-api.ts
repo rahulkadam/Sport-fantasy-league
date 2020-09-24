@@ -25,7 +25,7 @@ export function fetchAllPlayerlist() {
 }
 
 export function fetchPlayerlistByUserForLeague(id: number) {
-  return Post('/public/stats/getUserTeamByLiveMatch', {
+  return Post('/public/stats/getUserTeamByLastCompletedMatch', {
     data: {userTeamId: id},
   });
 }

@@ -14,6 +14,7 @@ const ExpandLeagueRow = ({
   fetchTeamByUser,
   playerList,
   captainId,
+  matchDescription,
 }: any) => {
   const userList = data.leagueUserTeamDTOS;
   const [showMemberTeam, setShowMemberTeam] = useState(false);
@@ -37,6 +38,7 @@ const ExpandLeagueRow = ({
         show={showMemberTeam}
         playerList={playerList}
         captainId={captainId}
+        matchDescription={matchDescription}
       />
     );
   }

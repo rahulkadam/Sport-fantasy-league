@@ -65,9 +65,9 @@ public class FantasyStatsController extends BaseController {
         return getResponseBodyWithCache(list, FOR_1_HOUR);
     }
 
-    @PostMapping(value = "/getUserTeamByLiveMatch")
+    @PostMapping(value = "/getUserTeamByLastCompletedMatch")
     public ResponseEntity<UserTeamDTO> getUserTeamByLiveMatch(@RequestBody RequestDTO dto) {
-        UserTeamDTO userTeamDTO =  leagueUserTeamScorePerMatchService.getUserTeamByLiveMatch(dto);
+        UserTeamDTO userTeamDTO =  leagueUserTeamScorePerMatchService.getUserTeamByLastCompletedMatch(dto);
         return getResponseBody(userTeamDTO);
     }
 }

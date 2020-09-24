@@ -19,7 +19,7 @@ const LeagueMemberTeamDetails = (props: LeagueMemberTeamDetailsProps) => {
       className="mainContainer"
       onHide={props.handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>User Team</Modal.Title>
+        <Modal.Title>Team For {props.matchDescription}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <UserTeamPlayerDetails

@@ -89,6 +89,7 @@ const League = () => {
             fetchTeamListByUser={fetchTeamListByUserForLeague}
             playerList={leagueMemberTeamDetails.teamPlayersPlayerDTOList}
             captainId={leagueMemberTeamDetails.team_captain_player_Id}
+            matchDescription={leagueMemberTeamDetails.description}
           />
         )}
         {userleagueList.length == 0 && (
