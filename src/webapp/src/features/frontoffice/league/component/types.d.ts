@@ -2,6 +2,7 @@ declare type LeagueUserListProps = {
   userleagueList: any;
   fetchTeamListByUser?: any;
   playerList?: any;
+  captainId?: any;
 };
 
 declare type JoinLeagueProps = {
@@ -20,6 +21,7 @@ declare type LeagueMemberTeamDetailsProps = {
   handleClose?: any;
   handleShow?: any;
   playerList?: any;
+  captainId?: any;
   show?: boolean;
   data?: data;
 };

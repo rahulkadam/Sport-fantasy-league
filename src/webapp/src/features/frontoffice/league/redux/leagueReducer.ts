@@ -4,6 +4,7 @@ import {
   JOIN_LEAGUE,
   CREATE_LEAGUE,
   FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE,
+  FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE_ERROR,
 } from './leagueConstants';
 
 const initialState: League = {
@@ -41,7 +42,12 @@ export default (state: League = initialState, action: any): League => {
     case FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE:
       return {
         ...state,
-        leagueMemberTeam: action.userTeamPlayers,
+        leagueMemberTeam: action.userTeam,
+      };
+    case FETCH_PLAYER_LIST_BY_USER_IN_LEAGUE_ERROR:
+      return {
+        ...state,
+        leagueMemberTeam: {},
       };
     default:
       return state;

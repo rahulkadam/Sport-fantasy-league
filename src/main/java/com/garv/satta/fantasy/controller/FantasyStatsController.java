@@ -1,9 +1,6 @@
 package com.garv.satta.fantasy.controller;
 
-import com.garv.satta.fantasy.dto.LeagueUserTeamScoreHistoryDTO;
-import com.garv.satta.fantasy.dto.MatchDTO;
-import com.garv.satta.fantasy.dto.MatchPlayerScoreDTO;
-import com.garv.satta.fantasy.dto.RequestDTO;
+import com.garv.satta.fantasy.dto.*;
 import com.garv.satta.fantasy.dto.reponsedto.LiveMatchDataDTO;
 import com.garv.satta.fantasy.service.LeagueUserTeamScorePerMatchService;
 import com.garv.satta.fantasy.service.MatchPlayerScoreService;
@@ -68,4 +65,9 @@ public class FantasyStatsController extends BaseController {
         return getResponseBodyWithCache(list, FOR_1_HOUR);
     }
 
+    @PostMapping(value = "/getUserTeamByLiveMatch")
+    public ResponseEntity<UserTeamDTO> getUserTeamByLiveMatch(@RequestBody RequestDTO dto) {
+        UserTeamDTO userTeamDTO =  leagueUserTeamScorePerMatchService.getUserTeamByLiveMatch(dto);
+        return getResponseBody(userTeamDTO);
+    }
 }

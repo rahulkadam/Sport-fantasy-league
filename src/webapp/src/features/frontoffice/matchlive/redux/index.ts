@@ -3,4 +3,5 @@ export {default as getLiveMatchProps} from './matchliveHooks';
 export {
   fetchLiveMatchListAction,
   fetchPlayerScoreByLiveMatchesAction,
+  fetchUserTeamByLiveMatchAction,
 } from './matchliveActions';

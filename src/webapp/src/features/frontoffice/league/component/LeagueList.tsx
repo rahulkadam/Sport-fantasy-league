@@ -90,6 +90,7 @@ const LeagueList = (props: LeagueUserListProps) => {
               <ExpandLeagueRow
                 fetchTeamByUser={props.fetchTeamListByUser}
                 playerList={props.playerList}
+                captainId={props.captainId}
               />
             }
             expandOnRowClicked

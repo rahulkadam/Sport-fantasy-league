@@ -25,6 +25,8 @@ public class LeagueUserTeamConverter extends Converter<LeagueUserTeam, LeagueUse
        leagueUserTeamDTO.setUserName(user.getName());
        leagueUserTeamDTO.setScore(userTeam.getTotal_score());
        leagueUserTeamDTO.setTeamName(userTeam.getName());
+       leagueUserTeamDTO.setLastMatchScore(userTeam.getLast_score());
+       leagueUserTeamDTO.setTransferCount(userTeam.getRemained_Transfer());
        return leagueUserTeamDTO;
     }
 

@@ -13,6 +13,8 @@ public class LeagueUserTeamDTO implements Serializable {
     private Long user_team_id;
     private Long league_id;
     private Integer userrank;
+    private Integer transferCount;
+    private Integer lastMatchScore;
     private String userName;
     private String teamName;
     private Integer score;

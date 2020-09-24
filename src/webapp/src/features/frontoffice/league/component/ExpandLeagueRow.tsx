@@ -9,7 +9,12 @@ import {StatusMessage} from 'common/components';
 import {GA_League_Event} from 'common/config';
 import {isListEmpty} from '../../../../common/util';
 
-const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
+const ExpandLeagueRow = ({
+  data,
+  fetchTeamByUser,
+  playerList,
+  captainId,
+}: any) => {
   const userList = data.leagueUserTeamDTOS;
   const [showMemberTeam, setShowMemberTeam] = useState(false);
   const handleMemberTeamClose = () => setShowMemberTeam(false);
@@ -31,6 +36,7 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
         handleClose={handleMemberTeamClose}
         show={showMemberTeam}
         playerList={playerList}
+        captainId={captainId}
       />
     );
   }
@@ -83,13 +89,11 @@ const ExpandLeagueRow = ({data, fetchTeamByUser, playerList}: any) => {
       left: true,
     },
     {
-      name: 'Name',
-      selector: 'userName',
+      name: 'Transfer',
+      selector: 'transferCount',
       sortable: true,
-      width: '35%',
-      cell: customName,
+      width: '15%',
       left: true,
-      omit: true,
     },
   ];
 
