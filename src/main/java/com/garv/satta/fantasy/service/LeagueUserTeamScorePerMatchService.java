@@ -91,34 +91,42 @@ public class LeagueUserTeamScorePerMatchService {
         return converter.convertToFullDTO(leagueUserTeamScorePerMatch);
     }
 
-    public LeagueUserTeamScorePerMatch getLeagueUserTeamScorePerMatchByLiveMatch(RequestDTO requestDTO) {
-        boolean isviewAllowed = fantasyConfigService.getShowUserTeamDetailsInLeague();
-        if (!isviewAllowed) {
-            throw new GenericException("User Team View disable, please check after match start");
-        }
-
-        List<MatchDTO> matchDTOS = matchService.getLiveMatches();
-        if (CollectionUtils.isEmpty(matchDTOS)) {
-            return null;
-        }
-        Long userTeamId = requestDTO.getUserTeamId();
-        if (userTeamId == null) {
-            UserTeam userTeam = userTeamService.getAuthenticatedUserTeam();
-            userTeamId = userTeam.getId();
-        }
+    public LeagueUserTeamScorePerMatch getLeagueUserTeamScorePerMatchByMatch(Long userTeamId) {
+        Match match = matchService.getJustStartedMatchList();
         LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch =
-                leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, matchDTOS.get(0).getId());
+                leagueUserTeamScorePerMatchRepository.findTeamScoreByUserTeamIdAndMatchId(userTeamId, match.getId());
+        if (leagueUserTeamScorePerMatch == null || leagueUserTeamScorePerMatch.getPlayerList() == null) {
+            throw new GenericException("User Team is not available");
+        }
         return leagueUserTeamScorePerMatch;
     }
 
-    public UserTeamDTO getUserTeamByLiveMatch(RequestDTO requestDTO) {
-        LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch = getLeagueUserTeamScorePerMatchByLiveMatch(requestDTO);
-        if (leagueUserTeamScorePerMatch == null || leagueUserTeamScorePerMatch.getPlayerList() == null) {
-            throw new GenericException("User Team View disable, please check after match start");
-        }
+    public UserTeamDTO getUserTeamDtoFromScorePerMatch(Match match, Long userTeamId) {
+        LeagueUserTeamScorePerMatch leagueUserTeamScorePerMatch = getLeagueUserTeamScorePerMatchByMatch(userTeamId);
         long[] playerIds = leagueUserTeamScorePerMatch.getPlayerList();
         List<PlayerDTO> playerList = playerService.getPlayerListbyids(playerIds);
         return converter.getUserTeamDtoFromEntity(leagueUserTeamScorePerMatch, playerList);
+    }
+
+    public Long getUserTeamIdFromRequest(RequestDTO requestDTO) {
+        Long userTeamId = requestDTO.getUserTeamId();
+        if (userTeamId == null) {
+            UserTeam userTeam = userTeamService.getAuthenticatedUserTeam();
+            if (userTeam == null) {
+                throw new GenericException("User Team is not available");
+            }
+            userTeamId = userTeam.getId();
+        }
+
+        return userTeamId;
+    }
+
+    public UserTeamDTO getUserTeamByLastCompletedMatch(RequestDTO requestDTO) {
+        Long userTeamId = getUserTeamIdFromRequest(requestDTO);
+        Match match = matchService.getJustStartedMatchList();
+        UserTeamDTO userTeamDTO = getUserTeamDtoFromScorePerMatch(match, userTeamId);
+        userTeamDTO.setDescription(match.getDescription());
+        return userTeamDTO;
     }
 
     public List<MatchPlayerScoreDTO> getUserScorePerMatchStats(RequestDTO requestDTO) {

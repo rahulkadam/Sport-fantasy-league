@@ -9,7 +9,7 @@ export function getPlayerScoreByLiveMatches() {
 }
 
 export function fetchUserTeamForLiveMatch() {
-  return Post('/public/stats/getUserTeamByLiveMatch', {
+  return Post('/public/stats/getUserTeamByLastCompletedMatch', {
     data: {id: 12398},
   });
 }

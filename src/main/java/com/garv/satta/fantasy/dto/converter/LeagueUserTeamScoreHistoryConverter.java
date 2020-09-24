@@ -51,7 +51,7 @@ public class LeagueUserTeamScoreHistoryConverter extends Converter<LeagueUserTea
         UserTeamDTO userTeamDTO = new UserTeamDTO();
         Long captainId = entity.getCaptain_player();
         if (!CollectionUtils.isEmpty(playerList)) {
-            PlayerDTO captain = playerList.stream().filter(playerDTO -> playerDTO.getId() == captainId).findFirst().orElse(null);
+            PlayerDTO captain = playerList.stream().filter(playerDTO -> playerDTO.getId().equals(captainId)).findFirst().orElse(null);
             if (captain != null) {
                 userTeamDTO.setTeam_captain_player_Id(captain.getId());
                 userTeamDTO.setCaptainName(captain.getName());

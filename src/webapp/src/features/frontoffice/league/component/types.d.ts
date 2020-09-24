@@ -3,6 +3,7 @@ declare type LeagueUserListProps = {
   fetchTeamListByUser?: any;
   playerList?: any;
   captainId?: any;
+  matchDescription?: any;
 };
 
 declare type JoinLeagueProps = {
@@ -24,6 +25,7 @@ declare type LeagueMemberTeamDetailsProps = {
   captainId?: any;
   show?: boolean;
   data?: data;
+  matchDescription?: any;
 };
 
 declare type JoinLeagueModalProps = {
@@ -32,3 +34,4 @@ declare type JoinLeagueModalProps = {
   handleClose?: any;
   handleShow?: any;
 };
+

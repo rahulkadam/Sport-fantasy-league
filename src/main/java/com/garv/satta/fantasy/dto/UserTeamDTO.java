@@ -11,6 +11,7 @@ import java.util.List;
 public class UserTeamDTO extends BaseDTO {
 
     private String name;
+    private String description;
     private Boolean status;
     private Integer creditbalance;
     private Integer totalbalance;
