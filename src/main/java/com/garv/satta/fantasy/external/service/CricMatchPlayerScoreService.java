@@ -89,15 +89,19 @@ public class CricMatchPlayerScoreService {
         Assert.notNull(externalMatchId, "External Id is Not Present for , " + matchId);
         String providerKey = fantasyConfigService.getLiveDataProviderKey();
         List<MatchPlayerScoreCricDTO> playerScoreDTOList = new ArrayList<>();
+        CricInfoMatchData cricInfoMatchData = null;
+        CricInfoMatchScore cricInfoMatchScore = null;
 
         if ("CRICINFO".equals(providerKey)) {
-            CricInfoMatchData cricInfoMatchData = cricInfoService.getMatchPlayerScore((long) externalMatchId);
+            cricInfoMatchData = cricInfoService.getMatchPlayerScore((long) externalMatchId);
             playerScoreDTOList = cricInfoMatchData.getMatchPlayerScoreCricDTOS();
-            saveMatchScoreFromCricInfo(cricInfoMatchData.getMatchScore(), match);
+            cricInfoMatchScore = cricInfoMatchData.getMatchScore();
+            saveMatchScoreFromCricInfo(cricInfoMatchScore, match);
         } else {
             playerScoreDTOList = cricAPIService.getMatchSummaryDetails(externalMatchId);
         }
         saveMatchPlayerScoreFromCric(playerScoreDTOList, match, UPDATE_SCORE);
+        completeMatch(cricInfoMatchScore, match);
         cacheService.clearLiveScoreCache();
     }
 
@@ -195,7 +199,6 @@ public class CricMatchPlayerScoreService {
             matchResult.setTeam_winner(match.getTeam_host());
             matchResult.setMatch(match);
             matchResultRepository.save(matchResult);
-            completeMatch(cricInfoMatchScore, match);
         } catch (Exception e) {
             errorService.logMessage("save_match_score_result Error" , e.getMessage());
         }
@@ -203,6 +206,10 @@ public class CricMatchPlayerScoreService {
 
     public void completeMatch(CricInfoMatchScore cricInfoMatchScore, Match match) {
         try {
+            if (cricInfoMatchScore == null) {
+                return;
+            }
+
             String matchSummary = cricInfoMatchScore.getSummary();
             boolean matchComplete = isMatchComplete(matchSummary);
             if (matchComplete) {
