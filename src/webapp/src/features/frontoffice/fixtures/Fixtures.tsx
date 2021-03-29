@@ -58,9 +58,9 @@ const Fixtures = () => {
         spinner
         text="Loading Fixture Details ...">
         <Helmet>
-          <title>IPL-20 Fixture</title>
+          <title>IPL-21 Fixture</title>
         </Helmet>
-        <div className="fixtureTitle">IPL-20 Fixture</div>
+        <div className="fixtureTitle">IPL-21 Fixture</div>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         <Badge variant="warning">*All Match Time are in IST*</Badge>
         {renderMatchListView()}

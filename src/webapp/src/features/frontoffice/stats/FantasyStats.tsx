@@ -66,13 +66,13 @@ const FantasyStats = () => {
       <div>
         {!isListEmpty(matchList) && (
           <div className="secondaryStatsTitle">
-            Select Match to see IPL-20 Match Stats
+            Select Match to see IPL-21 Match Stats
           </div>
         )}
         {isListEmpty(matchList) && (
           <StatusMessage
             type="error"
-            text="You will able to see Stats after first IPL match (19th Sept). Keep checking below Twitter stats till the time"
+            text="You will able to see Stats after first IPL match (9th April). Keep checking below Twitter stats till the time"
           />
         )}
         <MatchStats
@@ -89,7 +89,7 @@ const FantasyStats = () => {
     return (
       <div>
         <div className="secondaryStatsTitle">
-          Click on Player to see IPL-20 stats{' '}
+          Click on Player to see IPL-21 stats{' '}
         </div>
         <PlayerStats
           playerList={playerList}

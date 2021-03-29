@@ -364,7 +364,7 @@ const UserTeam = () => {
         spinner
         text="Loading User Team Details ...">
         <Helmet>
-          <title>IPl Fantasy Team - 20</title>
+          <title>IPl Fantasy Team - 21</title>
         </Helmet>
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {checkUserAccess()}

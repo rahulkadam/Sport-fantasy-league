@@ -58,8 +58,8 @@ export const teamList = [
   },
   {id: 'Delhi Capitals', name: 'Delhi Capitals', logo: teamDC, short: 'DC'},
   {
-    id: 'Kings XI Punjab',
-    name: 'Kings XI Punjab',
+    id: 'Punjab Kings',
+    name: 'Punjab Kings',
     logo: teampunjab,
     short: 'KXIP',
   },
