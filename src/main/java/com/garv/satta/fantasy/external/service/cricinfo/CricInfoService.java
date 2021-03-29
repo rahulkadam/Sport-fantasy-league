@@ -131,7 +131,12 @@ public class CricInfoService {
      */
     public Map<Integer, MatchPlayerScoreCricDTO> parseSecondInningsPlayerList(Document document,
                                                                               Map<Integer, MatchPlayerScoreCricDTO> playerMap) {
-        Elements playerListNode = document.select(".w-100.table.bowler").select("tbody").get(0).children();
+        Elements playerListNode = null;
+        try {
+            playerListNode = document.select(".w-100.table.batsman").select("tbody").get(0).children();
+        } catch (Exception e) {
+            playerListNode = document.select(".w-100.table.bowler").select("tbody").get(0).children();
+        }
         for (Element element : playerListNode) {
             playerMap = updatePlayerAttribute(element, playerMap, "secondInnings");
         }
