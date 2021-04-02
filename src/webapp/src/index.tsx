@@ -21,7 +21,7 @@ const Root = () => {
 
   return (
     <div className="mainContainer">
-      <div className="backgroundImageRight">Text images and player List</div>
+      <div className="backgroundImageRight">IPL Fantasy</div>
       <Header />
       <div className="fixedHeaderContainer">
         <BaseRoute />

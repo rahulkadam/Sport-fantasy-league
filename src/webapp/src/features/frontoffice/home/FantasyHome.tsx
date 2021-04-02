@@ -233,7 +233,7 @@ const FantasyHome = () => {
   function renderIPLImage() {
     return (
       <div>
-        <Image src={banneriplmain} width="100%" height="130px" />
+        <Image src={banneriplmain} width="100%" height="160px" />
       </div>
     );
   }
@@ -261,7 +261,6 @@ const FantasyHome = () => {
         {checkUserAccess()}
         <UserHomePageBoard />
         {renderIPLImage()}
-        {!loginUser && <FantasyFooterBanner />}
         {renderStatusMessage(configProps.hasError, configProps.statusMessage)}
         {fantasyNotice && renderStatusMessage(false, fantasyNotice.message)}
         {renderLiveMatchesSchedule()}
