@@ -13,22 +13,30 @@ public class MatchScoreParser {
 
     public CricInfoMatchScore getMatchScore(Document document) {
         try {
-            Elements scoreElement = document.getElementsByClass("teams");
+            Elements scoreElement = document.getElementsByClass("match-header").select(".teams");
             Element element = scoreElement.get(0);
             Elements teamElement = element.children();
             Element firstTeam = teamElement.get(0);
             Element secondTeam = teamElement.get(1);
 
             Elements firstteamList = firstTeam.children();
-            String firstTeamName = firstteamList.get(0).getElementsByClass("team-name").get(0).text();
-            String firstTeamScore = firstteamList.get(1).text();
+            String firstTeamName = firstteamList.get(0).getElementsByClass("name-detail").get(0).text();
+            String firstTeamScore = "";
+
+            if (firstteamList.size() > 1 && firstteamList.get(1) != null) {
+                firstTeamScore = firstteamList.get(1).getElementsByClass("score-detail").get(0).text();
+            }
 
             Elements secondteamList = secondTeam.children();
-            String secondTeamName = secondteamList.get(0).getElementsByClass("team-name").get(0).text();
-            String secondTeamScore = secondteamList.get(1).text();
+            String secondTeamName = secondteamList.get(0).getElementsByClass("name-detail").get(0).text();
+            String secondTeamScore = secondteamList.get(1).getElementsByClass("score-detail").get(0).text();
+
+            if (secondteamList.size() > 1 && secondteamList.get(1) != null) {
+                secondTeamScore = secondteamList.get(1).getElementsByClass("score-detail").get(0).text();
+            }
 
             String matchSummary = "";
-            Elements summary = document.select(".summary");
+            Elements summary = document.getElementsByClass("match-header").select(".status-text");
             if (summary.first() != null) {
                 matchSummary = summary.first().text();
             }
