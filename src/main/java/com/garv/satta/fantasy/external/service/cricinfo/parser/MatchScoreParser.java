@@ -29,7 +29,7 @@ public class MatchScoreParser {
 
             Elements secondteamList = secondTeam.children();
             String secondTeamName = secondteamList.get(0).getElementsByClass("name-detail").get(0).text();
-            String secondTeamScore = secondteamList.get(1).getElementsByClass("score-detail").get(0).text();
+            String secondTeamScore = "";
 
             if (secondteamList.size() > 1 && secondteamList.get(1) != null) {
                 secondTeamScore = secondteamList.get(1).getElementsByClass("score-detail").get(0).text();
