@@ -33,7 +33,8 @@ public class PlayerParser {
             return null;
         }
         int length = "https://www.espncricinfo.com/ci/content/player/".length();
-        String playerId = link.substring(length, link.length() - 5);
+        String[] linkSplit =  link.split("-");
+        String playerId = linkSplit[linkSplit.length-1];
         Integer playerIdInt = Integer.parseInt(playerId);
         return playerIdInt;
     }
@@ -56,6 +57,10 @@ public class PlayerParser {
         if (isCaptain && isWK) {
             int toIndex = name.indexOf("(");
             name = name.substring(0, toIndex).trim();
+            toIndex = name.indexOf("†");
+            if (toIndex > 0) {
+                name = name.substring(0, toIndex).trim();
+            }
             return name;
         }
 

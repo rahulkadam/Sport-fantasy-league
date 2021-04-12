@@ -51,8 +51,8 @@ export const teamList = [
     short: 'CSK',
   },
   {
-    id: 'Royal Challengers Bengaluru',
-    name: 'Royal Challengers Bengaluru',
+    id: 'Royal Challengers Bangalore',
+    name: 'Royal Challengers Bangalore',
     logo: teamRCB,
     short: 'RCB',
   },

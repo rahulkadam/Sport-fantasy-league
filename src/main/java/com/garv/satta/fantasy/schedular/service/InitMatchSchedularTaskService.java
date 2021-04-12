@@ -138,7 +138,7 @@ public class InitMatchSchedularTaskService {
         DateTime matchTime = match.getMatchTime();
         DateTime plus10MinTime = getTimePlusMinuite(5);
         if (matchTime.getMillis() < plus10MinTime.getMillis()) {
-            tournamentService.lockTournamentByName("IPL-20");
+            tournamentService.lockTournamentByName("IPL-21");
             // after tournament lock, init user for Same Match
             calculatePointsService.initUserScoreForMatch(match);
         }
