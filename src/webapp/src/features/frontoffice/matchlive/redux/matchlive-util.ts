@@ -5,7 +5,7 @@ export function getMapWithPlayerScore(arrayList: any[]) {
   const map = new Map();
   if (isListEmpty(arrayList)) return map;
   for (const item of arrayList) {
-    if (!map.has(item.id)) {
+    if (!map.has(item.playerId)) {
       map.set(item.playerId, item.pointscore);
     }
   }
