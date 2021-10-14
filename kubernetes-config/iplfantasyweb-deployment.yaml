@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ipl-service
+  labels:
+    app: fantasy-webapp-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fantasy-webapp
+  template:
+    metadata:
+      labels:
+        app: fantasy-webapp
+    spec:
+      containers:
+        - name: fantasy-webapp
+          image: ipl:fantasy-2022
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fantasy-webapp-service
+spec:
+  selector:
+    app: fantasy-webapp
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30100
+  type: ClusterIP
