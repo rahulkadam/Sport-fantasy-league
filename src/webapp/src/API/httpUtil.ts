@@ -92,7 +92,7 @@ function apiBaseRootUrl() {
   const protocol = window && window.location && window.location.protocol;
 
   if (hostname === 'localhost') {
-    backendHost = 'http://localhost:30100';
+    backendHost = 'http://localhost:8080';
   } else {
     backendHost = protocol + '//' + host;
   }

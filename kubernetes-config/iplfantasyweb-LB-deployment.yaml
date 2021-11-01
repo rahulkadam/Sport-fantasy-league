@@ -23,11 +23,15 @@ kind: Service
 metadata:
   name: fantasy-webapp-service
 spec:
-  type: NodePort
+  type: LoadBalancer
+  clusterIP: 10.96.1.1
   selector:
     app: fantasy-webapp
   ports:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 31100
+status:
+  loadBalancer:
+    ingress:
+      - ip: 192.0.2.127
