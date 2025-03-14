@@ -1,6 +1,6 @@
 # Sport Fantasy League Platform
 
-This repository contains the backend code for the Sport Fantasy League platform, a real-time fantasy sports application specifically designed for the Indian Premier League (IPL). This platform allows users to create virtual teams, participate in leagues, and compete based on the real-time performance of IPL players.
+This repository contains the code for the Sport Fantasy League platform, a real-time fantasy sports application specifically designed for the Indian Premier League (IPL). This platform allows users to create virtual teams, participate in leagues, and compete based on the real-time performance of IPL players.
 
 **Platform Description:**
 
